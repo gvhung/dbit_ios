@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimeTableViewController : UIViewController
+@interface TimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, retain) UITableView *tableView;
 
 - (instancetype)init;
 

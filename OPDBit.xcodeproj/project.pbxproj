@@ -18,6 +18,15 @@
 		B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682AD1AAC3741002D6983 /* LectureViewController.m */; };
 		B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B01AAC374D002D6983 /* TimeTableViewController.m */; };
 		B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */; };
+		B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B81AAC4A8E002D6983 /* DataManager.m */; };
+		B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682BC1AAC4AD9002D6983 /* LectureObject.m */; };
+		B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C11AAC4CDB002D6983 /* TimeTableObject.m */; };
+		B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */; };
+		B59682CB1AAC4D5B002D6983 /* LocalDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682CA1AAC4D5B002D6983 /* LocalDataObject.m */; };
+		B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D01AAC4E12002D6983 /* ServerLectureObject.m */; };
+		B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */; };
+		B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */; };
+		B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DA1AAC5892002D6983 /* TimeTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +62,24 @@
 		B59682B01AAC374D002D6983 /* TimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableViewController.m; sourceTree = "<group>"; };
 		B59682B31AAC47F0002D6983 /* LectureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureTableViewCell.h; sourceTree = "<group>"; };
 		B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureTableViewCell.m; sourceTree = "<group>"; };
+		B59682B71AAC4A8E002D6983 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		B59682B81AAC4A8E002D6983 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		B59682BB1AAC4AD9002D6983 /* LectureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureObject.h; sourceTree = "<group>"; };
+		B59682BC1AAC4AD9002D6983 /* LectureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureObject.m; sourceTree = "<group>"; };
+		B59682C01AAC4CDB002D6983 /* TimeTableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableObject.h; sourceTree = "<group>"; };
+		B59682C11AAC4CDB002D6983 /* TimeTableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableObject.m; sourceTree = "<group>"; };
+		B59682C51AAC4D2F002D6983 /* LectureDetailObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureDetailObject.h; sourceTree = "<group>"; };
+		B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureDetailObject.m; sourceTree = "<group>"; };
+		B59682C91AAC4D5B002D6983 /* LocalDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDataObject.h; sourceTree = "<group>"; };
+		B59682CA1AAC4D5B002D6983 /* LocalDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDataObject.m; sourceTree = "<group>"; };
+		B59682CF1AAC4E12002D6983 /* ServerLectureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerLectureObject.h; sourceTree = "<group>"; };
+		B59682D01AAC4E12002D6983 /* ServerLectureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerLectureObject.m; sourceTree = "<group>"; };
+		B59682D21AAC4E1B002D6983 /* ServerSchoolObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerSchoolObject.h; sourceTree = "<group>"; };
+		B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerSchoolObject.m; sourceTree = "<group>"; };
+		B59682D51AAC4E27002D6983 /* ServerTimeTableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableObject.h; sourceTree = "<group>"; };
+		B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableObject.m; sourceTree = "<group>"; };
+		B59682D91AAC5892002D6983 /* TimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableCell.h; sourceTree = "<group>"; };
+		B59682DA1AAC5892002D6983 /* TimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableCell.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +134,8 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B59682BA1AAC4AC4002D6983 /* Realm Model */,
+				B59682B61AAC4A76002D6983 /* DataManager */,
 				B59682AB1AAC3708002D6983 /* ViewController */,
 				B596827E1AAC2EB7002D6983 /* AppDelegate.h */,
 				B596827F1AAC2EB7002D6983 /* AppDelegate.m */,
@@ -177,6 +206,7 @@
 			children = (
 				B59682AF1AAC374D002D6983 /* TimeTableViewController.h */,
 				B59682B01AAC374D002D6983 /* TimeTableViewController.m */,
+				B59682D81AAC586D002D6983 /* Cell */,
 			);
 			name = TimeTable;
 			sourceTree = "<group>";
@@ -196,6 +226,101 @@
 			children = (
 				B59682B31AAC47F0002D6983 /* LectureTableViewCell.h */,
 				B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		B59682B61AAC4A76002D6983 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				B59682B71AAC4A8E002D6983 /* DataManager.h */,
+				B59682B81AAC4A8E002D6983 /* DataManager.m */,
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		B59682BA1AAC4AC4002D6983 /* Realm Model */ = {
+			isa = PBXGroup;
+			children = (
+				B59682CE1AAC4E00002D6983 /* ServerTimeTable */,
+				B59682CD1AAC4DA9002D6983 /* ServerSchool */,
+				B59682CC1AAC4D82002D6983 /* ServerLecture */,
+				B59682C81AAC4D39002D6983 /* LocalData */,
+				B59682BF1AAC4CBC002D6983 /* TimeTable */,
+				B59682BE1AAC4CB7002D6983 /* Lecture */,
+				B59682C41AAC4D1B002D6983 /* LectureDetail */,
+			);
+			name = "Realm Model";
+			sourceTree = "<group>";
+		};
+		B59682BE1AAC4CB7002D6983 /* Lecture */ = {
+			isa = PBXGroup;
+			children = (
+				B59682BB1AAC4AD9002D6983 /* LectureObject.h */,
+				B59682BC1AAC4AD9002D6983 /* LectureObject.m */,
+			);
+			name = Lecture;
+			sourceTree = "<group>";
+		};
+		B59682BF1AAC4CBC002D6983 /* TimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B59682C01AAC4CDB002D6983 /* TimeTableObject.h */,
+				B59682C11AAC4CDB002D6983 /* TimeTableObject.m */,
+			);
+			name = TimeTable;
+			sourceTree = "<group>";
+		};
+		B59682C41AAC4D1B002D6983 /* LectureDetail */ = {
+			isa = PBXGroup;
+			children = (
+				B59682C51AAC4D2F002D6983 /* LectureDetailObject.h */,
+				B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */,
+			);
+			name = LectureDetail;
+			sourceTree = "<group>";
+		};
+		B59682C81AAC4D39002D6983 /* LocalData */ = {
+			isa = PBXGroup;
+			children = (
+				B59682C91AAC4D5B002D6983 /* LocalDataObject.h */,
+				B59682CA1AAC4D5B002D6983 /* LocalDataObject.m */,
+			);
+			name = LocalData;
+			sourceTree = "<group>";
+		};
+		B59682CC1AAC4D82002D6983 /* ServerLecture */ = {
+			isa = PBXGroup;
+			children = (
+				B59682CF1AAC4E12002D6983 /* ServerLectureObject.h */,
+				B59682D01AAC4E12002D6983 /* ServerLectureObject.m */,
+			);
+			name = ServerLecture;
+			sourceTree = "<group>";
+		};
+		B59682CD1AAC4DA9002D6983 /* ServerSchool */ = {
+			isa = PBXGroup;
+			children = (
+				B59682D21AAC4E1B002D6983 /* ServerSchoolObject.h */,
+				B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */,
+			);
+			name = ServerSchool;
+			sourceTree = "<group>";
+		};
+		B59682CE1AAC4E00002D6983 /* ServerTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B59682D51AAC4E27002D6983 /* ServerTimeTableObject.h */,
+				B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */,
+			);
+			name = ServerTimeTable;
+			sourceTree = "<group>";
+		};
+		B59682D81AAC586D002D6983 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B59682D91AAC5892002D6983 /* TimeTableCell.h */,
+				B59682DA1AAC5892002D6983 /* TimeTableCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -342,12 +467,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B59682CB1AAC4D5B002D6983 /* LocalDataObject.m in Sources */,
+				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
+				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
+				B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */,
+				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
+				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
+				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
+				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
+				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,
 				B596827D1AAC2EB7002D6983 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
