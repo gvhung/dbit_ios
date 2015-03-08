@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>90D898D9-403C-4975-BCAB-25D6D6E2FE0B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OPDBit</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8389941CB36F2B483A3ED4D8E259071400A1C6D8</key>
+		<string>https://bitbucket.org/overthepixel/dbit_ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OPDBit.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8389941CB36F2B483A3ED4D8E259071400A1C6D8</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/overthepixel/dbit_ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8389941CB36F2B483A3ED4D8E259071400A1C6D8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8389941CB36F2B483A3ED4D8E259071400A1C6D8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OPDBit</string>
+		</dict>
+	</array>
+</dict>
+</plist>
