@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "OPLeftDrawerViewController.h"
+#import "LectureViewController.h"
 
 @interface AppDelegate ()
 
@@ -22,10 +23,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
     OPLeftDrawerViewController *leftDrawerViewController = [[OPLeftDrawerViewController alloc] init];
-    UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.view.backgroundColor = [UIColor redColor];
-    UINavigationController *centerNavigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:centerNavigationController leftDrawerViewController:leftDrawerViewController];
+    LectureViewController *lectureViewController = [[LectureViewController alloc] init];
+    _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:lectureViewController];
+    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController leftDrawerViewController:leftDrawerViewController];
     
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
     [self.drawerController setMaximumLeftDrawerWidth:200.0];
@@ -33,7 +33,7 @@
     self.drawerController.closeDrawerGestureModeMask ^= MMCloseDrawerGestureModeTapCenterView;
     self.drawerController.closeDrawerGestureModeMask ^= MMCloseDrawerGestureModePanningCenterView;
     self.drawerController.showsStatusBarBackgroundView = NO;
-    [self.drawerController setShowsShadow:NO];
+//    [self.drawerController setShowsShadow:NO];
     [self.drawerController setShouldStretchDrawer:NO];
     
     [self.window setRootViewController:self.drawerController];

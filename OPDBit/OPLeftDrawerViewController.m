@@ -8,6 +8,9 @@
 
 #import "OPLeftDrawerViewController.h"
 #import "OPLeftDrawerTableViewCell.h"
+#import "TimeTableViewController.h"
+#import "LectureViewController.h"
+#import "AppDelegate.h"
 
 #import <Masonry/Masonry.h>
 
@@ -74,19 +77,23 @@
         cell = [[OPLeftDrawerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    cell.textLabel.text = indexPath.row ? @"수업" : @"시간표";
+    cell.textLabel.text = indexPath.row ? @"시간표" : @"수업";
     
     return cell;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (indexPath.row) {
+        TimeTableViewController *timeTableViewController = [[TimeTableViewController alloc] init];
+        appDelegate.centerNavigationController.viewControllers = @[timeTableViewController];
+    } else {
+        LectureViewController *lectureViewController = [[LectureViewController alloc] init];
+        appDelegate.centerNavigationController.viewControllers = @[lectureViewController];
+    }
+    [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
 }
-*/
 
 @end

@@ -17,6 +17,7 @@
 		B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682A61AAC3378002D6983 /* OPLeftDrawerTableViewCell.m */; };
 		B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682AD1AAC3741002D6983 /* LectureViewController.m */; };
 		B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B01AAC374D002D6983 /* TimeTableViewController.m */; };
+		B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,8 @@
 		B59682AD1AAC3741002D6983 /* LectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureViewController.m; sourceTree = "<group>"; };
 		B59682AF1AAC374D002D6983 /* TimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableViewController.h; sourceTree = "<group>"; };
 		B59682B01AAC374D002D6983 /* TimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableViewController.m; sourceTree = "<group>"; };
+		B59682B31AAC47F0002D6983 /* LectureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureTableViewCell.h; sourceTree = "<group>"; };
+		B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureTableViewCell.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,6 +167,7 @@
 			children = (
 				B59682AC1AAC3741002D6983 /* LectureViewController.h */,
 				B59682AD1AAC3741002D6983 /* LectureViewController.m */,
+				B59682B21AAC47D3002D6983 /* Cell */,
 			);
 			name = Lecture;
 			sourceTree = "<group>";
@@ -185,6 +189,15 @@
 				B59682A31AAC3154002D6983 /* LeftDrawer */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		B59682B21AAC47D3002D6983 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B59682B31AAC47F0002D6983 /* LectureTableViewCell.h */,
+				B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
@@ -330,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
+				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,

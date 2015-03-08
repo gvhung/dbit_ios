@@ -13,15 +13,20 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
+  - Realm (0.90.6):
+    - Realm/Headers (= 0.90.6)
+  - Realm/Headers (0.90.6)
 
 DEPENDENCIES:
   - HMSegmentedControl (= 1.5)
   - Masonry (= 0.6.1)
   - MMDrawerController (= 0.5.7)
+  - Realm (= 0.90.6)
 
 SPEC CHECKSUMS:
   HMSegmentedControl: 5bb76002ce529ad83855a06cbdb5c6e48732141b
   Masonry: 2cb49fd14d203d2db5ca6bb017135b235dde9980
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
+  Realm: 6c3facc11964ab9f828f47de6d0e9bf9c4d9c818
 
 COCOAPODS: 0.35.0

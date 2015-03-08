@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) MMDrawerController *drawerController;
+@property (nonatomic, retain) UINavigationController *centerNavigationController;
 
 @end
 

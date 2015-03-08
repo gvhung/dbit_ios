@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <HMSegmentedControl/HMSegmentedControl.h>
 
-@interface LectureViewController : UIViewController
+@interface LectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, retain) HMSegmentedControl *daySegmentedControl;
+
+@property (nonatomic, retain) UITableView *lectureTableView;
 
 - (instancetype)init;
 
