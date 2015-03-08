@@ -27,6 +27,7 @@
 		B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */; };
 		B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */; };
 		B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DA1AAC5892002D6983 /* TimeTableCell.m */; };
+		B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableObject.m; sourceTree = "<group>"; };
 		B59682D91AAC5892002D6983 /* TimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableCell.h; sourceTree = "<group>"; };
 		B59682DA1AAC5892002D6983 /* TimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableCell.m; sourceTree = "<group>"; };
+		B59682DD1AAC69CE002D6983 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		B59682DE1AAC69CE002D6983 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,12 +138,12 @@
 			isa = PBXGroup;
 			children = (
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
-				B59682B61AAC4A76002D6983 /* DataManager */,
 				B59682AB1AAC3708002D6983 /* ViewController */,
 				B596827E1AAC2EB7002D6983 /* AppDelegate.h */,
 				B596827F1AAC2EB7002D6983 /* AppDelegate.m */,
 				B59682871AAC2EB7002D6983 /* Images.xcassets */,
 				B59682891AAC2EB7002D6983 /* LaunchScreen.xib */,
+				B59682E11AAC69DC002D6983 /* Utils */,
 				B596827A1AAC2EB7002D6983 /* Supporting Files */,
 			);
 			path = OPDBit;
@@ -325,6 +328,32 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		B59682DC1AAC69B1002D6983 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				B59682DD1AAC69CE002D6983 /* NetworkManager.h */,
+				B59682DE1AAC69CE002D6983 /* NetworkManager.m */,
+			);
+			name = NetworkManager;
+			sourceTree = "<group>";
+		};
+		B59682E01AAC69D5002D6983 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				B59682DC1AAC69B1002D6983 /* NetworkManager */,
+				B59682B61AAC4A76002D6983 /* DataManager */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		B59682E11AAC69DC002D6983 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B59682E01AAC69D5002D6983 /* Manager */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +508,7 @@
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
+				B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
 				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,

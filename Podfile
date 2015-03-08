@@ -1,6 +1,7 @@
 platform :ios, '7.0'
 xcodeproj 'OPDBit.xcodeproj'
 
+pod 'AFNetworking', '2.5.1'
 pod 'Realm', '0.90.6'
 pod 'HMSegmentedControl', '1.5'
 pod 'Masonry', '0.6.1'

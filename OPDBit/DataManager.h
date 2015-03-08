@@ -12,7 +12,6 @@
 
 + (DataManager *)sharedInstance;
 
-
 /*
 - (NSArray *)lecturesThatContainName:(NSString *)name;
 - (void)saveLectureWithResponse:(NSArray *)response update:(void (^)(NSInteger index))update;
