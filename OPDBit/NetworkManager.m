@@ -28,6 +28,14 @@
                                failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
+    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/school"];
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+        [self statusBarIndicator:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+        [self statusBarIndicator:NO];
+    }];
 }
 
 // 학기목록 가져오기
@@ -36,6 +44,14 @@
                                    failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
+    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/school/timetable/%ld", schoolId];
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+        [self statusBarIndicator:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+        [self statusBarIndicator:NO];
+    }];
 }
 
 // 학기별로 강의목록 가져오기
@@ -44,7 +60,7 @@
                                   failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/school/timetable/%ld", timeTableId];
+    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/timetable/%ld", timeTableId];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
         [self statusBarIndicator:NO];

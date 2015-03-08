@@ -12,10 +12,14 @@
 
 + (DataManager *)sharedInstance;
 
-/*
-- (NSArray *)lecturesThatContainName:(NSString *)name;
-- (void)saveLectureWithResponse:(NSArray *)response update:(void (^)(NSInteger index))update;
-- (NSArray *)allLectureObjects;
- */
+- (void)saveServerSchoolsWithResponse:(NSArray *)response;
+- (void)saveServerTimeTablesWithResponse:(NSArray *)response;
+- (void)saveServerLecturesWithResponse:(NSArray *)response update:(void (^)(NSInteger progressIndex))update;
+
+- (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
+
+- (NSArray *)getDownloadedTimeTables;
+- (NSArray *)getServerTimeTablesWithSchoolId:(NSInteger)schoolId;
+- (NSArray *)getSchools;
 
 @end

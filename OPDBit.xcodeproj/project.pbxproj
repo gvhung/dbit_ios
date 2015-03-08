@@ -28,6 +28,9 @@
 		B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */; };
 		B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DA1AAC5892002D6983 /* TimeTableCell.m */; };
 		B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
+		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
+		B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */; };
+		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,12 @@
 		B59682DA1AAC5892002D6983 /* TimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableCell.m; sourceTree = "<group>"; };
 		B59682DD1AAC69CE002D6983 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		B59682DE1AAC69CE002D6983 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		B59682E31AAC6DC2002D6983 /* AddTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTimeTableViewController.h; sourceTree = "<group>"; };
+		B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTimeTableViewController.m; sourceTree = "<group>"; };
+		B59682E71AAC7069002D6983 /* ServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableViewController.h; sourceTree = "<group>"; };
+		B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableViewController.m; sourceTree = "<group>"; };
+		B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadServerTimeTableViewController.h; sourceTree = "<group>"; };
+		B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadServerTimeTableViewController.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -210,6 +219,8 @@
 				B59682AF1AAC374D002D6983 /* TimeTableViewController.h */,
 				B59682B01AAC374D002D6983 /* TimeTableViewController.m */,
 				B59682D81AAC586D002D6983 /* Cell */,
+				B59682E21AAC6D7E002D6983 /* AddTimeTable */,
+				B59682E61AAC7054002D6983 /* ServerTimeTable */,
 			);
 			name = TimeTable;
 			sourceTree = "<group>";
@@ -354,6 +365,34 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		B59682E21AAC6D7E002D6983 /* AddTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B59682E31AAC6DC2002D6983 /* AddTimeTableViewController.h */,
+				B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */,
+			);
+			name = AddTimeTable;
+			sourceTree = "<group>";
+		};
+		B59682E61AAC7054002D6983 /* ServerTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B59682E71AAC7069002D6983 /* ServerTimeTableViewController.h */,
+				B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */,
+				B59682EA1AAC7B1C002D6983 /* DownloadServerTimeTable */,
+			);
+			name = ServerTimeTable;
+			sourceTree = "<group>";
+		};
+		B59682EA1AAC7B1C002D6983 /* DownloadServerTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */,
+				B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */,
+			);
+			name = DownloadServerTimeTable;
+			sourceTree = "<group>";
+		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +500,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		3D8A83E41B6E34A5A9FD29F2 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -469,14 +508,14 @@
 			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		656F88DC312AB4CE62D717DF /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -484,7 +523,7 @@
 			name = "Copy Pods Resources";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
@@ -500,16 +539,19 @@
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
+				B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */,
 				B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */,
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
 				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
+				B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
 				B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
+				B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
 				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,
 				B596827D1AAC2EB7002D6983 /* main.m in Sources */,
