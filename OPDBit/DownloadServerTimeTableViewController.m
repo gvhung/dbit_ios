@@ -126,9 +126,8 @@
          [_dataManager saveServerTimeTablesWithResponse:response];
          _timeTables = [_dataManager getServerTimeTablesWithSchoolId:_selectedSchoolId];
          
-         for (NSDictionary *serverTimeTableDictionary in _timeTables) {
-             [timeTableSelectAlertView addButtonWithTitle:[self getSemesterString:serverTimeTableDictionary[@"semester"]]];
-         }
+         for (NSDictionary *serverTimeTableDictionary in _timeTables)
+             [timeTableSelectAlertView addButtonWithTitle:[_dataManager getSemesterString:serverTimeTableDictionary[@"semester"]]];
          
          [timeTableSelectAlertView show];
          
@@ -163,14 +162,6 @@
      }];
 }
 
-#pragma mark - Utils
-
-- (NSString *)getSemesterString:(NSString *)semester
-{
-    NSArray *titleArray = [semester componentsSeparatedByString:@"-0"];
-    return [NSString stringWithFormat:@"%@년 %@학기", titleArray[0], titleArray[1]];
-}
-
 #pragma mark - Alert View Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -181,7 +172,7 @@
         [_schoolButton setTitle:_schools[buttonIndex-1][@"schoolName"] forState:UIControlStateNormal];
     } else if (alertView.tag == 2) {
         _selectedTimeTable = [_timeTables[buttonIndex-1][@"timeTableId"] integerValue];
-        [_timeTableButton setTitle:[self getSemesterString:_timeTables[buttonIndex-1][@"semester"]] forState:UIControlStateNormal];
+        [_timeTableButton setTitle:[_dataManager getSemesterString:_timeTables[buttonIndex-1][@"semester"]] forState:UIControlStateNormal];
     }
 }
 

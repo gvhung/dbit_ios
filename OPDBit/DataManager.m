@@ -128,6 +128,28 @@
     return [self arrayWithSchoolResults:schoolResults];
 }
 
+- (NSDictionary *)getServerTimeTableWithId:(NSInteger)timeTableId
+{
+    RLMResults *serverTimeTable = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    return [self arrayWithServerTimeTablesResults:serverTimeTable][0];
+}
+
+
+- (NSString *)getSchoolNameWithServerTimeTableId:(NSInteger)timeTableId
+{
+    RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    ServerTimeTableObject *serverTimeTableObject = serverTimeTableResults[0];
+    RLMResults *serverSchoolResults = [ServerSchoolObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", serverTimeTableObject.schoolId]];
+    ServerSchoolObject *serverSchoolObject = serverSchoolResults[0];
+    return serverSchoolObject.schoolName;
+}
+
+- (NSString *)getSemesterString:(NSString *)semester
+{
+    NSArray *titleArray = [semester componentsSeparatedByString:@"-0"];
+    return [NSString stringWithFormat:@"%@년 %@학기", titleArray[0], titleArray[1]];
+}
+
 #pragma mark - Results To Array
 
 - (NSArray *)arrayWithServerTimeTablesResults:(RLMResults *)result
@@ -157,67 +179,4 @@
     }
     return arrayForReturn;
 }
-
-/*
-- (void)saveLectureWithResponse:(NSArray *)response update:(void (^)(NSInteger index))update
-{
-    NSInteger index = 0;
-    [_realm beginWriteTransaction];
-    [_realm deleteAllObjects];
-    for (NSDictionary *lectureDictionary in response) {
-        LectureObject *lectureObject = [[LectureObject alloc] init];
-        lectureObject.name = [lectureDictionary valueForKey:@"name"];
-        lectureObject.semester = [lectureDictionary valueForKey:@"semester"];
-        lectureObject.score = [[lectureDictionary valueForKey:@"score"] integerValue];
-        lectureObject.prof = [lectureDictionary valueForKey:@"prof"];
-        lectureObject.key = [lectureDictionary valueForKey:@"key"];
-        lectureObject.room = [lectureDictionary valueForKey:@"room"];
-        lectureObject.extra = [lectureDictionary valueForKey:@"extra"];
-        lectureObject.campus = [lectureDictionary valueForKey:@"campus"];
-        lectureObject.date = [lectureDictionary valueForKey:@"date"];
-        lectureObject.step = [lectureDictionary valueForKey:@"step"];
-        
-        
-        
-        [_realm addObject:lectureObject];
-        index += 1;
-        update(index);
-    }
-    [_realm commitWriteTransaction];
-}
-
-- (NSArray *)lecturesThatContainName:(NSString *)name
-{
-    RLMResults *lectures = [LectureObject objectsWhere:[NSString stringWithFormat:@"name CONTAINS '%@'", name]];
-    return [self arrayFromLectureResults:lectures];
-}
-
-- (NSArray *)arrayFromLectureResults:(RLMResults *)results
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (LectureObject *lectureObject in results) {
-        NSMutableDictionary *lectureDictionary = [[NSMutableDictionary alloc] init];
-        [lectureDictionary setValue:lectureObject.name forKey:@"name"];
-        [lectureDictionary setValue:@(lectureObject.score) forKey:@"score"];
-        [lectureDictionary setValue:lectureObject.semester forKey:@"semester"];
-        [lectureDictionary setValue:lectureObject.key forKey:@"key"];
-        [lectureDictionary setValue:lectureObject.step forKey:@"step"];
-        [lectureDictionary setValue:lectureObject.prof forKey:@"prof"];
-        [lectureDictionary setValue:lectureObject.campus forKey:@"campus"];
-        [lectureDictionary setValue:lectureObject.date forKey:@"date"];
-        [lectureDictionary setValue:lectureObject.room forKey:@"room"];
-        [lectureDictionary setValue:lectureObject.extra forKey:@"extra"];
-        [array addObject:lectureDictionary];
-    }
-    return array;
-}
-
-- (NSArray *)allLectureObjects
-{
-    return [self arrayFromLectureResults:[LectureObject allObjects]];
-}
- 
- 
- */
-
 @end

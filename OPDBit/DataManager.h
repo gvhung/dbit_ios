@@ -22,4 +22,9 @@
 - (NSArray *)getServerTimeTablesWithSchoolId:(NSInteger)schoolId;
 - (NSArray *)getSchools;
 
+- (NSDictionary *)getServerTimeTableWithId:(NSInteger)timeTableId;
+
+- (NSString *)getSchoolNameWithServerTimeTableId:(NSInteger)timeTableId;
+- (NSString *)getSemesterString:(NSString *)semester;
+
 @end

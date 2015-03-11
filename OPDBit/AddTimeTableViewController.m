@@ -7,13 +7,16 @@
 //
 
 #import "AddTimeTableViewController.h"
+#import "ServerTimeTableViewController.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
 @interface AddTimeTableViewController ()
 
-@property (nonatomic) NSInteger selectedServerTimeTableId;
+@property (nonatomic, retain) DataManager *dataManager;
+@property (nonatomic, retain) NSDictionary *serverTimeTableObject;
 
 // UI Part
 @property (nonatomic, retain) UILabel *timeTableNameLabel;
@@ -32,6 +35,7 @@
 {
     self = [super init];
     if (self) {
+        _dataManager = [DataManager sharedInstance];
         _selectedServerTimeTableId = -1;
         
         _timeTableNameLabel = [[UILabel alloc] init];
@@ -68,6 +72,7 @@
     
     _serverTimeTableButton.backgroundColor = [UIColor lightGrayColor];
     [_serverTimeTableButton setTitle:@"서버 연동 안함" forState:UIControlStateNormal];
+    [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:_timeTableNameLabel];
     [self.view addSubview:_serverTimeTableLabel];
@@ -131,6 +136,23 @@
     }
     
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
+{
+    _selectedServerTimeTableId = selectedServerTimeTableId;
+    _serverTimeTableObject = [_dataManager getServerTimeTableWithId:_selectedServerTimeTableId];
+    NSString *schoolName = [_dataManager getSchoolNameWithServerTimeTableId:_selectedServerTimeTableId];
+    NSString *semesterName = [_dataManager getSemesterString:_serverTimeTableObject[@"semester"]];
+    NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
+    [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];
+}
+
+- (void)selectServerTimeTable
+{
+    ServerTimeTableViewController *timeTableViewController = [[ServerTimeTableViewController alloc] init];
+    timeTableViewController.delegate = self;
+    [self.navigationController pushViewController:timeTableViewController animated:YES];
 }
 
 - (void)viewDidLoad {

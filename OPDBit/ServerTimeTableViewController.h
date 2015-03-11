@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddTimeTableViewController.h"
 
 @interface ServerTimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
+
+@property (nonatomic, retain) AddTimeTableViewController *delegate;
 
 - (instancetype)init;
 

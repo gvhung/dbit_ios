@@ -84,6 +84,16 @@
     return cell;
 }
 
+#pragma mark - Table View Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (!self.delegate) return;
+    self.delegate.selectedServerTimeTableId = [_serverTimeTables[indexPath.row][@"timeTableId"] integerValue];
+    [self.navigationController popToViewController:self.delegate animated:YES];
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
@@ -95,13 +105,18 @@
 {
     [super viewWillAppear:animated];
     _serverTimeTables = [_dataManager getDownloadedTimeTables];
-    NSLog(@"%@", _serverTimeTables);
     [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)dealloc
+{
+    self.delegate = nil;
 }
 
 /*
