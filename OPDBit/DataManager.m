@@ -12,6 +12,7 @@
 #import "ServerSchoolObject.h"
 #import "ServerTimeTableObject.h"
 #import "ServerLectureObject.h"
+#import "TimeTableObject.h"
 
 @interface DataManager ()
 
@@ -96,6 +97,28 @@
         [_realm addObject:serverLectureObject];
         update(++index);
     }
+    [_realm commitWriteTransaction];
+}
+
+- (void)saveTimeTableWithName:(NSString *)name serverId:(NSInteger)serverId active:(BOOL)active
+{
+    [_realm beginWriteTransaction];
+    TimeTableObject *timeTableObject = [[TimeTableObject alloc] init];
+    timeTableObject.timeTableName = name;
+    timeTableObject.serverId = serverId;
+    timeTableObject.active = active;
+#warning what's mean uuid?
+    timeTableObject.uuid = @"";
+    timeTableObject.timeStart = 800;
+    timeTableObject.timeEnd = 2300;
+    timeTableObject.mon = YES;
+    timeTableObject.tue = YES;
+    timeTableObject.wed = YES;
+    timeTableObject.thu = YES;
+    timeTableObject.fri = YES;
+    timeTableObject.sat = YES;
+    timeTableObject.sun = YES;
+    [_realm addObject:timeTableObject];
     [_realm commitWriteTransaction];
 }
 

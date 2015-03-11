@@ -130,10 +130,15 @@
 
 - (void)done
 {
-    if (!_timeTableNameField.text) {
+    if (_timeTableNameField.text.length == 0) {
+        [_timeTableNameField resignFirstResponder];
         [KVNProgress showErrorWithStatus:@"시간표 이름을 입력해주세요!"];
         return;
     }
+    [_dataManager saveTimeTableWithName:_timeTableNameField.text
+                               serverId:_selectedServerTimeTableId
+                                 active:_primaryTimeTableSwitch.isOn];
+    [KVNProgress showSuccessWithStatus:@"시간표 생성 성공!"];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -145,6 +150,7 @@
     NSString *schoolName = [_dataManager getSchoolNameWithServerTimeTableId:_selectedServerTimeTableId];
     NSString *semesterName = [_dataManager getSemesterString:_serverTimeTableObject[@"semester"]];
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
+    if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
     [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];
 }
 

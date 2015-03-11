@@ -19,9 +19,9 @@
 
 // Specify properties to ignore (Realm won't persist these)
 
-+ (NSArray *)ignoredProperties
-{
-    return @[@"lectures"];
-}
+//+ (NSArray *)ignoredProperties
+//{
+//    return @[];
+//}
 
 @end

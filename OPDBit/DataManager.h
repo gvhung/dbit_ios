@@ -16,6 +16,8 @@
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response;
 - (void)saveServerLecturesWithResponse:(NSArray *)response update:(void (^)(NSInteger progressIndex))update;
 
+- (void)saveTimeTableWithName:(NSString *)name serverId:(NSInteger)serverId active:(BOOL)active;
+
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
 
 - (NSArray *)getDownloadedTimeTables;
