@@ -10,4 +10,9 @@
 
 @interface AddLectureHeaderCell : UITableViewCell
 
+@property (nonatomic, retain) NSString *lectureName;
+@property (nonatomic, retain) NSString *lectureTheme;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end

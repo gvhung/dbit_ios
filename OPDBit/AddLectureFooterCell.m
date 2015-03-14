@@ -8,16 +8,41 @@
 
 #import "AddLectureFooterCell.h"
 
+#import <Masonry/Masonry.h>
+
+@interface AddLectureFooterCell ()
+
+@property (nonatomic, strong) UIButton *addLectureDetailButton;
+
+@end
+
 @implementation AddLectureFooterCell
 
-- (void)awakeFromNib {
-    // Initialization code
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        _addLectureDetailButton = [[UIButton alloc] init];
+        [self initialize];
+    }
+    return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)initialize
+{
+    [_addLectureDetailButton setTitle:@"수업 추가" forState:UIControlStateNormal];
+    [_addLectureDetailButton addTarget:self.delegate action:@selector(addLectureDetailAction) forControlEvents:UIControlEventTouchUpInside];
+    _addLectureDetailButton.backgroundColor = [UIColor lightGrayColor];
+    
+    [self.contentView addSubview:_addLectureDetailButton];
+    [self makeAutoLayoutConstraints];
+}
 
-    // Configure the view for the selected state
+- (void)makeAutoLayoutConstraints
+{
+    [_addLectureDetailButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(10, 10, 10, 10));
+    }];
 }
 
 @end

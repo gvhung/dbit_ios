@@ -11,6 +11,7 @@
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
+#import <KVNProgress/KVNProgress.h>
 
 @interface SearchLectureViewController ()
 
@@ -18,6 +19,8 @@
 @property (nonatomic, strong) UITextField *searchTextField;
 
 @property (nonatomic, strong) NSArray *lectureResults;
+
+@property (nonatomic, strong) NSDictionary *selectedLectureDictionary;
 
 @end
 
@@ -93,6 +96,19 @@ static CGFloat const rowHeight = 105.0f;
     }];
 }
 
+#pragma mark - Bar Button Action
+
+- (void)selectServerLectureAction
+{
+    if (_selectedLectureDictionary == nil) {
+        [_searchTextField resignFirstResponder];
+        [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
+        return;
+    }
+    self.delegate.lectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
+    [self.navigationController popToViewController:self.delegate animated:YES];
+}
+
 #pragma mark - Setter
 
 - (void)setServerLectures:(NSArray *)serverLectures
@@ -102,16 +118,79 @@ static CGFloat const rowHeight = 105.0f;
     [_tableView reloadData];
 }
 
-#pragma mark - Bar Button Action
+#pragma mark - Getter
 
-- (void)selectServerLectureAction
+- (NSDictionary *)getConvertedDictionaryWithDictionary:(NSDictionary *)dictionary
 {
-    NSLog(@"%@", _lectureResults);
-    [_tableView reloadData];
-//    [self.navigationController popToViewController:self.delegate animated:YES];
+    NSInteger detailCount = 0;
+    
+    NSMutableDictionary *convertedDictionary = [[NSMutableDictionary alloc] init];
+    convertedDictionary[@"lectureName"] = dictionary[@"lectureName"];
+    NSMutableArray *lectureDetailArray = [[NSMutableArray alloc] init];
+    
+    NSArray *lectureLocationArray = [dictionary[@"lectureLocation"] componentsSeparatedByString:@","];
+    NSArray *lectureDaytimeArray = [dictionary[@"lectureDaytime"] componentsSeparatedByString:@","];
+
+    detailCount = lectureLocationArray.count;
+    if (lectureLocationArray.count != lectureDaytimeArray.count)
+        if (lectureDaytimeArray.count >= detailCount)
+            detailCount = lectureDaytimeArray.count;
+    
+    for (NSInteger i = 0; i < detailCount; i++) {
+        NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
+        lectureDetailDictionary[@"lectureLocation"] = (lectureLocationArray[i] == nil) ? @"" : lectureLocationArray[i];
+        lectureDetailDictionary[@"timeStart"] =
+        (lectureDaytimeArray[i] == nil) ? @"" : [self timeStartWithString:lectureDaytimeArray[i]];
+        lectureDetailDictionary[@"timeEnd"] =
+        (lectureDaytimeArray[i] == nil) ? @"" : [self timeEndWithString:lectureDaytimeArray[i]];
+        lectureDetailDictionary[@"day"] =
+        (lectureDaytimeArray[i] == nil) ? @"0" : [self dayWithString:lectureDaytimeArray[i]];
+        [lectureDetailArray addObject:lectureDetailDictionary];
+    }
+    convertedDictionary[@"lectureDetails"] = lectureDetailArray;
+    
+    return convertedDictionary;
 }
 
-#pragma mark - Getter
+- (NSNumber *)dayWithString:(NSString *)string
+{
+    NSString *pureDaytimeString = [string substringToIndex:1];
+    NSArray *dayStringArray = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
+    NSInteger dayInteger = 0;
+    for (NSString *dayString in dayStringArray)
+        if ([dayString isEqualToString:pureDaytimeString])
+            dayInteger = [dayStringArray indexOfObject:dayString];
+    return @(dayInteger);
+}
+
+- (NSNumber *)timeStartWithString:(NSString *)string
+{
+    NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
+    NSString *timeStartString = [pureDaytimeString componentsSeparatedByString:@"-"][0];
+    return @([self integerFromTimeString:timeStartString]);
+}
+
+- (NSNumber *)timeEndWithString:(NSString *)string
+{
+    NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
+    NSString *timeEndString = [pureDaytimeString componentsSeparatedByString:@"-"][1];
+    return @([self integerFromTimeString:timeEndString]);
+}
+
+- (NSString *)stringFromTimeInteger:(NSInteger)timeInteger
+{
+    NSInteger hours = timeInteger/100;
+    NSInteger minutes = timeInteger%100;
+    return [NSString stringWithFormat:@"%ld:%02ld", hours, minutes];
+}
+
+- (NSInteger)integerFromTimeString:(NSString *)timeString
+{
+    NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
+    NSInteger hours = [timeStringComponents[0] integerValue];
+    NSInteger minutes = [timeStringComponents[1] integerValue];
+    return hours*100 + minutes;
+}
 
 - (NSPredicate *)getPredicateWithString:(NSString *)searchString
 {
@@ -188,11 +267,11 @@ static CGFloat const rowHeight = 105.0f;
 }
 
 #pragma mark - Table View Delegate
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    _selectedLectureDictionary = _lectureResults[indexPath.row];
+}
 
 #pragma mark - Life Cycle
 

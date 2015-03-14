@@ -27,9 +27,9 @@
 
 @implementation AddLectureViewController
 
-static CGFloat const detailCellHeight = 200.0f;
-static CGFloat const headerCellHeight = 200.0f;
-static CGFloat const footerCellHeight = 200.0f;
+static CGFloat const headerCellHeight = 150.0f;
+static CGFloat const detailCellHeight = 295.0f;
+static CGFloat const footerCellHeight = 60.0f;
 
 static NSString * const headerCellIdentifier = @"AddLectureHeaderCell";
 static NSString * const detailCellIdentifier = @"AddLectureDetailCell";
@@ -51,6 +51,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self setTitle:@"강의 추가"];
+    
     UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"찾기"
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
@@ -66,6 +68,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     [_tableView registerClass:[AddLectureFooterCell class] forCellReuseIdentifier:footerCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorColor = [UIColor clearColor];
+    _tableView.allowsSelection = NO;
     _tableView.rowHeight = UITableViewRowAnimationAutomatic;
     
     [self.view addSubview:_tableView];
@@ -85,8 +89,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)setLectureDictionary:(NSDictionary *)lectureDictionary
 {
     _lectureDictionary = lectureDictionary;
-    _lectureDetails = lectureDictionary[@"lectureDetails"];
+    self.lectureDetails = lectureDictionary[@"lectureDetails"];
     [_tableView reloadData];
+}
+
+- (void)setLectureDetails:(NSArray *)lectureDetails
+{
+    _lectureDetails = lectureDetails;
+    NSLog(@"%@", lectureDetails);
 }
 
 #pragma mark - Table View Data Source
@@ -115,18 +125,49 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-//        AddCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddLectureCell" forIndexPath:indexPath];
-        AddLectureHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddLectureHeader" forIndexPath:<#(NSIndexPath *)#>]
+        AddLectureHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:headerCellIdentifier forIndexPath:indexPath];
         if (!cell)
-            cell = [[AddLectureCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddLectureCell"];
+            cell = [[AddLectureHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:headerCellIdentifier];
+        
+        cell.lectureName = _lectureDictionary[@"lectureName"];
+        cell.lectureTheme = _lectureDictionary[@"theme"];
+        
+        return cell;
     } else if (indexPath.section == 1) {
+        AddLectureDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:detailCellIdentifier forIndexPath:indexPath];
+        if (!cell)
+            cell = [[AddLectureDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:detailCellIdentifier];
         
+        cell.lectureDetailIndex = indexPath.row;
+        cell.lectureLocation = _lectureDetails[indexPath.row][@"lectureLocation"];
+        cell.timeStart = [_lectureDetails[indexPath.row][@"timeStart"] integerValue];
+        cell.timeEnd = [_lectureDetails[indexPath.row][@"timeEnd"] integerValue];
+        cell.day = [_lectureDetails[indexPath.row][@"day"] integerValue];
+        
+        return cell;
     } else {
+        AddLectureFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:footerCellIdentifier forIndexPath:indexPath];
+        if (!cell)
+            cell = [[AddLectureFooterCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCellIdentifier];
         
+        cell.delegate = self;
+        
+        return cell;
     }
-    
-    
-    return cell;
+}
+
+#pragma mark - Scroll View Delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [scrollView endEditing:YES];
+}
+
+#pragma mark - Add Action
+
+- (void)addLectureDetailAction
+{
+    NSLog(@"add!!!");
 }
 
 #pragma mark - Bar Button Action

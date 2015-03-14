@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddLectureViewController.h"
 
 @interface AddLectureFooterCell : UITableViewCell
+
+@property (nonatomic, strong) AddLectureViewController *delegate;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

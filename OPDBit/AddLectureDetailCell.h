@@ -10,4 +10,12 @@
 
 @interface AddLectureDetailCell : UITableViewCell
 
+@property (nonatomic) NSInteger lectureDetailIndex;
+@property (nonatomic, strong) NSString *lectureLocation;
+@property (nonatomic) NSInteger day;
+@property (nonatomic) NSInteger timeStart;
+@property (nonatomic) NSInteger timeEnd;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end
