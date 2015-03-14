@@ -107,8 +107,7 @@
     timeTableObject.timeTableName = name;
     timeTableObject.serverId = serverId;
     timeTableObject.active = active;
-#warning what's mean uuid?
-    timeTableObject.uuid = @"";
+    timeTableObject.utid = [self lastUtid]+1;
     timeTableObject.timeStart = 800;
     timeTableObject.timeEnd = 2300;
     timeTableObject.mon = YES;
@@ -120,6 +119,17 @@
     timeTableObject.sun = YES;
     [_realm addObject:timeTableObject];
     [_realm commitWriteTransaction];
+    
+    NSLog(@"%@", [TimeTableObject allObjects]);
+}
+
+- (NSInteger)lastUtid
+{
+    RLMResults *timeTableResults = [[TimeTableObject allObjects] sortedResultsUsingProperty:@"utid" ascending:NO];
+    if (timeTableResults.count == 0)
+        return 0;
+    TimeTableObject *lastTimeTableObject = timeTableResults[0];
+    return lastTimeTableObject.utid;
 }
 
 #pragma mark - Set Object Attribute
@@ -136,13 +146,13 @@
 - (NSArray *)getDownloadedTimeTables
 {
     RLMResults *downloadedTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"downloaded == YES"]];
-    return [self arrayWithServerTimeTablesResults:downloadedTimeTables];
+    return [self arrayWithServerTimeTableResults:downloadedTimeTables];
 }
 
 - (NSArray *)getServerTimeTablesWithSchoolId:(NSInteger)schoolId;
 {
     RLMResults *serverTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", schoolId]];
-    return [self arrayWithServerTimeTablesResults:serverTimeTables];
+    return [self arrayWithServerTimeTableResults:serverTimeTables];
 }
 
 - (NSArray *)getSchools
@@ -153,8 +163,14 @@
 
 - (NSDictionary *)getServerTimeTableWithId:(NSInteger)timeTableId
 {
-    RLMResults *serverTimeTable = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
-    return [self arrayWithServerTimeTablesResults:serverTimeTable][0];
+    RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    return [self arrayWithServerTimeTableResults:serverTimeTableResults][0];
+}
+
+- (NSArray *)getTimeTables;
+{
+    RLMResults *timeTableResults = [TimeTableObject allObjects];
+    return [self arrayWithTimeTableResults:timeTableResults];
 }
 
 
@@ -175,7 +191,7 @@
 
 #pragma mark - Results To Array
 
-- (NSArray *)arrayWithServerTimeTablesResults:(RLMResults *)result
+- (NSArray *)arrayWithServerTimeTableResults:(RLMResults *)result
 {
     NSMutableArray *arrayForReturn = [[NSMutableArray alloc] init];
     for (ServerTimeTableObject *serverTimeTableObject in result) {
@@ -202,4 +218,30 @@
     }
     return arrayForReturn;
 }
+
+- (NSArray *)arrayWithTimeTableResults:(RLMResults *)result
+{
+    NSMutableArray *arrayForReturn = [[NSMutableArray alloc] init];
+    for (TimeTableObject *timeTableObject in result) {
+        NSMutableDictionary *timeTableDictionary = [[NSMutableDictionary alloc] init];
+        timeTableDictionary[@"utid"] = @(timeTableObject.utid);
+        timeTableDictionary[@"timeTableName"] = timeTableObject.timeTableName;
+        timeTableDictionary[@"serverId"] = @(timeTableObject.serverId);
+        timeTableDictionary[@"timeStart"] = @(timeTableObject.timeStart);
+        timeTableDictionary[@"timeEnd"] = @(timeTableObject.timeEnd);
+        timeTableDictionary[@"lectures"] = timeTableObject.lectures;
+        timeTableDictionary[@"active"] = @(timeTableObject.active);
+        timeTableDictionary[@"mon"] = @(timeTableObject.mon);
+        timeTableDictionary[@"tue"] = @(timeTableObject.tue);
+        timeTableDictionary[@"wed"] = @(timeTableObject.wed);
+        timeTableDictionary[@"thu"] = @(timeTableObject.thu);
+        timeTableDictionary[@"fri"] = @(timeTableObject.fri);
+        timeTableDictionary[@"sat"] = @(timeTableObject.sat);
+        timeTableDictionary[@"sun"] = @(timeTableObject.sun);
+        [arrayForReturn addObject:timeTableDictionary];
+    }
+    return arrayForReturn;
+}
+
+
 @end

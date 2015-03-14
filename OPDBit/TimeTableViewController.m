@@ -10,10 +10,14 @@
 #import "TimeTableCell.h"
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
 
 @interface TimeTableViewController ()
+
+@property (nonatomic, retain) NSArray *timeTables;
+@property (nonatomic, retain) DataManager *dataManager;
 
 @end
 
@@ -23,6 +27,8 @@
 {
     self = [super init];
     if (self) {
+        _dataManager = [DataManager sharedInstance];
+        _timeTables = [[NSArray alloc] init];
         [self initialize];
     }
     return self;
@@ -75,7 +81,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _timeTables.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,13 +89,23 @@
     TimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TimeTableCell" forIndexPath:indexPath];
     if (!cell)
         cell = [[TimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TimeTableCell"];
+    cell.textLabel.text = _timeTables[indexPath.row][@"timeTableName"];
     
     return cell;
 }
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _timeTables = [_dataManager getTimeTables];
+    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

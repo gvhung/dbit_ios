@@ -13,7 +13,7 @@
  
  시간표를 저장하기 위한 RealmObject
  
- NSString *uuid : 고유 ID
+ NSInteger utid : 시간표 고유 ID
  NSString *timeTableName : 시간표명
  NSInteger serverId : 연동된 서버 시간표 ID
  NSInteger timeStart : 시간표 시작 시간을 저장하는 용도 (HHmm)
@@ -35,7 +35,7 @@
 
 @interface TimeTableObject : RLMObject
 
-@property NSString *uuid;
+@property NSInteger utid;
 @property NSString *timeTableName;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
