@@ -7,6 +7,7 @@
 //
 
 #import "ServerTimeTableViewController.h"
+#import "ServerTimeTableCell.h"
 #import "DownloadServerTimeTableViewController.h"
 #import "DataManager.h"
 
@@ -39,9 +40,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    [_tableView registerClass:[ServerTimeTableCell class] forCellReuseIdentifier:@"ServerTimeTableCell"];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ServerTimeTableCell"];
     
     UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
     self.navigationItem.rightBarButtonItem = downloadServerTimeTableButton;
@@ -77,9 +78,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServerTimeTableCell"];
+    ServerTimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServerTimeTableCell"];
     if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ServerTimeTableCell"];
+        cell = [[ServerTimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ServerTimeTableCell"];
     cell.textLabel.text = _serverTimeTables[indexPath.row][@"semester"];
     return cell;
 }

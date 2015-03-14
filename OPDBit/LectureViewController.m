@@ -7,6 +7,9 @@
 //
 
 #import "LectureViewController.h"
+#import "LectureTableViewCell.h"
+#import "AddLectureViewController.h"
+
 #import <Masonry/Masonry.h>
 
 @interface LectureViewController ()
@@ -29,8 +32,11 @@
     [self setTitle:@"강의"];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addLectureAction)];
+    self.navigationItem.rightBarButtonItem = addLectureButton;
+    
     _lectureTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    [_lectureTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"LectureCell"];
+    [_lectureTableView registerClass:[LectureTableViewCell class] forCellReuseIdentifier:@"LectureCell"];
     _lectureTableView.delegate = self;
     _lectureTableView.dataSource = self;
     
@@ -63,6 +69,12 @@
     }];
 }
 
+- (void)addLectureAction
+{
+    AddLectureViewController *addLectureViewController = [[AddLectureViewController alloc] init];
+    [self.navigationController pushViewController:addLectureViewController animated:YES];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -77,10 +89,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LectureCell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LectureCell"];
-    }
+    LectureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LectureCell"];
+    if (!cell)
+        cell = [[LectureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LectureCell"];
     return cell;
 }
 
