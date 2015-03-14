@@ -15,7 +15,7 @@
 
 @interface AddLectureViewController ()
 
-@property (nonatomic, retain) DataManager *dataManager;
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -60,6 +60,7 @@
         return;
     }
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
+    searchLectureViewController.serverLectures = [_dataManager getServerLecturesWithServerTimeTableId:[_dataManager.activedTimeTable[@"serverId"] integerValue]];
     searchLectureViewController.delegate = self;
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
 }

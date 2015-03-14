@@ -10,7 +10,7 @@
 
 @interface TimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)init;
 

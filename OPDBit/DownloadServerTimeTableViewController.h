@@ -10,8 +10,8 @@
 
 @interface DownloadServerTimeTableViewController : UIViewController <UIAlertViewDelegate>
 
-@property (nonatomic, retain) UIButton *schoolButton;
-@property (nonatomic, retain) UIButton *timeTableButton;
+@property (nonatomic, strong) UIButton *schoolButton;
+@property (nonatomic, strong) UIButton *timeTableButton;
 
 - (instancetype)init;
 

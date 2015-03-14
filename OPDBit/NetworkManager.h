@@ -11,7 +11,7 @@
 
 @interface NetworkManager : NSObject
 
-@property (nonatomic, retain) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 + (NetworkManager *)sharedInstance;
 

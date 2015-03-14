@@ -15,17 +15,17 @@
 
 @interface AddTimeTableViewController ()
 
-@property (nonatomic, retain) DataManager *dataManager;
-@property (nonatomic, retain) NSDictionary *serverTimeTableObject;
+@property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, strong) NSDictionary *serverTimeTableObject;
 
 // UI Part
-@property (nonatomic, retain) UILabel *timeTableNameLabel;
-@property (nonatomic, retain) UILabel *serverTimeTableLabel;
-@property (nonatomic, retain) UILabel *primaryTimeTableLabel;
+@property (nonatomic, strong) UILabel *timeTableNameLabel;
+@property (nonatomic, strong) UILabel *serverTimeTableLabel;
+@property (nonatomic, strong) UILabel *primaryTimeTableLabel;
 
-@property (nonatomic, retain) UITextField *timeTableNameField;
-@property (nonatomic, retain) UIButton *serverTimeTableButton;
-@property (nonatomic, retain) UISwitch *primaryTimeTableSwitch;
+@property (nonatomic, strong) UITextField *timeTableNameField;
+@property (nonatomic, strong) UIButton *serverTimeTableButton;
+@property (nonatomic, strong) UISwitch *primaryTimeTableSwitch;
 
 @end
 

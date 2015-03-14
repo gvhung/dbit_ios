@@ -16,8 +16,8 @@
 
 @interface DataManager ()
 
-@property (nonatomic, retain) RLMRealm *realm;
-@property (nonatomic, retain) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) RLMRealm *realm;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -186,6 +186,12 @@
     return [self arrayWithTimeTableResults:timeTableResults];
 }
 
+- (NSArray *)getServerLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId
+{
+    RLMResults *serverLectureResults = [ServerLectureObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", serverTimeTableId]];
+    return [self arrayWithServerLectureResults:serverLectureResults];
+}
+
 
 - (NSString *)getSchoolNameWithServerTimeTableId:(NSInteger)timeTableId
 {
@@ -287,6 +293,22 @@
         lectureDetailDictionary[@"timeEnd"] = @(lectureDetailObject.timeEnd);
         lectureDetailDictionary[@"day"] = @(lectureDetailObject.day);
         [arrayForReturn addObject:lectureDetailDictionary];
+    }
+    return arrayForReturn;
+}
+
+- (NSArray *)arrayWithServerLectureResults:(RLMResults *)result
+{
+    NSMutableArray *arrayForReturn = [[NSMutableArray alloc] init];
+    for (ServerLectureObject *serverLectureObject in result) {
+        NSMutableDictionary *serverLectureDictionary = [[NSMutableDictionary alloc] init];
+        serverLectureDictionary[@"timeTableId"] = @(serverLectureObject.timeTableId);
+        serverLectureDictionary[@"lectureProf"] = serverLectureObject.lectureProf;
+        serverLectureDictionary[@"lectureCode"] = serverLectureObject.lectureCode;
+        serverLectureDictionary[@"lectureName"] = serverLectureObject.lectureName;
+        serverLectureDictionary[@"lectureLocation"] = serverLectureObject.lectureLocation;
+        serverLectureDictionary[@"lectureDaytime"] = serverLectureObject.lectureDaytime;
+        [arrayForReturn addObject:serverLectureDictionary];
     }
     return arrayForReturn;
 }

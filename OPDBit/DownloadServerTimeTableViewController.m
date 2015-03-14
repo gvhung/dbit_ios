@@ -15,11 +15,11 @@
 
 @interface DownloadServerTimeTableViewController ()
 
-@property (nonatomic, retain) NetworkManager *networkManager;
-@property (nonatomic, retain) DataManager *dataManager;
+@property (nonatomic, strong) NetworkManager *networkManager;
+@property (nonatomic, strong) DataManager *dataManager;
 
-@property (nonatomic, retain) NSArray *schools;
-@property (nonatomic, retain) NSArray *timeTables;
+@property (nonatomic, strong) NSArray *schools;
+@property (nonatomic, strong) NSArray *timeTables;
 @property (nonatomic) NSInteger selectedSchoolId;
 @property (nonatomic) NSInteger selectedTimeTable;
 

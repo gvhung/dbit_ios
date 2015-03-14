@@ -10,7 +10,7 @@
 
 @interface DataManager : NSObject
 
-@property (nonatomic, retain) NSDictionary *activedTimeTable;
+@property (nonatomic, strong) NSDictionary *activedTimeTable;
 
 + (DataManager *)sharedInstance;
 
@@ -30,6 +30,8 @@
 - (NSDictionary *)getServerTimeTableWithId:(NSInteger)timeTableId;
 
 - (NSArray *)getTimeTables;
+
+- (NSArray *)getServerLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
 
 - (NSString *)getSchoolNameWithServerTimeTableId:(NSInteger)timeTableId;
 - (NSString *)getSemesterString:(NSString *)semester;

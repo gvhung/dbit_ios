@@ -11,6 +11,7 @@
 		B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */; };
 		B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */; };
 		B534EAD61AB43B3400EBE3EB /* SearchLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */; };
+		B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */; };
 		B596827D1AAC2EB7002D6983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
@@ -51,14 +52,16 @@
 		7AC2BC34DD53E7F748851752 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B534EACD1AB43A2900EBE3EB /* ServerTimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableCell.h; sourceTree = "<group>"; };
 		B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableCell.m; sourceTree = "<group>"; };
-		B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLectureViewController.h; sourceTree = "<group>"; };
-		B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureViewController.m; sourceTree = "<group>"; };
+		B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AddLectureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddLectureViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B534EAD41AB43B3400EBE3EB /* SearchLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLectureViewController.h; sourceTree = "<group>"; };
 		B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLectureViewController.m; sourceTree = "<group>"; };
+		B534EAD81AB44D3800EBE3EB /* SearchLectureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLectureCell.h; sourceTree = "<group>"; };
+		B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLectureCell.m; sourceTree = "<group>"; };
 		B59682771AAC2EB7002D6983 /* OPDBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPDBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B596827B1AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B596827C1AAC2EB7002D6983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		B596827E1AAC2EB7002D6983 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B596827E1AAC2EB7002D6983 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B596827F1AAC2EB7002D6983 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B59682871AAC2EB7002D6983 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B596828A1AAC2EB7002D6983 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -69,14 +72,14 @@
 		B59682A11AAC314D002D6983 /* OPLeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPLeftDrawerViewController.m; sourceTree = "<group>"; };
 		B59682A51AAC3378002D6983 /* OPLeftDrawerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPLeftDrawerTableViewCell.h; sourceTree = "<group>"; };
 		B59682A61AAC3378002D6983 /* OPLeftDrawerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPLeftDrawerTableViewCell.m; sourceTree = "<group>"; };
-		B59682AC1AAC3741002D6983 /* LectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureViewController.h; sourceTree = "<group>"; };
+		B59682AC1AAC3741002D6983 /* LectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LectureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B59682AD1AAC3741002D6983 /* LectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureViewController.m; sourceTree = "<group>"; };
 		B59682AF1AAC374D002D6983 /* TimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableViewController.h; sourceTree = "<group>"; };
 		B59682B01AAC374D002D6983 /* TimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableViewController.m; sourceTree = "<group>"; };
 		B59682B31AAC47F0002D6983 /* LectureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureTableViewCell.h; sourceTree = "<group>"; };
 		B59682B41AAC47F0002D6983 /* LectureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureTableViewCell.m; sourceTree = "<group>"; };
-		B59682B71AAC4A8E002D6983 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		B59682B81AAC4A8E002D6983 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		B59682B71AAC4A8E002D6983 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B59682B81AAC4A8E002D6983 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DataManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B59682BB1AAC4AD9002D6983 /* LectureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureObject.h; sourceTree = "<group>"; };
 		B59682BC1AAC4AD9002D6983 /* LectureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureObject.m; sourceTree = "<group>"; };
 		B59682C01AAC4CDB002D6983 /* TimeTableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableObject.h; sourceTree = "<group>"; };
@@ -96,11 +99,11 @@
 		B59682DD1AAC69CE002D6983 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		B59682DE1AAC69CE002D6983 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		B59682E31AAC6DC2002D6983 /* AddTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTimeTableViewController.h; sourceTree = "<group>"; };
-		B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTimeTableViewController.m; sourceTree = "<group>"; };
+		B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B59682E71AAC7069002D6983 /* ServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableViewController.h; sourceTree = "<group>"; };
 		B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableViewController.m; sourceTree = "<group>"; };
-		B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadServerTimeTableViewController.h; sourceTree = "<group>"; };
-		B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadServerTimeTableViewController.m; sourceTree = "<group>"; };
+		B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DownloadServerTimeTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DownloadServerTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,8 +158,18 @@
 			children = (
 				B534EAD41AB43B3400EBE3EB /* SearchLectureViewController.h */,
 				B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */,
+				B534EAD71AB44D1F00EBE3EB /* Cell */,
 			);
 			name = SearchLecture;
+			sourceTree = "<group>";
+		};
+		B534EAD71AB44D1F00EBE3EB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B534EAD81AB44D3800EBE3EB /* SearchLectureCell.h */,
+				B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		B596826E1AAC2EB7002D6983 = {
@@ -574,6 +587,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */,
 				B59682CB1AAC4D5B002D6983 /* LocalDataObject.m in Sources */,
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,

@@ -11,9 +11,9 @@
 
 @interface ServerTimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, retain) AddTimeTableViewController *delegate;
+@property (nonatomic, strong) AddTimeTableViewController *delegate;
 
 - (instancetype)init;
 

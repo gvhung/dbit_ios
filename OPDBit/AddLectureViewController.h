@@ -10,7 +10,7 @@
 
 @interface AddLectureViewController : UIViewController
 
-@property (nonatomic, retain) NSDictionary *lectureDictionary;
+@property (nonatomic, strong) NSDictionary *lectureDictionary;
 
 - (instancetype)init;
 

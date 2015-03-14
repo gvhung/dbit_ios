@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AddLectureViewController.h"
 
-@interface SearchLectureViewController : UIViewController
+@interface SearchLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, retain) AddLectureViewController *delegate;
+@property (nonatomic, strong) AddLectureViewController *delegate;
+
+@property (nonatomic, strong) NSArray *serverLectures;
+
+@property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)init;
 

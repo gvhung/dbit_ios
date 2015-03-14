@@ -11,9 +11,9 @@
 
 @interface LectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, retain) HMSegmentedControl *daySegmentedControl;
+@property (nonatomic, strong) HMSegmentedControl *daySegmentedControl;
 
-@property (nonatomic, retain) UITableView *lectureTableView;
+@property (nonatomic, strong) UITableView *lectureTableView;
 
 - (instancetype)init;
 

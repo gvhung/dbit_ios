@@ -16,8 +16,8 @@
 
 @interface TimeTableViewController ()
 
-@property (nonatomic, retain) NSArray *timeTables;
-@property (nonatomic, retain) DataManager *dataManager;
+@property (nonatomic, strong) NSArray *timeTables;
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 

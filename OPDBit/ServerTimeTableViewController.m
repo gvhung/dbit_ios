@@ -15,9 +15,9 @@
 
 @interface ServerTimeTableViewController ()
 
-@property (nonatomic, retain) DataManager *dataManager;
+@property (nonatomic, strong) DataManager *dataManager;
 
-@property (nonatomic, retain) NSArray *serverTimeTables;
+@property (nonatomic, strong) NSArray *serverTimeTables;
 
 @end
 
