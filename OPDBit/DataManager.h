@@ -10,7 +10,11 @@
 
 @interface DataManager : NSObject
 
+@property (nonatomic, retain) NSDictionary *activedTimeTable;
+
 + (DataManager *)sharedInstance;
+
+- (void)reloadActivedTimeTable;
 
 - (void)saveServerSchoolsWithResponse:(NSArray *)response;
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response;
