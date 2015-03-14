@@ -12,6 +12,9 @@
 		B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */; };
 		B534EAD61AB43B3400EBE3EB /* SearchLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */; };
 		B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */; };
+		B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAEE1AB47D8000EBE3EB /* AddLectureHeaderCell.m */; };
+		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
+		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
 		B596827D1AAC2EB7002D6983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
@@ -58,6 +61,12 @@
 		B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLectureViewController.m; sourceTree = "<group>"; };
 		B534EAD81AB44D3800EBE3EB /* SearchLectureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLectureCell.h; sourceTree = "<group>"; };
 		B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchLectureCell.m; sourceTree = "<group>"; };
+		B534EAED1AB47D8000EBE3EB /* AddLectureHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLectureHeaderCell.h; sourceTree = "<group>"; };
+		B534EAEE1AB47D8000EBE3EB /* AddLectureHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureHeaderCell.m; sourceTree = "<group>"; };
+		B534EAF31AB47DB100EBE3EB /* AddLectureFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLectureFooterCell.h; sourceTree = "<group>"; };
+		B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureFooterCell.m; sourceTree = "<group>"; };
+		B534EAF61AB47DBF00EBE3EB /* AddLectureDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLectureDetailCell.h; sourceTree = "<group>"; };
+		B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureDetailCell.m; sourceTree = "<group>"; };
 		B59682771AAC2EB7002D6983 /* OPDBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPDBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B596827B1AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B596827C1AAC2EB7002D6983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,6 +149,7 @@
 			children = (
 				B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */,
 				B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */,
+				B534EADB1AB474D400EBE3EB /* Cell */,
 			);
 			name = AddLecture;
 			sourceTree = "<group>";
@@ -170,6 +180,43 @@
 				B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		B534EADB1AB474D400EBE3EB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B534EAF01AB47D8400EBE3EB /* Header */,
+				B534EAF21AB47D8F00EBE3EB /* Detail */,
+				B534EAF11AB47D8A00EBE3EB /* Footer */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		B534EAF01AB47D8400EBE3EB /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				B534EAED1AB47D8000EBE3EB /* AddLectureHeaderCell.h */,
+				B534EAEE1AB47D8000EBE3EB /* AddLectureHeaderCell.m */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		B534EAF11AB47D8A00EBE3EB /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				B534EAF31AB47DB100EBE3EB /* AddLectureFooterCell.h */,
+				B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */,
+			);
+			name = Footer;
+			sourceTree = "<group>";
+		};
+		B534EAF21AB47D8F00EBE3EB /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B534EAF61AB47DBF00EBE3EB /* AddLectureDetailCell.h */,
+				B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */,
+			);
+			name = Detail;
 			sourceTree = "<group>";
 		};
 		B596826E1AAC2EB7002D6983 = {
@@ -588,6 +635,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */,
+				B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */,
 				B59682CB1AAC4D5B002D6983 /* LocalDataObject.m in Sources */,
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
@@ -604,8 +652,10 @@
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
 				B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */,
 				B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */,
+				B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
 				B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */,
+				B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
 				B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */,
 				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,
