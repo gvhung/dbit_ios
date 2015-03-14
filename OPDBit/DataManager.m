@@ -38,6 +38,7 @@
 {
     self = [super init];
     if (self) {
+        _activedTimeTable = [self getActivedTimeTable];
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
         _realm = [RLMRealm defaultRealm];
@@ -198,6 +199,7 @@
 - (NSDictionary *)getActivedTimeTable
 {
     RLMResults *activedTimeTableResults = [TimeTableObject objectsWhere:[NSString stringWithFormat:@"active == YES"]];
+    if (activedTimeTableResults.count == 0) return nil;
     return [self arrayWithTimeTableResults:activedTimeTableResults][0];
 }
 

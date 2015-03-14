@@ -8,10 +8,14 @@
 
 #import "AddLectureViewController.h"
 #import "SearchLectureViewController.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
+#import <KVNProgress/KVNProgress.h>
 
 @interface AddLectureViewController ()
+
+@property (nonatomic, retain) DataManager *dataManager;
 
 @end
 
@@ -21,6 +25,7 @@
 {
     self = [super init];
     if (self) {
+        _dataManager = [DataManager sharedInstance];
         [self initialize];
     }
     return self;
@@ -46,6 +51,14 @@
 
 - (void)searchLectureAction
 {
+    if (_dataManager.activedTimeTable == nil) {
+        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+        return;
+    }
+    if([_dataManager.activedTimeTable[@"serverId"] integerValue] == -1) {
+        [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
+        return;
+    }
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
     searchLectureViewController.delegate = self;
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
