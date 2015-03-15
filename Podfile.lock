@@ -38,6 +38,7 @@ PODS:
   - Realm (0.90.6):
     - Realm/Headers (= 0.90.6)
   - Realm/Headers (0.90.6)
+  - RMDateSelectionViewController (1.4.3)
 
 DEPENDENCIES:
   - AFNetworking (= 2.5.1)
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - Masonry (= 0.6.1)
   - MMDrawerController (= 0.5.7)
   - Realm (= 0.90.6)
+  - RMDateSelectionViewController (= 1.4.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
@@ -54,5 +56,6 @@ SPEC CHECKSUMS:
   Masonry: 2cb49fd14d203d2db5ca6bb017135b235dde9980
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
   Realm: 6c3facc11964ab9f828f47de6d0e9bf9c4d9c818
+  RMDateSelectionViewController: ae40905ee3cc7b66bc3291461be7aa7dd17edf4c
 
 COCOAPODS: 0.35.0

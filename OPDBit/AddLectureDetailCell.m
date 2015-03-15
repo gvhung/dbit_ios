@@ -80,14 +80,14 @@
     
     _timeStartButton.backgroundColor = [UIColor lightGrayColor];
     _timeStartButton.tag = 1;
-    [_timeStartButton addTarget:self
-                         action:@selector(changeTime:)
+    [_timeStartButton addTarget:self.delegate
+                         action:@selector(timeButtonTapped:)
                forControlEvents:UIControlEventTouchUpInside];
     
     _timeEndButton.backgroundColor = [UIColor lightGrayColor];
     _timeEndButton.tag = 2;
-    [_timeEndButton addTarget:self
-                         action:@selector(changeTime:)
+    [_timeEndButton addTarget:self.delegate
+                         action:@selector(timeButtonTapped:)
                forControlEvents:UIControlEventTouchUpInside];
     
     _separator.backgroundColor = [UIColor lightGrayColor];
@@ -169,14 +169,6 @@
         make.right.equalTo(self.contentView);
         make.height.equalTo(@1.0f);
     }];
-}
-
-#pragma mark - Time Change Method
-
-- (void)changeTime:(UIButton *)button
-{
-    [button setTitle:@"9:00" forState:UIControlStateNormal];
-    NSLog(@"changeTime\ntag : %ld\ntitle : %@", button.tag, button.titleLabel.text);
 }
 
 #pragma mark - Setter

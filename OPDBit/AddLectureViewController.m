@@ -71,7 +71,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _tableView.separatorColor = [UIColor clearColor];
     _tableView.allowsSelection = NO;
     _tableView.rowHeight = UITableViewRowAnimationAutomatic;
-    
+
     [self.view addSubview:_tableView];
     
     [self makeAutoLayoutConstraints];
@@ -172,6 +172,17 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         _lectureDictionary[@"theme"] = textField.text;
     else
         _lectureDetails[textField.tag][@"lectureLocation"] = textField.text;
+}
+
+#pragma mark - Time Change Method
+
+- (void)timeButtonTapped:(UIButton *)button
+{
+}
+
+- (void)changedTime:(UIDatePicker *)timePicker
+{
+    NSLog(@"%@", timePicker.date);
 }
 
 #pragma mark - Scroll View Delegate

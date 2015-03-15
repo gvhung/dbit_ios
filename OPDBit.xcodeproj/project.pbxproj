@@ -15,6 +15,8 @@
 		B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAEE1AB47D8000EBE3EB /* AddLectureHeaderCell.m */; };
 		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
 		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
+		B53A1D0D1AB5B9FF00DA1C78 /* WDBlurredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53A1D0C1AB5B9FF00DA1C78 /* WDBlurredViewController.m */; };
+		B53A1D101AB5BA2A00DA1C78 /* PopUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */; };
 		B596827D1AAC2EB7002D6983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
@@ -67,6 +69,10 @@
 		B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureFooterCell.m; sourceTree = "<group>"; };
 		B534EAF61AB47DBF00EBE3EB /* AddLectureDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLectureDetailCell.h; sourceTree = "<group>"; };
 		B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureDetailCell.m; sourceTree = "<group>"; };
+		B53A1D0B1AB5B9FF00DA1C78 /* WDBlurredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WDBlurredViewController.h; sourceTree = "<group>"; };
+		B53A1D0C1AB5B9FF00DA1C78 /* WDBlurredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WDBlurredViewController.m; sourceTree = "<group>"; };
+		B53A1D0E1AB5BA2A00DA1C78 /* PopUpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopUpListViewController.h; sourceTree = "<group>"; };
+		B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopUpListViewController.m; sourceTree = "<group>"; };
 		B59682771AAC2EB7002D6983 /* OPDBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPDBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B596827B1AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B596827C1AAC2EB7002D6983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -219,6 +225,32 @@
 			name = Detail;
 			sourceTree = "<group>";
 		};
+		B53A1D051AB5B6F000DA1C78 /* PopUpListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B53A1D0E1AB5BA2A00DA1C78 /* PopUpListViewController.h */,
+				B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */,
+			);
+			name = PopUpListViewController;
+			sourceTree = "<group>";
+		};
+		B53A1D0A1AB5B9FF00DA1C78 /* WDBlurredViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B53A1D0B1AB5B9FF00DA1C78 /* WDBlurredViewController.h */,
+				B53A1D0C1AB5B9FF00DA1C78 /* WDBlurredViewController.m */,
+			);
+			path = WDBlurredViewController;
+			sourceTree = "<group>";
+		};
+		B53A1D181AB5C12100DA1C78 /* ModalViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B53A1D051AB5B6F000DA1C78 /* PopUpListViewController */,
+			);
+			name = ModalViewController;
+			sourceTree = "<group>";
+		};
 		B596826E1AAC2EB7002D6983 = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +274,7 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B53A1D181AB5C12100DA1C78 /* ModalViewController */,
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
 				B59682AB1AAC3708002D6983 /* ViewController */,
 				B596827E1AAC2EB7002D6983 /* AppDelegate.h */,
@@ -257,6 +290,7 @@
 		B596827A1AAC2EB7002D6983 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B53A1D0A1AB5B9FF00DA1C78 /* WDBlurredViewController */,
 				B596827B1AAC2EB7002D6983 /* Info.plist */,
 				B596827C1AAC2EB7002D6983 /* main.m */,
 			);
@@ -645,8 +679,10 @@
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
 				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
+				B53A1D101AB5BA2A00DA1C78 /* PopUpListViewController.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
+				B53A1D0D1AB5B9FF00DA1C78 /* WDBlurredViewController.m in Sources */,
 				B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,

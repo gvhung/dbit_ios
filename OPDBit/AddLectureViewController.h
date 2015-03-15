@@ -31,7 +31,7 @@
 - (instancetype)init;
 - (void)addLectureDetailAction;
 
-
 - (void)textFieldDidChanged:(UITextField *)textField;
+- (void)timeButtonTapped:(UIButton *)button;
 
 @end
