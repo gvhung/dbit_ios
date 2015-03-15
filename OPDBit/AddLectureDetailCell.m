@@ -79,13 +79,12 @@
     _daySegmentedControl.selectionIndicatorBoxOpacity = 0;
     
     _timeStartButton.backgroundColor = [UIColor lightGrayColor];
-    _timeStartButton.tag = 1;
+
     [_timeStartButton addTarget:self.delegate
                          action:@selector(timeButtonTapped:)
                forControlEvents:UIControlEventTouchUpInside];
     
     _timeEndButton.backgroundColor = [UIColor lightGrayColor];
-    _timeEndButton.tag = 2;
     [_timeEndButton addTarget:self.delegate
                          action:@selector(timeButtonTapped:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -177,6 +176,9 @@
 {
     _lectureDetailIndex = lectureDetailIndex;
     _lectureLocationField.tag = lectureDetailIndex;
+    _timeStartButton.tag = lectureDetailIndex;
+    _timeEndButton.tag = -(lectureDetailIndex);
+    
     _titleLabel.text = [self titleString];
 }
 
@@ -204,7 +206,7 @@
 
 - (NSString *)titleString
 {
-    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex+1];
+    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex];
 }
 
 - (NSString *)lectureLocation

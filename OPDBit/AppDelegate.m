@@ -10,6 +10,8 @@
 #import "OPLeftDrawerViewController.h"
 #import "LectureViewController.h"
 
+#import <RMDateSelectionViewController/RMDateSelectionViewController.h>
+
 @interface AppDelegate ()
 
 @end
@@ -19,6 +21,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    [RMDateSelectionViewController setLocalizedTitleForSelectButton:@"선택"];
+    [RMDateSelectionViewController setLocalizedTitleForCancelButton:@"취소"];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 

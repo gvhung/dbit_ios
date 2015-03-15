@@ -22,6 +22,8 @@
 @property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
 
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
 @end
 
 @implementation AddLectureViewController
@@ -38,6 +40,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     self = [super init];
     if (self) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        _timePickerViewController = [RMDateSelectionViewController dateSelectionController];
         _lectureDictionary = [[NSMutableDictionary alloc] init];
         _dataManager = [DataManager sharedInstance];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -50,8 +54,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)initialize
 {
     self.view.backgroundColor = [UIColor whiteColor];
-    
     [self setTitle:@"강의 추가"];
+    
+    _dateFormatter.dateFormat = @"HHmm";
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
+    _dateFormatter.locale = locale;
+    
+    _timePickerViewController.delegate = self;
+    _timePickerViewController.hideNowButton = YES;
+    _timePickerViewController.disableBouncingWhenShowing = YES;
+    _timePickerViewController.datePicker.datePickerMode = UIDatePickerModeTime;
+    _timePickerViewController.datePicker.minuteInterval = 5;
+    _timePickerViewController.datePicker.timeZone = [NSTimeZone localTimeZone];
     
     UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"찾기"
                                                                             style:UIBarButtonItemStylePlain
@@ -143,7 +157,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         
         cell.delegate = self;
         
-        _lectureDetails[indexPath.row][@"index"] = @(indexPath.row);
+        _lectureDetails[indexPath.row][@"index"] = @(indexPath.row+1);
         cell.lectureDetailIndex = [_lectureDetails[indexPath.row][@"index"] integerValue];
         cell.lectureLocation = _lectureDetails[indexPath.row][@"lectureLocation"];
         cell.timeStart = [_lectureDetails[indexPath.row][@"timeStart"] integerValue];
@@ -162,6 +176,23 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    if (indexPath.section == 1)
+        return YES;
+    return NO;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSMutableArray *lectureDetailMutableArray = [[NSMutableArray alloc] initWithArray:_lectureDetails];
+        [lectureDetailMutableArray removeObjectAtIndex:indexPath.row];
+        _lectureDetails = lectureDetailMutableArray;
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
 #pragma mark - Text Field Delegate
 
 - (void)textFieldDidChanged:(UITextField *)textField
@@ -171,18 +202,40 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     else if (textField.tag == -2)
         _lectureDictionary[@"theme"] = textField.text;
     else
-        _lectureDetails[textField.tag][@"lectureLocation"] = textField.text;
+        _lectureDetails[textField.tag-1][@"lectureLocation"] = textField.text;
 }
 
 #pragma mark - Time Change Method
 
 - (void)timeButtonTapped:(UIButton *)button
 {
+    _timePickerViewController.datePicker.tag = button.tag;
+    [_timePickerViewController show];
 }
 
-- (void)changedTime:(UIDatePicker *)timePicker
+#pragma mark - RMDateSelectionViewController Delegate
+
+- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate
 {
-    NSLog(@"%@", timePicker.date);
+    NSInteger lectureDetailIndex = labs(vc.datePicker.tag)-1;
+    NSString *timeString = [_dateFormatter stringFromDate:aDate];
+    NSString *timeKey = (vc.datePicker.tag > 0) ? @"timeStart" : @"timeEnd";
+    if (vc.datePicker.tag < 0 && _lectureDetails[lectureDetailIndex][@"timeStart"]) {
+        if ([_lectureDetails[lectureDetailIndex][@"timeStart"] integerValue] > [timeString integerValue]) {
+            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
+            return;
+        }
+    }
+    if (vc.datePicker.tag > 0 && _lectureDetails[lectureDetailIndex][@"timeEnd"]) {
+        if ([_lectureDetails[lectureDetailIndex][@"timeEnd"] integerValue] < [timeString integerValue]) {
+            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
+            return;
+        }
+    }
+    
+    _lectureDetails[lectureDetailIndex][timeKey] = timeString;
+    NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:lectureDetailIndex inSection:1];
+    [_tableView reloadRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Scroll View Delegate
