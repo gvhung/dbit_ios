@@ -94,7 +94,7 @@
          schoolSelectAlertView.tag = 1;
          
          [_dataManager saveServerSchoolsWithResponse:response];
-         _schools = [_dataManager getSchools];
+         _schools = [_dataManager schools];
          
          for (NSDictionary *schoolDictionary in _schools) {
              [schoolSelectAlertView addButtonWithTitle:schoolDictionary[@"schoolName"]];
@@ -124,10 +124,10 @@
          
          
          [_dataManager saveServerTimeTablesWithResponse:response];
-         _timeTables = [_dataManager getServerTimeTablesWithSchoolId:_selectedSchoolId];
+         _timeTables = [_dataManager serverTimeTablesWithSchoolId:_selectedSchoolId];
          
          for (NSDictionary *serverTimeTableDictionary in _timeTables)
-             [timeTableSelectAlertView addButtonWithTitle:[_dataManager getSemesterString:serverTimeTableDictionary[@"semester"]]];
+             [timeTableSelectAlertView addButtonWithTitle:[_dataManager semesterString:serverTimeTableDictionary[@"semester"]]];
          
          [timeTableSelectAlertView show];
          
@@ -172,7 +172,7 @@
         [_schoolButton setTitle:_schools[buttonIndex-1][@"schoolName"] forState:UIControlStateNormal];
     } else if (alertView.tag == 2) {
         _selectedTimeTable = [_timeTables[buttonIndex-1][@"timeTableId"] integerValue];
-        [_timeTableButton setTitle:[_dataManager getSemesterString:_timeTables[buttonIndex-1][@"semester"]] forState:UIControlStateNormal];
+        [_timeTableButton setTitle:[_dataManager semesterString:_timeTables[buttonIndex-1][@"semester"]] forState:UIControlStateNormal];
     }
 }
 

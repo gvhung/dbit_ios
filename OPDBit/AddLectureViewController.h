@@ -12,9 +12,9 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSDictionary *lectureDictionary;
-
-
+@property (nonatomic, strong) NSDictionary *serverLectureDictionary;
+@property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
+@property (nonatomic, strong) NSArray *lectureDetails;
 
 #warning 지워야할 주석
 /*
@@ -30,5 +30,8 @@
 
 - (instancetype)init;
 - (void)addLectureDetailAction;
+
+
+- (void)textFieldDidChanged:(UITextField *)textField;
 
 @end

@@ -19,8 +19,6 @@
 
 @interface AddLectureViewController ()
 
-@property (nonatomic, strong) NSArray *lectureDetails;
-
 @property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
 
@@ -40,6 +38,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     self = [super init];
     if (self) {
+        _lectureDictionary = [[NSMutableDictionary alloc] init];
         _dataManager = [DataManager sharedInstance];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _lectureDetails = [[NSMutableArray alloc] init];
@@ -87,10 +86,11 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 #pragma mark - Setter
 
-- (void)setLectureDictionary:(NSDictionary *)lectureDictionary
+- (void)setServerLectureDictionary:(NSDictionary *)serverLectureDictionary
 {
-    _lectureDictionary = lectureDictionary;
-    self.lectureDetails = lectureDictionary[@"lectureDetails"];
+    _serverLectureDictionary = serverLectureDictionary;
+    _lectureDictionary[@"lectureName"] = serverLectureDictionary[@"lectureName"];
+    self.lectureDetails = serverLectureDictionary[@"lectureDetails"];
     [_tableView reloadData];
 }
 
@@ -130,14 +130,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         if (!cell)
             cell = [[AddLectureHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:headerCellIdentifier];
         
-        cell.lectureName = _lectureDictionary[@"lectureName"];
-        cell.lectureTheme = _lectureDictionary[@"theme"];
+        cell.delegate = self;
+        
+        cell.lectureName = _serverLectureDictionary[@"lectureName"];
+        cell.lectureTheme = _serverLectureDictionary[@"theme"];
         
         return cell;
     } else if (indexPath.section == 1) {
         AddLectureDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:detailCellIdentifier forIndexPath:indexPath];
         if (!cell)
             cell = [[AddLectureDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:detailCellIdentifier];
+        
+        cell.delegate = self;
         
         _lectureDetails[indexPath.row][@"index"] = @(indexPath.row);
         cell.lectureDetailIndex = [_lectureDetails[indexPath.row][@"index"] integerValue];
@@ -158,6 +162,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }
 }
 
+#pragma mark - Text Field Delegate
+
+- (void)textFieldDidChanged:(UITextField *)textField
+{
+    if (textField.tag == -1)
+        _lectureDictionary[@"lectureName"] = textField.text;
+    else if (textField.tag == -2)
+        _lectureDictionary[@"theme"] = textField.text;
+    else
+        _lectureDetails[textField.tag][@"lectureLocation"] = textField.text;
+}
+
 #pragma mark - Scroll View Delegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -174,6 +190,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     [lectureDetailMutableArray addObject:dummyLectureDetail];
     self.lectureDetails = lectureDetailMutableArray;
     NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:_lectureDetailCount-1 inSection:1];
+    [_tableView endEditing:YES];
     [_tableView insertRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationTop];
     [_tableView scrollToRowAtIndexPath:newCellIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
@@ -182,23 +199,30 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)searchLectureAction
 {
-    if (_dataManager.activedTimeTable == nil) {
-        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
-        return;
-    }
     if([_dataManager.activedTimeTable[@"serverId"] integerValue] == -1) {
         [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
         return;
     }
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
-    searchLectureViewController.serverLectures = [_dataManager getServerLecturesWithServerTimeTableId:[_dataManager.activedTimeTable[@"serverId"] integerValue]];
+    searchLectureViewController.serverLectures = [_dataManager serverLecturesWithServerTimeTableId:[_dataManager.activedTimeTable[@"serverId"] integerValue]];
     searchLectureViewController.delegate = self;
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
 }
 
 - (void)addLectureAction
 {
-    NSLog(@"%@", _lectureDetails);
+    if (!_lectureDictionary[@"lectureName"]) {
+        [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
+        return;
+    }
+    if (!_lectureDictionary[@"theme"]) {
+        [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
+        return;
+    }
+    [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
+                                       theme:_lectureDictionary[@"theme"]
+                              lectureDetails:_lectureDetails];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Life Cycle

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddLectureViewController.h"
 
 @interface AddLectureDetailCell : UITableViewCell
 
@@ -15,6 +16,8 @@
 @property (nonatomic) NSInteger day;
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
+
+@property (nonatomic, strong) AddLectureViewController *delegate;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 

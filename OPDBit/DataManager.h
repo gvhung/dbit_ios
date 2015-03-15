@@ -21,19 +21,21 @@
 - (void)saveServerLecturesWithResponse:(NSArray *)response update:(void (^)(NSInteger progressIndex))update;
 
 - (void)saveTimeTableWithName:(NSString *)name serverId:(NSInteger)serverId active:(BOOL)active;
+- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails;
+- (void)saveLectureDetailWithUlid:(NSInteger)ulid lectureLocation:(NSString *)lectureLocation timeEnd:(NSInteger)timeEnd timeStart:(NSInteger)timeStart day:(NSInteger)day;
 
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
 
-- (NSArray *)getDownloadedTimeTables;
-- (NSArray *)getServerTimeTablesWithSchoolId:(NSInteger)schoolId;
-- (NSArray *)getSchools;
-- (NSDictionary *)getServerTimeTableWithId:(NSInteger)timeTableId;
+- (NSArray *)downloadedTimeTables;
+- (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
+- (NSArray *)schools;
+- (NSDictionary *)serverTimeTableWithId:(NSInteger)timeTableId;
 
-- (NSArray *)getTimeTables;
+- (NSArray *)timeTables;
 
-- (NSArray *)getServerLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
+- (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
 
-- (NSString *)getSchoolNameWithServerTimeTableId:(NSInteger)timeTableId;
-- (NSString *)getSemesterString:(NSString *)semester;
+- (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
+- (NSString *)semesterString:(NSString *)semester;
 
 @end

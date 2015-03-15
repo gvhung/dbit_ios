@@ -54,6 +54,8 @@
     [_lectureNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _lectureNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _lectureNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _lectureNameField.tag = -1;
+    [_lectureNameField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
     
     _lectureThemeField.placeholder = @"테마 (임시)";
     _lectureThemeField.backgroundColor = [UIColor clearColor];
@@ -61,6 +63,8 @@
     [_lectureThemeField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _lectureThemeField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _lectureThemeField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _lectureThemeField.tag = -2;
+    [_lectureThemeField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
     
     [self.contentView addSubview:_separator];
     

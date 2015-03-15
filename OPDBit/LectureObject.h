@@ -13,7 +13,7 @@
  
  수업을 저장하기 위한 RealmObject
  
- NSInteger ulid : 고유 ID
+ NSInteger ulid : 강의 고유 ID
  RLMArray<LectureDetailObject> *lectureDetails : 강의(parent) - 수업(child) <To Many>
  NSString *lectureName : 강의명
  NSString *theme : 시계 색깔 (테마)

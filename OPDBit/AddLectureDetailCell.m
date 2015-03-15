@@ -67,6 +67,9 @@
     [_lectureLocationField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _lectureLocationField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _lectureLocationField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [_lectureLocationField addTarget:self.delegate
+                              action:@selector(textFieldDidChanged:)
+                    forControlEvents:UIControlEventEditingChanged];
     
     
     NSArray *sectionTitles = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
@@ -76,7 +79,16 @@
     _daySegmentedControl.selectionIndicatorBoxOpacity = 0;
     
     _timeStartButton.backgroundColor = [UIColor lightGrayColor];
+    _timeStartButton.tag = 1;
+    [_timeStartButton addTarget:self
+                         action:@selector(changeTime:)
+               forControlEvents:UIControlEventTouchUpInside];
+    
     _timeEndButton.backgroundColor = [UIColor lightGrayColor];
+    _timeEndButton.tag = 2;
+    [_timeEndButton addTarget:self
+                         action:@selector(changeTime:)
+               forControlEvents:UIControlEventTouchUpInside];
     
     _separator.backgroundColor = [UIColor lightGrayColor];
     
@@ -159,11 +171,20 @@
     }];
 }
 
+#pragma mark - Time Change Method
+
+- (void)changeTime:(UIButton *)button
+{
+    [button setTitle:@"9:00" forState:UIControlStateNormal];
+    NSLog(@"changeTime\ntag : %ld\ntitle : %@", button.tag, button.titleLabel.text);
+}
+
 #pragma mark - Setter
 
 - (void)setLectureDetailIndex:(NSInteger)lectureDetailIndex
 {
     _lectureDetailIndex = lectureDetailIndex;
+    _lectureLocationField.tag = lectureDetailIndex;
     _titleLabel.text = [self titleString];
 }
 

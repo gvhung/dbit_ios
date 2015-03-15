@@ -9,10 +9,14 @@
 #import "LectureViewController.h"
 #import "LectureTableViewCell.h"
 #import "AddLectureViewController.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
+#import <KVNProgress/KVNProgress.h>
 
 @interface LectureViewController ()
+
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -22,6 +26,7 @@
 {
     self = [super init];
     if (self) {
+        _dataManager = [DataManager sharedInstance];
         [self initialize];
     }
     return self;
@@ -71,6 +76,11 @@
 
 - (void)addLectureAction
 {
+    if (_dataManager.activedTimeTable == nil) {
+        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+        return;
+    }
+    
     AddLectureViewController *addLectureViewController = [[AddLectureViewController alloc] init];
     [self.navigationController pushViewController:addLectureViewController animated:YES];
 }
@@ -100,6 +110,7 @@
 - (void)changeDay:(HMSegmentedControl *)segmentedControl
 {
     NSLog(@"%ld", segmentedControl.selectedSegmentIndex);
+    NSLog(@"%@", _dataManager.activedTimeTable);
 }
 
 

@@ -105,7 +105,7 @@ static CGFloat const rowHeight = 105.0f;
         [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
         return;
     }
-    self.delegate.lectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
+    self.delegate.serverLectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
     [self.navigationController popToViewController:self.delegate animated:YES];
 }
 

@@ -146,9 +146,9 @@
 - (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
 {
     _selectedServerTimeTableId = selectedServerTimeTableId;
-    _serverTimeTableObject = [_dataManager getServerTimeTableWithId:_selectedServerTimeTableId];
-    NSString *schoolName = [_dataManager getSchoolNameWithServerTimeTableId:_selectedServerTimeTableId];
-    NSString *semesterName = [_dataManager getSemesterString:_serverTimeTableObject[@"semester"]];
+    _serverTimeTableObject = [_dataManager serverTimeTableWithId:_selectedServerTimeTableId];
+    NSString *schoolName = [_dataManager schoolNameWithServerTimeTableId:_selectedServerTimeTableId];
+    NSString *semesterName = [_dataManager semesterString:_serverTimeTableObject[@"semester"]];
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
     if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
     [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];

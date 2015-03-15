@@ -105,7 +105,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _serverTimeTables = [_dataManager getDownloadedTimeTables];
+    _serverTimeTables = [_dataManager downloadedTimeTables];
     [_tableView reloadData];
 }
 
