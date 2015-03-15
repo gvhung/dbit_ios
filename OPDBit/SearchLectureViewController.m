@@ -128,9 +128,18 @@ static CGFloat const rowHeight = 105.0f;
     convertedDictionary[@"lectureName"] = dictionary[@"lectureName"];
     NSMutableArray *lectureDetailArray = [[NSMutableArray alloc] init];
     
-    NSArray *lectureLocationArray = [dictionary[@"lectureLocation"] componentsSeparatedByString:@","];
-    NSArray *lectureDaytimeArray = [dictionary[@"lectureDaytime"] componentsSeparatedByString:@","];
+    // ,로 Location 을 나눌경우 생기는 에러 (ex. 405-250(원흥관 1,3 E250 강의실))
+    NSArray *lectureLocationArray = [dictionary[@"lectureLocation"] componentsSeparatedByString:@"),"];
+    for (NSInteger i = 0; i < lectureLocationArray.count; i++) {
+        NSString *lectureLocationString = lectureLocationArray[i];
+        if (i < lectureLocationArray.count-1) {
+            NSString *convertedString = [lectureLocationString stringByAppendingString:@")"];
+            [(NSMutableArray *)lectureLocationArray replaceObjectAtIndex:i withObject:convertedString];
+        }
+    }
 
+    
+    NSArray *lectureDaytimeArray = [dictionary[@"lectureDaytime"] componentsSeparatedByString:@","];
     detailCount = lectureLocationArray.count;
     if (lectureLocationArray.count != lectureDaytimeArray.count)
         if (lectureDaytimeArray.count >= detailCount)
@@ -140,11 +149,11 @@ static CGFloat const rowHeight = 105.0f;
         NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
         lectureDetailDictionary[@"lectureLocation"] = (lectureLocationArray[i] == nil) ? @"" : lectureLocationArray[i];
         lectureDetailDictionary[@"timeStart"] =
-        (lectureDaytimeArray[i] == nil) ? @"" : [self timeStartWithString:lectureDaytimeArray[i]];
+        (lectureDaytimeArray.count < i+1) ? @"" : [self timeStartWithString:lectureDaytimeArray[i]];
         lectureDetailDictionary[@"timeEnd"] =
-        (lectureDaytimeArray[i] == nil) ? @"" : [self timeEndWithString:lectureDaytimeArray[i]];
+        (lectureDaytimeArray.count < i+1) ? @"" : [self timeEndWithString:lectureDaytimeArray[i]];
         lectureDetailDictionary[@"day"] =
-        (lectureDaytimeArray[i] == nil) ? @"0" : [self dayWithString:lectureDaytimeArray[i]];
+        (lectureDaytimeArray.count < i+1) ? @"0" : [self dayWithString:lectureDaytimeArray[i]];
         [lectureDetailArray addObject:lectureDetailDictionary];
     }
     convertedDictionary[@"lectureDetails"] = lectureDetailArray;
