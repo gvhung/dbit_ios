@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) NSArray *lectureDetails;
 
+@property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -96,7 +97,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)setLectureDetails:(NSArray *)lectureDetails
 {
     _lectureDetails = lectureDetails;
-    NSLog(@"%@", lectureDetails);
+    _lectureDetailCount = lectureDetails.count;
 }
 
 #pragma mark - Table View Data Source
@@ -138,7 +139,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         if (!cell)
             cell = [[AddLectureDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:detailCellIdentifier];
         
-        cell.lectureDetailIndex = indexPath.row;
+        _lectureDetails[indexPath.row][@"index"] = @(indexPath.row);
+        cell.lectureDetailIndex = [_lectureDetails[indexPath.row][@"index"] integerValue];
         cell.lectureLocation = _lectureDetails[indexPath.row][@"lectureLocation"];
         cell.timeStart = [_lectureDetails[indexPath.row][@"timeStart"] integerValue];
         cell.timeEnd = [_lectureDetails[indexPath.row][@"timeEnd"] integerValue];
@@ -167,7 +169,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureDetailAction
 {
-    NSLog(@"add!!!");
+    NSMutableDictionary *dummyLectureDetail = [[NSMutableDictionary alloc] init];
+    NSMutableArray *lectureDetailMutableArray = [[NSMutableArray alloc] initWithArray:_lectureDetails];
+    [lectureDetailMutableArray addObject:dummyLectureDetail];
+    self.lectureDetails = lectureDetailMutableArray;
+    NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:_lectureDetailCount-1 inSection:1];
+    [_tableView insertRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [_tableView scrollToRowAtIndexPath:newCellIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - Bar Button Action
@@ -190,7 +198,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureAction
 {
-    
+    NSLog(@"%@", _lectureDetails);
 }
 
 #pragma mark - Life Cycle
