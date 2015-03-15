@@ -23,6 +23,8 @@
 
 @implementation TimeTableViewController
 
+static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
+
 - (instancetype)init
 {
     self = [super init];
@@ -43,7 +45,7 @@
     UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    [_tableView registerClass:[TimeTableCell class] forCellReuseIdentifier:@"TimeTableCell"];
+    [_tableView registerClass:[TimeTableCell class] forCellReuseIdentifier:TimeTableCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
@@ -86,12 +88,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TimeTableCell" forIndexPath:indexPath];
+    TimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:TimeTableCellIdentifier forIndexPath:indexPath];
     if (!cell)
-        cell = [[TimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TimeTableCell"];
+        cell = [[TimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeTableCellIdentifier];
     cell.textLabel.text = _timeTables[indexPath.row][@"timeTableName"];
     
     return cell;
+}
+
+#pragma mark - Table View Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
+    editTimeTableViewController.timeTableId = [_timeTables[indexPath.row][@"utid"] integerValue];
+    [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 
 #pragma mark - Life Cycle
@@ -105,6 +117,7 @@
 {
     [super viewWillAppear:animated];
     _timeTables = [_dataManager timeTables];
+    NSLog(@"%@", _timeTables);
     [_tableView reloadData];
 }
 

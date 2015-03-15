@@ -16,7 +16,8 @@
 @interface AddTimeTableViewController ()
 
 @property (nonatomic, strong) DataManager *dataManager;
-@property (nonatomic, strong) NSDictionary *serverTimeTableObject;
+@property (nonatomic, strong) NSDictionary *serverTimeTableDictionary;
+@property (nonatomic, strong) NSDictionary *timeTableDictionary;
 
 // UI Part
 @property (nonatomic, strong) UILabel *timeTableNameLabel;
@@ -36,6 +37,7 @@
     self = [super init];
     if (self) {
         _dataManager = [DataManager sharedInstance];
+        _timeTableId = -1;
         _selectedServerTimeTableId = -1;
         
         _timeTableNameLabel = [[UILabel alloc] init];
@@ -128,6 +130,25 @@
     }];
 }
 
+#pragma mark - Setter
+
+- (void)setTimeTableId:(NSInteger)timeTableId
+{
+    _timeTableId = timeTableId;
+    [self setTitle:@"시간표 수정"];
+    self.timeTableDictionary = [_dataManager timeTableWithId:timeTableId];
+}
+
+- (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
+{
+    _timeTableDictionary = timeTableDictionary;
+    self.selectedServerTimeTableId = [timeTableDictionary[@"serverId"] integerValue];
+    _timeTableNameField.text = timeTableDictionary[@"timeTableName"];
+    [_primaryTimeTableSwitch setOn:timeTableDictionary[@"active"]];
+}
+
+#pragma mark - Bar Button Action
+
 - (void)done
 {
     if (_timeTableNameField.text.length == 0) {
@@ -135,20 +156,36 @@
         [KVNProgress showErrorWithStatus:@"시간표 이름을 입력해주세요!"];
         return;
     }
-    [_dataManager saveTimeTableWithName:_timeTableNameField.text
-                               serverId:_selectedServerTimeTableId
-                                 active:_primaryTimeTableSwitch.isOn];
-    [KVNProgress showSuccessWithStatus:@"시간표 생성 성공!"];
     
+    if (_timeTableId != -1) {
+        [_dataManager updateTimeTableWithUtid:_timeTableId
+                                       name:_timeTableNameField.text
+                                   serverId:_selectedServerTimeTableId
+                                     active:_primaryTimeTableSwitch.isOn
+                                      failure:^(NSString *reason){
+                                          [KVNProgress showErrorWithStatus:reason];
+                                          return;
+                                       }];
+        [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
+    } else {
+        [_dataManager saveTimeTableWithName:_timeTableNameField.text
+                                   serverId:_selectedServerTimeTableId
+                                     active:_primaryTimeTableSwitch.isOn];
+        [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
+    }
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+#pragma mark - Action
 
 - (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
 {
     _selectedServerTimeTableId = selectedServerTimeTableId;
-    _serverTimeTableObject = [_dataManager serverTimeTableWithId:_selectedServerTimeTableId];
+    _serverTimeTableDictionary = [_dataManager serverTimeTableWithId:_selectedServerTimeTableId];
+    if (!_serverTimeTableDictionary)
+        return;
     NSString *schoolName = [_dataManager schoolNameWithServerTimeTableId:_selectedServerTimeTableId];
-    NSString *semesterName = [_dataManager semesterString:_serverTimeTableObject[@"semester"]];
+    NSString *semesterName = [_dataManager semesterString:_serverTimeTableDictionary[@"semester"]];
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
     if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
     [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];
@@ -160,6 +197,8 @@
     timeTableViewController.delegate = self;
     [self.navigationController pushViewController:timeTableViewController animated:YES];
 }
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];

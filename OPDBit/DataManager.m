@@ -140,6 +140,29 @@
     return lastTimeTableObject.utid;
 }
 
+- (void)updateTimeTableWithUtid:(NSInteger)utid
+                         name:(NSString *)name
+                     serverId:(NSInteger)serverId
+                       active:(BOOL)active
+                      failure:(void (^)(NSString *reason))failure
+{
+    [_realm beginWriteTransaction];
+    RLMResults *timeTableResults = [TimeTableObject objectsWhere:@"utid == %ld", utid];
+    if (timeTableResults.count == 0) {
+        NSString *reason = [NSString stringWithFormat:@"TimeTable (utid : %ld) for edit is NOT exist", utid];
+        NSLog(@"%@", reason);
+        failure(reason);
+        [_realm commitWriteTransaction];
+        return;
+    }
+    TimeTableObject *timeTableObject = timeTableResults[0];
+    timeTableObject.timeTableName = name;
+    timeTableObject.serverId = serverId;
+    timeTableObject.active = active;
+    [_realm addOrUpdateObject:timeTableObject];
+    [_realm commitWriteTransaction];
+}
+
 - (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails
 {
     [_realm beginWriteTransaction];
@@ -185,6 +208,10 @@
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId
 {
     RLMResults *serverTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    if (serverTimeTables.count == 0) {
+        NSLog(@"TimeTable (timeTableId : %ld) to set 'downloaded' is NOT exist!", timeTableId);
+        return;
+    }
     ServerTimeTableObject *timeTableObject = serverTimeTables[0];
     timeTableObject.downloaded = YES;
 }
@@ -194,36 +221,70 @@
 - (NSArray *)downloadedTimeTables
 {
     RLMResults *downloadedTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"downloaded == YES"]];
+    if (downloadedTimeTables.count == 0) {
+        NSLog(@"Downloaded TimeTables are NOT exist!");
+        return nil;
+    }
     return [self arrayWithServerTimeTableResults:downloadedTimeTables];
 }
 
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
 {
     RLMResults *serverTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", schoolId]];
+    if (serverTimeTables.count == 0) {
+        NSLog(@"Server TimeTable (schoolId : %ld) is NOT exist!", schoolId);
+        return nil;
+    }
     return [self arrayWithServerTimeTableResults:serverTimeTables];
 }
 
 - (NSArray *)schools
 {
     RLMResults *schoolResults = [ServerSchoolObject allObjects];
+    if (schoolResults.count == 0) {
+        NSLog(@"Schools are NOT exist!");
+        return nil;
+    }
     return [self arrayWithSchoolResults:schoolResults];
 }
 
-- (NSDictionary *)serverTimeTableWithId:(NSInteger)timeTableId
+- (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId
 {
-    RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", serverTimeTableId]];
+    if (serverTimeTableResults.count == 0) {
+        NSLog(@"Server TimeTable (timeTableId : %ld) is NOT exist!", serverTimeTableId);
+        return nil;
+    }
     return [self arrayWithServerTimeTableResults:serverTimeTableResults][0];
 }
 
-- (NSArray *)timeTables;
+- (NSArray *)timeTables
 {
-    RLMResults *timeTableResults = [TimeTableObject allObjects];
+    RLMResults *timeTableResults = [[TimeTableObject allObjects] sortedResultsUsingProperty:@"utid" ascending:YES];
+    if (timeTableResults.count == 0) {
+        NSLog(@"TimeTables are NOT exist!");
+        return nil;
+    }
     return [self arrayWithTimeTableResults:timeTableResults];
+}
+
+- (NSDictionary *)timeTableWithId:(NSInteger)timeTableId
+{
+    RLMResults *timeTableResults = [TimeTableObject objectsWhere:@"utid == %ld", timeTableId];
+    if (timeTableResults.count == 0) {
+        NSLog(@"TimeTable (utid : %ld) is NOT exist!", timeTableId);
+        return nil;
+    }
+    return [self arrayWithTimeTableResults:timeTableResults][0];
 }
 
 - (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId
 {
     RLMResults *serverLectureResults = [ServerLectureObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", serverTimeTableId]];
+    if (serverLectureResults.count == 0) {
+        NSLog(@"Server Lectures (timeTableId : %ld) are NOT exist!", serverTimeTableId);
+        return nil;
+    }
     return [self arrayWithServerLectureResults:serverLectureResults];
 }
 
@@ -231,8 +292,16 @@
 - (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId
 {
     RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
+    if (serverTimeTableResults.count == 0) {
+        NSLog(@"Server TimeTable (timeTableId : %ld) for School Name is NOT exist!", timeTableId);
+        return @"";
+    }
     ServerTimeTableObject *serverTimeTableObject = serverTimeTableResults[0];
     RLMResults *serverSchoolResults = [ServerSchoolObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", serverTimeTableObject.schoolId]];
+    if (serverSchoolResults.count == 0) {
+        NSLog(@"Server School (schoolId : %ld) for School Name is NOT exist!", serverTimeTableObject.schoolId);
+        return @"";
+    }
     ServerSchoolObject *serverSchoolObject = serverSchoolResults[0];
     return serverSchoolObject.schoolName;
 }
@@ -246,7 +315,10 @@
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid
 {
     RLMResults *lectureResults = [self.activedTimeTableObject.lectures objectsWhere:@"ulid == %ld", ulid];
-    if (lectureResults.count == 0) return nil;
+    if (lectureResults.count == 0) {
+        NSLog(@"Lecture (ulid : %ld) is NOT exist", ulid);
+        return nil;
+    }
     LectureObject *lectureObject = lectureResults[0];
     return lectureObject;
 }
@@ -256,14 +328,20 @@
 - (TimeTableObject *)activedTimeTableObject
 {
     RLMResults *activedTimeTableResults = [TimeTableObject objectsWhere:[NSString stringWithFormat:@"active == YES"]];
-    if (activedTimeTableResults.count == 0) return nil;
+    if (activedTimeTableResults.count == 0) {
+        NSLog(@"Actived TimeTable is NOT exist! (Object)");
+        return nil;
+    }
     return activedTimeTableResults[0];
 }
 
 - (NSDictionary *)activedTimeTable
 {
     RLMResults *activedTimeTableResults = [TimeTableObject objectsWhere:[NSString stringWithFormat:@"active == YES"]];
-    if (activedTimeTableResults.count == 0) return nil;
+    if (activedTimeTableResults.count == 0) {
+        NSLog(@"Actived TimeTable is NOT exist! (Dictionary)");
+        return nil;
+    }
     return [self arrayWithTimeTableResults:activedTimeTableResults][0];
 }
 

@@ -14,27 +14,38 @@
 
 + (DataManager *)sharedInstance;
 
-- (void)reloadActivedTimeTable;
-
 - (void)saveServerSchoolsWithResponse:(NSArray *)response;
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response;
-- (void)saveServerLecturesWithResponse:(NSArray *)response update:(void (^)(NSInteger progressIndex))update;
+- (void)saveServerLecturesWithResponse:(NSArray *)response
+                                update:(void (^)(NSInteger progressIndex))update;
 
-- (void)saveTimeTableWithName:(NSString *)name serverId:(NSInteger)serverId active:(BOOL)active;
-- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails;
-- (void)saveLectureDetailWithUlid:(NSInteger)ulid lectureLocation:(NSString *)lectureLocation timeEnd:(NSInteger)timeEnd timeStart:(NSInteger)timeStart day:(NSInteger)day;
+- (void)saveTimeTableWithName:(NSString *)name
+                     serverId:(NSInteger)serverId
+                       active:(BOOL)active;
+- (void)saveLectureWithLectureName:(NSString *)lectureName
+                             theme:(NSString *)theme
+                    lectureDetails:(NSArray *)lectureDetails;
+- (void)saveLectureDetailWithUlid:(NSInteger)ulid
+                  lectureLocation:(NSString *)lectureLocation
+                          timeEnd:(NSInteger)timeEnd
+                        timeStart:(NSInteger)timeStart
+                              day:(NSInteger)day;
+
+- (void)updateTimeTableWithUtid:(NSInteger)utid
+                         name:(NSString *)name
+                     serverId:(NSInteger)serverId
+                       active:(BOOL)active
+                      failure:(void (^)(NSString *reason))failure;
 
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
 
 - (NSArray *)downloadedTimeTables;
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
 - (NSArray *)schools;
-- (NSDictionary *)serverTimeTableWithId:(NSInteger)timeTableId;
-
+- (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId;
 - (NSArray *)timeTables;
-
+- (NSDictionary *)timeTableWithId:(NSInteger)timeTableId;
 - (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
-
 - (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
 - (NSString *)semesterString:(NSString *)semester;
 

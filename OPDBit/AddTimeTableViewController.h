@@ -11,6 +11,7 @@
 @interface AddTimeTableViewController : UIViewController
 
 @property (nonatomic) NSInteger selectedServerTimeTableId;
+@property (nonatomic) NSInteger timeTableId;
 
 - (instancetype)init;
 
