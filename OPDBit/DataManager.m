@@ -195,6 +195,7 @@
     [_realm beginWriteTransaction];
     LectureObject *lectureObject = [self lectureObjectWithUlid:ulid];
     LectureDetailObject *lectureDetailObject = [[LectureDetailObject alloc] init];
+    lectureDetailObject.ulid = ulid;
     lectureDetailObject.lectureLocation = lectureLocation;
     lectureDetailObject.timeEnd = timeEnd;
     lectureDetailObject.timeStart = timeStart;
@@ -312,6 +313,20 @@
     return [NSString stringWithFormat:@"%@년 %@학기", titleArray[0], titleArray[1]];
 }
 
+- (NSArray *)lectureDetailsWithDay:(NSInteger)day
+{
+    NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
+    for (LectureObject *lectureObject in self.activedTimeTableObject.lectures) {
+        RLMResults *lecturesResults = [lectureObject.lectureDetails objectsWhere:@"day == %d", day];
+        if (lecturesResults.count != 0) [resultsArray addObject:lecturesResults];
+    }
+    if (resultsArray.count == 0) {
+        NSLog(@"LectureDetails (day : %ld) is NOT exist", day);
+        return nil;
+    }
+    return [self arrayWithLectureDetailResulstArray:resultsArray];
+}
+
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid
 {
     RLMResults *lectureResults = [self.activedTimeTableObject.lectures objectsWhere:@"ulid == %ld", ulid];
@@ -413,11 +428,31 @@
     return arrayForReturn;
 }
 
+- (NSArray *)arrayWithLectureDetailResulstArray:(NSArray *)resultsArray
+{
+    NSMutableArray *arrayForReturn = [[NSMutableArray alloc] init];
+    for (RLMResults *lectureDetailResults in resultsArray) {
+        for (LectureDetailObject *lectureDetailObject in lectureDetailResults) {
+            NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
+            LectureObject *lectureObject = [self lectureObjectWithUlid:lectureDetailObject.ulid];
+            lectureDetailDictionary[@"ulid"] = @(lectureDetailObject.ulid);
+            lectureDetailDictionary[@"lectureLocation"] = lectureDetailObject.lectureLocation;
+            lectureDetailDictionary[@"timeStart"] = @(lectureDetailObject.timeStart);
+            lectureDetailDictionary[@"timeEnd"] = @(lectureDetailObject.timeEnd);
+            lectureDetailDictionary[@"lectureName"] = lectureObject.lectureName;
+            lectureDetailDictionary[@"theme"] = lectureObject.theme;
+            [arrayForReturn addObject:lectureDetailDictionary];
+        }
+    }
+    return arrayForReturn;
+}
+
 - (NSArray *)arrayWithLectureDetailArray:(RLMArray *)lectureDetails
 {
     NSMutableArray *arrayForReturn = [[NSMutableArray alloc] init];
     for (LectureDetailObject *lectureDetailObject in lectureDetails) {
         NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
+        lectureDetailDictionary[@"ulid"] = @(lectureDetailObject.ulid);
         lectureDetailDictionary[@"lectureLocation"] = lectureDetailObject.lectureLocation;
         lectureDetailDictionary[@"timeStart"] = @(lectureDetailObject.timeStart);
         lectureDetailDictionary[@"timeEnd"] = @(lectureDetailObject.timeEnd);
@@ -441,6 +476,23 @@
         [arrayForReturn addObject:serverLectureDictionary];
     }
     return arrayForReturn;
+}
+
+#pragma mark - Time Convert Method
+
++ (NSString *)stringFromTimeInteger:(NSInteger)timeInteger
+{
+    NSInteger hours = timeInteger/100;
+    NSInteger minutes = timeInteger%100;
+    return [NSString stringWithFormat:@"%ld:%02ld", hours, minutes];
+}
+
++ (NSInteger)integerFromTimeString:(NSString *)timeString
+{
+    NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
+    NSInteger hours = [timeStringComponents[0] integerValue];
+    NSInteger minutes = [timeStringComponents[1] integerValue];
+    return hours*100 + minutes;
 }
 
 @end

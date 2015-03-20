@@ -23,6 +23,11 @@
  
  */
 
+/**
+ *  
+ *
+ */
+
 @interface ServerTimeTableObject : RLMObject
 
 @property NSInteger timeTableId;

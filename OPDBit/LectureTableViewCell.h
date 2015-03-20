@@ -10,4 +10,9 @@
 
 @interface LectureTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) NSDictionary *lectureDetailDictionary;
+@property (nonatomic) NSInteger ulid;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end

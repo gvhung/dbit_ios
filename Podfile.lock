@@ -35,6 +35,7 @@ PODS:
     - MMDrawerController/Core
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
+  - MZClockView (1.0.2)
   - Realm (0.90.6):
     - Realm/Headers (= 0.90.6)
   - Realm/Headers (0.90.6)
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - KVNProgress (= 2.1.9)
   - Masonry (= 0.6.1)
   - MMDrawerController (= 0.5.7)
+  - MZClockView (= 1.0.2)
   - Realm (= 0.90.6)
   - RMDateSelectionViewController (= 1.4.3)
 
@@ -55,6 +57,7 @@ SPEC CHECKSUMS:
   KVNProgress: 9c9a3686a3eac347dc88753eed44bae5ebee1b83
   Masonry: 2cb49fd14d203d2db5ca6bb017135b235dde9980
   MMDrawerController: c3ab7a318ddc7e2bcd133139c3161af08c6e1197
+  MZClockView: dccbcd768ddeeb661cfd0dfe1772c32b05f39a6c
   Realm: 6c3facc11964ab9f828f47de6d0e9bf9c4d9c818
   RMDateSelectionViewController: ae40905ee3cc7b66bc3291461be7aa7dd17edf4c
 

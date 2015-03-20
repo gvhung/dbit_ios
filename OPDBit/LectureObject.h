@@ -9,15 +9,14 @@
 #import <Realm/Realm.h>
 #import "LectureDetailObject.h"
 
-/*
- 
- 수업을 저장하기 위한 RealmObject
- 
- NSInteger ulid : 강의 고유 ID
- RLMArray<LectureDetailObject> *lectureDetails : 강의(parent) - 수업(child) <To Many>
- NSString *lectureName : 강의명
- NSString *theme : 시계 색깔 (테마)
- 
+
+/**
+ * 수업을 저장하기 위한 RealmObject
+ *
+ * @param   ulid 강의 고유 ID (NSInteger)
+ * @param   lectureDetails  강의(parent) - 수업(child) <To Many> (RLMArray<LectureDetailObject> *)
+ * @param   lectureName 강의명 (NSString *)
+ * @param   theme   시계 색깔 (테마) (NSString *)
  */
 
 @interface LectureObject : RLMObject

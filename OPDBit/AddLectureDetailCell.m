@@ -7,6 +7,7 @@
 //
 
 #import "AddLectureDetailCell.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
@@ -189,12 +190,12 @@
 
 - (void)setTimeStart:(NSInteger)timeStart
 {
-    [_timeStartButton setTitle:[self stringFromTimeInteger:timeStart] forState:UIControlStateNormal];
+    [_timeStartButton setTitle:[DataManager stringFromTimeInteger:timeStart] forState:UIControlStateNormal];
 }
 
 - (void)setTimeEnd:(NSInteger)timeEnd
 {
-    [_timeEndButton setTitle:[self stringFromTimeInteger:timeEnd] forState:UIControlStateNormal];
+    [_timeEndButton setTitle:[DataManager stringFromTimeInteger:timeEnd] forState:UIControlStateNormal];
 }
 
 - (void)setDay:(NSInteger)day
@@ -216,34 +217,17 @@
 
 - (NSInteger)timeStart
 {
-    return [self integerFromTimeString:_timeStartButton.titleLabel.text];
+    return [DataManager integerFromTimeString:_timeStartButton.titleLabel.text];
 }
 
 - (NSInteger)timeEnd
 {
-    return [self integerFromTimeString:_timeEndButton.titleLabel.text];
+    return [DataManager integerFromTimeString:_timeEndButton.titleLabel.text];
 }
 
 - (NSInteger)day
 {
     return _daySegmentedControl.selectedSegmentIndex;
-}
-
-#pragma mark - Convert Method
-
-- (NSString *)stringFromTimeInteger:(NSInteger)timeInteger
-{
-    NSInteger hours = timeInteger/100;
-    NSInteger minutes = timeInteger%100;
-    return [NSString stringWithFormat:@"%ld:%02ld", hours, minutes];
-}
-
-- (NSInteger)integerFromTimeString:(NSString *)timeString
-{
-    NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
-    NSInteger hours = [timeStringComponents[0] integerValue];
-    NSInteger minutes = [timeStringComponents[1] integerValue];
-    return hours*100 + minutes;
 }
 
 @end

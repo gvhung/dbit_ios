@@ -16,11 +16,18 @@
 
 @interface LectureViewController ()
 
+@property (nonatomic, strong) UIView *clockLine;
+@property (nonatomic, strong) UILabel *emptyLabel;
+
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
 @implementation LectureViewController
+
+static CGFloat const LectureCellHeight = 80.0f;
+
+static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (instancetype)init
 {
@@ -41,9 +48,17 @@
     self.navigationItem.rightBarButtonItem = addLectureButton;
     
     _lectureTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    [_lectureTableView registerClass:[LectureTableViewCell class] forCellReuseIdentifier:@"LectureCell"];
+    [_lectureTableView registerClass:[LectureTableViewCell class] forCellReuseIdentifier:LectureCellIdentifier];
     _lectureTableView.delegate = self;
     _lectureTableView.dataSource = self;
+    _lectureTableView.backgroundColor = [UIColor clearColor];
+    _lectureTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    _clockLine = [[UIView alloc] init];
+    _clockLine.backgroundColor = [UIColor lightGrayColor];
+    
+    _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.text = @"수업이 없어요! :D";
     
     NSArray *segmentedAttributes = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
     _daySegmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:segmentedAttributes];
@@ -53,6 +68,9 @@
     [_daySegmentedControl addTarget:self
                              action:@selector(changeDay:)
                    forControlEvents:UIControlEventValueChanged];
+    
+    [self.view addSubview:_emptyLabel];
+    [self.view addSubview:_clockLine];
     [self.view addSubview:_daySegmentedControl];
     [self.view addSubview:_lectureTableView];
     [self makeAutoLayoutConstraints];
@@ -71,6 +89,15 @@
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.view.mas_bottom);
         make.top.equalTo(_daySegmentedControl.mas_bottom);
+    }];
+    [_clockLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_daySegmentedControl.mas_bottom);
+        make.left.equalTo(self.view).with.offset(30.0f);
+        make.bottom.equalTo(self.view);
+        make.width.equalTo(@1.0f);
+    }];
+    [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_lectureTableView);
     }];
 }
 
@@ -94,25 +121,63 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _lectureDetails.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LectureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LectureCell"];
+    LectureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LectureCellIdentifier];
     if (!cell)
-        cell = [[LectureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LectureCell"];
+        cell = [[LectureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LectureCellIdentifier];
+    cell.lectureDetailDictionary = _lectureDetails[indexPath.row];
     return cell;
+}
+
+#pragma mark - Table View Delegate
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return LectureCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return LectureCellHeight;
 }
 
 #pragma mark - Segmented Control Delegate
 
 - (void)changeDay:(HMSegmentedControl *)segmentedControl
 {
-    NSLog(@"%ld", segmentedControl.selectedSegmentIndex);
+    self.lectureDetails = [_dataManager lectureDetailsWithDay:segmentedControl.selectedSegmentIndex];
     NSLog(@"%@", _dataManager.activedTimeTable);
 }
 
+#pragma mark - Setter
+
+- (void)setLectureDetails:(NSArray *)lectureDetails
+{
+    _lectureDetails = lectureDetails;
+    [self hideTableView:[self lectureDetailsAreEmpty]];
+}
+
+#pragma mark - Instance Method
+
+- (BOOL)lectureDetailsAreEmpty
+{
+    return !_lectureDetails.count;
+}
+
+- (void)hideTableView:(BOOL)hide
+{
+    _lectureTableView.hidden = hide;
+    _clockLine.hidden = hide;
+    _emptyLabel.hidden = !hide;
+    
+    if (!hide) [_lectureTableView reloadData];
+}
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad
 {
@@ -125,14 +190,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
 }
-*/
 
 @end

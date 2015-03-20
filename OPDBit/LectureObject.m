@@ -24,9 +24,4 @@
 //    return @[];
 //}
 
-+(NSString *)primaryKey
-{
-    return @"ulid";
-}
-
 @end

@@ -8,6 +8,7 @@
 
 #import "SearchLectureViewController.h"
 #import "SearchLectureCell.h"
+#import "DataManager.h"
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
@@ -176,29 +177,14 @@ static CGFloat const rowHeight = 105.0f;
 {
     NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
     NSString *timeStartString = [pureDaytimeString componentsSeparatedByString:@"-"][0];
-    return @([self integerFromTimeString:timeStartString]);
+    return @([DataManager integerFromTimeString:timeStartString]);
 }
 
 - (NSNumber *)timeEndWithString:(NSString *)string
 {
     NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
     NSString *timeEndString = [pureDaytimeString componentsSeparatedByString:@"-"][1];
-    return @([self integerFromTimeString:timeEndString]);
-}
-
-- (NSString *)stringFromTimeInteger:(NSInteger)timeInteger
-{
-    NSInteger hours = timeInteger/100;
-    NSInteger minutes = timeInteger%100;
-    return [NSString stringWithFormat:@"%ld:%02ld", hours, minutes];
-}
-
-- (NSInteger)integerFromTimeString:(NSString *)timeString
-{
-    NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
-    NSInteger hours = [timeStringComponents[0] integerValue];
-    NSInteger minutes = [timeStringComponents[1] integerValue];
-    return hours*100 + minutes;
+    return @([DataManager integerFromTimeString:timeEndString]);
 }
 
 - (NSPredicate *)getPredicateWithString:(NSString *)searchString

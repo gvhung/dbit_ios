@@ -38,7 +38,6 @@
                       failure:(void (^)(NSString *reason))failure;
 
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
-
 - (NSArray *)downloadedTimeTables;
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
 - (NSArray *)schools;
@@ -48,5 +47,25 @@
 - (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
 - (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
 - (NSString *)semesterString:(NSString *)semester;
+
+/**
+ * Lecture Details to display
+ *
+ *  @param  day day (ex. mon, tue, ...) to display Lecture Detail in active TimeTable
+ *
+ *  @return lectureName Lecture Name
+ *  @return theme       Color Theme
+ *  @return timeStart   Start time (NSInteger)
+ *  @return timeEnd     End time (NSInteger)
+ *  @return lectureLocation Lecture Location
+ */
+
+- (NSArray *)lectureDetailsWithDay:(NSInteger)day;
+
+#pragma mark - Time Convert Method
+
++ (NSString *)stringFromTimeInteger:(NSInteger)timeInteger;
+
++ (NSInteger)integerFromTimeString:(NSString *)timeString;
 
 @end
