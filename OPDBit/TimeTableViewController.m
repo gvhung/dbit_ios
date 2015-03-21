@@ -117,7 +117,6 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
 {
     [super viewWillAppear:animated];
     _timeTables = [_dataManager timeTables];
-    NSLog(@"%@", _timeTables);
     [_tableView reloadData];
 }
 

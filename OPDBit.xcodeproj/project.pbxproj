@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		55B8495F730042A6986A0411 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
+		B533CE3D1ABD430300907A7C /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
 		B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */; };
 		B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */; };
 		B534EAD61AB43B3400EBE3EB /* SearchLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */; };
@@ -16,7 +17,6 @@
 		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
 		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
-		B53A1D101AB5BA2A00DA1C78 /* PopUpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */; };
 		B596827D1AAC2EB7002D6983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
@@ -54,6 +54,8 @@
 /* Begin PBXFileReference section */
 		36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7AC2BC34DD53E7F748851752 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B533CE3B1ABD430300907A7C /* UIFont+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+OPTheme.h"; sourceTree = "<group>"; };
+		B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+OPTheme.m"; sourceTree = "<group>"; };
 		B534EACD1AB43A2900EBE3EB /* ServerTimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableCell.h; sourceTree = "<group>"; };
 		B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableCell.m; sourceTree = "<group>"; };
 		B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AddLectureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -70,8 +72,6 @@
 		B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureDetailCell.m; sourceTree = "<group>"; };
 		B53655C91ABCA8E500626416 /* UIColor+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OPTheme.h"; sourceTree = "<group>"; };
 		B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OPTheme.m"; sourceTree = "<group>"; };
-		B53A1D0E1AB5BA2A00DA1C78 /* PopUpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopUpListViewController.h; sourceTree = "<group>"; };
-		B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopUpListViewController.m; sourceTree = "<group>"; };
 		B59682771AAC2EB7002D6983 /* OPDBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPDBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B596827B1AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B596827C1AAC2EB7002D6983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -145,6 +145,24 @@
 				36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B533CE3E1ABD430700907A7C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				B533CE3B1ABD430300907A7C /* UIFont+OPTheme.h */,
+				B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
+		B533CE3F1ABD431200907A7C /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				B53655C91ABCA8E500626416 /* UIColor+OPTheme.h */,
+				B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */,
+			);
+			name = Color;
 			sourceTree = "<group>";
 		};
 		B534EACB1AB439BF00EBE3EB /* AddLecture */ = {
@@ -225,27 +243,10 @@
 		B53655C81ABCA8BD00626416 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				B53655C91ABCA8E500626416 /* UIColor+OPTheme.h */,
-				B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */,
+				B533CE3F1ABD431200907A7C /* Color */,
+				B533CE3E1ABD430700907A7C /* Font */,
 			);
 			name = Theme;
-			sourceTree = "<group>";
-		};
-		B53A1D051AB5B6F000DA1C78 /* PopUpListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				B53A1D0E1AB5BA2A00DA1C78 /* PopUpListViewController.h */,
-				B53A1D0F1AB5BA2A00DA1C78 /* PopUpListViewController.m */,
-			);
-			name = PopUpListViewController;
-			sourceTree = "<group>";
-		};
-		B53A1D181AB5C12100DA1C78 /* ModalViewController */ = {
-			isa = PBXGroup;
-			children = (
-				B53A1D051AB5B6F000DA1C78 /* PopUpListViewController */,
-			);
-			name = ModalViewController;
 			sourceTree = "<group>";
 		};
 		B596826E1AAC2EB7002D6983 = {
@@ -272,7 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				B53655C81ABCA8BD00626416 /* Theme */,
-				B53A1D181AB5C12100DA1C78 /* ModalViewController */,
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
 				B59682AB1AAC3708002D6983 /* ViewController */,
 				B596827E1AAC2EB7002D6983 /* AppDelegate.h */,
@@ -665,7 +665,6 @@
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
 				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
-				B53A1D101AB5BA2A00DA1C78 /* PopUpListViewController.m in Sources */,
 				B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
@@ -677,6 +676,7 @@
 				B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
 				B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */,
+				B533CE3D1ABD430300907A7C /* UIFont+OPTheme.m in Sources */,
 				B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
 				B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */,

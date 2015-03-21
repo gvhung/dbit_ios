@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "OPLeftDrawerViewController.h"
 #import "LectureViewController.h"
+#import "UIColor+OPTheme.h"
 
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 
@@ -31,6 +32,11 @@
     OPLeftDrawerViewController *leftDrawerViewController = [[OPLeftDrawerViewController alloc] init];
     LectureViewController *lectureViewController = [[LectureViewController alloc] init];
     _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:lectureViewController];
+    
+    _centerNavigationController.navigationBar.barTintColor = [UIColor op_primary];
+    _centerNavigationController.navigationBar.opaque = YES;
+    _centerNavigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimary]};
+    
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController leftDrawerViewController:leftDrawerViewController];
     
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];

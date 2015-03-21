@@ -136,7 +136,16 @@
 {
     _timeTableId = timeTableId;
     [self setTitle:@"시간표 수정"];
+    UIBarButtonItem *deleteTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteTimeTable)];
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
+    [barButtonItems addObject:deleteTimeTableButton];
+    self.navigationItem.rightBarButtonItems = barButtonItems;
     self.timeTableDictionary = [_dataManager timeTableWithId:timeTableId];
+}
+
+- (void)deleteTimeTable
+{
+    
 }
 
 - (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
