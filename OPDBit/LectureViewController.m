@@ -145,12 +145,16 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     return LectureCellHeight;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 #pragma mark - Segmented Control Delegate
 
 - (void)changeDay:(HMSegmentedControl *)segmentedControl
 {
     self.lectureDetails = [_dataManager lectureDetailsWithDay:segmentedControl.selectedSegmentIndex];
-    NSLog(@"%@", _dataManager.activedTimeTable);
 }
 
 #pragma mark - Setter

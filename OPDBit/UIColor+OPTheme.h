@@ -125,4 +125,10 @@
 
 + (UIColor *)op_divider;
 
+/**
+ *  Lecture Theme
+ */
+
++ (UIColor *)op_lectureTheme:(NSInteger)themeId;
+
 @end
