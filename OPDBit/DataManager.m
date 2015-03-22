@@ -212,25 +212,21 @@
     [_realm beginWriteTransaction];
     RLMResults *timeTableObjectToDeleteResult = [TimeTableObject objectsWhere:@"utid == %ld", utid];
     TimeTableObject *timeTableObjectToDelete = timeTableObjectToDeleteResult[0];
-    [_realm deleteObject:timeTableObjectToDelete];
     for (LectureObject *lectureObject in timeTableObjectToDelete.lectures) {
-        [_realm deleteObject:lectureObject];
-        for (LectureDetailObject *lectureDetailObject in lectureObject.lectureDetails) {
-            [_realm deleteObject:lectureDetailObject];
-        }
+        [_realm deleteObjects:lectureObject.lectureDetails];
     }
+    [_realm deleteObjects:timeTableObjectToDelete.lectures];
+    [_realm deleteObject:timeTableObjectToDelete];
     [_realm commitWriteTransaction];
 }
 
 - (void)deleteLectureWithUlid:(NSInteger)ulid
 {
     [_realm beginWriteTransaction];
-    RLMResults *lectureObjectToDeleteResult = [LectureObject objectsWhere:@"ulid"];
+    RLMResults *lectureObjectToDeleteResult = [LectureObject objectsWhere:@"ulid == %ld", ulid];
     LectureObject *lectureObjectToDelete = lectureObjectToDeleteResult[0];
+    [_realm deleteObjects:lectureObjectToDelete.lectureDetails];
     [_realm deleteObject:lectureObjectToDelete];
-    for (LectureDetailObject *lectureDetailObject in lectureObjectToDelete.lectureDetails) {
-        [_realm deleteObject:lectureDetailObject];
-    }
     [_realm commitWriteTransaction];
 }
 

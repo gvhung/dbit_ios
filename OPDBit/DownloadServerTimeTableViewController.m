@@ -68,15 +68,15 @@
 - (void)makeAutoLayoutConstraints
 {
     [_schoolButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@50.0f);
-        make.width.equalTo(@200.0f);
-        make.bottom.lessThanOrEqualTo(self.view.mas_centerY).with.offset(10.0f);
+        make.left.equalTo(self.view.mas_left).with.offset(20.0f);
+        make.right.equalTo(self.view.mas_right).with.offset(-20.0f);
+        make.bottom.equalTo(self.view.mas_centerY).with.offset(-10.0f);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
     [_timeTableButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@50.0f);
-        make.width.equalTo(@200.0f);
-        make.top.greaterThanOrEqualTo(self.view.mas_centerY).with.offset(10.0f);
+        make.left.equalTo(self.view.mas_left).with.offset(20.0f);
+        make.right.equalTo(self.view.mas_right).with.offset(-20.0f);
+        make.top.equalTo(self.view.mas_centerY).with.offset(10.0f);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }
