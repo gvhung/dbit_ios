@@ -60,7 +60,7 @@
     [_clockView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(10.0f);
         make.top.equalTo(self.contentView).with.offset(5.0f);
-        make.bottom.equalTo(self.contentView.mas_centerY).with.offset(5.0f);
+        make.bottom.equalTo(self.contentView.mas_centerY).with.offset(-5.0f);
     }];
     
     [_lectureNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {

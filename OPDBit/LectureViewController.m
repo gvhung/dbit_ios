@@ -98,7 +98,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     }];
     [_clockLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_daySegmentedControl.mas_bottom);
-        make.left.equalTo(self.view).with.offset(30.0f);
+        make.left.equalTo(self.view).with.offset(25.0f);
         make.bottom.equalTo(self.view);
         make.width.equalTo(@1.0f);
     }];
