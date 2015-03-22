@@ -37,6 +37,9 @@
                        active:(BOOL)active
                       failure:(void (^)(NSString *reason))failure;
 
+- (void)deleteTimeTableWithUtid:(NSInteger)utid;
+- (void)deleteLectureWithUlid:(NSInteger)ulid;
+
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
 - (NSArray *)downloadedTimeTables;
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;

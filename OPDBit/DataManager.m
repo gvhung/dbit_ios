@@ -42,6 +42,7 @@
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
         _realm = [RLMRealm defaultRealm];
+        NSLog(@"%@", [LectureObject allObjects]);
     }
     return self;
 }
@@ -201,6 +202,35 @@
     lectureDetailObject.timeStart = timeStart;
     lectureDetailObject.day = day;
     [lectureObject.lectureDetails addObject:lectureDetailObject];
+    [_realm commitWriteTransaction];
+}
+
+#pragma mark - Delete Object in Realm
+
+- (void)deleteTimeTableWithUtid:(NSInteger)utid
+{
+    [_realm beginWriteTransaction];
+    RLMResults *timeTableObjectToDeleteResult = [TimeTableObject objectsWhere:@"utid == %ld", utid];
+    TimeTableObject *timeTableObjectToDelete = timeTableObjectToDeleteResult[0];
+    [_realm deleteObject:timeTableObjectToDelete];
+    for (LectureObject *lectureObject in timeTableObjectToDelete.lectures) {
+        [_realm deleteObject:lectureObject];
+        for (LectureDetailObject *lectureDetailObject in lectureObject.lectureDetails) {
+            [_realm deleteObject:lectureDetailObject];
+        }
+    }
+    [_realm commitWriteTransaction];
+}
+
+- (void)deleteLectureWithUlid:(NSInteger)ulid
+{
+    [_realm beginWriteTransaction];
+    RLMResults *lectureObjectToDeleteResult = [LectureObject objectsWhere:@"ulid"];
+    LectureObject *lectureObjectToDelete = lectureObjectToDeleteResult[0];
+    [_realm deleteObject:lectureObjectToDelete];
+    for (LectureDetailObject *lectureDetailObject in lectureObjectToDelete.lectureDetails) {
+        [_realm deleteObject:lectureDetailObject];
+    }
     [_realm commitWriteTransaction];
 }
 

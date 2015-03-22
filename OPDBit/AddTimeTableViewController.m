@@ -145,7 +145,9 @@
 
 - (void)deleteTimeTable
 {
-    
+    [_dataManager deleteTimeTableWithUtid:_timeTableId];
+    [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
