@@ -19,6 +19,8 @@
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UITextField *searchTextField;
 
+@property (nonatomic, strong) UILabel *emptyLabel;
+
 @property (nonatomic, strong) NSArray *lectureResults;
 
 @property (nonatomic, strong) NSDictionary *selectedLectureDictionary;
@@ -38,6 +40,7 @@ static CGFloat const rowHeight = 105.0f;
         _segmentedControl = [[HMSegmentedControl alloc] init];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _searchTextField = [[UITextField alloc] init];
+        _emptyLabel = [[UILabel alloc] init];
         [self initialize];
     }
     return self;
@@ -60,6 +63,8 @@ static CGFloat const rowHeight = 105.0f;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.estimatedRowHeight = rowHeight;
     
+    _emptyLabel.text = @"검색결과가 없습니다! :D";
+    
     UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectServerLectureAction)];
     
     _searchTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
@@ -76,8 +81,9 @@ static CGFloat const rowHeight = 105.0f;
     self.navigationItem.titleView = _searchTextField;
     self.navigationItem.rightBarButtonItem = selectServerLectureButton;
     
-    [self.view addSubview:_segmentedControl];
     [self.view addSubview:_tableView];
+    [self.view addSubview:_segmentedControl];
+    [self.view addSubview:_emptyLabel];
     [self makeAutoLayoutConstraints];
 }
 
@@ -85,15 +91,15 @@ static CGFloat const rowHeight = 105.0f;
 {
     [_segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@64.0f);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
         make.height.equalTo(@60.0f);
     }];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_segmentedControl.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(60,0,0,0));
+    }];
+    [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
     }];
 }
 
@@ -116,7 +122,30 @@ static CGFloat const rowHeight = 105.0f;
 {
     _serverLectures = serverLectures;
     _lectureResults = serverLectures;
+    [self hideTableView:[self lectureResultsAreEmpty]];
     [_tableView reloadData];
+}
+
+- (void)setLectureResults:(NSArray *)lectureResults
+{
+    _lectureResults = lectureResults;
+    [self hideTableView:[self lectureResultsAreEmpty]];
+    [_tableView reloadData];
+}
+
+#pragma mark - Instance Method
+
+- (BOOL)lectureResultsAreEmpty
+{
+    return !_lectureResults.count;
+}
+
+- (void)hideTableView:(BOOL)hide
+{
+    _tableView.hidden = hide;
+    _emptyLabel.hidden = !hide;
+    
+    if (!hide) [_tableView reloadData];
 }
 
 #pragma mark - Getter
@@ -240,12 +269,12 @@ static CGFloat const rowHeight = 105.0f;
 - (void)textFieldDidChange:(UITextField *)textField
 {
     if(textField.text.length == 0)
-        _lectureResults = _serverLectures;
+        self.lectureResults = _serverLectures;
     else
     {
         NSMutableArray *searchArray = [NSMutableArray arrayWithArray:_serverLectures];
         NSPredicate *predicate = [self getPredicateWithString:textField.text];
-        _lectureResults = [NSMutableArray arrayWithArray:[searchArray filteredArrayUsingPredicate:predicate]];
+        self.lectureResults = [NSMutableArray arrayWithArray:[searchArray filteredArrayUsingPredicate:predicate]];
     }
     
     [_tableView reloadData];
@@ -255,10 +284,9 @@ static CGFloat const rowHeight = 105.0f;
 
 - (void)segmentedControlDidChange:(HMSegmentedControl *)segmentedControl
 {
-    _tableView.contentOffset = CGPointMake(0, 0);
+    _tableView.contentOffset = CGPointMake(0, -64);
     _searchTextField.text = @"";
-    _lectureResults = _serverLectures;
-    [_tableView reloadData];
+    self.lectureResults = _serverLectures;
 }
 
 #pragma mark - Table View Delegate
@@ -286,20 +314,5 @@ static CGFloat const rowHeight = 105.0f;
     [super viewWillDisappear:animated];
     [_searchTextField resignFirstResponder];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

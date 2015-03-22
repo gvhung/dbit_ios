@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) NSArray *serverTimeTables;
 
+@property (nonatomic, strong) UILabel *emptyLabel;
+
 @end
 
 @implementation ServerTimeTableViewController
@@ -38,16 +40,20 @@
 {
     [self setTitle:@"서버 시간표"];
     self.view.backgroundColor = [UIColor whiteColor];
+
+    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
+    self.navigationItem.rightBarButtonItem = downloadServerTimeTableButton;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_tableView registerClass:[ServerTimeTableCell class] forCellReuseIdentifier:@"ServerTimeTableCell"];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
-    self.navigationItem.rightBarButtonItem = downloadServerTimeTableButton;
+    _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.text = @"서버 시간표가 없어요! :D";
     
     [self.view addSubview:_tableView];
+    [self.view addSubview:_emptyLabel];
     [self makeAutoLayoutConstraints];
 }
 
@@ -56,12 +62,9 @@
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-}
-
-- (void)downloadServerTimeTable
-{
-    DownloadServerTimeTableViewController *downloadServerTimeTableViewController = [[DownloadServerTimeTableViewController alloc] init];
-    [self.navigationController pushViewController:downloadServerTimeTableViewController animated:YES];
+    [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_tableView);
+    }];
 }
 
 #pragma mark - Table View Data Source
@@ -95,6 +98,37 @@
     [self.navigationController popToViewController:self.delegate animated:YES];
 }
 
+#pragma mark - Setter
+
+- (void)setServerTimeTables:(NSArray *)serverTimeTables
+{
+    _serverTimeTables = serverTimeTables;
+    [self hideTableView:[self serverTimeTablesAreEmpty]];
+}
+
+#pragma mark - Instance Method
+
+- (BOOL)serverTimeTablesAreEmpty
+{
+    return !_serverTimeTables.count;
+}
+
+- (void)hideTableView:(BOOL)hide
+{
+    _tableView.hidden = hide;
+    _emptyLabel.hidden = !hide;
+    
+    if (!hide) [_tableView reloadData];
+}
+
+#pragma mark - Bar Button Action
+
+- (void)downloadServerTimeTable
+{
+    DownloadServerTimeTableViewController *downloadServerTimeTableViewController = [[DownloadServerTimeTableViewController alloc] init];
+    [self.navigationController pushViewController:downloadServerTimeTableViewController animated:YES];
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
@@ -105,29 +139,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _serverTimeTables = [_dataManager downloadedTimeTables];
+    self.serverTimeTables = [_dataManager downloadedTimeTables];
     [_tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-- (void)dealloc
-{
-    self.delegate = nil;
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+//- (void)dealloc
+//{
+//    self.delegate = nil;
+//}
 
 @end

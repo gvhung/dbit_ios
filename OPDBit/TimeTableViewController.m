@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSArray *timeTables;
 @property (nonatomic, strong) DataManager *dataManager;
 
+@property (nonatomic, strong) UILabel *emptyLabel;
+
 @end
 
 @implementation TimeTableViewController
@@ -44,13 +46,18 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTimeTable)];
     UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
     
+    self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_tableView registerClass:[TimeTableCell class] forCellReuseIdentifier:TimeTableCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-    self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
+    _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.text = @"시간표가 없어요! :D";
+
     [self.view addSubview:_tableView];
+    [self.view addSubview:_emptyLabel];
     [self makeAutoLayoutConstraints];
 }
 
@@ -59,20 +66,11 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
+    
+    [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(_tableView);
+    }];
 }
-
-- (void)downloadServerTimeTable
-{
-    ServerTimeTableViewController *serverTimeTableViewController = [[ServerTimeTableViewController alloc] init];
-    [self.navigationController pushViewController:serverTimeTableViewController animated:YES];
-}
-
-- (void)addTimeTable
-{
-    AddTimeTableViewController *addTimeTableViewController = [[AddTimeTableViewController alloc] init];
-    [self.navigationController pushViewController:addTimeTableViewController animated:YES];
-}
-
 
 #pragma mark - Table View Data Source
 
@@ -106,6 +104,43 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 
+#pragma mark - Setter
+
+- (void)setTimeTables:(NSArray *)timeTables
+{
+    _timeTables = timeTables;
+    [self hideTableView:[self timeTablesAreEmpty]];
+}
+
+#pragma mark - Instance Method
+
+- (BOOL)timeTablesAreEmpty
+{
+    return !_timeTables.count;
+}
+
+- (void)hideTableView:(BOOL)hide
+{
+    _tableView.hidden = hide;
+    _emptyLabel.hidden = !hide;
+    
+    if (!hide) [_tableView reloadData];
+}
+
+#pragma mark - Bar Button Action
+
+- (void)downloadServerTimeTable
+{
+    ServerTimeTableViewController *serverTimeTableViewController = [[ServerTimeTableViewController alloc] init];
+    [self.navigationController pushViewController:serverTimeTableViewController animated:YES];
+}
+
+- (void)addTimeTable
+{
+    AddTimeTableViewController *addTimeTableViewController = [[AddTimeTableViewController alloc] init];
+    [self.navigationController pushViewController:addTimeTableViewController animated:YES];
+}
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
@@ -116,23 +151,8 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _timeTables = [_dataManager timeTables];
+    self.timeTables = [_dataManager timeTables];
     [_tableView reloadData];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
