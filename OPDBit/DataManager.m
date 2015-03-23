@@ -164,11 +164,39 @@
     [_realm commitWriteTransaction];
 }
 
+- (void)updateLectureWithUlid:(NSInteger)ulid
+                         name:(NSString *)name
+                        theme:(NSString *)theme
+               lectureDetails:(NSArray *)lectureDetails
+                      failure:(void (^)(NSString *reason))failure
+{
+    [self deleteLectureWithUlid:ulid];
+    [self saveLectureWithLectureName:name theme:theme lectureDetails:lectureDetails ulid:ulid];
+}
+
 - (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails
 {
     [_realm beginWriteTransaction];
     LectureObject *lectureObject = [[LectureObject alloc] init];
     lectureObject.ulid = [self lastUlid]+1;
+    lectureObject.lectureName = lectureName;
+    lectureObject.theme = theme;
+    [self.activedTimeTableObject.lectures addObject:lectureObject];
+    [_realm commitWriteTransaction];
+    for (NSDictionary *lectureDetailDictionary in lectureDetails) {
+        [self saveLectureDetailWithUlid:lectureObject.ulid
+                        lectureLocation:lectureDetailDictionary[@"lectureLocation"]
+                                timeEnd:[lectureDetailDictionary[@"timeEnd"] integerValue]
+                              timeStart:[lectureDetailDictionary[@"timeStart"] integerValue]
+                                    day:[lectureDetailDictionary[@"day"] integerValue]];
+    }
+}
+
+- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails ulid:(NSInteger)ulid
+{
+    [_realm beginWriteTransaction];
+    LectureObject *lectureObject = [[LectureObject alloc] init];
+    lectureObject.ulid = ulid;
     lectureObject.lectureName = lectureName;
     lectureObject.theme = theme;
     [self.activedTimeTableObject.lectures addObject:lectureObject];
@@ -362,6 +390,12 @@
     }
     LectureObject *lectureObject = lectureResults[0];
     return lectureObject;
+}
+
+- (NSDictionary *)lectureWithId:(NSInteger)ulid
+{
+    RLMResults *lectureResults = [self.activedTimeTableObject.lectures objectsWhere:@"ulid == %ld", ulid];
+    return [self arrayWithLectureArray:(RLMArray *)lectureResults][0];
 }
 
 #pragma mark - Getter

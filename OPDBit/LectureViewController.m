@@ -154,6 +154,10 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
+    editLectureViewController.ulidToEdit = [_lectureDetails[indexPath.row][@"ulid"] integerValue];
+    [self.navigationController pushViewController:editLectureViewController animated:YES];
 }
 
 #pragma mark - Segmented Control Delegate

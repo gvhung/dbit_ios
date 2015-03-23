@@ -14,8 +14,9 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) NSDictionary *serverLectureDictionary;
-@property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
 @property (nonatomic, strong) NSArray *lectureDetails;
+
+@property (nonatomic) NSInteger ulidToEdit;
 
 @property (nonatomic, strong) RMDateSelectionViewController *timePickerViewController;
 

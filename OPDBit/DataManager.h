@@ -25,6 +25,12 @@
 - (void)saveLectureWithLectureName:(NSString *)lectureName
                              theme:(NSString *)theme
                     lectureDetails:(NSArray *)lectureDetails;
+
+- (void)saveLectureWithLectureName:(NSString *)lectureName
+                             theme:(NSString *)theme
+                    lectureDetails:(NSArray *)lectureDetails
+                              ulid:(NSInteger)ulid;
+
 - (void)saveLectureDetailWithUlid:(NSInteger)ulid
                   lectureLocation:(NSString *)lectureLocation
                           timeEnd:(NSInteger)timeEnd
@@ -35,6 +41,12 @@
                          name:(NSString *)name
                      serverId:(NSInteger)serverId
                        active:(BOOL)active
+                      failure:(void (^)(NSString *reason))failure;
+
+- (void)updateLectureWithUlid:(NSInteger)ulid
+                         name:(NSString *)name
+                        theme:(NSString *)theme
+               lectureDetails:(NSArray *)lectureDetails
                       failure:(void (^)(NSString *reason))failure;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
@@ -50,6 +62,7 @@
 - (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
 - (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
 - (NSString *)semesterString:(NSString *)semester;
+- (NSDictionary *)lectureWithId:(NSInteger)ulid;
 
 /**
  * Lecture Details to display

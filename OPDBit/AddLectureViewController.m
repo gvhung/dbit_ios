@@ -21,6 +21,8 @@
 
 @property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
+@property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
+
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
@@ -114,6 +116,23 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _lectureDetailCount = lectureDetails.count;
 }
 
+- (void)setUlidToEdit:(NSInteger)ulidToEdit
+{
+    _ulidToEdit = ulidToEdit;
+    [self setTitle:@"강의 수정"];
+    UIBarButtonItem *deleteLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteLecture)];
+    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
+    [barButtonItems addObject:deleteLectureButton];
+    self.navigationItem.rightBarButtonItems = barButtonItems;
+    
+    NSDictionary *lectureDictionary = [_dataManager lectureWithId:ulidToEdit];
+    _lectureDictionary[@"lectureName"] = lectureDictionary[@"lectureName"];
+    _lectureDictionary[@"theme"] = lectureDictionary[@"theme"];
+    self.lectureDetails = lectureDictionary[@"lectureDetails"];
+    
+    [_tableView reloadData];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -146,8 +165,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         
         cell.delegate = self;
         
-        cell.lectureName = _serverLectureDictionary[@"lectureName"];
-        cell.lectureTheme = _serverLectureDictionary[@"theme"];
+        cell.lectureName = _lectureDictionary[@"lectureName"];
+        cell.lectureTheme = _lectureDictionary[@"theme"];
         
         return cell;
     } else if (indexPath.section == 1) {
@@ -283,9 +302,28 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
-    [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
-                                       theme:_lectureDictionary[@"theme"]
-                              lectureDetails:_lectureDetails];
+    
+    if (_ulidToEdit == -1){
+        [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
+                                           theme:_lectureDictionary[@"theme"]
+                                  lectureDetails:_lectureDetails];
+        [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
+    } else {
+        [_dataManager updateLectureWithUlid:_ulidToEdit
+                                       name:_lectureDictionary[@"lectureName"]
+                                      theme:_lectureDictionary[@"theme"]
+                             lectureDetails:_lectureDetails
+                                    failure:nil];
+        [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)deleteLecture
+{
+    [_dataManager deleteLectureWithUlid:_ulidToEdit];
+    [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
