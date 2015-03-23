@@ -90,17 +90,19 @@
      getServerSchoolsWithCompletion:^(id response) {
          [KVNProgress dismiss];
          
-         UIAlertView *schoolSelectAlertView = [[UIAlertView alloc] initWithTitle:@"학교선택" message:@"" delegate:self cancelButtonTitle:@"확인" otherButtonTitles:nil];
-         schoolSelectAlertView.tag = 1;
-         
          [_dataManager saveServerSchoolsWithResponse:response];
          _schools = [_dataManager schools];
          
+         UIActionSheet *schoolSelectActionSheet = [[UIActionSheet alloc] initWithTitle:@"학교를 선택해주세요!"
+                                                                              delegate:self
+                                                                     cancelButtonTitle:@"취소"
+                                                                destructiveButtonTitle:nil
+                                                                     otherButtonTitles:nil];
+         schoolSelectActionSheet.tag = 1;
          for (NSDictionary *schoolDictionary in _schools) {
-             [schoolSelectAlertView addButtonWithTitle:schoolDictionary[@"schoolName"]];
+             [schoolSelectActionSheet addButtonWithTitle:schoolDictionary[@"schoolName"]];
          }
-         
-         [schoolSelectAlertView show];
+         [schoolSelectActionSheet showInView:self.view];
      } failure:^(NSError *error) {
          [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
          NSLog(@"%@", error);
@@ -119,18 +121,19 @@
      completion:^(id response) {
          [KVNProgress dismiss];
          
-         UIAlertView *timeTableSelectAlertView = [[UIAlertView alloc] initWithTitle:@"시간표 선택" message:@"" delegate:self cancelButtonTitle:@"확인" otherButtonTitles:nil];
-         timeTableSelectAlertView.tag = 2;
-         
-         
          [_dataManager saveServerTimeTablesWithResponse:response];
          _timeTables = [_dataManager serverTimeTablesWithSchoolId:_selectedSchoolId];
          
-         for (NSDictionary *serverTimeTableDictionary in _timeTables)
-             [timeTableSelectAlertView addButtonWithTitle:[_dataManager semesterString:serverTimeTableDictionary[@"semester"]]];
-         
-         [timeTableSelectAlertView show];
-         
+         UIActionSheet *timeTableSelectActionSheet = [[UIActionSheet alloc] initWithTitle:@"시간표를 선택해주세요!"
+                                                                                 delegate:self
+                                                                        cancelButtonTitle:@"취소"
+                                                                   destructiveButtonTitle:nil
+                                                                        otherButtonTitles:nil];
+         timeTableSelectActionSheet.tag = 2;
+         for (NSDictionary *serverTimeTableDictionary in _timeTables) {
+             [timeTableSelectActionSheet addButtonWithTitle:[_dataManager semesterString:serverTimeTableDictionary[@"semester"]]];
+         }
+         [timeTableSelectActionSheet showInView:self.view];
     } failure:^(NSError *error) {
         [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
         NSLog(@"%@", error);
@@ -162,15 +165,17 @@
      }];
 }
 
-#pragma mark - Alert View Delegate
+#pragma mark - Action Sheet Delegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) return;
-    if (alertView.tag == 1) {
+    if (actionSheet.tag == 1) {
         _selectedSchoolId = [_schools[buttonIndex-1][@"schoolId"] integerValue];
+        _selectedTimeTable = 0;
         [_schoolButton setTitle:_schools[buttonIndex-1][@"schoolName"] forState:UIControlStateNormal];
-    } else if (alertView.tag == 2) {
+        [_timeTableButton setTitle:@"시간표를 선택해주세요." forState:UIControlStateNormal];
+    } else if (actionSheet.tag == 2) {
         _selectedTimeTable = [_timeTables[buttonIndex-1][@"timeTableId"] integerValue];
         [_timeTableButton setTitle:[_dataManager semesterString:_timeTables[buttonIndex-1][@"semester"]] forState:UIControlStateNormal];
     }

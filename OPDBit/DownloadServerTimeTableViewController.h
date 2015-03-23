@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DownloadServerTimeTableViewController : UIViewController <UIAlertViewDelegate>
+@interface DownloadServerTimeTableViewController : UIViewController <UIActionSheetDelegate>
 
 @property (nonatomic, strong) UIButton *schoolButton;
 @property (nonatomic, strong) UIButton *timeTableButton;
