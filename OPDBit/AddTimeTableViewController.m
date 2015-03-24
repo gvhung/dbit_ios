@@ -152,10 +152,11 @@
 
 - (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
 {
+    NSLog(@"%@", timeTableDictionary);
     _timeTableDictionary = timeTableDictionary;
     self.selectedServerTimeTableId = [timeTableDictionary[@"serverId"] integerValue];
     _timeTableNameField.text = timeTableDictionary[@"timeTableName"];
-    [_primaryTimeTableSwitch setOn:timeTableDictionary[@"active"]];
+    [_primaryTimeTableSwitch setOn:[timeTableDictionary[@"active"] boolValue]];
 }
 
 #pragma mark - Bar Button Action

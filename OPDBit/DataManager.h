@@ -51,7 +51,9 @@
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
 
+- (void)setActiveWithUtid:(NSInteger)utid;
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
+
 - (NSArray *)downloadedTimeTables;
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
 - (NSArray *)schools;

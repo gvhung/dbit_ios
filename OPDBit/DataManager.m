@@ -159,6 +159,14 @@
     TimeTableObject *timeTableObject = timeTableResults[0];
     timeTableObject.timeTableName = name;
     timeTableObject.serverId = serverId;
+    
+    if (active) {
+        RLMResults *timeTableResults = [TimeTableObject allObjects];
+        for (TimeTableObject *resultTimeTableObject in timeTableResults) {
+            resultTimeTableObject.active = NO;
+        }
+    }
+    
     timeTableObject.active = active;
     [_realm addOrUpdateObject:timeTableObject];
     [_realm commitWriteTransaction];
@@ -258,6 +266,16 @@
 }
 
 #pragma mark - Set Object Attribute
+
+- (void)setActiveWithUtid:(NSInteger)utid
+{
+    TimeTableObject *timeTableObject = [TimeTableObject objectsWhere:@"utid == %ld", utid][0];
+    RLMResults *timeTableResults = [TimeTableObject allObjects];
+    for (TimeTableObject *resultTimeTableObject in timeTableResults) {
+        resultTimeTableObject.active = NO;
+    }
+    timeTableObject.active = YES;
+}
 
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId
 {

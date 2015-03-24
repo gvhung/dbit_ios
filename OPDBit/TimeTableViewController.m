@@ -13,6 +13,7 @@
 #import "DataManager.h"
 
 #import <Masonry/Masonry.h>
+#import <KVNProgress/KVNProgress.h>
 
 @interface TimeTableViewController ()
 
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) DataManager *dataManager;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @end
 
@@ -55,6 +57,8 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = @"시간표가 없어요! :D";
+    
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"취소" destructiveButtonTitle:@"기본 시간표 설정" otherButtonTitles:@"수정하기", nil];
 
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];
@@ -99,9 +103,25 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
-    editTimeTableViewController.timeTableId = [_timeTables[indexPath.row][@"utid"] integerValue];
-    [self.navigationController pushViewController:editTimeTableViewController animated:YES];
+    
+    _actionSheet.title = _timeTables[indexPath.row][@"timeTableName"];
+    _actionSheet.tag = indexPath.row;
+    [_actionSheet showInView:self.view];
+}
+
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [_dataManager setActiveWithUtid:actionSheet.tag];
+        [KVNProgress showSuccessWithStatus:[NSString stringWithFormat:@"기본 시간표가\n'%@'\n(으)로 설정되었습니다.", _timeTables[actionSheet.tag][@"timeTableName"]]];
+        [_tableView reloadData];
+    } else if (buttonIndex == 1) {
+        AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
+        editTimeTableViewController.timeTableId = [_timeTables[actionSheet.tag][@"utid"] integerValue];
+        [self.navigationController pushViewController:editTimeTableViewController animated:YES];
+    }
 }
 
 #pragma mark - Setter
