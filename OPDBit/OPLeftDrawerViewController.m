@@ -11,10 +11,14 @@
 #import "TimeTableViewController.h"
 #import "LectureViewController.h"
 #import "AppDelegate.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
+#import <KVNProgress/KVNProgress.h>
 
 @interface OPLeftDrawerViewController ()
+
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
@@ -24,6 +28,7 @@
 {
     self = [super init];
     if (self) {
+        _dataManager = [DataManager sharedInstance];
         [self initialize];
     }
     return self;
@@ -90,6 +95,11 @@
         TimeTableViewController *timeTableViewController = [[TimeTableViewController alloc] init];
         appDelegate.centerNavigationController.viewControllers = @[timeTableViewController];
     } else {
+        if (!_dataManager.activedTimeTable) {
+            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+            [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
+            return;
+        }
         LectureViewController *lectureViewController = [[LectureViewController alloc] init];
         appDelegate.centerNavigationController.viewControllers = @[lectureViewController];
     }

@@ -8,8 +8,10 @@
 
 #import "AppDelegate.h"
 #import "OPLeftDrawerViewController.h"
+#import "TimeTableViewController.h"
 #import "LectureViewController.h"
 #import "UIColor+OPTheme.h"
+#import "DataManager.h"
 
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 
@@ -23,16 +25,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
     [RMDateSelectionViewController setLocalizedTitleForSelectButton:@"선택"];
     [RMDateSelectionViewController setLocalizedTitleForCancelButton:@"취소"];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
     OPLeftDrawerViewController *leftDrawerViewController = [[OPLeftDrawerViewController alloc] init];
-    LectureViewController *lectureViewController = [[LectureViewController alloc] init];
-    _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:lectureViewController];
     
+    if ([DataManager sharedInstance].activedTimeTable) {
+        LectureViewController *lectureViewController = [[LectureViewController alloc] init];
+        _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:lectureViewController];
+    } else {
+        TimeTableViewController *timeTableViewController = [[TimeTableViewController alloc] init];
+        _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:timeTableViewController];
+    }
     _centerNavigationController.navigationBar.barTintColor = [UIColor op_primary];
     _centerNavigationController.navigationBar.opaque = YES;
     _centerNavigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimary]};
