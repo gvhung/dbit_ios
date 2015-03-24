@@ -42,7 +42,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (void)initialize
 {
-    [self setTitle:@"강의"];
+    [self setTitle:_dataManager.activedTimeTable[@"timeTableName"]];
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addLectureAction)];
