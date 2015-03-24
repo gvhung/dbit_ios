@@ -168,7 +168,6 @@
                          name:(NSString *)name
                         theme:(NSString *)theme
                lectureDetails:(NSArray *)lectureDetails
-                      failure:(void (^)(NSString *reason))failure
 {
     [self deleteLectureWithUlid:ulid];
     [self saveLectureWithLectureName:name theme:theme lectureDetails:lectureDetails ulid:ulid];

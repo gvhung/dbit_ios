@@ -312,8 +312,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [_dataManager updateLectureWithUlid:_ulidToEdit
                                        name:_lectureDictionary[@"lectureName"]
                                       theme:_lectureDictionary[@"theme"]
-                             lectureDetails:_lectureDetails
-                                    failure:nil];
+                             lectureDetails:_lectureDetails];
         [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
     }
     

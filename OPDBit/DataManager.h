@@ -46,8 +46,7 @@
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
                         theme:(NSString *)theme
-               lectureDetails:(NSArray *)lectureDetails
-                      failure:(void (^)(NSString *reason))failure;
+               lectureDetails:(NSArray *)lectureDetails;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
