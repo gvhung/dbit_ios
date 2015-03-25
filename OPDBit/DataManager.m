@@ -555,6 +555,98 @@
     return arrayForReturn;
 }
 
+#pragma mark - Lecture Theme
+
++ (NSInteger)lectureThemeCount
+{
+    return 19;
+}
+
++ (NSString *)lectureThemeName:(NSInteger)themeId
+{
+    switch (themeId) {
+        case 0:
+            return @"빨간색";
+            break;
+            
+        case 1:
+            return @"분홍색";
+            break;
+            
+        case 2:
+            return @"보라색";
+            break;
+            
+        case 3:
+            return @"진한 보라색";
+            break;
+            
+        case 4:
+            return @"남색";
+            break;
+            
+        case 5:
+            return @"파란색";
+            break;
+            
+        case 6:
+            return @"하늘색";
+            break;
+            
+        case 7:
+            return @"청록색";
+            break;
+            
+        case 8:
+            return @"청색";
+            break;
+            
+        case 9:
+            return @"초록색";
+            break;
+            
+        case 10:
+            return @"연두색";
+            break;
+            
+        case 11:
+            return @"라임색";
+            break;
+            
+        case 12:
+            return @"노란색";
+            break;
+            
+        case 13:
+            return @"호박색";
+            break;
+            
+        case 14:
+            return @"주황색";
+            break;
+            
+        case 15:
+            return @"진한 주황색";
+            break;
+            
+        case 16:
+            return @"갈색";
+            break;
+            
+        case 17:
+            return @"회색";
+            break;
+            
+        case 18:
+            return @"푸른 회색";
+            break;
+            
+        default:
+            return @"알 수 없는 테마";
+            break;
+    }
+}
+
 #pragma mark - Time Convert Method
 
 + (NSString *)stringFromTimeInteger:(NSInteger)timeInteger

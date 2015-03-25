@@ -79,6 +79,11 @@
 
 - (NSArray *)lectureDetailsWithDay:(NSInteger)day;
 
+#pragma mark - Lecture Theme
+
++ (NSInteger)lectureThemeCount;
++ (NSString *)lectureThemeName:(NSInteger)themeId;
+
 #pragma mark - Time Convert Method
 
 + (NSString *)stringFromTimeInteger:(NSInteger)timeInteger;

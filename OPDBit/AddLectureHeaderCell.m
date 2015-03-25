@@ -7,6 +7,7 @@
 //
 
 #import "AddLectureHeaderCell.h"
+#import "DataManager.h"
 
 #import <Masonry/Masonry.h>
 

@@ -16,7 +16,7 @@
  * @param   ulid 강의 고유 ID (NSInteger)
  * @param   lectureDetails  강의(parent) - 수업(child) <To Many> (RLMArray<LectureDetailObject> *)
  * @param   lectureName 강의명 (NSString *)
- * @param   theme   시계 색깔 (테마) (NSString *)
+ * @param   theme   시계 색깔 (테마) (NSInteger)
  */
 
 @interface LectureObject : RLMObject
@@ -25,7 +25,7 @@
 @property RLMArray<LectureDetailObject> *lectureDetails;
 @property NSString *lectureName;
 
-@property NSString *theme;
+@property NSInteger theme;
 
 @end
 

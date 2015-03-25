@@ -116,7 +116,86 @@
 
 + (UIColor *)op_lectureTheme:(NSInteger)themeId
 {
-    return [self colorWithHexString:@""];
+    switch (themeId) {
+        case 0:
+            return [self colorWithHexString:@"#F44336"];
+            break;
+            
+        case 1:
+            return [self colorWithHexString:@"#E91E63"];
+            break;
+            
+        case 2:
+            return [self colorWithHexString:@"#9C27B0"];
+            break;
+            
+        case 3:
+            return [self colorWithHexString:@"#673AB7"];
+            break;
+            
+        case 4:
+            return [self colorWithHexString:@"#3F51B5"];
+            break;
+            
+        case 5:
+            return [self colorWithHexString:@"#2196F3"];
+            break;
+            
+        case 6:
+            return [self colorWithHexString:@"#03A9F4"];
+            break;
+            
+        case 7:
+            return [self colorWithHexString:@"#00BCD4"];
+            break;
+            
+        case 8:
+            return [self colorWithHexString:@"#009688"];
+            break;
+            
+        case 9:
+            return [self colorWithHexString:@"#4CAF50"];
+            break;
+            
+        case 10:
+            return [self colorWithHexString:@"#8BC34A"];
+            break;
+            
+        case 11:
+            return [self colorWithHexString:@"#CDDC39"];
+            break;
+            
+        case 12:
+            return [self colorWithHexString:@"#FFEB3B"];
+            break;
+            
+        case 13:
+            return [self colorWithHexString:@"#FFC107"];
+            break;
+            
+        case 14:
+            return [self colorWithHexString:@"#FF9800"];
+            break;
+            
+        case 15:
+            return [self colorWithHexString:@"#FF5722"];
+            break;
+            
+        case 16:
+            return [self colorWithHexString:@"#795548"];
+            break;
+            
+        case 17:
+            return [self colorWithHexString:@"#9E9E9E"];
+            break;
+            
+        case 18:
+            return [self colorWithHexString:@"#607D8B"];
+            break;
+            
+        default:
+            return [self whiteColor];
+    }
 }
 
 
