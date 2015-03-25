@@ -45,8 +45,12 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     [self setTitle:@"시간표"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTimeTable)];
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
+    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                        target:self
+                                                                                        action:@selector(addTimeTable)];
+    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+                                                                                                   target:self
+                                                                                                   action:@selector(downloadServerTimeTable)];
     
     self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
     
