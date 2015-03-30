@@ -8,6 +8,7 @@
 
 #import "LectureTableViewCell.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <MZClockView/MZClockView.h>
@@ -29,7 +30,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _clockView = [[MZClockView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.height - 10.0f, self.contentView.frame.size.height - 10.0f)
-                                                  color:[UIColor blueColor]
+                                                  color:[UIColor whiteColor]
                                                   hours:10
                                                 minutes:10
                                               handWidth:2.0f
@@ -85,6 +86,8 @@
 - (void)setLectureDetailDictionary:(NSDictionary *)lectureDetailDictionary
 {
     _lectureDetailDictionary = lectureDetailDictionary;
+    
+    NSLog(@"%@", lectureDetailDictionary);
     
     NSInteger startTime = [lectureDetailDictionary[@"timeStart"] integerValue];
     NSInteger endTime = [lectureDetailDictionary[@"timeEnd"] integerValue];

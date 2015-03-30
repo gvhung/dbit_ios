@@ -10,6 +10,7 @@
 #import "DataManager.h"
 
 #import <Masonry/Masonry.h>
+#import <HMSegmentedControl/HMSegmentedControl.h>
 
 @interface AddLectureHeaderCell ()
 
@@ -19,7 +20,7 @@
 @property (nonatomic, strong) UILabel *lectureThemeLabel;
 
 @property (nonatomic, strong) UITextField *lectureNameField;
-@property (nonatomic, strong) UITextField *lectureThemeField;
+@property (nonatomic, strong) HMSegmentedControl *lectureThemeSegmentedControl;
 
 @end
 
@@ -29,13 +30,17 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _lectureTheme = 0;
+        
+        NSArray *thumbnailArray = [DataManager lectureThemeThumbnailArray];
+
         _separator = [[UIView alloc] init];
         
         _lectureNameLabel = [[UILabel alloc] init];
         _lectureThemeLabel = [[UILabel alloc] init];
         
         _lectureNameField = [[UITextField alloc] init];
-        _lectureThemeField = [[UITextField alloc] init];
+        _lectureThemeSegmentedControl = [[HMSegmentedControl alloc] initWithSectionImages:thumbnailArray sectionSelectedImages:thumbnailArray];
         
         [self initialize];
     }
@@ -58,14 +63,10 @@
     _lectureNameField.tag = -1;
     [_lectureNameField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
     
-    _lectureThemeField.placeholder = @"테마 (임시)";
-    _lectureThemeField.backgroundColor = [UIColor clearColor];
-    _lectureThemeField.borderStyle = UITextBorderStyleNone;
-    [_lectureThemeField setAutocorrectionType:UITextAutocorrectionTypeNo];
-    _lectureThemeField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _lectureThemeField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    _lectureThemeField.tag = -2;
-    [_lectureThemeField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+    _lectureThemeSegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
+    _lectureThemeSegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    _lectureThemeSegmentedControl.selectionIndicatorBoxOpacity = 0;
+    [_lectureThemeSegmentedControl addTarget:self.delegate action:@selector(segmentedControlDidChanged:) forControlEvents:UIControlEventValueChanged];
     
     [self.contentView addSubview:_separator];
     
@@ -73,7 +74,7 @@
     [self.contentView addSubview:_lectureThemeLabel];
     
     [self.contentView addSubview:_lectureNameField];
-    [self.contentView addSubview:_lectureThemeField];
+    [self.contentView addSubview:_lectureThemeSegmentedControl];
     
     [self makeAutoLayoutConstraints];
 }
@@ -97,10 +98,11 @@
         make.left.equalTo(self.contentView).with.offset(padding);
         make.right.equalTo(self.contentView).with.offset(-padding);
     }];
-    [_lectureThemeField mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_lectureThemeSegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_lectureThemeLabel.mas_bottom).with.offset(2.0f);
         make.left.equalTo(self.contentView).with.offset(padding);
         make.right.equalTo(self.contentView).with.offset(-padding);
+        make.height.equalTo(@40.0f);
     }];
     
     [_separator mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -118,19 +120,14 @@
     _lectureNameField.text = lectureName;
 }
 
-- (void)setLectureTheme:(NSString *)lectureTheme
+- (void)setLectureTheme:(NSInteger)lectureTheme
 {
-    _lectureThemeField.text = lectureTheme;
+    _lectureTheme = lectureTheme;
 }
 
 - (NSString *)lectureName
 {
     return _lectureNameField.text;
-}
-
-- (NSString *)lectureTheme
-{
-    return _lectureThemeField.text;
 }
 
 @end

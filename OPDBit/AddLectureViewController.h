@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
+#import <HMSegmentedControl/HMSegmentedControl.h>
 
 @interface AddLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, RMDateSelectionViewControllerDelegate>
 
@@ -24,6 +25,7 @@
 - (void)addLectureDetailAction;
 
 - (void)textFieldDidChanged:(UITextField *)textField;
+- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl;
 - (void)timeButtonTapped:(UIButton *)button;
 
 @end

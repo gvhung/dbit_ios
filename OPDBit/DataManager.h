@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface DataManager : NSObject
 
@@ -23,11 +24,11 @@
                      serverId:(NSInteger)serverId
                        active:(BOOL)active;
 - (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSString *)theme
+                             theme:(NSInteger)theme
                     lectureDetails:(NSArray *)lectureDetails;
 
 - (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSString *)theme
+                             theme:(NSInteger)theme
                     lectureDetails:(NSArray *)lectureDetails
                               ulid:(NSInteger)ulid;
 
@@ -45,7 +46,7 @@
 
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
-                        theme:(NSString *)theme
+                        theme:(NSInteger)theme
                lectureDetails:(NSArray *)lectureDetails;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
@@ -82,7 +83,8 @@
 #pragma mark - Lecture Theme
 
 + (NSInteger)lectureThemeCount;
-+ (NSString *)lectureThemeName:(NSInteger)themeId;
++ (NSArray *)lectureThemeThumbnailArray;
++ (UIImage *)lectureThemeThumbnail:(NSInteger)themeId;
 
 #pragma mark - Time Convert Method
 

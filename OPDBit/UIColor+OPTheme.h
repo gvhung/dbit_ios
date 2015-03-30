@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIColor (OPTheme)
-/*
- colorPrimary : #FF5722 colorPrimaryDark : #E64A19 colorPrimary100 : #FFCCBC
- colorAccent : #FFAB40 colorAccentDark : #FF9100 colorAccent100 : #FFD180
- background : #FFFFFF backgroundDark : #000000
- textColorPrimaryDark : #DE000000 textColorSecondaryDark : #8A000000 textColorDisabledDark : #42000000
- textColorPrimary : #FFFFFF textColorSecondary : #B2FFFFFF textColorDisabled : #4C000000 (v0.1.1) textColorDisabled : #4CFFFFFF
- dividerDark : #1F000000 divider : #1FFFFFFF
- */
 
 /// @name   Primary Color
 

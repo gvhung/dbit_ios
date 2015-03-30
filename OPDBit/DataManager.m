@@ -14,6 +14,8 @@
 #import "ServerLectureObject.h"
 #import "TimeTableObject.h"
 
+#import "UIColor+OPTheme.h"
+
 @interface DataManager ()
 
 @property (nonatomic, strong) RLMRealm *realm;
@@ -174,14 +176,14 @@
 
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
-                        theme:(NSString *)theme
+                        theme:(NSInteger)theme
                lectureDetails:(NSArray *)lectureDetails
 {
     [self deleteLectureWithUlid:ulid];
     [self saveLectureWithLectureName:name theme:theme lectureDetails:lectureDetails ulid:ulid];
 }
 
-- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails
+- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSInteger)theme lectureDetails:(NSArray *)lectureDetails
 {
     [_realm beginWriteTransaction];
     LectureObject *lectureObject = [[LectureObject alloc] init];
@@ -199,7 +201,7 @@
     }
 }
 
-- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSString *)theme lectureDetails:(NSArray *)lectureDetails ulid:(NSInteger)ulid
+- (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSInteger)theme lectureDetails:(NSArray *)lectureDetails ulid:(NSInteger)ulid
 {
     [_realm beginWriteTransaction];
     LectureObject *lectureObject = [[LectureObject alloc] init];
@@ -499,7 +501,7 @@
         lectureDictionary[@"ulid"] = @(lectureObject.ulid);
         lectureDictionary[@"lectureName"] = lectureObject.lectureName;
         lectureDictionary[@"lectureDetails"] = [self arrayWithLectureDetailArray:lectureObject.lectureDetails];
-        lectureDictionary[@"theme"] = lectureObject.theme;
+        lectureDictionary[@"theme"] = @(lectureObject.theme);
         [arrayForReturn addObject:lectureDictionary];
     }
     return arrayForReturn;
@@ -517,7 +519,7 @@
             lectureDetailDictionary[@"timeStart"] = @(lectureDetailObject.timeStart);
             lectureDetailDictionary[@"timeEnd"] = @(lectureDetailObject.timeEnd);
             lectureDetailDictionary[@"lectureName"] = lectureObject.lectureName;
-            lectureDetailDictionary[@"theme"] = lectureObject.theme;
+            lectureDetailDictionary[@"theme"] = @(lectureObject.theme);
             [arrayForReturn addObject:lectureDetailDictionary];
         }
     }
@@ -562,89 +564,33 @@
     return 19;
 }
 
-+ (NSString *)lectureThemeName:(NSInteger)themeId
++ (NSArray *)lectureThemeThumbnailArray
 {
-    switch (themeId) {
-        case 0:
-            return @"빨간색";
-            break;
-            
-        case 1:
-            return @"분홍색";
-            break;
-            
-        case 2:
-            return @"보라색";
-            break;
-            
-        case 3:
-            return @"진한 보라색";
-            break;
-            
-        case 4:
-            return @"남색";
-            break;
-            
-        case 5:
-            return @"파란색";
-            break;
-            
-        case 6:
-            return @"하늘색";
-            break;
-            
-        case 7:
-            return @"청록색";
-            break;
-            
-        case 8:
-            return @"청색";
-            break;
-            
-        case 9:
-            return @"초록색";
-            break;
-            
-        case 10:
-            return @"연두색";
-            break;
-            
-        case 11:
-            return @"라임색";
-            break;
-            
-        case 12:
-            return @"노란색";
-            break;
-            
-        case 13:
-            return @"호박색";
-            break;
-            
-        case 14:
-            return @"주황색";
-            break;
-            
-        case 15:
-            return @"진한 주황색";
-            break;
-            
-        case 16:
-            return @"갈색";
-            break;
-            
-        case 17:
-            return @"회색";
-            break;
-            
-        case 18:
-            return @"푸른 회색";
-            break;
-            
-        default:
-            return @"알 수 없는 테마";
-            break;
+    NSMutableArray *lectureThemeArray = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < [self lectureThemeCount]; i++) {
+        [lectureThemeArray addObject:[self lectureThemeThumbnail:i]];
     }
+    return lectureThemeArray;
+}
+
++ (UIImage *)lectureThemeThumbnail:(NSInteger)themeId;
+{
+    return [self thumbnailFromColor:[UIColor op_lectureTheme:themeId]];
+}
+
++ (UIImage *)thumbnailFromColor:(UIColor *)color
+{
+    UIView *thumbnailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    thumbnailView.layer.cornerRadius = thumbnailView.frame.size.width/2;
+    thumbnailView.layer.backgroundColor = color.CGColor;
+    CGRect rect = [thumbnailView bounds];
+    
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [thumbnailView.layer renderInContext:context];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
 }
 
 #pragma mark - Time Convert Method

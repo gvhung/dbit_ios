@@ -12,7 +12,7 @@
 @interface AddLectureHeaderCell : UITableViewCell
 
 @property (nonatomic, retain) NSString *lectureName;
-@property (nonatomic, retain) NSString *lectureTheme;
+@property (nonatomic) NSInteger lectureTheme;
 
 @property (nonatomic, strong) AddLectureViewController *delegate;
 

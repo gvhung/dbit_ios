@@ -166,7 +166,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         cell.delegate = self;
         
         cell.lectureName = _lectureDictionary[@"lectureName"];
-        cell.lectureTheme = _lectureDictionary[@"theme"];
+        cell.lectureTheme = [_lectureDictionary[@"theme"] integerValue];
         
         return cell;
     } else if (indexPath.section == 1) {
@@ -216,12 +216,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)textFieldDidChanged:(UITextField *)textField
 {
-    if (textField.tag == -1)
+    if (textField.tag == -1) {
         _lectureDictionary[@"lectureName"] = textField.text;
-    else if (textField.tag == -2)
-        _lectureDictionary[@"theme"] = textField.text;
-    else
+    } else {
         _lectureDetails[textField.tag-1][@"lectureLocation"] = textField.text;
+    }
+}
+
+- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
+{
+    _lectureDictionary[@"theme"] = @(segmentedControl.selectedSegmentIndex);
+    NSLog(@"%@", _lectureDictionary);
+    [_tableView reloadData];
 }
 
 #pragma mark - Time Change Method
@@ -305,13 +311,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     
     if (_ulidToEdit == -1){
         [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
-                                           theme:_lectureDictionary[@"theme"]
+                                           theme:[_lectureDictionary[@"theme"] integerValue]
                                   lectureDetails:_lectureDetails];
         [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
     } else {
         [_dataManager updateLectureWithUlid:_ulidToEdit
                                        name:_lectureDictionary[@"lectureName"]
-                                      theme:_lectureDictionary[@"theme"]
+                                      theme:[_lectureDictionary[@"theme"] integerValue]
                              lectureDetails:_lectureDetails];
         [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
     }
