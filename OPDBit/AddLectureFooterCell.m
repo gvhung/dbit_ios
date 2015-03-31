@@ -7,6 +7,8 @@
 //
 
 #import "AddLectureFooterCell.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 
@@ -31,8 +33,9 @@
 - (void)initialize
 {
     [_addLectureDetailButton setTitle:@"수업 추가" forState:UIControlStateNormal];
+    [_addLectureDetailButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
+    _addLectureDetailButton.titleLabel.font = [UIFont op_title];
     [_addLectureDetailButton addTarget:self.delegate action:@selector(addLectureDetailAction) forControlEvents:UIControlEventTouchUpInside];
-    _addLectureDetailButton.backgroundColor = [UIColor lightGrayColor];
     
     [self.contentView addSubview:_addLectureDetailButton];
     [self makeAutoLayoutConstraints];
@@ -41,7 +44,7 @@
 - (void)makeAutoLayoutConstraints
 {
     [_addLectureDetailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(10, 10, 10, 10));
+        make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(5, 5, 5, 5));
     }];
 }
 

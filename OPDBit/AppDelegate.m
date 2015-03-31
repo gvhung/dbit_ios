@@ -11,6 +11,7 @@
 #import "TimeTableViewController.h"
 #import "LectureViewController.h"
 #import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 #import "DataManager.h"
 
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
@@ -24,6 +25,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [RMDateSelectionViewController setLocalizedTitleForSelectButton:@"선택"];
     [RMDateSelectionViewController setLocalizedTitleForCancelButton:@"취소"];
@@ -41,17 +44,25 @@
     }
     _centerNavigationController.navigationBar.barTintColor = [UIColor op_primary];
     _centerNavigationController.navigationBar.opaque = YES;
-    _centerNavigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimary]};
+    _centerNavigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimary],
+                                                                      NSFontAttributeName : [UIFont op_title]};
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor op_textPrimary],
+                                                                      NSFontAttributeName : [UIFont op_title]}
+                                                forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTintColor:[UIColor op_textPrimary]];
+    [[UITextField appearance] setTintColor:[UIColor op_textSecondaryDark]];
     
-    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController leftDrawerViewController:leftDrawerViewController];
+    [[NSClassFromString(@"_UINavigationBarBackIndicatorView") appearance] setTintColor:[UIColor op_textPrimary]];
     
+    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController
+                                                            leftDrawerViewController:leftDrawerViewController];
+
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
     [self.drawerController setMaximumLeftDrawerWidth:200.0];
     [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeBezelPanningCenterView];
     self.drawerController.closeDrawerGestureModeMask ^= MMCloseDrawerGestureModeTapCenterView;
     self.drawerController.closeDrawerGestureModeMask ^= MMCloseDrawerGestureModePanningCenterView;
     self.drawerController.showsStatusBarBackgroundView = NO;
-//    [self.drawerController setShowsShadow:NO];
     [self.drawerController setShouldStretchDrawer:NO];
     
     [self.window setRootViewController:self.drawerController];

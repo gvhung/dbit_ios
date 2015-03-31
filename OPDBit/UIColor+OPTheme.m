@@ -9,6 +9,7 @@
 #import "UIColor+OPTheme.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define UIColorFromARGB(argbValue) [UIColor colorWithRed:((float)((argbValue & 0xFF0000) >> 16))/255.0 green:((float)((argbValue & 0xFF00) >> 8))/255.0 blue:((float)(argbValue & 0xFF))/255.0 alpha:((float)((argbValue & 0xFF000000) >> 24))/255.0]
 
 @implementation UIColor (OPTheme)
 
@@ -67,40 +68,40 @@
 
 + (UIColor *)op_textPrimaryDark
 {
-    return [self colorWithHexString:@"#DE0000"];
+    return [self colorWithHexString:@"#DE000000"];
 }
 
 + (UIColor *)op_textSecondary
 {
-    return [self colorWithHexString:@"#B2FFFF"];
+    return [self colorWithHexString:@"#B2FFFFFF"];
 }
 
 + (UIColor *)op_textSecondaryDark
 {
-    return [self colorWithHexString:@"#8A0000"];
+    return [self colorWithHexString:@"#8A000000"];
 }
 
 + (UIColor *)op_textDisabled
 {
-    return [self colorWithHexString:@"#4C0000"];
-    //return [self colorWithHexString:@"#4CFFFF"]; (v0.1.1)
+//    return [self colorWithHexString:@"#4C000000"];
+    return [self colorWithHexString:@"#4CFFFFFF"];
 }
 
 + (UIColor *)op_textDisabledDark
 {
-    return [self colorWithHexString:@"#420000"];
+    return [self colorWithHexString:@"#42000000"];
 }
 
 #pragma mark - Divider Color
 
 + (UIColor *)op_dividerDark
 {
-    return [self colorWithHexString:@"#1F0000"];
+    return [self colorWithHexString:@"#1F000000"];
 }
 
 + (UIColor *)op_divider
 {
-    return [self colorWithHexString:@"#1FFFFF"];
+    return [self colorWithHexString:@"#1FFFFFFF"];
 }
 
 #pragma mark - Lecture Theme Color
@@ -195,6 +196,9 @@
 + (UIColor *)colorWithHexString:(NSString *)str {
     const char *cStr = [str cStringUsingEncoding:NSASCIIStringEncoding];
     long x = strtol(cStr+1, NULL, 16);
+    if (str.length == 9) {
+        return UIColorFromARGB(x);
+    }
     return UIColorFromRGB(x);
 }
 

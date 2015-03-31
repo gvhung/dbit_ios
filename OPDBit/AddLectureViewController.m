@@ -23,7 +23,6 @@
 @property (nonatomic, strong) DataManager *dataManager;
 @property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
 
-
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
@@ -31,8 +30,8 @@
 @implementation AddLectureViewController
 
 static CGFloat const headerCellHeight = 150.0f;
-static CGFloat const detailCellHeight = 295.0f;
-static CGFloat const footerCellHeight = 60.0f;
+static CGFloat const detailCellHeight = 255.0f;
+static CGFloat const footerCellHeight = 55.0f;
 
 static NSString * const headerCellIdentifier = @"AddLectureHeaderCell";
 static NSString * const detailCellIdentifier = @"AddLectureDetailCell";
@@ -57,6 +56,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     self.view.backgroundColor = [UIColor whiteColor];
     [self setTitle:@"강의 추가"];
+    
+    _ulidToEdit = -1;
     
     _dateFormatter.dateFormat = @"HHmm";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
@@ -86,7 +87,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     [_tableView registerClass:[AddLectureFooterCell class] forCellReuseIdentifier:footerCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.separatorColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.allowsSelection = NO;
     _tableView.rowHeight = UITableViewRowAnimationAutomatic;
 
@@ -122,7 +123,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     _ulidToEdit = ulidToEdit;
     [self setTitle:@"강의 수정"];
-    UIBarButtonItem *deleteLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteLecture)];
+    UIBarButtonItem *deleteLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+                                                                                         target:self
+                                                                                         action:@selector(deleteLecture)];
     NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
     [barButtonItems addObject:deleteLectureButton];
     self.navigationItem.rightBarButtonItems = barButtonItems;
@@ -190,9 +193,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         AddLectureFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:footerCellIdentifier forIndexPath:indexPath];
         if (!cell)
             cell = [[AddLectureFooterCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:footerCellIdentifier];
-        
+
         cell.delegate = self;
-        
+
         return cell;
     }
 }
@@ -252,13 +255,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
             return;
         }
     }
+
     if (vc.datePicker.tag > 0 && _lectureDetails[lectureDetailIndex][@"timeEnd"]) {
         if ([_lectureDetails[lectureDetailIndex][@"timeEnd"] integerValue] < [timeString integerValue]) {
             [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
     }
-    
+
     _lectureDetails[lectureDetailIndex][timeKey] = timeString;
     NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:lectureDetailIndex inSection:1];
     [_tableView reloadRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -293,9 +297,11 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
         return;
     }
+    
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
     searchLectureViewController.serverLectures = [_dataManager serverLecturesWithServerTimeTableId:[_dataManager.activedTimeTable[@"serverId"] integerValue]];
     searchLectureViewController.delegate = self;
+    [self setTitle:@""];
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
 }
 
@@ -310,7 +316,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    if (!_ulidToEdit){
+    if (_ulidToEdit == -1) {
         [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
                                            theme:[_lectureDictionary[@"theme"] integerValue]
                                   lectureDetails:_lectureDetails];
@@ -338,6 +344,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (_ulidToEdit == -1)
+        [self setTitle:@"강의 추가"];
+    else
+        [self setTitle:@"강의 수정"];
 }
 
 @end

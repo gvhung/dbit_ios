@@ -9,6 +9,8 @@
 #import "SearchLectureViewController.h"
 #import "SearchLectureCell.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
@@ -29,7 +31,7 @@
 
 @implementation SearchLectureViewController
 
-static CGFloat const rowHeight = 105.0f;
+static CGFloat const rowHeight = 80.0f;
 
 - (instancetype)init
 {
@@ -52,9 +54,18 @@ static CGFloat const rowHeight = 105.0f;
     
     NSArray *segmentedControlSectionTitles = @[@"강의명", @"과목코드", @"교수명"];
     _segmentedControl.sectionTitles = segmentedControlSectionTitles;
+    _segmentedControl.borderType = HMSegmentedControlBorderTypeBottom;
+    _segmentedControl.borderColor = [UIColor op_dividerDark];
+    _segmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textSecondaryDark],
+                                                 NSFontAttributeName : [UIFont op_primary]};
+    _segmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimaryDark],
+                                                         NSFontAttributeName : [UIFont op_primary]};
     _segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _segmentedControl.selectionIndicatorBoxOpacity = 0;
+    _segmentedControl.selectionIndicatorColor = [UIColor op_primary];
+    _segmentedControl.selectionIndicatorHeight = 2.0f;
+    
     [_segmentedControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
     
     [_tableView registerClass:[SearchLectureCell class] forCellReuseIdentifier:@"SearchLectureCell"];
@@ -62,10 +73,13 @@ static CGFloat const rowHeight = 105.0f;
     _tableView.dataSource = self;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.estimatedRowHeight = rowHeight;
+    _tableView.separatorColor = [UIColor op_dividerDark];
     
     _emptyLabel.text = @"검색결과가 없습니다! :D";
     
-    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectServerLectureAction)];
+    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                               target:self
+                                                                                               action:@selector(selectServerLectureAction)];
     
     _searchTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     _searchTextField.center = CGPointMake(self.view.center.x, 22);
@@ -73,6 +87,11 @@ static CGFloat const rowHeight = 105.0f;
     _searchTextField.placeholder = @"강의 검색";
     _searchTextField.backgroundColor = [UIColor clearColor];
     _searchTextField.borderStyle = UITextBorderStyleNone;
+    _searchTextField.textColor = [UIColor op_textPrimary];
+    _searchTextField.tintColor = [UIColor op_textSecondary];
+    _searchTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:_searchTextField.placeholder
+                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor op_textSecondary]}];
+    _searchTextField.font = [UIFont op_title];
     [_searchTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _searchTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -89,14 +108,15 @@ static CGFloat const rowHeight = 105.0f;
 
 - (void)makeAutoLayoutConstraints
 {
+    CGFloat segmentedControlHeight = 45.0f;
     [_segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@64.0f);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.height.equalTo(@60.0f);
+        make.height.equalTo(@(segmentedControlHeight));
     }];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(60,0,0,0));
+        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(segmentedControlHeight,0,0,0));
     }];
     [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);

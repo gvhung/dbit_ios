@@ -9,6 +9,7 @@
 #import "LectureTableViewCell.h"
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <MZClockView/MZClockView.h>
@@ -48,6 +49,15 @@
     self.backgroundColor = [UIColor clearColor];
     _clockView.backgroundColor = [UIColor whiteColor];
     
+    _lectureNameLabel.textColor = [UIColor op_textPrimaryDark];
+    _lectureNameLabel.font = [UIFont op_primary];
+    
+    _lectureTimeLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureTimeLabel.font = [UIFont op_secondary];
+    
+    _lectureLocationLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureLocationLabel.font = [UIFont op_secondary];
+    
     [self.contentView addSubview:_clockView];
     [self.contentView addSubview:_lectureNameLabel];
     [self.contentView addSubview:_lectureTimeLabel];
@@ -60,23 +70,23 @@
 {
     [_clockView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(10.0f);
-        make.top.equalTo(self.contentView).with.offset(5.0f);
-        make.bottom.equalTo(self.contentView.mas_centerY).with.offset(-5.0f);
+        make.top.equalTo(self.contentView).with.offset(6.0f);
+        make.bottom.equalTo(self.contentView.mas_centerY).with.offset(-6.0f);
     }];
     
     [_lectureNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).with.offset(5.0f);
-        make.left.equalTo(_clockView.mas_bottom).with.offset(10.0f);
+        make.top.equalTo(self.contentView).with.offset(7.0f);
+        make.left.equalTo(_clockView.mas_bottom).with.offset(15.0f);
         make.right.equalTo(self.contentView).with.offset(-10.0f);
     }];
     [_lectureTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_lectureNameLabel.mas_bottom).with.offset(3.0f);
-        make.left.equalTo(_clockView.mas_bottom).with.offset(10.0f);
+        make.left.equalTo(_clockView.mas_bottom).with.offset(15.0f);
         make.right.equalTo(self.contentView).with.offset(-10.0f);
     }];
     [_lectureLocationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_lectureTimeLabel.mas_bottom).with.offset(3.0f);
-        make.left.equalTo(_clockView.mas_bottom).with.offset(10.0f);
+        make.left.equalTo(_clockView.mas_bottom).with.offset(15.0f);
         make.right.equalTo(self.contentView).with.offset(-10.0f);
     }];
 }

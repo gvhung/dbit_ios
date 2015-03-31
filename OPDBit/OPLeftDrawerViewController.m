@@ -12,6 +12,8 @@
 #import "LectureViewController.h"
 #import "AppDelegate.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -60,6 +62,18 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -82,6 +96,8 @@
         cell = [[OPLeftDrawerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
+    cell.textLabel.textColor = [UIColor op_textPrimaryDark];
+    cell.textLabel.font = [UIFont op_title];
     cell.textLabel.text = indexPath.row ? @"시간표" : @"수업";
     
     return cell;

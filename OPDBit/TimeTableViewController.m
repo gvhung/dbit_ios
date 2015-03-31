@@ -11,6 +11,9 @@
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
 #import "DataManager.h"
+#import "UIFont+OPTheme.h"
+
+#import "UIColor+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -48,6 +51,7 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                                         target:self
                                                                                         action:@selector(addTimeTable)];
+    addTimeTableButton.tintColor = [UIColor op_textPrimary];
     UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
                                                                                                    target:self
                                                                                                    action:@selector(downloadServerTimeTable)];

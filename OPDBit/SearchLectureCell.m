@@ -7,6 +7,8 @@
 //
 
 #import "SearchLectureCell.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 
@@ -28,6 +30,18 @@
 
 - (void)initialize
 {
+    _lectureTitleLabel.textColor = [UIColor op_textPrimaryDark];
+    _lectureTitleLabel.font = [UIFont op_primary];
+    
+    _lectureCodeLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureCodeLabel.font = [UIFont op_secondary];
+    
+    _lectureLocationLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureLocationLabel.font = [UIFont op_secondary];
+    
+    _lectureTimeLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureTimeLabel.font = [UIFont op_secondary];
+    
     [self.contentView addSubview:_lectureTitleLabel];
     [self.contentView addSubview:_lectureCodeLabel];
     [self.contentView addSubview:_lectureLocationLabel];
@@ -38,11 +52,11 @@
 
 - (void)makeAutoLayoutConstraints
 {
-    CGFloat leftAndRightPadding = 12.0f;
+    CGFloat leftAndRightPadding = 15.0f;
     [_lectureTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView.mas_top).with.offset(5.0f);
-        make.left.equalTo(self.contentView.mas_left).with.offset(leftAndRightPadding-3);
-        make.right.equalTo(self.contentView.mas_right).with.offset(-leftAndRightPadding+3);
+        make.left.equalTo(self.contentView.mas_left).with.offset(leftAndRightPadding);
+        make.right.equalTo(self.contentView.mas_right).with.offset(-leftAndRightPadding);
     }];
     [_lectureCodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.lectureTitleLabel.mas_bottom).with.offset(3.0f);

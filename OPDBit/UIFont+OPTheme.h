@@ -10,4 +10,10 @@
 
 @interface UIFont (OPTheme)
 
++ (UIFont *)op_primary;
+
++ (UIFont *)op_secondary;
+
++ (UIFont *)op_title;
+
 @end

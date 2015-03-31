@@ -8,6 +8,8 @@
 
 #import "AddLectureHeaderCell.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
@@ -49,12 +51,19 @@
 
 - (void)initialize
 {
-    _separator.backgroundColor = [UIColor lightGrayColor];
+    _separator.backgroundColor = [UIColor op_dividerDark];
     
     _lectureNameLabel.text = @"강의명";
+    _lectureNameLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureNameLabel.font = [UIFont op_secondary];
+    
     _lectureThemeLabel.text = @"테마";
+    _lectureThemeLabel.textColor = [UIColor op_textSecondaryDark];
+    _lectureThemeLabel.font = [UIFont op_secondary];
     
     _lectureNameField.placeholder = @"강의명";
+    _lectureNameField.font = [UIFont op_title];
+    _lectureNameField.textColor = [UIColor op_textPrimaryDark];
     _lectureNameField.backgroundColor = [UIColor clearColor];
     _lectureNameField.borderStyle = UITextBorderStyleNone;
     [_lectureNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
@@ -63,6 +72,9 @@
     _lectureNameField.tag = -1;
     [_lectureNameField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
     
+    _lectureThemeSegmentedControl.borderColor = [UIColor op_dividerDark];
+    _lectureThemeSegmentedControl.selectionIndicatorColor = [UIColor op_primary];
+    _lectureThemeSegmentedControl.selectionIndicatorHeight = 2.0f;
     _lectureThemeSegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _lectureThemeSegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _lectureThemeSegmentedControl.selectionIndicatorBoxOpacity = 0;
@@ -81,7 +93,7 @@
 
 - (void)makeAutoLayoutConstraints
 {
-    CGFloat padding = 10.0f;
+    CGFloat padding = 15.0f;
     [_lectureNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(padding);
         make.left.equalTo(self.contentView).with.offset(padding);
@@ -104,9 +116,9 @@
         make.right.equalTo(self.contentView).with.offset(-padding);
         make.height.equalTo(@40.0f);
     }];
-    
+
     [_separator mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.contentView).with.offset(1.0f);
+        make.bottom.equalTo(self.contentView).with.offset(-1.0f);
         make.left.equalTo(self.contentView);
         make.right.equalTo(self.contentView);
         make.height.equalTo(@1.0f);

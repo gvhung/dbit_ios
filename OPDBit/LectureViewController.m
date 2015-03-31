@@ -11,6 +11,7 @@
 #import "AddLectureViewController.h"
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -26,7 +27,7 @@
 
 @implementation LectureViewController
 
-static CGFloat const LectureCellHeight = 80.0f;
+static CGFloat const LectureCellHeight = 68.0f;
 
 static NSString * const LectureCellIdentifier = @"LectureCell";
 
@@ -57,15 +58,21 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     _lectureTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _clockLine = [[UIView alloc] init];
-    _clockLine.backgroundColor = [UIColor lightGrayColor];
+    _clockLine.backgroundColor = [UIColor op_dividerDark];
     
     _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.textColor = [UIColor op_textPrimaryDark];
+    _emptyLabel.font = [UIFont op_title];
     _emptyLabel.text = @"수업이 없어요! :D";
     
     NSArray *segmentedAttributes = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
     _daySegmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:segmentedAttributes];
     _daySegmentedControl.borderType = HMSegmentedControlBorderTypeBottom;
-    _daySegmentedControl.borderColor = [UIColor op_divider];
+    _daySegmentedControl.borderColor = [UIColor op_dividerDark];
+    _daySegmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textSecondaryDark],
+                                                            NSFontAttributeName : [UIFont op_primary]};
+    _daySegmentedControl.selectedTitleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimaryDark],
+                                                                    NSFontAttributeName : [UIFont op_primary]};
     _daySegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _daySegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _daySegmentedControl.selectionIndicatorBoxOpacity = 0;
@@ -88,7 +95,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.top.equalTo(self.view).with.offset(64.0f);
-        make.height.equalTo(@50);
+        make.height.equalTo(@45.0);
     }];
     [_lectureTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
@@ -98,7 +105,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     }];
     [_clockLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_daySegmentedControl.mas_bottom);
-        make.left.equalTo(self.view).with.offset(25.0f);
+        make.left.equalTo(self.view).with.offset(20.5f);
         make.bottom.equalTo(self.view);
         make.width.equalTo(@1.0f);
     }];
