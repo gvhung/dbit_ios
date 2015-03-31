@@ -66,6 +66,8 @@
 - (NSString *)semesterString:(NSString *)semester;
 - (NSDictionary *)lectureWithId:(NSInteger)ulid;
 
+- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(NSArray *)lectureDetails;
+
 /**
  * Lecture Details to display
  *

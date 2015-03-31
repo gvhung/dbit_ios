@@ -315,6 +315,10 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
+    if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {
+        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
+        return;
+    }
     
     if (_ulidToEdit == -1) {
         [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]

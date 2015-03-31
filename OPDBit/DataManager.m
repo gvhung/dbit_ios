@@ -411,10 +411,50 @@
     return lectureObject;
 }
 
+- (NSArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid
+{
+    RLMResults *lectureDetailResults = [LectureDetailObject objectsWhere:@"ulid == %ld", ulid];
+    if (lectureDetailResults.count == 0) {
+        NSLog(@"LectureDetails (ulid : %ld) is NOT exist", ulid);
+        return nil;
+    }
+    NSMutableArray *lectureDetailObjects = [[NSMutableArray alloc] init];
+    for (LectureDetailObject *lectureDetailObject in lectureDetailResults) {
+        [lectureDetailObjects addObject:lectureDetailObject];
+    }
+    return lectureDetailObjects;
+}
+
 - (NSDictionary *)lectureWithId:(NSInteger)ulid
 {
     RLMResults *lectureResults = [self.activedTimeTableObject.lectures objectsWhere:@"ulid == %ld", ulid];
     return [self arrayWithLectureArray:(RLMArray *)lectureResults][0];
+}
+
+- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(NSArray *)lectureDetails
+{
+    for (NSDictionary *lectureDetailDictionary in lectureDetails) {
+        for (NSNumber *ulid in [self ulidsInActivedTimeTables]) {
+            for (LectureDetailObject *lectureDetailObject in [self lectureDetailObjectsWithUlid:ulid.integerValue]) {
+                if (((lectureDetailObject.timeStart <= [lectureDetailDictionary[@"timeStart"] integerValue])
+                    && ([lectureDetailDictionary[@"timeStart"] integerValue] < lectureDetailObject.timeEnd))
+                    || ((lectureDetailObject.timeStart < [lectureDetailDictionary[@"timeEnd"] integerValue])
+                        && ([lectureDetailDictionary[@"timeEnd"] integerValue] <= lectureDetailObject.timeEnd))) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+- (NSArray *)ulidsInActivedTimeTables
+{
+    NSMutableArray *ulids = [[NSMutableArray alloc] init];
+    for (LectureObject *lectureObject in self.activedTimeTableObject.lectures) {
+        [ulids addObject:@(lectureObject.ulid)];
+    }
+    return ulids;
 }
 
 #pragma mark - Getter
@@ -438,6 +478,8 @@
     }
     return [self arrayWithTimeTableResults:activedTimeTableResults][0];
 }
+
+
 
 #pragma mark - Results To Array
 
