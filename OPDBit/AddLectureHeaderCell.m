@@ -117,17 +117,14 @@
 
 - (void)setLectureName:(NSString *)lectureName
 {
+    _lectureName = lectureName;
     _lectureNameField.text = lectureName;
 }
 
 - (void)setLectureTheme:(NSInteger)lectureTheme
 {
     _lectureTheme = lectureTheme;
-}
-
-- (NSString *)lectureName
-{
-    return _lectureNameField.text;
+    _lectureThemeSegmentedControl.selectedSegmentIndex = lectureTheme;
 }
 
 @end

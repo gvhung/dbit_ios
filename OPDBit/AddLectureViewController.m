@@ -62,6 +62,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
     _dateFormatter.locale = locale;
     
+    _lectureDictionary[@"theme"] = @(0);
+    
     _timePickerViewController.delegate = self;
     _timePickerViewController.hideNowButton = YES;
     _timePickerViewController.disableBouncingWhenShowing = YES;
@@ -226,7 +228,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
 {
     _lectureDictionary[@"theme"] = @(segmentedControl.selectedSegmentIndex);
-    NSLog(@"%@", _lectureDictionary);
     [_tableView reloadData];
 }
 
@@ -309,7 +310,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    if (_ulidToEdit == -1){
+    if (!_ulidToEdit){
         [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
                                            theme:[_lectureDictionary[@"theme"] integerValue]
                                   lectureDetails:_lectureDetails];

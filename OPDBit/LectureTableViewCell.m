@@ -86,9 +86,7 @@
 - (void)setLectureDetailDictionary:(NSDictionary *)lectureDetailDictionary
 {
     _lectureDetailDictionary = lectureDetailDictionary;
-    
-    NSLog(@"%@", lectureDetailDictionary);
-    
+    _clockView.themeColor = [UIColor op_lectureTheme:[lectureDetailDictionary[@"theme"] integerValue]];
     NSInteger startTime = [lectureDetailDictionary[@"timeStart"] integerValue];
     NSInteger endTime = [lectureDetailDictionary[@"timeEnd"] integerValue];
     
