@@ -150,7 +150,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     } else if (buttonIndex == 2) {
         [_dataManager deleteTimeTableWithUtid:[_timeTables[actionSheet.tag][@"utid"] integerValue]];
         [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
-        [_tableView reloadData];
+        self.timeTables = [_dataManager timeTables];
     }
 }
 
@@ -203,7 +203,6 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     [super viewWillAppear:animated];
     self.timeTables = [_dataManager timeTables];
-    [_tableView reloadData];
 }
 
 @end
