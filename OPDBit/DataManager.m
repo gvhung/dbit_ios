@@ -397,7 +397,9 @@
         NSLog(@"LectureDetails (day : %ld) is NOT exist", day);
         return nil;
     }
-    return [self arrayWithLectureDetailResulstArray:resultsArray];
+    NSArray *sortedArray = [self arrayWithLectureDetailResulstArray:resultsArray];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStart" ascending:YES];
+    return [sortedArray sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid
@@ -436,11 +438,16 @@
     for (NSDictionary *lectureDetailDictionary in lectureDetails) {
         for (NSNumber *ulid in [self ulidsInActivedTimeTables]) {
             for (LectureDetailObject *lectureDetailObject in [self lectureDetailObjectsWithUlid:ulid.integerValue]) {
-                if (((lectureDetailObject.timeStart <= [lectureDetailDictionary[@"timeStart"] integerValue])
-                    && ([lectureDetailDictionary[@"timeStart"] integerValue] < lectureDetailObject.timeEnd))
-                    || ((lectureDetailObject.timeStart < [lectureDetailDictionary[@"timeEnd"] integerValue])
-                        && ([lectureDetailDictionary[@"timeEnd"] integerValue] <= lectureDetailObject.timeEnd))) {
-                    return YES;
+                // lectureDetailObject.day가 같을 경우
+                if (lectureDetailObject.day == [lectureDetailDictionary[@"day"] integerValue]) {
+                    // (lectureDetailObject.timeStart <= timeStart < lectureDetailObject.timeEnd) || (lectureDetailObject.timeStart < timeEnd <= lectureDetailObject.timeEnd)
+                    if ((lectureDetailObject.timeStart <= [lectureDetailDictionary[@"timeStart"] integerValue]
+                         && [lectureDetailDictionary[@"timeStart"] integerValue] < lectureDetailObject.timeEnd)
+                        ||
+                        (lectureDetailObject.timeStart < [lectureDetailDictionary[@"timeEnd"] integerValue]
+                         && [lectureDetailDictionary[@"timeEnd"] integerValue] <= lectureDetailObject.timeEnd)) {
+                        return YES;
+                    }
                 }
             }
         }
