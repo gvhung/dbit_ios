@@ -104,7 +104,7 @@
         make.right.equalTo(self.contentView).with.offset(padding);
     }];
     [_separatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.contentView).with.offset(0.5f);
+        make.bottom.equalTo(self.contentView).with.offset(-0.5f);
         make.left.equalTo(self.contentView).with.offset(15.0f);
         make.right.equalTo(self.contentView);
         make.height.equalTo(@0.5f);

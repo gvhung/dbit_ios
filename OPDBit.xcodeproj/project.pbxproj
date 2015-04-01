@@ -19,6 +19,9 @@
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
 		B593AA3E1ACC0BBA0063F09E /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3C1ACC0BBA0063F09E /* on.png */; };
 		B593AA3F1ACC0BBA0063F09E /* off.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3D1ACC0BBA0063F09E /* off.png */; };
+		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
+		B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */; };
+		B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
 		B596827D1AAC2EB7002D6983 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
@@ -76,6 +79,12 @@
 		B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OPTheme.m"; sourceTree = "<group>"; };
 		B593AA3C1ACC0BBA0063F09E /* on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on.png; sourceTree = "<group>"; };
 		B593AA3D1ACC0BBA0063F09E /* off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = off.png; sourceTree = "<group>"; };
+		B593AA411ACC3DDF0063F09E /* TimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableView.h; sourceTree = "<group>"; };
+		B593AA421ACC3DDF0063F09E /* TimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableView.m; sourceTree = "<group>"; };
+		B593AA441ACC4E7D0063F09E /* ShowTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTimeTableViewController.h; sourceTree = "<group>"; };
+		B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowTimeTableViewController.m; sourceTree = "<group>"; };
+		B593AA491ACC58610063F09E /* LectureDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureDetailView.h; sourceTree = "<group>"; };
+		B593AA4A1ACC58610063F09E /* LectureDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureDetailView.m; sourceTree = "<group>"; };
 		B59682771AAC2EB7002D6983 /* OPDBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPDBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B596827B1AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B596827C1AAC2EB7002D6983 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -262,6 +271,34 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
+		B593AA401ACC3DB50063F09E /* TimeTableView */ = {
+			isa = PBXGroup;
+			children = (
+				B593AA481ACC58420063F09E /* LectureDetailView */,
+				B593AA411ACC3DDF0063F09E /* TimeTableView.h */,
+				B593AA421ACC3DDF0063F09E /* TimeTableView.m */,
+			);
+			name = TimeTableView;
+			sourceTree = "<group>";
+		};
+		B593AA471ACC4E820063F09E /* ShowTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B593AA441ACC4E7D0063F09E /* ShowTimeTableViewController.h */,
+				B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */,
+			);
+			name = ShowTimeTable;
+			sourceTree = "<group>";
+		};
+		B593AA481ACC58420063F09E /* LectureDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				B593AA491ACC58610063F09E /* LectureDetailView.h */,
+				B593AA4A1ACC58610063F09E /* LectureDetailView.m */,
+			);
+			name = LectureDetailView;
+			sourceTree = "<group>";
+		};
 		B596826E1AAC2EB7002D6983 = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +322,7 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B593AA401ACC3DB50063F09E /* TimeTableView */,
 				B53655C81ABCA8BD00626416 /* Theme */,
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
 				B59682AB1AAC3708002D6983 /* ViewController */,
@@ -374,6 +412,7 @@
 				B59682AA1AAC3700002D6983 /* TimeTable */,
 				B59682A91AAC36F8002D6983 /* Lecture */,
 				B59682A31AAC3154002D6983 /* LeftDrawer */,
+				B593AA471ACC4E820063F09E /* ShowTimeTable */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -678,12 +717,14 @@
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
 				B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */,
 				B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */,
+				B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */,
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
 				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
+				B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */,
 				B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
@@ -695,6 +736,7 @@
 				B533CE3D1ABD430300907A7C /* UIFont+OPTheme.m in Sources */,
 				B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
+				B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */,
 				B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */,
 				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,
 				B596827D1AAC2EB7002D6983 /* main.m in Sources */,
