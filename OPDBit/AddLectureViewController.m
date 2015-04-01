@@ -68,6 +68,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _timePickerViewController.delegate = self;
     _timePickerViewController.hideNowButton = YES;
     _timePickerViewController.disableBouncingWhenShowing = YES;
+    _timePickerViewController.datePicker.locale = locale;
     _timePickerViewController.datePicker.datePickerMode = UIDatePickerModeTime;
     _timePickerViewController.datePicker.minuteInterval = 5;
     _timePickerViewController.datePicker.timeZone = [NSTimeZone localTimeZone];

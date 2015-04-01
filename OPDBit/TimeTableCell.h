@@ -10,4 +10,6 @@
 
 @interface TimeTableCell : UITableViewCell
 
+@property (nonatomic, strong) NSDictionary *timeTableDictionary;
+
 @end

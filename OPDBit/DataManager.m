@@ -648,7 +648,7 @@
 {
     NSInteger hours = timeInteger/100;
     NSInteger minutes = timeInteger%100;
-    return [NSString stringWithFormat:@"%ld:%02ld", hours, minutes];
+    return [NSString stringWithFormat:@"%02ld:%02ld", hours, minutes];
 }
 
 + (NSInteger)integerFromTimeString:(NSString *)timeString

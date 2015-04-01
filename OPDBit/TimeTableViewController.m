@@ -31,6 +31,7 @@
 @implementation TimeTableViewController
 
 static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
+static CGFloat const TimeTableCellHeight = 75.0f;
 
 - (instancetype)init
 {
@@ -62,11 +63,18 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     [_tableView registerClass:[TimeTableCell class] forCellReuseIdentifier:TimeTableCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _emptyLabel = [[UILabel alloc] init];
+    _emptyLabel.textColor = [UIColor op_textPrimaryDark];
+    _emptyLabel.font = [UIFont op_title];
     _emptyLabel.text = @"시간표가 없어요! :D";
     
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"취소" destructiveButtonTitle:@"기본 시간표 설정" otherButtonTitles:@"수정하기", nil];
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                               delegate:self
+                                      cancelButtonTitle:@"취소"
+                                 destructiveButtonTitle:@"기본 시간표 설정"
+                                      otherButtonTitles:@"수정하기", @"삭제하기", nil];
 
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];
@@ -101,7 +109,7 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     TimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:TimeTableCellIdentifier forIndexPath:indexPath];
     if (!cell)
         cell = [[TimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeTableCellIdentifier];
-    cell.textLabel.text = _timeTables[indexPath.row][@"timeTableName"];
+    cell.timeTableDictionary = _timeTables[indexPath.row];
     
     return cell;
 }
@@ -117,6 +125,16 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     [_actionSheet showInView:self.view];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return TimeTableCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return TimeTableCellHeight;
+}
+
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -129,6 +147,10 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
         AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
         editTimeTableViewController.timeTableId = [_timeTables[actionSheet.tag][@"utid"] integerValue];
         [self.navigationController pushViewController:editTimeTableViewController animated:YES];
+    } else if (buttonIndex == 2) {
+        [_dataManager deleteTimeTableWithUtid:[_timeTables[actionSheet.tag][@"utid"] integerValue]];
+        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+        [_tableView reloadData];
     }
 }
 
@@ -168,6 +190,7 @@ static NSString * const TimeTableCellIdentifier = @"TimeTableCell";
     AddTimeTableViewController *addTimeTableViewController = [[AddTimeTableViewController alloc] init];
     [self.navigationController pushViewController:addTimeTableViewController animated:YES];
 }
+
 
 #pragma mark - Life Cycle
 

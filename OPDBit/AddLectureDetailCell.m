@@ -192,10 +192,10 @@
     }];
     
     [_separator mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.contentView).with.offset(-1.0f);
-        make.left.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView).with.offset(-0.5f);
+        make.left.equalTo(self.contentView).with.offset(15.0f);
         make.right.equalTo(self.contentView);
-        make.height.equalTo(@1.0f);
+        make.height.equalTo(@0.5f);
     }];
 }
 
