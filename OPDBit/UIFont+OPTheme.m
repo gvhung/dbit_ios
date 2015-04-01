@@ -22,7 +22,7 @@
 
 + (UIFont *)op_title
 {
-    return [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:17];
+    return [UIFont fontWithName:@"AppleSDGothicNeo-Regular" size:17];
 }
 
 @end

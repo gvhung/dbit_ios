@@ -124,12 +124,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     _ulidToEdit = ulidToEdit;
     [self setTitle:@"강의 수정"];
-    UIBarButtonItem *deleteLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-                                                                                         target:self
-                                                                                         action:@selector(deleteLecture)];
-    NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
-    [barButtonItems addObject:deleteLectureButton];
-    self.navigationItem.rightBarButtonItems = barButtonItems;
     
     NSDictionary *lectureDictionary = [_dataManager lectureWithId:ulidToEdit];
     _lectureDictionary[@"lectureName"] = lectureDictionary[@"lectureName"];
@@ -334,13 +328,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)deleteLecture
-{
-    [_dataManager deleteLectureWithUlid:_ulidToEdit];
-    [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

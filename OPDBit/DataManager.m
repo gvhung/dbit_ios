@@ -271,12 +271,14 @@
 
 - (void)setActiveWithUtid:(NSInteger)utid
 {
+    [_realm beginWriteTransaction];
     TimeTableObject *timeTableObject = [TimeTableObject objectsWhere:@"utid == %ld", utid][0];
     RLMResults *timeTableResults = [TimeTableObject allObjects];
     for (TimeTableObject *resultTimeTableObject in timeTableResults) {
         resultTimeTableObject.active = NO;
     }
     timeTableObject.active = YES;
+    [_realm commitWriteTransaction];
 }
 
 - (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId

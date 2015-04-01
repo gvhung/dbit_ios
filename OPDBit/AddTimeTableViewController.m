@@ -9,6 +9,8 @@
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -23,6 +25,8 @@
 @property (nonatomic, strong) UILabel *timeTableNameLabel;
 @property (nonatomic, strong) UILabel *serverTimeTableLabel;
 @property (nonatomic, strong) UILabel *primaryTimeTableLabel;
+
+@property (nonatomic, strong) UIView *textFieldBottomBorder;
 
 @property (nonatomic, strong) UITextField *timeTableNameField;
 @property (nonatomic, strong) UIButton *serverTimeTableButton;
@@ -44,6 +48,8 @@
         _serverTimeTableLabel = [[UILabel alloc] init];
         _primaryTimeTableLabel = [[UILabel alloc] init];
         
+        _textFieldBottomBorder = [[UIView alloc] init];
+        
         _timeTableNameField = [[UITextField alloc] initWithFrame:CGRectZero];
         _serverTimeTableButton = [[UIButton alloc] initWithFrame:CGRectZero];
         _primaryTimeTableSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -64,21 +70,39 @@
     
     //Labels
     _timeTableNameLabel.text = @"시간표 이름";
-    _serverTimeTableLabel.text = @"학교 시간표 연동";
-    _primaryTimeTableLabel.text = @"기본 시간표 설정";
+    _timeTableNameLabel.textColor = [UIColor op_primary];
+    _timeTableNameLabel.font = [UIFont op_secondary];
     
-    //Factors
-    _timeTableNameField.borderStyle = UITextBorderStyleRoundedRect;
+    _serverTimeTableLabel.text = @"학교 시간표 연동";
+    _serverTimeTableLabel.textColor = [UIColor op_textSecondaryDark];
+    _serverTimeTableLabel.font = [UIFont op_secondary];
+    
+    _primaryTimeTableLabel.text = @"기본 시간표 설정";
+    _primaryTimeTableLabel.textColor = [UIColor op_textPrimaryDark];
+    _primaryTimeTableLabel.font = [UIFont op_primary];
+    
+    _textFieldBottomBorder.backgroundColor = [UIColor op_primary];
+    
+    _timeTableNameField.borderStyle = UITextBorderStyleNone;
+    _timeTableNameField.font = [UIFont op_title];
+    _timeTableNameField.textColor = [UIColor op_textPrimaryDark];
+    _timeTableNameField.backgroundColor = [UIColor clearColor];
     _timeTableNameField.placeholder = @"시간표 이름";
     _timeTableNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _timeTableNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [_timeTableNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
-    _serverTimeTableButton.backgroundColor = [UIColor lightGrayColor];
+    [_serverTimeTableButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
     [_serverTimeTableButton setTitle:@"서버 연동 안함" forState:UIControlStateNormal];
+    _serverTimeTableButton.titleLabel.font = [UIFont op_primary];
+    _serverTimeTableButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:_timeTableNameLabel];
     [self.view addSubview:_serverTimeTableLabel];
     [self.view addSubview:_primaryTimeTableLabel];
+    
+    [self.view addSubview:_textFieldBottomBorder];
     
     [self.view addSubview:_timeTableNameField];
     [self.view addSubview:_serverTimeTableButton];
@@ -90,7 +114,7 @@
 {
     CGFloat gapForSuperViewTop = 64.0f;
     CGFloat gapBetweenSections = 40.0f;
-    CGFloat gapBetweenLabelAndFactor = 2.0f;
+    CGFloat gapBetweenLabelAndFactor = 5.0f;
     CGFloat edgePadding = 15.0f;
     
     //Labels
@@ -111,9 +135,6 @@
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
     }];
     
-    
-    //Factors
-    
     [_timeTableNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeTableNameLabel.mas_bottom).with.offset(gapBetweenLabelAndFactor);
         make.left.equalTo(self.view.mas_left).with.offset(edgePadding);
@@ -125,8 +146,15 @@
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
     }];
     [_primaryTimeTableSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_serverTimeTableButton.mas_bottom).with.offset(gapBetweenSections);
+        make.centerY.equalTo(_primaryTimeTableLabel);
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
+    }];
+    
+    [_textFieldBottomBorder mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_timeTableNameField.mas_bottom);
+        make.left.equalTo(_timeTableNameField);
+        make.right.equalTo(_timeTableNameField);
+        make.height.equalTo(@0.5f);
     }];
 }
 

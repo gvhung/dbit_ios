@@ -9,6 +9,8 @@
 #import "DownloadServerTimeTableViewController.h"
 #import "NetworkManager.h"
 #import "DataManager.h"
+#import "UIColor+OPTheme.h"
+#import "UIFont+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -18,10 +20,11 @@
 @property (nonatomic, strong) NetworkManager *networkManager;
 @property (nonatomic, strong) DataManager *dataManager;
 
-@property (nonatomic, strong) NSArray *schools;
-@property (nonatomic, strong) NSArray *timeTables;
-@property (nonatomic) NSInteger selectedSchoolId;
-@property (nonatomic) NSInteger selectedTimeTable;
+@property (nonatomic, strong) UILabel *schoolLabel;
+@property (nonatomic, strong) UILabel *timeTableLabel;
+
+@property (nonatomic, strong) UIButton *schoolButton;
+@property (nonatomic, strong) UIButton *timeTableButton;
 
 @end
 
@@ -37,6 +40,13 @@
         _timeTables = [[NSArray alloc] init];
         _selectedSchoolId = 0;
         _selectedTimeTable = 0;
+        
+        _schoolButton = [[UIButton alloc] init];
+        _timeTableButton = [[UIButton alloc] init];
+        
+        _schoolLabel = [[UILabel alloc] init];
+        _timeTableLabel = [[UILabel alloc] init];
+        
         [self initialize];
     }
     return self;
@@ -47,36 +57,65 @@
     [self setTitle:@"서버 시간표 다운로드"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    _schoolButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    _schoolButton.backgroundColor = [UIColor lightGrayColor];
+    [_schoolButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
+    _schoolButton.titleLabel.font = [UIFont op_title];
     [_schoolButton setTitle:@"학교를 선택해주세요." forState:UIControlStateNormal];
     [_schoolButton addTarget:self action:@selector(selectSchool) forControlEvents:UIControlEventTouchUpInside];
     
-    _timeTableButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    _timeTableButton.backgroundColor = [UIColor lightGrayColor];
+    [_timeTableButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
+    _timeTableButton.titleLabel.font = [UIFont op_title];
     [_timeTableButton setTitle:@"시간표를 선택해주세요." forState:UIControlStateNormal];
     [_timeTableButton addTarget:self action:@selector(selectTimeTable) forControlEvents:UIControlEventTouchUpInside];
+    
+    _schoolLabel.text = @"학교 선택";
+    _schoolLabel.textAlignment = NSTextAlignmentCenter;
+    _schoolLabel.textColor = [UIColor op_textSecondaryDark];
+    _schoolLabel.font = [UIFont op_primary];
+    
+    _timeTableLabel.text = @"시간표 선택";
+    _timeTableLabel.textAlignment = NSTextAlignmentCenter;
+    _timeTableLabel.textColor = [UIColor op_textSecondaryDark];
+    _timeTableLabel.font = [UIFont op_primary];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(downloadTimeTable)];
     
     self.navigationItem.rightBarButtonItem = doneButton;
     [self.view addSubview:_schoolButton];
     [self.view addSubview:_timeTableButton];
+    
+    [self.view addSubview:_schoolLabel];
+    [self.view addSubview:_timeTableLabel];
     [self makeAutoLayoutConstraints];
 }
 
 - (void)makeAutoLayoutConstraints
 {
+    CGFloat padding = 15.0f;
+    CGFloat margin = 100.0f;
+    CGFloat gap = 10.0f;
     [_schoolButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).with.offset(20.0f);
-        make.right.equalTo(self.view.mas_right).with.offset(-20.0f);
-        make.bottom.equalTo(self.view.mas_centerY).with.offset(-10.0f);
+        make.left.equalTo(self.view.mas_left).with.offset(padding);
+        make.right.equalTo(self.view.mas_right).with.offset(-padding);
+        make.bottom.equalTo(self.view.mas_centerY).with.offset(-margin);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
     [_timeTableButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).with.offset(20.0f);
-        make.right.equalTo(self.view.mas_right).with.offset(-20.0f);
-        make.top.equalTo(self.view.mas_centerY).with.offset(10.0f);
+        make.left.equalTo(self.view.mas_left).with.offset(padding);
+        make.right.equalTo(self.view.mas_right).with.offset(-padding);
+        make.top.equalTo(self.view.mas_centerY).with.offset(padding);
+        make.centerX.equalTo(self.view.mas_centerX);
+    }];
+    
+    [_schoolLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_schoolButton.mas_top).with.offset(-gap);
+        make.left.equalTo(self.view.mas_left).with.offset(padding);
+        make.right.equalTo(self.view.mas_right).with.offset(-padding);
+        make.centerX.equalTo(self.view.mas_centerX);
+    }];
+    [_timeTableLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_timeTableButton.mas_top).with.offset(-gap);
+        make.left.equalTo(self.view.mas_left).with.offset(padding);
+        make.right.equalTo(self.view.mas_right).with.offset(-padding);
         make.centerX.equalTo(self.view.mas_centerX);
     }];
 }

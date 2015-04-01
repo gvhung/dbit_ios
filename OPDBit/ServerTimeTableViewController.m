@@ -23,6 +23,9 @@
 
 @end
 
+static NSString * const ServerTimeTableCellIdentifier = @"ServerTimeTableCell";
+static CGFloat const ServerTimeTableCellHeight = 75.0f;
+
 @implementation ServerTimeTableViewController
 
 - (instancetype)init
@@ -45,9 +48,10 @@
     self.navigationItem.rightBarButtonItem = downloadServerTimeTableButton;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    [_tableView registerClass:[ServerTimeTableCell class] forCellReuseIdentifier:@"ServerTimeTableCell"];
+    [_tableView registerClass:[ServerTimeTableCell class] forCellReuseIdentifier:ServerTimeTableCellIdentifier];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = @"서버 시간표가 없어요! :D";
@@ -81,10 +85,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ServerTimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ServerTimeTableCell"];
+    ServerTimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:ServerTimeTableCellIdentifier];
     if (!cell)
-        cell = [[ServerTimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ServerTimeTableCell"];
-    cell.textLabel.text = _serverTimeTables[indexPath.row][@"semester"];
+        cell = [[ServerTimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ServerTimeTableCellIdentifier];
+    cell.serverTimeTable = _serverTimeTables[indexPath.row];
     return cell;
 }
 
@@ -96,6 +100,16 @@
     if (!self.delegate) return;
     self.delegate.selectedServerTimeTableId = [_serverTimeTables[indexPath.row][@"timeTableId"] integerValue];
     [self.navigationController popToViewController:self.delegate animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return ServerTimeTableCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return ServerTimeTableCellHeight;
 }
 
 #pragma mark - Setter

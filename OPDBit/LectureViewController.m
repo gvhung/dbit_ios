@@ -21,6 +21,8 @@
 @property (nonatomic, strong) UIView *clockLine;
 @property (nonatomic, strong) UILabel *emptyLabel;
 
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -81,6 +83,12 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [_daySegmentedControl addTarget:self
                              action:@selector(changeDay:)
                    forControlEvents:UIControlEventValueChanged];
+    
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                               delegate:self
+                                      cancelButtonTitle:@"취소"
+                                 destructiveButtonTitle:@"삭제하기"
+                                      otherButtonTitles:@"수정하기", nil];
     
     [self.view addSubview:_emptyLabel];
     [self.view addSubview:_clockLine];
@@ -162,9 +170,24 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
-    editLectureViewController.ulidToEdit = [_lectureDetails[indexPath.row][@"ulid"] integerValue];
-    [self.navigationController pushViewController:editLectureViewController animated:YES];
+    _actionSheet.title = _lectureDetails[indexPath.row][@"lectureName"];
+    _actionSheet.tag = indexPath.row;
+    [_actionSheet showInView:self.view];
+}
+
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [_dataManager deleteLectureWithUlid:[_lectureDetails[actionSheet.tag][@"ulid"] integerValue]];
+        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
+        self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
+    } else if (buttonIndex == 1) {
+        AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
+        editLectureViewController.ulidToEdit = [_lectureDetails[actionSheet.tag][@"ulid"] integerValue];
+        [self.navigationController pushViewController:editLectureViewController animated:YES];
+    }
 }
 
 #pragma mark - Segmented Control Delegate

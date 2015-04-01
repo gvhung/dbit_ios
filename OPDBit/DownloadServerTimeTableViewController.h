@@ -10,8 +10,10 @@
 
 @interface DownloadServerTimeTableViewController : UIViewController <UIActionSheetDelegate>
 
-@property (nonatomic, strong) UIButton *schoolButton;
-@property (nonatomic, strong) UIButton *timeTableButton;
+@property (nonatomic, strong) NSArray *schools;
+@property (nonatomic, strong) NSArray *timeTables;
+@property (nonatomic) NSInteger selectedSchoolId;
+@property (nonatomic) NSInteger selectedTimeTable;
 
 - (instancetype)init;
 

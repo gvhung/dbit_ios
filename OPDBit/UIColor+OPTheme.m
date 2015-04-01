@@ -17,7 +17,7 @@
 
 + (UIColor *)op_primary
 {
-    return [self colorWithHexString:@"#FF5722"];
+    return [self colorWithHexString:@"#FF5724"];
 }
 
 + (UIColor *)op_primaryDark

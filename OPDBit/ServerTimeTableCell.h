@@ -10,4 +10,8 @@
 
 @interface ServerTimeTableCell : UITableViewCell
 
+@property (nonatomic, strong) NSDictionary *serverTimeTable;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end

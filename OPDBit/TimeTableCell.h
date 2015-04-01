@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSDictionary *timeTableDictionary;
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end

@@ -140,9 +140,9 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        [_dataManager setActiveWithUtid:actionSheet.tag];
+        [_dataManager setActiveWithUtid:[_timeTables[actionSheet.tag][@"utid"] integerValue]];
         [KVNProgress showSuccessWithStatus:[NSString stringWithFormat:@"기본 시간표가\n'%@'\n(으)로 설정되었습니다.", _timeTables[actionSheet.tag][@"timeTableName"]]];
-        [_tableView reloadData];
+        self.timeTables = [_dataManager timeTables];
     } else if (buttonIndex == 1) {
         AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
         editTimeTableViewController.timeTableId = [_timeTables[actionSheet.tag][@"utid"] integerValue];

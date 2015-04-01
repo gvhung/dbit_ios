@@ -76,6 +76,8 @@ static CGFloat const rowHeight = 80.0f;
     _tableView.separatorColor = [UIColor op_dividerDark];
     
     _emptyLabel.text = @"검색결과가 없습니다! :D";
+    _emptyLabel.textColor = [UIColor op_textPrimaryDark];
+    _emptyLabel.font = [UIFont op_title];
     
     UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                                target:self
