@@ -23,6 +23,10 @@
 		B54C8D4A1ACDA76900DF2455 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D451ACDA76900DF2455 /* search.png */; };
 		B54C8D4B1ACDA76900DF2455 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D461ACDA76900DF2455 /* download.png */; };
 		B54C8D4E1ACDAA2000DF2455 /* UIImage+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D4D1ACDAA2000DF2455 /* UIImage+OPTheme.m */; };
+		B54C8D6C1ACDB1F300DF2455 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */; };
+		B54C8D721ACDB1F300DF2455 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
+		B54C8D741ACDB1F300DF2455 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */; };
+		B54C8D771ACDB1F300DF2455 /* OPDBit Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B54C8D6A1ACDB1F200DF2455 /* OPDBit Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B593AA3E1ACC0BBA0063F09E /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3C1ACC0BBA0063F09E /* on.png */; };
 		B593AA3F1ACC0BBA0063F09E /* off.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3D1ACC0BBA0063F09E /* off.png */; };
 		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
@@ -50,9 +54,20 @@
 		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
 		B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */; };
 		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
+		B5BE82501ACDB866009B5DB9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */; };
+		B5BE82511ACDB8A3009B5DB9 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
+		B5BE82521ACDB8A4009B5DB9 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
+		B5BE82531ACDB8EC009B5DB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B54C8D751ACDB1F300DF2455 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B596826F1AAC2EB7002D6983 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B54C8D691ACDB1F200DF2455;
+			remoteInfo = "OPDBit Widget";
+		};
 		B59682911AAC2EB7002D6983 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B596826F1AAC2EB7002D6983 /* Project object */;
@@ -61,6 +76,20 @@
 			remoteInfo = OPDBit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B54C8D7B1ACDB1F300DF2455 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B54C8D771ACDB1F300DF2455 /* OPDBit Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +119,12 @@
 		B54C8D461ACDA76900DF2455 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
 		B54C8D4C1ACDAA2000DF2455 /* UIImage+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OPTheme.h"; sourceTree = "<group>"; };
 		B54C8D4D1ACDAA2000DF2455 /* UIImage+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+OPTheme.m"; sourceTree = "<group>"; };
+		B54C8D6A1ACDB1F200DF2455 /* OPDBit Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OPDBit Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		B54C8D6F1ACDB1F300DF2455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B54C8D701ACDB1F300DF2455 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		B54C8D711ACDB1F300DF2455 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		B593AA3C1ACC0BBA0063F09E /* on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on.png; sourceTree = "<group>"; };
 		B593AA3D1ACC0BBA0063F09E /* off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = off.png; sourceTree = "<group>"; };
 		B593AA411ACC3DDF0063F09E /* TimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableView.h; sourceTree = "<group>"; };
@@ -146,6 +181,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B54C8D671ACDB1F200DF2455 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B54C8D6C1ACDB1F300DF2455 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B59682741AAC2EB7002D6983 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -285,6 +328,25 @@
 			name = Image;
 			sourceTree = "<group>";
 		};
+		B54C8D6D1ACDB1F300DF2455 /* OPDBit Widget */ = {
+			isa = PBXGroup;
+			children = (
+				B54C8D701ACDB1F300DF2455 /* TodayViewController.h */,
+				B54C8D711ACDB1F300DF2455 /* TodayViewController.m */,
+				B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */,
+				B54C8D6E1ACDB1F300DF2455 /* Supporting Files */,
+			);
+			path = "OPDBit Widget";
+			sourceTree = "<group>";
+		};
+		B54C8D6E1ACDB1F300DF2455 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B54C8D6F1ACDB1F300DF2455 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B593AA3B1ACC0BA90063F09E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +394,7 @@
 			children = (
 				B59682791AAC2EB7002D6983 /* OPDBit */,
 				B59682931AAC2EB7002D6983 /* OPDBitTests */,
+				B54C8D6D1ACDB1F300DF2455 /* OPDBit Widget */,
 				B59682781AAC2EB7002D6983 /* Products */,
 				50E9E19CC8AB086F75932C27 /* Pods */,
 				D50F2B14238F6B1E7CE06FE5 /* Frameworks */,
@@ -343,6 +406,7 @@
 			children = (
 				B59682771AAC2EB7002D6983 /* OPDBit.app */,
 				B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */,
+				B54C8D6A1ACDB1F200DF2455 /* OPDBit Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -598,6 +662,7 @@
 			isa = PBXGroup;
 			children = (
 				7AC2BC34DD53E7F748851752 /* libPods.a */,
+				B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -605,6 +670,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B54C8D691ACDB1F200DF2455 /* OPDBit Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B54C8D7A1ACDB1F300DF2455 /* Build configuration list for PBXNativeTarget "OPDBit Widget" */;
+			buildPhases = (
+				B54C8D661ACDB1F200DF2455 /* Sources */,
+				B54C8D671ACDB1F200DF2455 /* Frameworks */,
+				B54C8D681ACDB1F200DF2455 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OPDBit Widget";
+			productName = "OPDBit Widget";
+			productReference = B54C8D6A1ACDB1F200DF2455 /* OPDBit Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B59682761AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B596829A1AAC2EB7002D6983 /* Build configuration list for PBXNativeTarget "OPDBit" */;
@@ -614,10 +696,12 @@
 				B59682741AAC2EB7002D6983 /* Frameworks */,
 				B59682751AAC2EB7002D6983 /* Resources */,
 				656F88DC312AB4CE62D717DF /* Copy Pods Resources */,
+				B54C8D7B1ACDB1F300DF2455 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B54C8D761ACDB1F300DF2455 /* PBXTargetDependency */,
 			);
 			name = OPDBit;
 			productName = OPDBit;
@@ -651,6 +735,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Minz;
 				TargetAttributes = {
+					B54C8D691ACDB1F200DF2455 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					B59682761AAC2EB7002D6983 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -675,16 +762,27 @@
 			targets = (
 				B59682761AAC2EB7002D6983 /* OPDBit */,
 				B596828F1AAC2EB7002D6983 /* OPDBitTests */,
+				B54C8D691ACDB1F200DF2455 /* OPDBit Widget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B54C8D681ACDB1F200DF2455 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B54C8D741ACDB1F300DF2455 /* MainInterface.storyboard in Resources */,
+				B5BE82531ACDB8EC009B5DB9 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B59682751AAC2EB7002D6983 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B596828B1AAC2EB7002D6983 /* LaunchScreen.xib in Resources */,
+				B5BE82501ACDB866009B5DB9 /* MainInterface.storyboard in Resources */,
 				B54C8D471ACDA76900DF2455 /* menu.png in Resources */,
 				B593AA3F1ACC0BBA0063F09E /* off.png in Resources */,
 				B54C8D4A1ACDA76900DF2455 /* search.png in Resources */,
@@ -739,6 +837,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B54C8D661ACDB1F200DF2455 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B54C8D721ACDB1F300DF2455 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B59682731AAC2EB7002D6983 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -746,6 +852,7 @@
 				B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */,
 				B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */,
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
+				B5BE82511ACDB8A3009B5DB9 /* TodayViewController.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
 				B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */,
@@ -782,6 +889,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5BE82521ACDB8A4009B5DB9 /* TodayViewController.m in Sources */,
 				B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -789,6 +897,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B54C8D761ACDB1F300DF2455 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B54C8D691ACDB1F200DF2455 /* OPDBit Widget */;
+			targetProxy = B54C8D751ACDB1F300DF2455 /* PBXContainerItemProxy */;
+		};
 		B59682921AAC2EB7002D6983 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B59682761AAC2EB7002D6983 /* OPDBit */;
@@ -808,6 +921,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B54C8D781ACDB1F300DF2455 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "OPDBit Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B54C8D791ACDB1F300DF2455 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "OPDBit Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		B59682981AAC2EB7002D6983 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -945,6 +1082,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B54C8D7A1ACDB1F300DF2455 /* Build configuration list for PBXNativeTarget "OPDBit Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B54C8D781ACDB1F300DF2455 /* Debug */,
+				B54C8D791ACDB1F300DF2455 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B59682721AAC2EB7002D6983 /* Build configuration list for PBXProject "OPDBit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
