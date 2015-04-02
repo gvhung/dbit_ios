@@ -11,9 +11,10 @@
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
 #import "DataManager.h"
-#import "UIFont+OPTheme.h"
 
+#import "UIFont+OPTheme.h"
 #import "UIColor+OPTheme.h"
+#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -49,13 +50,14 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     [self setTitle:@"시간표"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                        target:self
-                                                                                        action:@selector(addTimeTable)];
-    addTimeTableButton.tintColor = [UIColor op_textPrimary];
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
-                                                                                                   target:self
-                                                                                                   action:@selector(downloadServerTimeTable)];
+    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(addTimeTable)];
+    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"download.png"]
+                                                                                      style:UIBarButtonItemStylePlain
+                                                                                     target:self
+                                                                                     action:@selector(downloadServerTimeTable)];
     
     self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
     

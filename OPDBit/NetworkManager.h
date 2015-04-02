@@ -26,7 +26,7 @@
                                    failure:(void (^)(NSError *error))failure;
 
 // 학기별로 강의목록 가져오기
-- (void)getServerLecuturesWithTimeTableID:(NSInteger)timeTableId
+- (void)getServerLecturesWithTimeTableID:(NSInteger)timeTableId
                          completion:(void (^)(id response))success
                             failure:(void (^)(NSError *error))failure;
 

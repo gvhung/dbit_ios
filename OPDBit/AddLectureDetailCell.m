@@ -103,6 +103,7 @@
     _daySegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _daySegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _daySegmentedControl.selectionIndicatorBoxOpacity = 0;
+    [_daySegmentedControl addTarget:self.delegate action:@selector(segmentedControlDidChanged:) forControlEvents:UIControlEventValueChanged];
 
     [_timeStartButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
     _timeStartButton.titleLabel.font = [UIFont op_title];
@@ -207,6 +208,7 @@
     _lectureLocationField.tag = lectureDetailIndex;
     _timeStartButton.tag = lectureDetailIndex;
     _timeEndButton.tag = -(lectureDetailIndex);
+    _daySegmentedControl.tag = lectureDetailIndex;
     
     _titleLabel.text = [self titleString];
 }

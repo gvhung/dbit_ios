@@ -11,6 +11,8 @@
 #import "DownloadServerTimeTableViewController.h"
 #import "DataManager.h"
 
+#import "UIImage+OPTheme.h"
+
 #import <Masonry/Masonry.h>
 
 @interface ServerTimeTableViewController ()
@@ -44,7 +46,10 @@ static CGFloat const ServerTimeTableCellHeight = 75.0f;
     [self setTitle:@"서버 시간표"];
     self.view.backgroundColor = [UIColor whiteColor];
 
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(downloadServerTimeTable)];
+    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"download.png"]
+                                                                                      style:UIBarButtonItemStylePlain
+                                                                                     target:self
+                                                                                     action:@selector(downloadServerTimeTable)];
     self.navigationItem.rightBarButtonItem = downloadServerTimeTableButton;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];

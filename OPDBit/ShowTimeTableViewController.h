@@ -10,6 +10,8 @@
 
 @interface ShowTimeTableViewController : UIViewController
 
+@property (nonatomic, strong) NSDictionary *activedTimeTable;
+
 - (id)init;
 
 @end

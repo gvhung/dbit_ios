@@ -9,8 +9,10 @@
 #import "DownloadServerTimeTableViewController.h"
 #import "NetworkManager.h"
 #import "DataManager.h"
+
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -77,8 +79,10 @@
     _timeTableLabel.textColor = [UIColor op_textSecondaryDark];
     _timeTableLabel.font = [UIFont op_primary];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(downloadTimeTable)];
-    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(downloadTimeTable)];
     self.navigationItem.rightBarButtonItem = doneButton;
     [self.view addSubview:_schoolButton];
     [self.view addSubview:_timeTableButton];
@@ -93,6 +97,7 @@
     CGFloat padding = 15.0f;
     CGFloat margin = 100.0f;
     CGFloat gap = 10.0f;
+    
     [_schoolButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).with.offset(padding);
         make.right.equalTo(self.view.mas_right).with.offset(-padding);
@@ -144,7 +149,7 @@
          [schoolSelectActionSheet showInView:self.view];
      } failure:^(NSError *error) {
          [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
-         NSLog(@"%@", error);
+         NSLog(@"Failed To Get Server Schools\n%@", error);
     }];
 }
 
@@ -175,7 +180,7 @@
          [timeTableSelectActionSheet showInView:self.view];
     } failure:^(NSError *error) {
         [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
-        NSLog(@"%@", error);
+        NSLog(@"Failed to Get Server Time Table With School ID (%ld)\n%@", _selectedSchoolId, error);
     }];
 }
 
@@ -187,20 +192,19 @@
     }
     [KVNProgress showWithStatus:@"시간표 내려받는 중.."];
     [_networkManager
-     getServerLecuturesWithTimeTableID:_selectedTimeTable completion:^(id response) {
+     getServerLecturesWithTimeTableID:_selectedTimeTable completion:^(id response) {
          [KVNProgress dismiss];
          NSInteger totalCount = [response count];
-         [_dataManager saveServerLecturesWithResponse:response update:^(NSInteger progressIndex) {
+         [_dataManager saveServerLecturesWithResponse:response serverTimeTableId:_selectedTimeTable update:^(NSInteger progressIndex) {
              [KVNProgress showProgress:progressIndex/totalCount status:[NSString stringWithFormat:@"%ld/%ld", progressIndex, totalCount]];
              if (progressIndex == totalCount) {
                  [KVNProgress showSuccessWithStatus:[NSString stringWithFormat:@"총 %ld개 강의 내려받기 성공!", totalCount]];
-                 [_dataManager setDownloadedWithTimeTableId:_selectedTimeTable];
                  [self.navigationController popViewControllerAnimated:YES];
              }
          }];
      } failure:^(NSError *error) {
          [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
-         NSLog(@"%@", error);
+         NSLog(@"Failed to Get Server Lectures Wit Time Table ID (%ld)\n%@", _selectedSchoolId, error);
      }];
 }
 

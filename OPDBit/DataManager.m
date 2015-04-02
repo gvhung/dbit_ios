@@ -44,7 +44,6 @@
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
         _realm = [RLMRealm defaultRealm];
-        NSLog(@"%@", [LectureObject allObjects]);
     }
     return self;
 }
@@ -68,26 +67,25 @@
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response
 {
     [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerTimeTableObject allObjects]];
     for (NSDictionary *serverTimeTableDictionary in response) {
+        [_realm deleteObjects:[ServerTimeTableObject objectsWhere:@"timeTableId == %ld", [serverTimeTableDictionary[@"id"] integerValue]]];
         ServerTimeTableObject *serverTimeTableObject = [[ServerTimeTableObject alloc] init];
         serverTimeTableObject.timeTableId = [serverTimeTableDictionary[@"id"] integerValue];
         serverTimeTableObject.schoolId = [serverTimeTableDictionary[@"school_id"] integerValue];
         serverTimeTableObject.semester = serverTimeTableDictionary[@"semester"];
         serverTimeTableObject.updatedAt = [_dateFormatter dateFromString:serverTimeTableDictionary[@"updated_at"]];
         serverTimeTableObject.checkedAt = [NSDate date];
-        serverTimeTableObject.downloaded = NO;
         
         [_realm addObject:serverTimeTableObject];
     }
     [_realm commitWriteTransaction];
 }
 
-- (void)saveServerLecturesWithResponse:(NSArray *)response update:(void (^)(NSInteger progressIndex))update
+- (void)saveServerLecturesWithResponse:(NSArray *)response serverTimeTableId:(NSInteger)serverTimeTableId update:(void (^)(NSInteger progressIndex))update
 {
     NSInteger index = 0;
     [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerLectureObject allObjects]];
+    [_realm deleteObjects:[ServerLectureObject objectsWhere:@"timeTableId == %ld", serverTimeTableId]];
     for (NSDictionary *serverLectureDictionary in response) {
         ServerLectureObject *serverLectureObject = [[ServerLectureObject alloc] init];
         serverLectureObject.lectureCode = serverLectureDictionary[@"lecture_code"];
@@ -120,15 +118,15 @@
     
     timeTableObject.active = active;
     timeTableObject.utid = [self lastUtid]+1;
-    timeTableObject.timeStart = 800;
-    timeTableObject.timeEnd = 2300;
+    timeTableObject.timeStart = -1;
+    timeTableObject.timeEnd = -1;
     timeTableObject.mon = YES;
     timeTableObject.tue = YES;
     timeTableObject.wed = YES;
     timeTableObject.thu = YES;
     timeTableObject.fri = YES;
-    timeTableObject.sat = YES;
-    timeTableObject.sun = YES;
+    timeTableObject.sat = NO;
+    timeTableObject.sun = NO;
     [_realm addObject:timeTableObject];
     [_realm commitWriteTransaction];
 }
@@ -136,7 +134,6 @@
 - (NSInteger)lastUtid
 {
     RLMResults *timeTableResults = [[TimeTableObject allObjects] sortedResultsUsingProperty:@"utid" ascending:NO];
-    NSLog(@"%@", timeTableResults);
     if (timeTableResults.count == 0)
         return -1;
     TimeTableObject *lastTimeTableObject = timeTableResults[0];
@@ -240,6 +237,8 @@
     lectureDetailObject.day = day;
     [lectureObject.lectureDetails addObject:lectureDetailObject];
     [_realm commitWriteTransaction];
+    
+    [self refreshTimeTableSetting];
 }
 
 #pragma mark - Delete Object in Realm
@@ -265,6 +264,39 @@
     [_realm deleteObjects:lectureObjectToDelete.lectureDetails];
     [_realm deleteObject:lectureObjectToDelete];
     [_realm commitWriteTransaction];
+    
+    [self refreshTimeTableSetting];
+}
+
+- (void)refreshTimeTableSetting
+{
+    [_realm beginWriteTransaction];
+    
+    self.activedTimeTableObject.sat = NO;
+    self.activedTimeTableObject.sun = NO;
+    self.activedTimeTableObject.timeStart = -1;
+    self.activedTimeTableObject.timeEnd = -1;
+    
+    NSMutableArray *resultsArray = [[NSMutableArray alloc] init];
+    for (LectureObject *lectureObject in self.activedTimeTableObject.lectures) {
+        RLMResults *lecturesResults = [lectureObject.lectureDetails objectsWhere:@"ulid == %ld", lectureObject.ulid];
+        if (lecturesResults.count != 0) [resultsArray addObject:lecturesResults];
+    }
+    for (RLMResults *lectureDetailResults in resultsArray) {
+        for (LectureDetailObject *lectureDetailObject in lectureDetailResults) {
+            if (self.activedTimeTableObject.timeStart == -1 || self.activedTimeTableObject.timeStart > lectureDetailObject.timeStart)
+                self.activedTimeTableObject.timeStart = lectureDetailObject.timeStart;
+            
+            if (self.activedTimeTableObject.timeEnd == -1 || self.activedTimeTableObject.timeEnd < lectureDetailObject.timeEnd)
+                self.activedTimeTableObject.timeEnd = lectureDetailObject.timeEnd;
+            
+            if (lectureDetailObject.day == 5 || lectureDetailObject.day == 6) {
+                self.activedTimeTableObject.sat = YES;
+                self.activedTimeTableObject.sun = YES;
+            }
+        }
+    }
+    [_realm commitWriteTransaction];
 }
 
 #pragma mark - Set Object Attribute
@@ -281,22 +313,11 @@
     [_realm commitWriteTransaction];
 }
 
-- (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId
-{
-    RLMResults *serverTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
-    if (serverTimeTables.count == 0) {
-        NSLog(@"TimeTable (timeTableId : %ld) to set 'downloaded' is NOT exist!", timeTableId);
-        return;
-    }
-    ServerTimeTableObject *timeTableObject = serverTimeTables[0];
-    timeTableObject.downloaded = YES;
-}
-
 #pragma mark - Get Objects
 
 - (NSArray *)downloadedTimeTables
 {
-    RLMResults *downloadedTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"downloaded == YES"]];
+    RLMResults *downloadedTimeTables = [ServerTimeTableObject allObjects];
     if (downloadedTimeTables.count == 0) {
         NSLog(@"Downloaded TimeTables are NOT exist!");
         return nil;
@@ -330,7 +351,7 @@
     if (serverTimeTableResults.count == 0) {
         NSLog(@"Server TimeTable (timeTableId : %ld) is NOT exist!", serverTimeTableId);
         return nil;
-    }
+    }    
     return [self arrayWithServerTimeTableResults:serverTimeTableResults][0];
 }
 
@@ -399,6 +420,7 @@
         NSLog(@"LectureDetails (day : %ld) is NOT exist", day);
         return nil;
     }
+    
     NSArray *sortedArray = [self arrayWithLectureDetailResulstArray:resultsArray];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStart" ascending:YES];
     return [sortedArray sortedArrayUsingDescriptors:@[sortDescriptor]];
@@ -466,6 +488,18 @@
     return ulids;
 }
 
+- (NSArray *)daySectionTitles
+{
+    return (self.activedTimeTableObject.sat && self.activedTimeTableObject.sun) ? @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"] : @[@"월", @"화", @"수", @"목", @"금"];
+}
+
+- (BOOL)lecturesIsEmptyInActivedTimeTable
+{
+    if (self.activedTimeTableObject.lectures.count != 0)
+        return NO;
+    return YES;
+}
+
 #pragma mark - Getter
 
 - (TimeTableObject *)activedTimeTableObject
@@ -489,7 +523,6 @@
 }
 
 
-
 #pragma mark - Results To Array
 
 - (NSArray *)arrayWithServerTimeTableResults:(RLMResults *)result
@@ -502,7 +535,6 @@
         serverTimeTableDictionary[@"semester"] = serverTimeTableObject.semester;
         serverTimeTableDictionary[@"updatedAt"] = serverTimeTableObject.updatedAt;
         serverTimeTableDictionary[@"checkedAt"] = serverTimeTableObject.checkedAt;
-        serverTimeTableDictionary[@"downloaded"] = @(serverTimeTableObject.downloaded);
         [arrayForReturn addObject:serverTimeTableDictionary];
     }
     return arrayForReturn;

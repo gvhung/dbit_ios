@@ -7,6 +7,8 @@
 //
 
 #import "TimeTableView.h"
+#import "LectureDetailView.h"
+
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
@@ -24,22 +26,22 @@
 
 @implementation TimeTableView
 
-static CGFloat const SectionHeadHeight = 50.0f;
+static CGFloat const SectionHeadHeight = 40.0f;
 static CGFloat const TimeHeadWidth = 30.0f;
 static CGFloat const LineWidth = 0.5f;
 
-- (id)initWithFrame:(CGRect)frame lectureDetails:(NSArray *)lectureDetails sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
+- (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor op_background];
         
-        _sectionTitles = sectionTitles;
-        _lectureDetails = lectureDetails;
+        self.sectionTitles = sectionTitles;
+        self.lectures = lectures;
         
-        _timeStart = timeStart;
-        _timeEnd = timeEnd;
-        _timeBlockCount = [self timeBlockCount];
+        self.timeStart = timeStart;
+        self.timeEnd = timeEnd;
+        self.timeBlockCount = [self timeBlockCount];
         
         [self initializeLayout];
     }
@@ -53,11 +55,10 @@ static CGFloat const LineWidth = 0.5f;
         self.backgroundColor = [UIColor op_background];
         
         _sectionTitles = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
-        _lectureDetails = [[NSArray alloc] init];
+        _lectures = [[NSArray alloc] init];
         
         _timeStart = 800;
         _timeEnd = 2000;
-        _timeBlockCount = [self timeBlockCount];
         
         [self initializeLayout];
     }
@@ -66,8 +67,35 @@ static CGFloat const LineWidth = 0.5f;
 
 - (void)initializeLayout
 {
+    _timeBlockCount = [self timeBlockCount];
     _sectionWidth = (self.frame.size.width-TimeHeadWidth)/_sectionTitles.count;
     _timeHeight = (self.frame.size.height-SectionHeadHeight)/_timeBlockCount;
+    
+    for (NSDictionary *lectureDictionary in _lectures) {
+        for (NSDictionary *lectureDetailDictionary in lectureDictionary[@"lectureDetails"]) {
+            
+            NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue] - _timeStart;
+            CGFloat startHours = convertedStartTime/100;
+            CGFloat startMinutes = convertedStartTime%100;
+            
+            NSInteger convertedEndTime = [lectureDetailDictionary[@"timeEnd"] integerValue] - [lectureDetailDictionary[@"timeStart"] integerValue];
+            CGFloat endHours = convertedEndTime/100;
+            CGFloat endMinutes = convertedEndTime%100;
+            
+            CGFloat x = TimeHeadWidth + _sectionWidth*[lectureDetailDictionary[@"day"] integerValue];
+            CGFloat y = SectionHeadHeight + _timeHeight*(startHours + startMinutes/60);
+            CGFloat height = _timeHeight*(endHours + endMinutes/60);
+            NSLog(@"%lf %lf %lf", x, y, height);
+            
+            CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
+            NSLog(@"%@\n\n\n%@", NSStringFromCGRect(lectureDetailViewFrame), lectureDetailDictionary);
+            LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
+                                                                                      theme:[lectureDictionary[@"theme"] integerValue]
+                                                                                lectureName:lectureDictionary[@"lectureName"]
+                                                                            lectureLocation:lectureDetailDictionary[@"lectureLocation"]];
+            [self addSubview:lectureDetailView];
+        }
+    }
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -81,26 +109,33 @@ static CGFloat const LineWidth = 0.5f;
     NSInteger i;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(context, [UIColor op_dividerDark].CGColor);
-
+    CGContextSetStrokeColorWithColor(context, [UIColor op_textSecondaryDark].CGColor);
     CGContextSetLineWidth(context, LineWidth);
-    
+
     // Section Line Drawing
     for (i = 0; i < _sectionTitles.count; i++) {
-        CGContextMoveToPoint(context, TimeHeadWidth+(_sectionWidth*i), 0.0f); //start at this point
+        if (i == 1) {
+            CGContextStrokePath(context);
+            CGContextSetStrokeColorWithColor(context, [UIColor op_dividerDark].CGColor);
+        }
+        CGContextMoveToPoint(context, TimeHeadWidth+(_sectionWidth*i), SectionHeadHeight); //start at this point
         CGContextAddLineToPoint(context, TimeHeadWidth+(_sectionWidth*i), self.frame.size.height); //draw to this point
     }
+    CGContextStrokePath(context);
+    
+    CGContextSetStrokeColorWithColor(context, [UIColor op_textSecondaryDark].CGColor);
     
     for (i = 0; i < _timeBlockCount; i++) {
-        CGContextMoveToPoint(context, 0.0f, SectionHeadHeight+(_timeHeight*i)); //start at this point
+        if (i == 1) {
+            CGContextStrokePath(context);
+            CGContextSetStrokeColorWithColor(context, [UIColor op_dividerDark].CGColor);
+        }
+        CGContextMoveToPoint(context, TimeHeadWidth, SectionHeadHeight+(_timeHeight*i)); //start at this point
         CGContextAddLineToPoint(context, self.frame.size.width, SectionHeadHeight+(_timeHeight*i)); //draw to this point
     }
-    
-    // and now draw the Path!
     CGContextStrokePath(context);
     
 #warning 텍스트 위, 아래로 정렬
-    
     for (i = _blockStart; i < _blockEnd; i++) {
         UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SectionHeadHeight+_timeHeight*(i-_blockStart), TimeHeadWidth, _timeHeight)];
         timeLabel.textColor = [UIColor op_textPrimaryDark];

@@ -10,8 +10,13 @@
 
 @interface LectureDetailView : UIView
 
-@property (nonatomic, strong) NSDictionary *lectureDetailDictionary;
+@property (nonatomic) BOOL selectedLectureDetail;
+
+@property (nonatomic) NSInteger theme;
+@property (nonatomic, strong) NSString *lectureName;
+@property (nonatomic, strong) NSString *lectureLocation;
 
 - (id)initWithFrame:(CGRect)frame;
+- (id)initWithFrame:(CGRect)frame theme:(NSInteger)theme lectureName:(NSString *)lectureName lectureLocation:(NSString *)lectureLocation;
 
 @end

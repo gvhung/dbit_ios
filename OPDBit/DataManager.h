@@ -15,22 +15,56 @@
 
 + (DataManager *)sharedInstance;
 
+#pragma mark - Database Manage Method
+
+/**
+ *
+ */
+
 - (void)saveServerSchoolsWithResponse:(NSArray *)response;
+
+/**
+ *
+ */
+
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response;
+
+/**
+ *
+ */
+
 - (void)saveServerLecturesWithResponse:(NSArray *)response
+                     serverTimeTableId:(NSInteger)serverTimeTableId
                                 update:(void (^)(NSInteger progressIndex))update;
+
+/**
+ *
+ */
 
 - (void)saveTimeTableWithName:(NSString *)name
                      serverId:(NSInteger)serverId
                        active:(BOOL)active;
+
+/**
+ *
+ */
+
 - (void)saveLectureWithLectureName:(NSString *)lectureName
                              theme:(NSInteger)theme
                     lectureDetails:(NSArray *)lectureDetails;
+
+/**
+ *
+ */
 
 - (void)saveLectureWithLectureName:(NSString *)lectureName
                              theme:(NSInteger)theme
                     lectureDetails:(NSArray *)lectureDetails
                               ulid:(NSInteger)ulid;
+
+/**
+ *
+ */
 
 - (void)saveLectureDetailWithUlid:(NSInteger)ulid
                   lectureLocation:(NSString *)lectureLocation
@@ -38,33 +72,110 @@
                         timeStart:(NSInteger)timeStart
                               day:(NSInteger)day;
 
+/**
+ *
+ */
+
 - (void)updateTimeTableWithUtid:(NSInteger)utid
                          name:(NSString *)name
                      serverId:(NSInteger)serverId
                        active:(BOOL)active
                       failure:(void (^)(NSString *reason))failure;
 
+/**
+ *
+ */
+
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
                         theme:(NSInteger)theme
                lectureDetails:(NSArray *)lectureDetails;
 
+/**
+ *
+ */
+
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
+
+/**
+ *
+ */
+
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
 
+#pragma mark - Set Attributes
+
+/**
+ *
+ */
+
 - (void)setActiveWithUtid:(NSInteger)utid;
-- (void)setDownloadedWithTimeTableId:(NSInteger)timeTableId;
+
+#pragma mark - Get Objects
+
+/**
+ *
+ */
 
 - (NSArray *)downloadedTimeTables;
+
+/**
+ *
+ */
+
 - (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
+
+/**
+ *
+ */
+
 - (NSArray *)schools;
+
+/**
+ *
+ */
+
 - (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId;
+
+/**
+ *
+ */
+
 - (NSArray *)timeTables;
+
+/**
+ *
+ */
+
 - (NSDictionary *)timeTableWithId:(NSInteger)timeTableId;
+
+/**
+ *
+ */
+
 - (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
+
+/**
+ *
+ */
+
 - (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
+
+/**
+ *
+ */
+
 - (NSString *)semesterString:(NSString *)semester;
+
+/**
+ *
+ */
+
 - (NSDictionary *)lectureWithId:(NSInteger)ulid;
+
+/**
+ *
+ */
 
 - (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(NSArray *)lectureDetails;
 
@@ -82,15 +193,49 @@
 
 - (NSArray *)lectureDetailsWithDay:(NSInteger)day;
 
+/**
+ *
+ */
+
+- (NSArray *)daySectionTitles;
+
+/**
+ *
+ */
+
+- (BOOL)lecturesIsEmptyInActivedTimeTable;
+
 #pragma mark - Lecture Theme
 
+/**
+ *
+ */
+
 + (NSInteger)lectureThemeCount;
+
+/**
+ *
+ */
+
 + (NSArray *)lectureThemeThumbnailArray;
+
+/**
+ *
+ */
+
 + (UIImage *)lectureThemeThumbnail:(NSInteger)themeId;
 
 #pragma mark - Time Convert Method
 
+/**
+ *
+ */
+
 + (NSString *)stringFromTimeInteger:(NSInteger)timeInteger;
+
+/**
+ *
+ */
 
 + (NSInteger)integerFromTimeString:(NSString *)timeString;
 

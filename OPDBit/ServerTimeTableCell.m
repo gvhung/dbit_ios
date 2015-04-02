@@ -23,7 +23,6 @@
 
 @property (nonatomic, strong) UILabel *semesterLabel;
 @property (nonatomic, strong) UILabel *schoolNameLabel;
-#warning subLabel 대신 다른 이름 사용
 @property (nonatomic, strong) UILabel *checkedAtLabel;
 
 @property (nonatomic, strong) UIView *separatorView;

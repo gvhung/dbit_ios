@@ -10,6 +10,7 @@
 #import "OPLeftDrawerTableViewCell.h"
 #import "TimeTableViewController.h"
 #import "LectureViewController.h"
+#import "ShowTimeTableViewController.h"
 #import "AppDelegate.h"
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
@@ -22,6 +23,8 @@
 
 @property (nonatomic, strong) DataManager *dataManager;
 
+@property (nonatomic, strong) NSArray *cellName;
+
 @end
 
 @implementation OPLeftDrawerViewController
@@ -30,6 +33,8 @@
 {
     self = [super init];
     if (self) {
+        _cellName = @[@"시간표 모아보기", @"수업", @"시간표"];
+        
         _dataManager = [DataManager sharedInstance];
         [self initialize];
     }
@@ -86,7 +91,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,7 +103,7 @@
     
     cell.textLabel.textColor = [UIColor op_textPrimaryDark];
     cell.textLabel.font = [UIFont op_title];
-    cell.textLabel.text = indexPath.row ? @"시간표" : @"수업";
+    cell.textLabel.text = _cellName[indexPath.row];
     
     return cell;
 }
@@ -107,10 +112,21 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (indexPath.row) {
-        TimeTableViewController *timeTableViewController = [[TimeTableViewController alloc] init];
-        appDelegate.centerNavigationController.viewControllers = @[timeTableViewController];
-    } else {
+    if (indexPath.row == 0) {
+        if ([_dataManager lecturesIsEmptyInActivedTimeTable]) {
+            [KVNProgress showErrorWithStatus:@"아직 수업이 없습니다!"];
+            [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
+            return;
+        }
+        if (!_dataManager.activedTimeTable) {
+            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+            [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
+            return;
+        }
+        ShowTimeTableViewController *showTimeTableViewController = [[ShowTimeTableViewController alloc] init];
+        appDelegate.centerNavigationController.viewControllers = @[showTimeTableViewController];
+    }
+    if (indexPath.row == 1) {
         if (!_dataManager.activedTimeTable) {
             [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
@@ -118,6 +134,9 @@
         }
         LectureViewController *lectureViewController = [[LectureViewController alloc] init];
         appDelegate.centerNavigationController.viewControllers = @[lectureViewController];
+    } else if (indexPath.row == 2) {
+        TimeTableViewController *timeTableViewController = [[TimeTableViewController alloc] init];
+        appDelegate.centerNavigationController.viewControllers = @[timeTableViewController];
     }
     [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
 }

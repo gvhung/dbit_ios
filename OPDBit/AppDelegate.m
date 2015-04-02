@@ -16,10 +16,6 @@
 
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 
-#warning 테스트
-
-#import "ShowTimeTableViewController.h"
-
 @interface AppDelegate ()
 
 @end
@@ -56,15 +52,12 @@
     [[UIBarButtonItem appearance] setTintColor:[UIColor op_textPrimary]];
     [[UITextField appearance] setTintColor:[UIColor op_textSecondaryDark]];
     
-    [[NSClassFromString(@"_UINavigationBarBackIndicatorView") appearance] setTintColor:[UIColor op_textPrimary]];
-    
-    /*
+    if([UINavigationBar conformsToProtocol:@protocol(UIAppearanceContainer)]) {
+        [UINavigationBar appearance].tintColor = [UIColor op_textPrimary];
+    }
+
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController
                                                             leftDrawerViewController:leftDrawerViewController];
-     */
-    
-    ShowTimeTableViewController *showTimeTableViewController = [[ShowTimeTableViewController alloc] init];
-    self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:showTimeTableViewController leftDrawerViewController:leftDrawerViewController];
 
     [self.drawerController setRestorationIdentifier:@"MMDrawer"];
     [self.drawerController setMaximumLeftDrawerWidth:200.0];

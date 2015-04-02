@@ -10,8 +10,10 @@
 #import "LectureTableViewCell.h"
 #import "AddLectureViewController.h"
 #import "DataManager.h"
+
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -48,7 +50,10 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [self setTitle:_dataManager.activedTimeTable[@"timeTableName"]];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addLectureAction)];
+    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:self
+                                                                        action:@selector(addLectureAction)];
     addLectureButton.tintColor = [UIColor op_textPrimary];
     self.navigationItem.rightBarButtonItem = addLectureButton;
     
@@ -67,8 +72,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     _emptyLabel.font = [UIFont op_title];
     _emptyLabel.text = @"수업이 없어요! :D";
     
-    NSArray *segmentedAttributes = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
-    _daySegmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:segmentedAttributes];
+    _daySegmentedControl = [[HMSegmentedControl alloc] initWithSectionTitles:[_dataManager daySectionTitles]];
     _daySegmentedControl.borderType = HMSegmentedControlBorderTypeBottom;
     _daySegmentedControl.borderColor = [UIColor op_dividerDark];
     _daySegmentedControl.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textSecondaryDark],
@@ -183,6 +187,9 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
         [_dataManager deleteLectureWithUlid:[_lectureDetails[actionSheet.tag][@"ulid"] integerValue]];
         [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
+        if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
+        _daySegmentedControl.sectionTitles = [_dataManager daySectionTitles];
+        [_daySegmentedControl setNeedsDisplay];
     } else if (buttonIndex == 1) {
         AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
         editLectureViewController.ulidToEdit = [_lectureDetails[actionSheet.tag][@"ulid"] integerValue];
@@ -237,6 +244,9 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
+    if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
+    _daySegmentedControl.sectionTitles = [_dataManager daySectionTitles];
+    [_daySegmentedControl setNeedsDisplay];
 }
 
 @end

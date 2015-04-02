@@ -21,7 +21,6 @@
 
 @property (nonatomic, strong) UILabel *timeTableNameLabel;
 @property (nonatomic, strong) UILabel *serverTimeTableNameLabel;
-#warning subLabel 대신 다른 이름 사용
 @property (nonatomic, strong) UILabel *subLabel;
 
 @property (nonatomic, strong) UIView *separatorView;

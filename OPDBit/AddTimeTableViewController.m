@@ -9,8 +9,10 @@
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
 #import "DataManager.h"
+
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -65,7 +67,10 @@
     [self setTitle:@"시간표 추가"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(done)];
     self.navigationItem.rightBarButtonItem = doneButton;
     
     //Labels
@@ -169,7 +174,6 @@
 
 - (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
 {
-    NSLog(@"%@", timeTableDictionary);
     _timeTableDictionary = timeTableDictionary;
     self.selectedServerTimeTableId = [timeTableDictionary[@"serverId"] integerValue];
     _timeTableNameField.text = timeTableDictionary[@"timeTableName"];

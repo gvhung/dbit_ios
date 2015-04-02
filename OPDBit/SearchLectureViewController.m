@@ -9,8 +9,10 @@
 #import "SearchLectureViewController.h"
 #import "SearchLectureCell.h"
 #import "DataManager.h"
+
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+#import "UIImage+OPTheme.h"
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
@@ -79,10 +81,10 @@ static CGFloat const rowHeight = 80.0f;
     _emptyLabel.textColor = [UIColor op_textPrimaryDark];
     _emptyLabel.font = [UIFont op_title];
     
-    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                               target:self
-                                                                                               action:@selector(selectServerLectureAction)];
-    
+    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+                                                                                  style:UIBarButtonItemStylePlain
+                                                                                 target:self
+                                                                                 action:@selector(selectServerLectureAction)];
     _searchTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     _searchTextField.center = CGPointMake(self.view.center.x, 22);
     

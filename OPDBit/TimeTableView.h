@@ -15,12 +15,12 @@
  */
 @property (nonatomic, strong) NSArray *sectionTitles;
 
-@property (nonatomic, strong) NSArray *lectureDetails;
+@property (nonatomic, strong) NSArray *lectures;
 
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
 
-- (id)initWithFrame:(CGRect)frame lectureDetails:(NSArray *)lectureDetails sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
+- (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
 - (id)initWithFrame:(CGRect)frame;
 
 @end

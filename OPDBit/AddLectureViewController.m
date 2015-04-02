@@ -11,6 +11,9 @@
 #import "AddLectureDetailCell.h"
 #import "AddLectureFooterCell.h"
 
+#import "UIColor+OPTheme.h"
+#import "UIImage+OPTheme.h"
+
 #import "SearchLectureViewController.h"
 #import "DataManager.h"
 
@@ -73,13 +76,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _timePickerViewController.datePicker.minuteInterval = 5;
     _timePickerViewController.datePicker.timeZone = [NSTimeZone localTimeZone];
     
-    UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"찾기"
+    UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"search.png"]
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(searchLectureAction)];
-    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                                      target:self
-                                                                                      action:@selector(addLectureAction)];;
+    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:self
+                                                                        action:@selector(addLectureAction)];
     
     self.navigationItem.rightBarButtonItems = @[addLectureButton, searchLectureButton];
     
@@ -223,9 +227,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }
 }
 
+#pragma mark - Segmented Control Delegate
+
 - (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
 {
-    _lectureDictionary[@"theme"] = @(segmentedControl.selectedSegmentIndex);
+    if (segmentedControl.tag == -1)
+        _lectureDictionary[@"theme"] = @(segmentedControl.selectedSegmentIndex);
+    else
+        _lectureDetails[segmentedControl.tag-1][@"day"] = @(segmentedControl.selectedSegmentIndex);
     [_tableView reloadData];
 }
 
@@ -302,6 +311,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureAction
 {
+    [_tableView endEditing:YES];
     if (!_lectureDictionary[@"lectureName"]) {
         [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
         return;
@@ -310,12 +320,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
-    if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {
-        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
-        return;
+    for (NSDictionary *lectureDetailDictionary in _lectureDetails) {
+        if (!lectureDetailDictionary[@"lectureLocation"]) {
+            [KVNProgress showErrorWithStatus:@"강의실을 입력해주세요!"];
+            return;
+        }
     }
     
     if (_ulidToEdit == -1) {
+        if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {
+            [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
+            return;
+        }
         [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
                                            theme:[_lectureDictionary[@"theme"] integerValue]
                                   lectureDetails:_lectureDetails];

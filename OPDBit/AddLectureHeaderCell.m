@@ -78,6 +78,7 @@
     _lectureThemeSegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _lectureThemeSegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _lectureThemeSegmentedControl.selectionIndicatorBoxOpacity = 0;
+    _lectureThemeSegmentedControl.tag = -1;
     [_lectureThemeSegmentedControl addTarget:self.delegate action:@selector(segmentedControlDidChanged:) forControlEvents:UIControlEventValueChanged];
     
     [self.contentView addSubview:_separator];
