@@ -129,6 +129,10 @@
     timeTableObject.sun = NO;
     [_realm addObject:timeTableObject];
     [_realm commitWriteTransaction];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:self.activedTimeTable forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
 }
 
 - (NSInteger)lastUtid
@@ -169,6 +173,10 @@
     timeTableObject.active = active;
     [_realm addOrUpdateObject:timeTableObject];
     [_realm commitWriteTransaction];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:self.activedTimeTable forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
 }
 
 - (void)updateLectureWithUlid:(NSInteger)ulid
@@ -214,6 +222,10 @@
                               timeStart:[lectureDetailDictionary[@"timeStart"] integerValue]
                                     day:[lectureDetailDictionary[@"day"] integerValue]];
     }
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:self.activedTimeTable forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
 }
 
 - (NSInteger)lastUlid
@@ -519,6 +531,10 @@
         NSLog(@"Actived TimeTable is NOT exist! (Dictionary)");
         return nil;
     }
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:[self arrayWithTimeTableResults:activedTimeTableResults][0] forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
     return [self arrayWithTimeTableResults:activedTimeTableResults][0];
 }
 

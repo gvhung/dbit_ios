@@ -11,6 +11,6 @@
 
 @interface TodayViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet TimeTableView *timeTableView;
+@property (nonatomic, strong) IBOutlet TimeTableView *timeTableView;
 
 @end

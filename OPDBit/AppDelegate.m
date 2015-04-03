@@ -35,6 +35,7 @@
 
     OPLeftDrawerViewController *leftDrawerViewController = [[OPLeftDrawerViewController alloc] init];
     
+    
     if ([DataManager sharedInstance].activedTimeTable) {
         LectureViewController *lectureViewController = [[LectureViewController alloc] init];
         _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:lectureViewController];
@@ -94,6 +95,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (NSURL *)applicationDocumentsDirectory
+{
+    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.yourdomain.YourAwesomeApp" in the application's documents directory.
+    
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 @end

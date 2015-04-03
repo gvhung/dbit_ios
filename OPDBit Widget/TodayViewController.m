@@ -11,29 +11,48 @@
 
 @interface TodayViewController () <NCWidgetProviding>
 
-
-
 @end
 
 @implementation TodayViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        NSLog(@"init");
+        self.preferredContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, 300.0f);
+        [self updateTimeTable];
+    }
+    return self;
+}
+
+- (void)userDefaultsDidChange:(NSNotification *)notification
+{
+    [self updateTimeTable];
+}
+
+- (void)updateTimeTable
+{
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    NSDictionary *activedTimeTable = [defaults objectForKey:@"ActivedTimeTable"];
+    NSLog(@"%@", activedTimeTable);
+    
+    _timeTableView.lectures = activedTimeTable[@"lectures"];
+    _timeTableView.sectionTitles = ([activedTimeTable[@"sat"] boolValue] && [activedTimeTable[@"sun"] boolValue]) ? @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"] : @[@"월", @"화", @"수", @"목", @"금"];
+    _timeTableView.timeStart = [activedTimeTable[@"timeStart"] integerValue];
+    _timeTableView.timeEnd = [activedTimeTable[@"timeEnd"] integerValue];
+    
+//    _timeTableView.lectures = [[NSArray alloc] init];
+//    _timeTableView.sectionTitles = @[@"월", @"화", @"수", @"목", @"금"];
+//    _timeTableView.timeStart = 800;
+//    _timeTableView.timeEnd = 1500;
+    
+    NSLog(@"%ld",[activedTimeTable[@"timeEnd"] integerValue]);
+    NSLog(@"%ld", _timeTableView.timeEnd);
+    [_timeTableView setNeedsDisplay];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-//    DataManager *dataManager = [DataManager sharedInstance];
-//    _timeTableView.lectures = dataManager.activedTimeTable[@"lectures"];
-//    _timeTableView.sectionTitles = [dataManager daySectionTitles];
-//    _timeTableView.timeStart = [dataManager.activedTimeTable[@"timeStart"] integerValue];
-//    _timeTableView.timeEnd = [dataManager.activedTimeTable[@"timeEnd"] integerValue];
-    
-    
-    _timeTableView.lectures = [[NSArray alloc] init];
-    _timeTableView.sectionTitles = @[@"월", @"화", @"수", @"목", @"금"];
-    _timeTableView.timeStart = 800;
-    _timeTableView.timeEnd = 2300;
-    
-    [_timeTableView setNeedsDisplay];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,7 +67,9 @@
     // If there's no update required, use NCUpdateResultNoData
     // If there's an update, use NCUpdateResultNewData
 
-    NSLog(@"d");
+//    _timeTableView.frame = self.view.frame;
+//    [_timeTableView setNeedsDisplay];
+//    NSLog(@"widget Perform update : %@", NSStringFromCGRect(self.view.frame));
     
     completionHandler(NCUpdateResultNewData);
 }

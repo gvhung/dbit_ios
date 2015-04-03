@@ -50,7 +50,7 @@
 - (void)makeAutoLayoutConstraints
 {
     [_timeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(64, 0, 0, 0));
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(64, 5, 0, 0));
     }];
 }
 

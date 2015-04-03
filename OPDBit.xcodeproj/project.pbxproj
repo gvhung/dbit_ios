@@ -17,6 +17,20 @@
 		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
 		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B54227391ACEAF1D00BBBD3F /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
+		B542273A1ACEAF4500BBBD3F /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
+		B542273B1ACEAFC300BBBD3F /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B542273C1ACEAFC700BBBD3F /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
+		B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
+		B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B542273F1ACEB06000BBBD3F /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
+		B54227461ACEBFB100BBBD3F /* TimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C11AAC4CDB002D6983 /* TimeTableObject.m */; };
+		B54227471ACEBFB600BBBD3F /* LectureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682BC1AAC4AD9002D6983 /* LectureObject.m */; };
+		B54227481ACEBFBC00BBBD3F /* LectureDetailObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */; };
+		B54227491ACEBFC100BBBD3F /* ServerLectureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D01AAC4E12002D6983 /* ServerLectureObject.m */; };
+		B542274A1ACEBFC400BBBD3F /* ServerSchoolObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */; };
+		B542274B1ACEBFC800BBBD3F /* ServerTimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */; };
+		B542274C1ACEBFCF00BBBD3F /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B81AAC4A8E002D6983 /* DataManager.m */; };
 		B54C8D471ACDA76900DF2455 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D421ACDA76900DF2455 /* menu.png */; };
 		B54C8D481ACDA76900DF2455 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D431ACDA76900DF2455 /* add.png */; };
 		B54C8D491ACDA76900DF2455 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D441ACDA76900DF2455 /* done.png */; };
@@ -55,8 +69,6 @@
 		B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */; };
 		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
 		B5BE82501ACDB866009B5DB9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */; };
-		B5BE82511ACDB8A3009B5DB9 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
-		B5BE82521ACDB8A4009B5DB9 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B54C8D711ACDB1F300DF2455 /* TodayViewController.m */; };
 		B5BE82531ACDB8EC009B5DB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +124,11 @@
 		B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureDetailCell.m; sourceTree = "<group>"; };
 		B53655C91ABCA8E500626416 /* UIColor+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OPTheme.h"; sourceTree = "<group>"; };
 		B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OPTheme.m"; sourceTree = "<group>"; };
+		B54227401ACEB8C200BBBD3F /* libPods-Realm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Realm.a"; path = "Pods/build/Debug-iphoneos/libPods-Realm.a"; sourceTree = "<group>"; };
+		B54227421ACEB95B00BBBD3F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		B54227441ACEBA3900BBBD3F /* libPods-Masonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Masonry.a"; path = "Pods/build/Debug-iphoneos/libPods-Masonry.a"; sourceTree = "<group>"; };
+		B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OPDBit.entitlements; sourceTree = "<group>"; };
+		B542274E1ACECA9100BBBD3F /* OPDBit Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "OPDBit Widget.entitlements"; sourceTree = "<group>"; };
 		B54C8D421ACDA76900DF2455 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		B54C8D431ACDA76900DF2455 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		B54C8D441ACDA76900DF2455 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
@@ -331,6 +348,7 @@
 		B54C8D6D1ACDB1F300DF2455 /* OPDBit Widget */ = {
 			isa = PBXGroup;
 			children = (
+				B542274E1ACECA9100BBBD3F /* OPDBit Widget.entitlements */,
 				B54C8D701ACDB1F300DF2455 /* TodayViewController.h */,
 				B54C8D711ACDB1F300DF2455 /* TodayViewController.m */,
 				B54C8D731ACDB1F300DF2455 /* MainInterface.storyboard */,
@@ -414,6 +432,7 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
 				B593AA401ACC3DB50063F09E /* TimeTableView */,
 				B53655C81ABCA8BD00626416 /* Theme */,
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
@@ -661,6 +680,9 @@
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B54227441ACEBA3900BBBD3F /* libPods-Masonry.a */,
+				B54227421ACEB95B00BBBD3F /* libPods.a */,
+				B54227401ACEB8C200BBBD3F /* libPods-Realm.a */,
 				7AC2BC34DD53E7F748851752 /* libPods.a */,
 				B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */,
 			);
@@ -674,9 +696,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B54C8D7A1ACDB1F300DF2455 /* Build configuration list for PBXNativeTarget "OPDBit Widget" */;
 			buildPhases = (
+				6608452605CAF3B83999E996 /* Check Pods Manifest.lock */,
 				B54C8D661ACDB1F200DF2455 /* Sources */,
 				B54C8D671ACDB1F200DF2455 /* Frameworks */,
 				B54C8D681ACDB1F200DF2455 /* Resources */,
+				A2117BF9F169197378E05D6A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -737,9 +761,21 @@
 				TargetAttributes = {
 					B54C8D691ACDB1F200DF2455 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = V55Z33K4J2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					B59682761AAC2EB7002D6983 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = V55Z33K4J2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					B596828F1AAC2EB7002D6983 = {
 						CreatedOnToolsVersion = 6.1;
@@ -834,6 +870,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6608452605CAF3B83999E996 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A2117BF9F169197378E05D6A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -841,6 +907,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B542274B1ACEBFC800BBBD3F /* ServerTimeTableObject.m in Sources */,
+				B542274C1ACEBFCF00BBBD3F /* DataManager.m in Sources */,
+				B54227491ACEBFC100BBBD3F /* ServerLectureObject.m in Sources */,
+				B542273A1ACEAF4500BBBD3F /* LectureDetailView.m in Sources */,
+				B54227471ACEBFB600BBBD3F /* LectureObject.m in Sources */,
+				B542274A1ACEBFC400BBBD3F /* ServerSchoolObject.m in Sources */,
+				B542273C1ACEAFC700BBBD3F /* UIFont+OPTheme.m in Sources */,
+				B54227461ACEBFB100BBBD3F /* TimeTableObject.m in Sources */,
+				B54227391ACEAF1D00BBBD3F /* TimeTableView.m in Sources */,
+				B542273B1ACEAFC300BBBD3F /* UIColor+OPTheme.m in Sources */,
+				B54227481ACEBFBC00BBBD3F /* LectureDetailObject.m in Sources */,
 				B54C8D721ACDB1F300DF2455 /* TodayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -852,7 +929,7 @@
 				B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */,
 				B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */,
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
-				B5BE82511ACDB8A3009B5DB9 /* TodayViewController.m in Sources */,
+				B542273F1ACEB06000BBBD3F /* TodayViewController.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
 				B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */,
@@ -889,8 +966,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5BE82521ACDB8A4009B5DB9 /* TodayViewController.m in Sources */,
+				B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */,
 				B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */,
+				B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,24 +1001,42 @@
 /* Begin XCBuildConfiguration section */
 		B54C8D781ACDB1F300DF2455 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OPDBit Widget/OPDBit Widget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "OPDBit Widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		B54C8D791ACDB1F300DF2455 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "OPDBit Widget/OPDBit Widget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "OPDBit Widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1026,10 +1122,14 @@
 			baseConfigurationReference = FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OPDBit/OPDBit.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OPDBit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1038,10 +1138,14 @@
 			baseConfigurationReference = 36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OPDBit/OPDBit.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OPDBit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

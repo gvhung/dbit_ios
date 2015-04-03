@@ -26,9 +26,28 @@
 
 @implementation TimeTableView
 
-static CGFloat const SectionHeadHeight = 40.0f;
-static CGFloat const TimeHeadWidth = 30.0f;
-static CGFloat const LineWidth = 0.5f;
+static CGFloat SectionHeadHeight = 30.0f;
+static CGFloat TimeHeadWidth = 20.0f;
+static CGFloat LineWidth = 0.5f;
+
+
+- (id)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
+        self.sectionTitles = sectionTitles;
+        self.lectures = lectures;
+        
+        self.timeStart = timeStart;
+        self.timeEnd = timeEnd;
+        self.timeBlockCount = [self timeBlockCount];
+        
+        [self initializeLayout];
+    }
+    return self;
+}
 
 - (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
 {
@@ -85,10 +104,8 @@ static CGFloat const LineWidth = 0.5f;
             CGFloat x = TimeHeadWidth + _sectionWidth*[lectureDetailDictionary[@"day"] integerValue];
             CGFloat y = SectionHeadHeight + _timeHeight*(startHours + startMinutes/60);
             CGFloat height = _timeHeight*(endHours + endMinutes/60);
-            NSLog(@"%lf %lf %lf", x, y, height);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
-            NSLog(@"%@\n\n\n%@", NSStringFromCGRect(lectureDetailViewFrame), lectureDetailDictionary);
             LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
                                                                                       theme:[lectureDictionary[@"theme"] integerValue]
                                                                                 lectureName:lectureDictionary[@"lectureName"]
@@ -106,6 +123,12 @@ static CGFloat const LineWidth = 0.5f;
 - (void)drawLines
 {
     [self initializeLayout];
+
+    NSLog(@"%@", _lectures);
+    NSLog(@"%ld", _timeStart);
+    NSLog(@"%ld", _timeEnd);
+    NSLog(@"%@", NSStringFromCGRect(self.frame));
+    
     NSInteger i;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -135,14 +158,17 @@ static CGFloat const LineWidth = 0.5f;
     }
     CGContextStrokePath(context);
     
-#warning 텍스트 위, 아래로 정렬
-    for (i = _blockStart; i < _blockEnd; i++) {
+    for (i = _blockStart+1; i < _blockEnd; i++) {
         UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SectionHeadHeight+_timeHeight*(i-_blockStart), TimeHeadWidth, _timeHeight)];
         timeLabel.textColor = [UIColor op_textPrimaryDark];
         timeLabel.font = [UIFont op_primary];
         timeLabel.textAlignment = NSTextAlignmentRight;
         timeLabel.text = [NSString stringWithFormat:@"%2ld", (i%12 == 0) ? 12 : i%12];
         [self addSubview:timeLabel];
+        
+        [timeLabel sizeToFit];
+        CGRect timeLabelRect = CGRectMake(TimeHeadWidth - timeLabel.frame.size.width, SectionHeadHeight+_timeHeight*(i-_blockStart)-timeLabel.frame.size.height/2, timeLabel.frame.size.width, timeLabel.frame.size.height);
+        timeLabel.frame = timeLabelRect;
     }
     
     for (i = 0; i < _sectionTitles.count; i++) {

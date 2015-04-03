@@ -20,7 +20,11 @@
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
 
+- (id)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
+
 - (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
 - (id)initWithFrame:(CGRect)frame;
+
+- (void)drawLines;
 
 @end

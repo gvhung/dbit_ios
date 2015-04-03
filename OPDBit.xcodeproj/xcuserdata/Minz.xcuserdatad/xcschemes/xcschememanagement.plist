@@ -6,18 +6,17 @@
 	<dict>
 		<key>OPDBit Widget.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
 		<key>OPDBit.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
-		</dict>
-		<key>디빛.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>11</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
