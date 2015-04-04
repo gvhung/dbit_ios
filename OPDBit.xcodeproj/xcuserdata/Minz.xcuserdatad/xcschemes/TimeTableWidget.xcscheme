@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B54C8D691ACDB1F200DF2455"
-               BuildableName = "OPDBit Widget.appex"
-               BlueprintName = "OPDBit Widget"
+               BlueprintIdentifier = "B51438441ACFCA7900EED7A5"
+               BuildableName = "TimeTableWidget.appex"
+               BlueprintName = "TimeTableWidget"
                ReferencedContainer = "container:OPDBit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B54C8D691ACDB1F200DF2455"
-            BuildableName = "OPDBit Widget.appex"
-            BlueprintName = "OPDBit Widget"
+            BlueprintIdentifier = "B51438441ACFCA7900EED7A5"
+            BuildableName = "TimeTableWidget.appex"
+            BlueprintName = "TimeTableWidget"
             ReferencedContainer = "container:OPDBit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

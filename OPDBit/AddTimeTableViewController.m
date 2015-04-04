@@ -12,7 +12,6 @@
 
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -67,7 +66,7 @@
     [self setTitle:@"시간표 추가"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(done)];
@@ -117,7 +116,7 @@
 
 - (void)makeAutoLayoutConstraints
 {
-    CGFloat gapForSuperViewTop = 64.0f;
+    CGFloat gapForSuperViewTop = 0.0f;
     CGFloat gapBetweenSections = 40.0f;
     CGFloat gapBetweenLabelAndFactor = 5.0f;
     CGFloat edgePadding = 15.0f;

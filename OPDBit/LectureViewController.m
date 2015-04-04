@@ -6,6 +6,8 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#import "AppDelegate.h"
+
 #import "LectureViewController.h"
 #import "LectureTableViewCell.h"
 #import "AddLectureViewController.h"
@@ -13,7 +15,6 @@
 
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -50,12 +51,17 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [self setTitle:_dataManager.activedTimeTable[@"timeTableName"]];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
-                                                                         style:UIBarButtonItemStylePlain
+    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                         target:self
                                                                         action:@selector(addLectureAction)];
     addLectureButton.tintColor = [UIColor op_textPrimary];
     self.navigationItem.rightBarButtonItem = addLectureButton;
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(openDrawer)];
+    self.navigationItem.leftBarButtonItem = menuButton;
     
     _lectureTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_lectureTableView registerClass:[LectureTableViewCell class] forCellReuseIdentifier:LectureCellIdentifier];
@@ -106,7 +112,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [_daySegmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.top.equalTo(self.view).with.offset(64.0f);
+        make.top.equalTo(self.view);
         make.height.equalTo(@45.0);
     }];
     [_lectureTableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -124,17 +130,6 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(_lectureTableView);
     }];
-}
-
-- (void)addLectureAction
-{
-    if (_dataManager.activedTimeTable == nil) {
-        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
-        return;
-    }
-    
-    AddLectureViewController *addLectureViewController = [[AddLectureViewController alloc] init];
-    [self.navigationController pushViewController:addLectureViewController animated:YES];
 }
 
 #pragma mark - Table View Data Source
@@ -226,6 +221,25 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     _emptyLabel.hidden = !hide;
     
     if (!hide) [_lectureTableView reloadData];
+}
+
+#pragma mark - Bar Button Action
+
+- (void)addLectureAction
+{
+    if (_dataManager.activedTimeTable == nil) {
+        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+        return;
+    }
+    
+    AddLectureViewController *addLectureViewController = [[AddLectureViewController alloc] init];
+    [self.navigationController pushViewController:addLectureViewController animated:YES];
+}
+
+- (void)openDrawer
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 #pragma mark - Life Cycle

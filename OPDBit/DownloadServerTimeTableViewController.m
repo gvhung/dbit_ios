@@ -12,7 +12,6 @@
 
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -79,7 +78,7 @@
     _timeTableLabel.textColor = [UIColor op_textSecondaryDark];
     _timeTableLabel.font = [UIFont op_primary];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(downloadTimeTable)];
@@ -148,7 +147,15 @@
          }
          [schoolSelectActionSheet showInView:self.view];
      } failure:^(NSError *error) {
-         [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
+         
+         NSString *errorMessage;
+         
+         if (error.code == -1003 || error.code == -1009)
+             errorMessage = @"인터넷 연결을 확인해주세요!";
+         else
+             errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+         
+         [KVNProgress showErrorWithStatus:errorMessage];
          NSLog(@"Failed To Get Server Schools\n%@", error);
     }];
 }
@@ -179,7 +186,16 @@
          }
          [timeTableSelectActionSheet showInView:self.view];
     } failure:^(NSError *error) {
-        [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
+        
+        NSString *errorMessage;
+        
+        if (error.code == -1003 || error.code == -1009)
+            errorMessage = @"인터넷 연결을 확인해주세요!";
+        else
+            errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+        
+        [KVNProgress showErrorWithStatus:errorMessage];
+        
         NSLog(@"Failed to Get Server Time Table With School ID (%ld)\n%@", _selectedSchoolId, error);
     }];
 }
@@ -203,8 +219,15 @@
              }
          }];
      } failure:^(NSError *error) {
-         [KVNProgress showErrorWithStatus:@"내려받는 도중에 오류가 발생했습니다!"];
-         NSLog(@"Failed to Get Server Lectures Wit Time Table ID (%ld)\n%@", _selectedSchoolId, error);
+         NSString *errorMessage;
+         
+         if (error.code == -1009 || error.code == -1003)
+             errorMessage = @"인터넷 연결을 확인해주세요!";
+         else
+             errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+         
+         [KVNProgress showErrorWithStatus:errorMessage];
+         NSLog(@"Failed to Get Server Lectures With Time Table ID (%ld)\n%@", _selectedSchoolId, error);
      }];
 }
 

@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - HMSegmentedControl (1.5)
-  - KVNProgress (2.1.9)
+  - KVNProgress (2.2.1)
   - Masonry (0.6.1)
   - MMDrawerController (0.5.7):
     - MMDrawerController/Core (= 0.5.7)
@@ -44,7 +44,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (= 2.5.1)
   - HMSegmentedControl (= 1.5)
-  - KVNProgress (= 2.1.9)
+  - KVNProgress
   - Masonry (= 0.6.1)
   - MMDrawerController (= 0.5.7)
   - MZClockView (= 1.0.2)
@@ -54,7 +54,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 10e85a00bb0f475124e4ff2677bf15693b2c1523
   HMSegmentedControl: 23b6155cd3670f73ffc6eb836af1cfc440e81780
-  KVNProgress: a7e0f3635581174c04ef8ac42f5a364eb94f6f5c
+  KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
   Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   MZClockView: dccbcd768ddeeb661cfd0dfe1772c32b05f39a6c

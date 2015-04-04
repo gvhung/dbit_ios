@@ -6,6 +6,8 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#import "AppDelegate.h"
+
 #import "TimeTableViewController.h"
 #import "TimeTableCell.h"
 #import "AddTimeTableViewController.h"
@@ -14,7 +16,6 @@
 
 #import "UIFont+OPTheme.h"
 #import "UIColor+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -50,16 +51,21 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     [self setTitle:@"시간표"];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
-                                                                           style:UIBarButtonItemStylePlain
+    UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                           target:self
                                                                           action:@selector(addTimeTable)];
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"download.png"]
+    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download"]
                                                                                       style:UIBarButtonItemStylePlain
                                                                                      target:self
                                                                                      action:@selector(downloadServerTimeTable)];
     
     self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(openDrawer)];
+    self.navigationItem.leftBarButtonItem = menuButton;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     [_tableView registerClass:[TimeTableCell class] forCellReuseIdentifier:TimeTableCellIdentifier];
@@ -191,6 +197,12 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     AddTimeTableViewController *addTimeTableViewController = [[AddTimeTableViewController alloc] init];
     [self.navigationController pushViewController:addTimeTableViewController animated:YES];
+}
+
+- (void)openDrawer
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 

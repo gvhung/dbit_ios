@@ -6,6 +6,8 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#import "AppDelegate.h"
+
 #import "ShowTimeTableViewController.h"
 #import "TimeTableView.h"
 #import "DataManager.h"
@@ -44,13 +46,18 @@
 - (void)initialize
 {
     [self setTitle:@"시간표 모아보기"];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"]
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(openDrawer)];
+    self.navigationItem.leftBarButtonItem = menuButton;
     [self makeAutoLayoutConstraints];
 }
 
 - (void)makeAutoLayoutConstraints
 {
     [_timeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(64, 5, 0, 0));
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 5, 0, 0));
     }];
 }
 
@@ -75,6 +82,14 @@
     _timeTableView.timeStart = [_activedTimeTable[@"timeStart"] integerValue];
     _timeTableView.timeEnd = [_activedTimeTable[@"timeEnd"] integerValue];
     [_timeTableView setNeedsDisplay];
+}
+
+#pragma mark - Bar Button Action
+
+- (void)openDrawer
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 @end

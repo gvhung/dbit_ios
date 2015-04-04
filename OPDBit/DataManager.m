@@ -204,6 +204,10 @@
                               timeStart:[lectureDetailDictionary[@"timeStart"] integerValue]
                                     day:[lectureDetailDictionary[@"day"] integerValue]];
     }
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:self.activedTimeTable forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
 }
 
 - (void)saveLectureWithLectureName:(NSString *)lectureName theme:(NSInteger)theme lectureDetails:(NSArray *)lectureDetails ulid:(NSInteger)ulid
@@ -266,6 +270,12 @@
     [_realm deleteObjects:timeTableObjectToDelete.lectures];
     [_realm deleteObject:timeTableObjectToDelete];
     [_realm commitWriteTransaction];
+    if (!self.activedTimeTableObject) {
+        NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+        
+        [sharedDefaults setObject:nil forKey:@"ActivedTimeTable"];
+        [sharedDefaults synchronize];
+    }
 }
 
 - (void)deleteLectureWithUlid:(NSInteger)ulid
@@ -309,6 +319,12 @@
         }
     }
     [_realm commitWriteTransaction];
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:self.activedTimeTable forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
+
 }
 
 #pragma mark - Set Object Attribute

@@ -1,16 +1,13 @@
 //
 //  TodayViewController.h
-//  OPDBit Widget
+//  TimeTableWidget
 //
-//  Created by Kweon Min Jun on 2015. 4. 3..
+//  Created by Kweon Min Jun on 2015. 4. 4..
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "TimeTableView.h"
 
 @interface TodayViewController : UIViewController
-
-@property (nonatomic, strong) IBOutlet TimeTableView *timeTableView;
 
 @end

@@ -12,7 +12,6 @@
 
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
@@ -81,7 +80,7 @@ static CGFloat const rowHeight = 80.0f;
     _emptyLabel.textColor = [UIColor op_textPrimaryDark];
     _emptyLabel.font = [UIFont op_title];
     
-    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"done.png"]
+    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
                                                                                   style:UIBarButtonItemStylePlain
                                                                                  target:self
                                                                                  action:@selector(selectServerLectureAction)];
@@ -114,7 +113,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     CGFloat segmentedControlHeight = 45.0f;
     [_segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@64.0f);
+        make.top.equalTo(self.view);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.equalTo(@(segmentedControlHeight));

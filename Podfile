@@ -1,7 +1,7 @@
 platform :ios, '7.0'
 xcodeproj 'OPDBit.xcodeproj'
 
-pod 'KVNProgress', '2.1.9'
+pod 'KVNProgress', '2.2.1'
 pod 'AFNetworking', '2.5.1'
 pod 'Realm', '0.90.6'
 pod 'HMSegmentedControl', '1.5'

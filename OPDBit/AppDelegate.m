@@ -10,6 +10,7 @@
 #import "OPLeftDrawerViewController.h"
 #import "TimeTableViewController.h"
 #import "LectureViewController.h"
+#import "ShowTimeTableViewController.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 #import "DataManager.h"
@@ -17,6 +18,7 @@
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 
 @interface AppDelegate ()
+
 
 @end
 
@@ -44,7 +46,7 @@
         _centerNavigationController = [[UINavigationController alloc] initWithRootViewController:timeTableViewController];
     }
     _centerNavigationController.navigationBar.barTintColor = [UIColor op_primary];
-    _centerNavigationController.navigationBar.opaque = YES;
+    _centerNavigationController.navigationBar.translucent = NO;
     _centerNavigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor op_textPrimary],
                                                                       NSFontAttributeName : [UIFont op_title]};
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor op_textPrimary],
@@ -56,7 +58,6 @@
     if([UINavigationBar conformsToProtocol:@protocol(UIAppearanceContainer)]) {
         [UINavigationBar appearance].tintColor = [UIColor op_textPrimary];
     }
-
     self.drawerController = [[MMDrawerController alloc] initWithCenterViewController:_centerNavigationController
                                                             leftDrawerViewController:leftDrawerViewController];
 
@@ -97,11 +98,17 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (NSURL *)applicationDocumentsDirectory
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.yourdomain.YourAwesomeApp" in the application's documents directory.
-    
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    if ( [[url host] isEqualToString:@"widget"]) {
+        if ([[url path] isEqualToString:@"/show"]) {
+            ShowTimeTableViewController *showTiemTableViewController = [[ShowTimeTableViewController alloc] init];
+            [_centerNavigationController setViewControllers:@[showTiemTableViewController]];
+            return YES;
+        }
+        return YES;
+    }
+    return NO;
 }
 
 @end

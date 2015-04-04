@@ -12,7 +12,6 @@
 #import "AddLectureFooterCell.h"
 
 #import "UIColor+OPTheme.h"
-#import "UIImage+OPTheme.h"
 
 #import "SearchLectureViewController.h"
 #import "DataManager.h"
@@ -76,11 +75,11 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _timePickerViewController.datePicker.minuteInterval = 5;
     _timePickerViewController.datePicker.timeZone = [NSTimeZone localTimeZone];
     
-    UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"search.png"]
+    UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"]
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(searchLectureAction)];
-    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage op_barButtonImageWithName:@"add.png"]
+    UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
                                                                          style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(addLectureAction)];
@@ -320,12 +319,18 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
-    for (NSDictionary *lectureDetailDictionary in _lectureDetails) {
-        if (!lectureDetailDictionary[@"lectureLocation"]) {
-            [KVNProgress showErrorWithStatus:@"강의실을 입력해주세요!"];
-            return;
+    
+    for (NSInteger i = 0; i < _lectureDetails.count; i++) {
+        if (!_lectureDetails[i][@"lectureLocation"]) {
+            _lectureDetails[i][@"lectureLocation"] = @"";
         }
     }
+//    for (NSDictionary *lectureDetailDictionary in _lectureDetails) {
+//        if (!lectureDetailDictionary[@"lectureLocation"]) {
+//            [KVNProgress showErrorWithStatus:@"강의실을 입력해주세요!"];
+//            return;
+//        }
+//    }
     
     if (_ulidToEdit == -1) {
         if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {

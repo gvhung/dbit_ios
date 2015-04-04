@@ -123,11 +123,6 @@ static CGFloat LineWidth = 0.5f;
 - (void)drawLines
 {
     [self initializeLayout];
-
-    NSLog(@"%@", _lectures);
-    NSLog(@"%ld", _timeStart);
-    NSLog(@"%ld", _timeEnd);
-    NSLog(@"%@", NSStringFromCGRect(self.frame));
     
     NSInteger i;
     
@@ -180,6 +175,7 @@ static CGFloat LineWidth = 0.5f;
         [self addSubview:sectionLabel];
     }
 }
+
 
 #pragma mark - Instance Method
 
