@@ -102,6 +102,8 @@
     _serverTimeTableButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];
     
+    _primaryTimeTableSwitch.on = YES;
+    
     [self.view addSubview:_timeTableNameLabel];
     [self.view addSubview:_serverTimeTableLabel];
     [self.view addSubview:_primaryTimeTableLabel];

@@ -325,12 +325,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
             _lectureDetails[i][@"lectureLocation"] = @"";
         }
     }
-//    for (NSDictionary *lectureDetailDictionary in _lectureDetails) {
-//        if (!lectureDetailDictionary[@"lectureLocation"]) {
-//            [KVNProgress showErrorWithStatus:@"강의실을 입력해주세요!"];
-//            return;
-//        }
-//    }
     
     if (_ulidToEdit == -1) {
         if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {

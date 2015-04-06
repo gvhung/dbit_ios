@@ -234,7 +234,7 @@
 
 - (NSInteger)lastUlid
 {
-    RLMResults *lectureResults = [self.activedTimeTableObject.lectures sortedResultsUsingProperty:@"ulid" ascending:NO];
+    RLMResults *lectureResults = [[LectureObject allObjects] sortedResultsUsingProperty:@"ulid" ascending:NO];
     if (lectureResults.count == 0)
         return -1;
     LectureObject *lastLectureObject = lectureResults[0];

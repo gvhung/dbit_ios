@@ -76,7 +76,6 @@
 - (void)setActivedTimeTable:(NSDictionary *)activedTimeTable
 {
     _activedTimeTable = activedTimeTable;
-    NSLog(@"%@",activedTimeTable);
     _timeTableView.lectures = _activedTimeTable[@"lectures"];
     _timeTableView.sectionTitles = [_dataManager daySectionTitles];
     _timeTableView.timeStart = [_activedTimeTable[@"timeStart"] integerValue];

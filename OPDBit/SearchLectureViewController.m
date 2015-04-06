@@ -307,7 +307,7 @@ static CGFloat const rowHeight = 80.0f;
 
 - (void)segmentedControlDidChange:(HMSegmentedControl *)segmentedControl
 {
-    _tableView.contentOffset = CGPointMake(0, -64);
+    _tableView.contentOffset = CGPointMake(0, 0);
     _searchTextField.text = @"";
     self.lectureResults = _serverLectures;
 }

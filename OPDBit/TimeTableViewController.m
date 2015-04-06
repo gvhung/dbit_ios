@@ -82,7 +82,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
                                                delegate:self
                                       cancelButtonTitle:@"취소"
                                  destructiveButtonTitle:@"기본 시간표 설정"
-                                      otherButtonTitles:@"수정하기", @"삭제하기", nil];
+                                      otherButtonTitles:@"수정하기", nil];
 
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];
@@ -143,6 +143,19 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     return TimeTableCellHeight;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [_dataManager deleteTimeTableWithUtid:[_timeTables[indexPath.row][@"utid"] integerValue]];
+        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+        self.timeTables = [_dataManager timeTables];
+    }
+}
+
 #pragma mark - Action Sheet Delegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -155,10 +168,6 @@ static CGFloat const TimeTableCellHeight = 75.0f;
         AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
         editTimeTableViewController.timeTableId = [_timeTables[actionSheet.tag][@"utid"] integerValue];
         [self.navigationController pushViewController:editTimeTableViewController animated:YES];
-    } else if (buttonIndex == 2) {
-        [_dataManager deleteTimeTableWithUtid:[_timeTables[actionSheet.tag][@"utid"] integerValue]];
-        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
-        self.timeTables = [_dataManager timeTables];
     }
 }
 

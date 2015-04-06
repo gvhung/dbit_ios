@@ -44,26 +44,12 @@ static CGFloat const EmptyButtonPadding = 10.0f;
 static CGFloat const SectionHeadHeight = 30.0f;
 static CGFloat const TimeHeadWidth = 20.0f;
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        NSLog(@"init");
-    }
-    return self;
-}
-
 - (void)initializeWidget
 {
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openDBitApp)];
     [self.view addGestureRecognizer:tapGestureRecognizer];
     
-    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
-    _activedTimeTable = [defaults objectForKey:@"ActivedTimeTable"];
-    
-    NSLog(@"%@", _activedTimeTable);
-    
     if (!_activedTimeTable || [_activedTimeTable[@"timeStart"] integerValue] == -1) {
-        
-        NSLog(@"lectures? : %@", _activedTimeTable[@"lectures"]);
         _emptyButton = [[UIButton alloc] initWithFrame:CGRectMake(0, EmptyButtonPadding, [UIScreen mainScreen].bounds.size.width, EmptyButtonHeight)];
         self.preferredContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, EmptyButtonPadding+EmptyButtonHeight);
         [_emptyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -181,7 +167,7 @@ static CGFloat const TimeHeadWidth = 20.0f;
 {
     UIView *lectureDetailView = [[UIView alloc] initWithFrame:frame];
     
-    
+    lectureDetailView.backgroundColor = [[self op_lectureTheme:theme] colorWithAlphaComponent:0.5f];
     lectureDetailView.clipsToBounds = YES;
     
     UILabel *lectureNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 10)];
@@ -210,7 +196,20 @@ static CGFloat const TimeHeadWidth = 20.0f;
     lectureNameLabel.frame = CGRectMake(0, 10.0f, frame.size.width, lectureNameLabelSize.height);
     lectureLocationLabel.frame = CGRectMake(0, (frame.size.height + lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), frame.size.width, lectureLocationLabelSize.height);
     
-    lectureDetailView.backgroundColor = [[self op_lectureTheme:theme] colorWithAlphaComponent:0.5f];
+    if ((lectureNameLabel.frame.origin.y+lectureNameLabel.frame.size.height) >= lectureLocationLabel.frame.origin.y)
+    {
+        lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+        lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:8];
+        
+        CGRect lectureNameLabelFrame = lectureNameLabel.frame;
+        CGRect lectureLocationLabelFrame = lectureLocationLabel.frame;
+        
+        lectureNameLabelFrame.origin.y = 5.0f;
+        lectureLocationLabelFrame.origin.y = lectureNameLabelFrame.origin.y + lectureNameLabelFrame.size.height + 2.0f;
+        
+        lectureNameLabel.frame = lectureNameLabelFrame;
+        lectureLocationLabel.frame = lectureLocationLabelFrame;
+    }
     
     return lectureDetailView;
 }
@@ -220,7 +219,6 @@ static CGFloat const TimeHeadWidth = 20.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self initializeWidget];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -239,8 +237,10 @@ static CGFloat const TimeHeadWidth = 20.0f;
     // If there's no update required, use NCUpdateResultNoData
     // If there's an update, use NCUpdateResultNewData
     
-    NSLog(@"widgetPerformUpdateWithCompletionHandler");
-    
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    _activedTimeTable = [defaults objectForKey:@"ActivedTimeTable"];
+
+    [self initializeWidget];
     completionHandler(NCUpdateResultNewData);
 }
 

@@ -50,7 +50,6 @@
 - (void)initialize
 {
     self.clipsToBounds = YES;
-    self.alpha = 0.7f;
     
     _lectureNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 10)];
     _lectureNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -83,6 +82,21 @@
     
     _lectureNameLabel.frame = CGRectMake(0, 10.0f, self.bounds.size.width, lectureNameLabelSize.height);
     _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + 10.0f + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
+    
+    if ((_lectureNameLabel.frame.origin.y + _lectureNameLabel.frame.size.height) >= _lectureLocationLabel.frame.origin.y)
+    {
+        _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
+        _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+        
+        CGRect lectureNameLabelFrame = _lectureNameLabel.frame;
+        CGRect lectureLocationLabelFrame = _lectureLocationLabel.frame;
+        
+        lectureNameLabelFrame.origin.y = 5.0f;
+        lectureLocationLabelFrame.origin.y = lectureNameLabelFrame.origin.y + lectureNameLabelFrame.size.height + 2.0f;
+        
+        _lectureNameLabel.frame = lectureNameLabelFrame;
+        _lectureLocationLabel.frame = lectureLocationLabelFrame;
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -107,7 +121,7 @@
 - (void)setTheme:(NSInteger)theme
 {
     _theme = theme;
-    self.backgroundColor = [UIColor op_lectureTheme:theme];
+    self.backgroundColor = [[UIColor op_lectureTheme:theme] colorWithAlphaComponent:0.7f];
     [self setNeedsDisplay];
 }
 

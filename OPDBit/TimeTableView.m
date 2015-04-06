@@ -73,6 +73,11 @@ static CGFloat LineWidth = 0.5f;
     if (self) {
         self.backgroundColor = [UIColor op_background];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(setNeedsDisplay)
+                                                     name:UIDeviceOrientationDidChangeNotification
+                                                   object:nil];
+        
         _sectionTitles = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
         _lectures = [[NSArray alloc] init];
         
@@ -162,7 +167,7 @@ static CGFloat LineWidth = 0.5f;
         [self addSubview:timeLabel];
         
         [timeLabel sizeToFit];
-        CGRect timeLabelRect = CGRectMake(TimeHeadWidth - timeLabel.frame.size.width, SectionHeadHeight+_timeHeight*(i-_blockStart)-timeLabel.frame.size.height/2, timeLabel.frame.size.width, timeLabel.frame.size.height);
+        CGRect timeLabelRect = CGRectMake(TimeHeadWidth - timeLabel.frame.size.width - 2.0f, SectionHeadHeight+_timeHeight*(i-_blockStart)-timeLabel.frame.size.height/2, timeLabel.frame.size.width, timeLabel.frame.size.height);
         timeLabel.frame = timeLabelRect;
     }
     
@@ -175,7 +180,6 @@ static CGFloat LineWidth = 0.5f;
         [self addSubview:sectionLabel];
     }
 }
-
 
 #pragma mark - Instance Method
 
