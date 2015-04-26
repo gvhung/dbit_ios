@@ -320,6 +320,11 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
+    if (_lectureDetails.count == 0){
+        [KVNProgress showErrorWithStatus:@"수업이 하나도 추가되지 않았습니다!"];
+        return;
+    }
+    
     for (NSInteger i = 0; i < _lectureDetails.count; i++) {
         if (!_lectureDetails[i][@"lectureLocation"]) {
             _lectureDetails[i][@"lectureLocation"] = @"";
