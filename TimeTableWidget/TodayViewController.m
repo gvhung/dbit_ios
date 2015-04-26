@@ -116,7 +116,7 @@ static CGFloat const TimeHeadWidth = 20.0f;
         timeLabel.textColor = [UIColor whiteColor];
         timeLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:12];
         timeLabel.textAlignment = NSTextAlignmentRight;
-        timeLabel.text = [NSString stringWithFormat:@"%2ld", (i%12 == 0) ? 12 : i%12];
+        timeLabel.text = [NSString stringWithFormat:@"%2d", (i%12 == 0) ? 12 : i%12];
         [_timeTableView addSubview:timeLabel];
         
         [timeLabel sizeToFit];
