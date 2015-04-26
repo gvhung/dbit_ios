@@ -237,7 +237,7 @@
 
 - (NSString *)titleString
 {
-    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex];
+    return [NSString stringWithFormat:@"수업 %d", _lectureDetailIndex];
 }
 
 - (NSString *)lectureLocation

@@ -695,7 +695,7 @@
 
 + (UIImage *)thumbnailFromColor:(UIColor *)color
 {
-    UIView *thumbnailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIView *thumbnailView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
     thumbnailView.layer.cornerRadius = thumbnailView.frame.size.width/2;
     thumbnailView.layer.backgroundColor = color.CGColor;
     CGRect rect = [thumbnailView bounds];
@@ -705,7 +705,18 @@
     [thumbnailView.layer renderInContext:context];
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return img;
+    
+    return [self imageResize:img andResizeTo:CGSizeMake(30, 30)];
+}
+
++ (UIImage *)imageResize:(UIImage *)img andResizeTo:(CGSize)newSize
+{
+    CGFloat scale = [[UIScreen mainScreen]scale];
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, scale);
+    [img drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 #pragma mark - Time Convert Method
@@ -714,7 +725,7 @@
 {
     NSInteger hours = timeInteger/100;
     NSInteger minutes = timeInteger%100;
-    return [NSString stringWithFormat:@"%02ld:%02ld", hours, minutes];
+    return [NSString stringWithFormat:@"%02ld:%02ld", (long)hours, (long)minutes];
 }
 
 + (NSInteger)integerFromTimeString:(NSString *)timeString
