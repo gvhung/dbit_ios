@@ -97,7 +97,7 @@
     [_timeTableNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
     [_serverTimeTableButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
-    [_serverTimeTableButton setTitle:@"서버 연동 안함" forState:UIControlStateNormal];
+    [_serverTimeTableButton setTitle:@"서버 시간표를 선택해 주세요!" forState:UIControlStateNormal];
     _serverTimeTableButton.titleLabel.font = [UIFont op_primary];
     _serverTimeTableButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];

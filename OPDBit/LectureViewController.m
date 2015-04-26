@@ -24,8 +24,6 @@
 @property (nonatomic, strong) UIView *clockLine;
 @property (nonatomic, strong) UILabel *emptyLabel;
 
-@property (nonatomic, strong) UIActionSheet *actionSheet;
-
 @property (nonatomic, strong) DataManager *dataManager;
 
 @end
@@ -93,12 +91,6 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     [_daySegmentedControl addTarget:self
                              action:@selector(changeDay:)
                    forControlEvents:UIControlEventValueChanged];
-    
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                               delegate:self
-                                      cancelButtonTitle:@"취소"
-                                 destructiveButtonTitle:@"삭제하기"
-                                      otherButtonTitles:@"수정하기", nil];
     
     [self.view addSubview:_emptyLabel];
     [self.view addSubview:_clockLine];
@@ -169,26 +161,25 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    _actionSheet.title = _lectureDetails[indexPath.row][@"lectureName"];
-    _actionSheet.tag = indexPath.row;
-    [_actionSheet showInView:self.view];
+    
+    AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
+    editLectureViewController.ulidToEdit = [_lectureDetails[indexPath.row][@"ulid"] integerValue];
+    [self.navigationController pushViewController:editLectureViewController animated:YES];
 }
 
-#pragma mark - Action Sheet Delegate
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        [_dataManager deleteLectureWithUlid:[_lectureDetails[actionSheet.tag][@"ulid"] integerValue]];
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [_dataManager deleteLectureWithUlid:[_lectureDetails[indexPath.row][@"ulid"] integerValue]];
         [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
         if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
         _daySegmentedControl.sectionTitles = [_dataManager daySectionTitles];
         [_daySegmentedControl setNeedsDisplay];
-    } else if (buttonIndex == 1) {
-        AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
-        editLectureViewController.ulidToEdit = [_lectureDetails[actionSheet.tag][@"ulid"] integerValue];
-        [self.navigationController pushViewController:editLectureViewController animated:YES];
     }
 }
 

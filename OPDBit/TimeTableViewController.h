@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface TimeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)init;
+- (void)editTimeTableWithId:(NSInteger)utid;
 
 @end

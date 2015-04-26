@@ -36,6 +36,8 @@
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
 		B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
 		B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B281AECE5AE0096F39C /* Crashlytics.framework */; };
+		B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B291AECE5AE0096F39C /* Fabric.framework */; };
 		B593AA3E1ACC0BBA0063F09E /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3C1ACC0BBA0063F09E /* on.png */; };
 		B593AA3F1ACC0BBA0063F09E /* off.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3D1ACC0BBA0063F09E /* off.png */; };
 		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
@@ -136,11 +138,10 @@
 		B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLectureDetailCell.m; sourceTree = "<group>"; };
 		B53655C91ABCA8E500626416 /* UIColor+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OPTheme.h"; sourceTree = "<group>"; };
 		B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OPTheme.m"; sourceTree = "<group>"; };
-		B54227401ACEB8C200BBBD3F /* libPods-Realm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Realm.a"; path = "Pods/build/Debug-iphoneos/libPods-Realm.a"; sourceTree = "<group>"; };
-		B54227421ACEB95B00BBBD3F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		B54227441ACEBA3900BBBD3F /* libPods-Masonry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Masonry.a"; path = "Pods/build/Debug-iphoneos/libPods-Masonry.a"; sourceTree = "<group>"; };
 		B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OPDBit.entitlements; sourceTree = "<group>"; };
 		B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		B5530B281AECE5AE0096F39C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		B5530B291AECE5AE0096F39C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		B593AA3C1ACC0BBA0063F09E /* on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = on.png; sourceTree = "<group>"; };
 		B593AA3D1ACC0BBA0063F09E /* off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = off.png; sourceTree = "<group>"; };
 		B593AA411ACC3DDF0063F09E /* TimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableView.h; sourceTree = "<group>"; };
@@ -209,7 +210,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
 				55B8495F730042A6986A0411 /* libPods.a in Frameworks */,
+				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +431,8 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B5530B281AECE5AE0096F39C /* Crashlytics.framework */,
+				B5530B291AECE5AE0096F39C /* Fabric.framework */,
 				B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */,
 				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
 				B593AA401ACC3DB50063F09E /* TimeTableView */,
@@ -677,9 +682,6 @@
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B54227441ACEBA3900BBBD3F /* libPods-Masonry.a */,
-				B54227421ACEB95B00BBBD3F /* libPods.a */,
-				B54227401ACEB8C200BBBD3F /* libPods-Realm.a */,
 				7AC2BC34DD53E7F748851752 /* libPods.a */,
 				B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */,
 			);
@@ -716,6 +718,7 @@
 				B59682751AAC2EB7002D6983 /* Resources */,
 				656F88DC312AB4CE62D717DF /* Copy Pods Resources */,
 				B54C8D7B1ACDB1F300DF2455 /* Embed App Extensions */,
+				B5530B131AECE3230096F39C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -870,6 +873,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B5530B131AECE3230096F39C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b13d96d8f86642f8566e7fc02bf10a4ae6835ea1 874578870def39559eb4d3719c2109ef9c2f22f7768276b747ccea533ce73f74";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1074,6 +1090,11 @@
 				CODE_SIGN_ENTITLEMENTS = OPDBit/OPDBit.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/OPDBit",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = OPDBit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1092,6 +1113,11 @@
 				CODE_SIGN_ENTITLEMENTS = OPDBit/OPDBit.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/OPDBit",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = OPDBit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

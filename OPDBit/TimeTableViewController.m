@@ -12,6 +12,7 @@
 #import "TimeTableCell.h"
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
+#import "LectureViewController.h"
 #import "DataManager.h"
 
 #import "UIFont+OPTheme.h"
@@ -26,7 +27,6 @@
 @property (nonatomic, strong) DataManager *dataManager;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
-@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @end
 
@@ -73,16 +73,16 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc]
+                                         initWithTarget:self action:@selector(handleLongPress:)];
+    longPressRecognizer.minimumPressDuration = 0.5f; //seconds
+    longPressRecognizer.delegate = self;
+    [_tableView addGestureRecognizer:longPressRecognizer];
+    
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.textColor = [UIColor op_textPrimaryDark];
     _emptyLabel.font = [UIFont op_title];
     _emptyLabel.text = @"시간표가 없어요! :D";
-    
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                               delegate:self
-                                      cancelButtonTitle:@"취소"
-                                 destructiveButtonTitle:@"기본 시간표 설정"
-                                      otherButtonTitles:@"수정하기", nil];
 
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];
@@ -128,9 +128,11 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    _actionSheet.title = _timeTables[indexPath.row][@"timeTableName"];
-    _actionSheet.tag = indexPath.row;
-    [_actionSheet showInView:self.view];
+    [_dataManager setActiveWithUtid:[_timeTables[indexPath.row][@"utid"] integerValue]];
+    self.timeTables = [_dataManager timeTables];
+    
+    LectureViewController *lectureViewController = [[LectureViewController alloc] init];
+    [self.navigationController setViewControllers:@[lectureViewController] animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,19 +158,15 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     }
 }
 
-#pragma mark - Action Sheet Delegate
+#pragma mark - Gesture Recognizer
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
-    if (buttonIndex == 0) {
-        [_dataManager setActiveWithUtid:[_timeTables[actionSheet.tag][@"utid"] integerValue]];
-        [KVNProgress showSuccessWithStatus:[NSString stringWithFormat:@"기본 시간표가\n'%@'\n(으)로 설정되었습니다.", _timeTables[actionSheet.tag][@"timeTableName"]]];
-        self.timeTables = [_dataManager timeTables];
-    } else if (buttonIndex == 1) {
-        AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
-        editTimeTableViewController.timeTableId = [_timeTables[actionSheet.tag][@"utid"] integerValue];
-        [self.navigationController pushViewController:editTimeTableViewController animated:YES];
-    }
+    CGPoint p = [gestureRecognizer locationInView:_tableView];
+    
+    NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+        [self editTimeTableWithId:[_timeTables[indexPath.row][@"utid"] integerValue]];
 }
 
 #pragma mark - Setter
@@ -212,6 +210,13 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void)editTimeTableWithId:(NSInteger)utid
+{
+    AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
+    editTimeTableViewController.timeTableId = utid;
+    [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 
 

@@ -10,7 +10,7 @@
 #import <HMSegmentedControl/HMSegmentedControl.h>
 
 
-@interface LectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface LectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) HMSegmentedControl *daySegmentedControl;
 

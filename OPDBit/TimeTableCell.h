@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TimeTableViewController.h"
 
 @interface TimeTableCell : UITableViewCell
 
+@property (nonatomic, strong) TimeTableViewController *delegate;
 @property (nonatomic, strong) NSDictionary *timeTableDictionary;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
