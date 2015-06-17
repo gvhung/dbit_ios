@@ -123,4 +123,10 @@
 
 + (UIColor *)op_lectureTheme:(NSInteger)themeId;
 
+/**
+ *  New Lecture Color
+ */
+
++ (UIColor *)op_newLecutre;
+
 @end

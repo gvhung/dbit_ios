@@ -188,6 +188,11 @@
     }
 }
 
++ (UIColor *)op_newLecutre
+{
+    return [self colorWithHexString:@"#DEDEDE"];
+}
+
 
 #pragma mark - Convert
 
