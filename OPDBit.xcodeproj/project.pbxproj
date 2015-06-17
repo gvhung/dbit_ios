@@ -986,7 +986,7 @@
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d618f28f-6fe7-4989-84b4-e08cdc38822f";
+				PROVISIONING_PROFILE = "2d7b991f-a0cf-431e-ad6d-f740e812373f";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1000,7 +1000,7 @@
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d618f28f-6fe7-4989-84b4-e08cdc38822f";
+				PROVISIONING_PROFILE = "2d7b991f-a0cf-431e-ad6d-f740e812373f";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1100,7 +1100,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c61b1bd8-0d0e-4918-a06f-b62525cfe823";
+				PROVISIONING_PROFILE = "e94ccb43-631a-4ab8-adf1-21f33025cb6c";
 			};
 			name = Debug;
 		};
@@ -1123,7 +1123,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c61b1bd8-0d0e-4918-a06f-b62525cfe823";
+				PROVISIONING_PROFILE = "e94ccb43-631a-4ab8-adf1-21f33025cb6c";
 			};
 			name = Release;
 		};
