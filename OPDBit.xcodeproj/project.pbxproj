@@ -65,6 +65,7 @@
 		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
 		B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */; };
 		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
+		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,8 @@
 		B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableViewController.m; sourceTree = "<group>"; };
 		B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DownloadServerTimeTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DownloadServerTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B5FF49891B321F7A00E411B1 /* ShowLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowLectureViewController.h; sourceTree = "<group>"; };
+		B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowLectureViewController.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -503,6 +506,7 @@
 				B59682B21AAC47D3002D6983 /* Cell */,
 				B534EACB1AB439BF00EBE3EB /* AddLecture */,
 				B534EAD31AB43B1B00EBE3EB /* SearchLecture */,
+				B5FF49881B321F6A00E411B1 /* ShowLecture */,
 			);
 			name = Lecture;
 			sourceTree = "<group>";
@@ -677,6 +681,15 @@
 				B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */,
 			);
 			name = DownloadServerTimeTable;
+			sourceTree = "<group>";
+		};
+		B5FF49881B321F6A00E411B1 /* ShowLecture */ = {
+			isa = PBXGroup;
+			children = (
+				B5FF49891B321F7A00E411B1 /* ShowLectureViewController.h */,
+				B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */,
+			);
+			name = ShowLecture;
 			sourceTree = "<group>";
 		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
@@ -912,6 +925,7 @@
 				B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */,
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
 				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
+				B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
