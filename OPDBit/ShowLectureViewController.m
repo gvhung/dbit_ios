@@ -6,13 +6,50 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#import <Masonry/Masonry.h>
+
 #import "ShowLectureViewController.h"
+#import "TimeTableView.h"
+#import "DataManager.h"
 
 @interface ShowLectureViewController ()
+
+@property (nonatomic, strong) TimeTableView *timeTableView;
+
+@property (nonatomic, strong) DataManager *dataManager;
 
 @end
 
 @implementation ShowLectureViewController
+
+#pragma mark - initialize
+
+- (id)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _dataManager = [DataManager sharedInstance];
+//        _timeTableView = [[TimeTableView alloc] initWithFrame:<#(CGRect)#> lectures:<#(NSArray *)#> sectionTitles:<#(NSArray *)#> timeStart:<#(NSInteger)#> timeEnd:<#(NSInteger)#>]
+        
+        [self initialize];
+    }
+    
+    return self;
+}
+
+- (void)initialize
+{
+    [self makeAutoLayoutContraints];
+}
+
+- (void)makeAutoLayoutContraints
+{
+    
+}
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,15 +60,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
