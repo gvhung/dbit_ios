@@ -6,6 +6,12 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#define SERVER_URL @"https://dbit.plusquare.com/api"
+
+#define SEMESTER @"/semester"
+#define LECTURE_LIST @"/lecture/list"
+
+
 #import "NetworkManager.h"
 
 @implementation NetworkManager
@@ -28,9 +34,10 @@
                                failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/school"];
+    NSString *url = [SERVER_URL stringByAppendingString:SEMESTER];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(responseObject);
+        NSLog(@"%@", responseObject);
+//        success(responseObject);
         [self statusBarIndicator:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -44,7 +51,9 @@
                                    failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/school/timetable/%ld", schoolId];
+    NSString *parameter = [NSString stringWithFormat:@"/%ld", schoolId];
+    NSString *url = [[SERVER_URL stringByAppendingString:SEMESTER]
+                                  stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
         [self statusBarIndicator:NO];
@@ -60,7 +69,9 @@
                                   failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *url = [NSString stringWithFormat:@"http://dbit.api.overthepixel.com/timetable/%ld", timeTableId];
+    NSString *parameter = [NSString stringWithFormat:@"/%ld", timeTableId];
+    NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
+                                 stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
         [self statusBarIndicator:NO];
