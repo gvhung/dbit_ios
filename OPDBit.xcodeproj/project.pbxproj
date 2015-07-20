@@ -34,8 +34,6 @@
 		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
 		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
-		B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
-		B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
 		B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B281AECE5AE0096F39C /* Crashlytics.framework */; };
 		B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B291AECE5AE0096F39C /* Fabric.framework */; };
 		B593AA3E1ACC0BBA0063F09E /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3C1ACC0BBA0063F09E /* on.png */; };
@@ -47,7 +45,6 @@
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
 		B596828B1AAC2EB7002D6983 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59682891AAC2EB7002D6983 /* LaunchScreen.xib */; };
-		B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682961AAC2EB7002D6983 /* OPDBitTests.m */; };
 		B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682A11AAC314D002D6983 /* OPLeftDrawerViewController.m */; };
 		B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682A61AAC3378002D6983 /* OPLeftDrawerTableViewCell.m */; };
 		B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682AD1AAC3741002D6983 /* LectureViewController.m */; };
@@ -75,13 +72,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B51438441ACFCA7900EED7A5;
 			remoteInfo = TimeTableWidget;
-		};
-		B59682911AAC2EB7002D6983 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B596826F1AAC2EB7002D6983 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B59682761AAC2EB7002D6983;
-			remoteInfo = OPDBit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -158,9 +148,6 @@
 		B596827F1AAC2EB7002D6983 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B59682871AAC2EB7002D6983 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B596828A1AAC2EB7002D6983 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPDBitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B59682951AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B59682961AAC2EB7002D6983 /* OPDBitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPDBitTests.m; sourceTree = "<group>"; };
 		B59682A01AAC314D002D6983 /* OPLeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPLeftDrawerViewController.h; sourceTree = "<group>"; };
 		B59682A11AAC314D002D6983 /* OPLeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPLeftDrawerViewController.m; sourceTree = "<group>"; };
 		B59682A51AAC3378002D6983 /* OPLeftDrawerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPLeftDrawerTableViewCell.h; sourceTree = "<group>"; };
@@ -216,13 +203,6 @@
 				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
 				55B8495F730042A6986A0411 /* libPods.a in Frameworks */,
 				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B596828D1AAC2EB7002D6983 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +393,6 @@
 			isa = PBXGroup;
 			children = (
 				B59682791AAC2EB7002D6983 /* OPDBit */,
-				B59682931AAC2EB7002D6983 /* OPDBitTests */,
 				B51438471ACFCA7A00EED7A5 /* TimeTableWidget */,
 				B59682781AAC2EB7002D6983 /* Products */,
 				50E9E19CC8AB086F75932C27 /* Pods */,
@@ -425,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				B59682771AAC2EB7002D6983 /* OPDBit.app */,
-				B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */,
 				B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */,
 			);
 			name = Products;
@@ -458,23 +436,6 @@
 				B593AA3B1ACC0BA90063F09E /* Resource */,
 				B596827B1AAC2EB7002D6983 /* Info.plist */,
 				B596827C1AAC2EB7002D6983 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B59682931AAC2EB7002D6983 /* OPDBitTests */ = {
-			isa = PBXGroup;
-			children = (
-				B59682961AAC2EB7002D6983 /* OPDBitTests.m */,
-				B59682941AAC2EB7002D6983 /* Supporting Files */,
-			);
-			path = OPDBitTests;
-			sourceTree = "<group>";
-		};
-		B59682941AAC2EB7002D6983 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B59682951AAC2EB7002D6983 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -743,24 +704,6 @@
 			productReference = B59682771AAC2EB7002D6983 /* OPDBit.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B596828F1AAC2EB7002D6983 /* OPDBitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B596829D1AAC2EB7002D6983 /* Build configuration list for PBXNativeTarget "OPDBitTests" */;
-			buildPhases = (
-				B596828C1AAC2EB7002D6983 /* Sources */,
-				B596828D1AAC2EB7002D6983 /* Frameworks */,
-				B596828E1AAC2EB7002D6983 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B59682921AAC2EB7002D6983 /* PBXTargetDependency */,
-			);
-			name = OPDBitTests;
-			productName = OPDBitTests;
-			productReference = B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -788,10 +731,6 @@
 							};
 						};
 					};
-					B596828F1AAC2EB7002D6983 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = B59682761AAC2EB7002D6983;
-					};
 				};
 			};
 			buildConfigurationList = B59682721AAC2EB7002D6983 /* Build configuration list for PBXProject "OPDBit" */;
@@ -808,7 +747,6 @@
 			projectRoot = "";
 			targets = (
 				B59682761AAC2EB7002D6983 /* OPDBit */,
-				B596828F1AAC2EB7002D6983 /* OPDBitTests */,
 				B51438441ACFCA7900EED7A5 /* TimeTableWidget */,
 			);
 		};
@@ -844,13 +782,6 @@
 				B593AA3E1ACC0BBA0063F09E /* on.png in Resources */,
 				B52C3E5A1AD04853001BB5B8 /* done.png in Resources */,
 				B52C3E5C1AD04853001BB5B8 /* done@3x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B596828E1AAC2EB7002D6983 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -950,16 +881,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B596828C1AAC2EB7002D6983 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */,
-				B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */,
-				B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -967,11 +888,6 @@
 			isa = PBXTargetDependency;
 			target = B51438441ACFCA7900EED7A5 /* TimeTableWidget */;
 			targetProxy = B514384F1ACFCA7A00EED7A5 /* PBXContainerItemProxy */;
-		};
-		B59682921AAC2EB7002D6983 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B59682761AAC2EB7002D6983 /* OPDBit */;
-			targetProxy = B59682911AAC2EB7002D6983 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1141,44 +1057,6 @@
 			};
 			name = Release;
 		};
-		B596829E1AAC2EB7002D6983 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = OPDBitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPDBit.app/OPDBit";
-			};
-			name = Debug;
-		};
-		B596829F1AAC2EB7002D6983 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = OPDBitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPDBit.app/OPDBit";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1205,15 +1083,6 @@
 			buildConfigurations = (
 				B596829B1AAC2EB7002D6983 /* Debug */,
 				B596829C1AAC2EB7002D6983 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B596829D1AAC2EB7002D6983 /* Build configuration list for PBXNativeTarget "OPDBitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B596829E1AAC2EB7002D6983 /* Debug */,
-				B596829F1AAC2EB7002D6983 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
