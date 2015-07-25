@@ -1,14 +1,14 @@
 //
-//  ServerSchoolObject.m
+//  ServerSemesterObject.m
 //  OPDBit
 //
-//  Created by Kweon Min Jun on 2015. 3. 8..
+//  Created by 1000732 on 2015. 7. 26..
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
-#import "ServerSchoolObject.h"
+#import "ServerSemesterObject.h"
 
-@implementation ServerSchoolObject
+@implementation ServerSemesterObject
 
 // Specify default values for properties
 
@@ -19,14 +19,9 @@
 
 // Specify properties to ignore (Realm won't persist these)
 
-//+ (NSArray *)ignoredProperties
-//{
-//    return @[];
-//}
-
-+(NSString *)primaryKey
++ (NSArray *)ignoredProperties
 {
-    return @"schoolId";
+    return @[@""];
 }
 
 @end

@@ -9,12 +9,12 @@
 #import "DataManager.h"
 
 #import <Realm/Realm.h>
-#import "ServerSchoolObject.h"
-#import "ServerTimeTableObject.h"
 #import "ServerLectureObject.h"
 #import "TimeTableObject.h"
 
 #import "UIColor+OPTheme.h"
+
+#define REALMPATH @"VERSION2.realm"
 
 @interface DataManager ()
 
@@ -37,32 +37,26 @@
     return shared;
 }
 
+- (void)migrateV1toV2
+{
+    [RLMRealm setSchemaVersion:1
+                forRealmAtPath:[RLMRealm defaultRealmPath]
+            withMigrationBlock:^(RLMMigration *migration, NSUInteger oldSchemaVersion) {
+    }];
+}
+
 - (id)init
 {
     self = [super init];
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-        _realm = [RLMRealm defaultRealm];
+        _realm = [RLMRealm realmWithPath:REALMPATH];
     }
     return self;
 }
 
 #pragma mark - Save Objects
-
-- (void)saveServerSchoolsWithResponse:(NSArray *)response
-{
-    [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerSchoolObject allObjects]];
-    for (NSDictionary *schoolDictionary in response) {
-        ServerSchoolObject *serverSchoolObject = [[ServerSchoolObject alloc] init];
-        serverSchoolObject.schoolId = [schoolDictionary[@"id"] integerValue];
-        serverSchoolObject.schoolName = schoolDictionary[@"school_name"];
-        
-        [_realm addObject:serverSchoolObject];
-    }
-    [_realm commitWriteTransaction];
-}
 
 - (void)saveServerTimeTablesWithResponse:(NSArray *)response
 {
@@ -110,7 +104,7 @@
     timeTableObject.serverId = serverId;
     
     if (active) {
-        RLMResults *timeTableResults = [TimeTableObject allObjects];
+        RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
         for (TimeTableObject *resultTimeTableObject in timeTableResults) {
             resultTimeTableObject.active = NO;
         }
@@ -137,7 +131,7 @@
 
 - (NSInteger)lastUtid
 {
-    RLMResults *timeTableResults = [[TimeTableObject allObjects] sortedResultsUsingProperty:@"utid" ascending:NO];
+    RLMResults *timeTableResults = [[TimeTableObject allObjectsInRealm:_realm] sortedResultsUsingProperty:@"utid" ascending:NO];
     if (timeTableResults.count == 0)
         return -1;
     TimeTableObject *lastTimeTableObject = timeTableResults[0];
@@ -164,7 +158,7 @@
     timeTableObject.serverId = serverId;
     
     if (active) {
-        RLMResults *timeTableResults = [TimeTableObject allObjects];
+        RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
         for (TimeTableObject *resultTimeTableObject in timeTableResults) {
             resultTimeTableObject.active = NO;
         }
@@ -234,7 +228,7 @@
 
 - (NSInteger)lastUlid
 {
-    RLMResults *lectureResults = [[LectureObject allObjects] sortedResultsUsingProperty:@"ulid" ascending:NO];
+    RLMResults *lectureResults = [[LectureObject allObjectsInRealm:_realm] sortedResultsUsingProperty:@"ulid" ascending:NO];
     if (lectureResults.count == 0)
         return -1;
     LectureObject *lastLectureObject = lectureResults[0];
@@ -333,7 +327,7 @@
 {
     [_realm beginWriteTransaction];
     TimeTableObject *timeTableObject = [TimeTableObject objectsWhere:@"utid == %ld", utid][0];
-    RLMResults *timeTableResults = [TimeTableObject allObjects];
+    RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
     for (TimeTableObject *resultTimeTableObject in timeTableResults) {
         resultTimeTableObject.active = NO;
     }
@@ -345,32 +339,12 @@
 
 - (NSArray *)downloadedTimeTables
 {
-    RLMResults *downloadedTimeTables = [ServerTimeTableObject allObjects];
+    RLMResults *downloadedTimeTables = [ServerTimeTableObject allObjectsInRealm:_realm];
     if (downloadedTimeTables.count == 0) {
         NSLog(@"Downloaded TimeTables are NOT exist!");
         return nil;
     }
     return [self arrayWithServerTimeTableResults:downloadedTimeTables];
-}
-
-- (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
-{
-    RLMResults *serverTimeTables = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", schoolId]];
-    if (serverTimeTables.count == 0) {
-        NSLog(@"Server TimeTable (schoolId : %ld) is NOT exist!", schoolId);
-        return nil;
-    }
-    return [self arrayWithServerTimeTableResults:serverTimeTables];
-}
-
-- (NSArray *)schools
-{
-    RLMResults *schoolResults = [ServerSchoolObject allObjects];
-    if (schoolResults.count == 0) {
-        NSLog(@"Schools are NOT exist!");
-        return nil;
-    }
-    return [self arrayWithSchoolResults:schoolResults];
 }
 
 - (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId
@@ -385,7 +359,7 @@
 
 - (NSArray *)timeTables
 {
-    RLMResults *timeTableResults = [[TimeTableObject allObjects] sortedResultsUsingProperty:@"utid" ascending:YES];
+    RLMResults *timeTableResults = [[TimeTableObject allObjectsInRealm:_realm] sortedResultsUsingProperty:@"utid" ascending:YES];
     if (timeTableResults.count == 0) {
         NSLog(@"TimeTables are NOT exist!");
         return nil;
@@ -411,24 +385,6 @@
         return nil;
     }
     return [self arrayWithServerLectureResults:serverLectureResults];
-}
-
-
-- (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId
-{
-    RLMResults *serverTimeTableResults = [ServerTimeTableObject objectsWhere:[NSString stringWithFormat:@"timeTableId == %ld", timeTableId]];
-    if (serverTimeTableResults.count == 0) {
-        NSLog(@"Server TimeTable (timeTableId : %ld) for School Name is NOT exist!", timeTableId);
-        return @"";
-    }
-    ServerTimeTableObject *serverTimeTableObject = serverTimeTableResults[0];
-    RLMResults *serverSchoolResults = [ServerSchoolObject objectsWhere:[NSString stringWithFormat:@"schoolId == %ld", serverTimeTableObject.schoolId]];
-    if (serverSchoolResults.count == 0) {
-        NSLog(@"Server School (schoolId : %ld) for School Name is NOT exist!", serverTimeTableObject.schoolId);
-        return @"";
-    }
-    ServerSchoolObject *serverSchoolObject = serverSchoolResults[0];
-    return serverSchoolObject.schoolName;
 }
 
 - (NSString *)semesterString:(NSString *)semester
