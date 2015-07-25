@@ -6,16 +6,23 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class TimeTableObject;
+@class ServerSemesterObject;
+@class ServerLectureObject;
+@class LectureObject;
+@class LectureDetailObject;
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 
 @interface DataManager : NSObject
 
-@property (nonatomic, strong) NSDictionary *activedTimeTable;
+@property (nonatomic, strong) TimeTableObject *activedTimeTable;
 
 + (DataManager *)sharedInstance;
 
-- (BOOL)migrateV1toV2;
+- (void)migrateV1toV2;
 
 #pragma mark - Database Manage Method
 
@@ -56,28 +63,15 @@
 
 #pragma mark - Get Objects
 
-- (NSArray *)downloadedTimeTables;
-- (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId;
-- (NSArray *)timeTables;
-- (NSDictionary *)timeTableWithId:(NSInteger)timeTableId;
-- (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
-- (NSString *)semesterString:(NSString *)semester;
-- (NSDictionary *)lectureWithId:(NSInteger)ulid;
-- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(NSArray *)lectureDetails;
-
-/**
- * Lecture Details to display
- *
- *  @param  day day (ex. mon, tue, ...) to display Lecture Detail in active TimeTable
- *
- *  @return lectureName Lecture Name
- *  @return theme       Color Theme
- *  @return timeStart   Start time (NSInteger)
- *  @return timeEnd     End time (NSInteger)
- *  @return lectureLocation Lecture Location
- */
-
-- (NSArray *)lectureDetailsWithDay:(NSInteger)day;
+- (RLMArray *)timeTables;
+- (TimeTableObject *)timeTableWithId:(NSInteger)timeTableId;
+- (RLMArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
+- (RLMArray *)lectureDetailsWithDay:(NSInteger)day;
+- (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
+- (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
+- (LectureObject *)lectureWithId:(NSInteger)ulid;
+- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(RLMArray *)lectureDetails;
+- (RLMArray *)ulidsInActivedTimeTables;
 - (NSArray *)daySectionTitles;
 - (BOOL)lecturesIsEmptyInActivedTimeTable;
 

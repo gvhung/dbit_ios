@@ -122,11 +122,6 @@
     _timeTableNameLabel.text = timeTableDictionary[@"timeTableName"];
     if ([timeTableDictionary[@"serverId"] integerValue] == -1) {
         _serverTimeTableNameLabel.text = @"서버 연동 시간표가 없습니다.";
-    } else {
-        NSDictionary *serverTimeTableDictionary = [_dataManager serverTimeTableWithId:[timeTableDictionary[@"serverId"] integerValue]];
-        NSString *schoolName = [_dataManager schoolNameWithServerTimeTableId:[timeTableDictionary[@"serverId"] integerValue]];
-        NSString *semesterName = [_dataManager semesterString:serverTimeTableDictionary[@"semester"]];
-        _serverTimeTableNameLabel.text = [NSString stringWithFormat:@"%@ : %@", schoolName, semesterName];
     }
     _subLabel.text = ([timeTableDictionary[@"active"] integerValue]) ? @"기본 시간표" : @"활성화 되지 않은 시간표";
 }

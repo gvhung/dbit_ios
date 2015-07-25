@@ -10,7 +10,10 @@
 
 @interface ServerSemesterObject : RLMObject
 
-
+@property NSInteger version;
+@property NSInteger semesterId;
+@property NSString *semesterKey;
+@property NSString *semesterName;
 
 @end
 
