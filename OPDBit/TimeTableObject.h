@@ -39,18 +39,12 @@
 @property NSString *timeTableName;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
-@property NSInteger serverId;
+@property NSInteger semesterID; // serverId -> semesterId
 
 @property RLMArray<LectureObject> *lectures;
 @property BOOL active;
 
-@property BOOL mon;
-@property BOOL tue;
-@property BOOL wed;
-@property BOOL thu;
-@property BOOL fri;
-@property BOOL sat;
-@property BOOL sun;
+@property BOOL workAtWeekend;
 
 @end
 

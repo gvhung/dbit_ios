@@ -26,34 +26,32 @@
 
 #pragma mark - Database Manage Method
 
-- (void)saveServerTimeTablesWithResponse:(NSArray *)response;
+- (void)saveServerSemestersWithResponse:(NSArray *)response
+                             completion:(void (^)())completion;
 - (void)saveServerLecturesWithResponse:(NSArray *)response
-                     serverTimeTableId:(NSInteger)serverTimeTableId
-                                update:(void (^)(NSInteger progressIndex))update;
+                            semesterID:(NSInteger)semesterID
+                            completion:(void (^)())completion;
 - (void)saveTimeTableWithName:(NSString *)name
-                     serverId:(NSInteger)serverId
+                   semesterID:(NSInteger)semesterID
                        active:(BOOL)active;
 - (void)saveLectureWithLectureName:(NSString *)lectureName
                              theme:(NSInteger)theme
-                    lectureDetails:(NSArray *)lectureDetails;
-- (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSInteger)theme
-                    lectureDetails:(NSArray *)lectureDetails
-                              ulid:(NSInteger)ulid;
+                    lectureDetails:(RLMArray *)lectureDetails;
 - (void)saveLectureDetailWithUlid:(NSInteger)ulid
                   lectureLocation:(NSString *)lectureLocation
                           timeEnd:(NSInteger)timeEnd
                         timeStart:(NSInteger)timeStart
                               day:(NSInteger)day;
 - (void)updateTimeTableWithUtid:(NSInteger)utid
-                         name:(NSString *)name
-                     serverId:(NSInteger)serverId
-                       active:(BOOL)active
-                      failure:(void (^)(NSString *reason))failure;
+                           name:(NSString *)name
+                     semesterID:(NSInteger)semesterID
+                         active:(BOOL)active
+                        failure:(void (^)(NSString *reason))failure;
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
                         theme:(NSInteger)theme
-               lectureDetails:(NSArray *)lectureDetails;
+               lectureDetails:(RLMArray *)lectureDetails;
+
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
 
@@ -64,14 +62,14 @@
 #pragma mark - Get Objects
 
 - (RLMArray *)timeTables;
-- (TimeTableObject *)timeTableWithId:(NSInteger)timeTableId;
-- (RLMArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
+- (TimeTableObject *)timeTableWithUtid:(NSInteger)utid;
+- (RLMArray *)serverLecturesWithSemesterID:(NSInteger)semesterID;
+
 - (RLMArray *)lectureDetailsWithDay:(NSInteger)day;
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
 - (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
-- (LectureObject *)lectureWithId:(NSInteger)ulid;
+- (LectureObject *)lectureWithUlid:(NSInteger)ulid;
 - (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(RLMArray *)lectureDetails;
-- (RLMArray *)ulidsInActivedTimeTables;
 - (NSArray *)daySectionTitles;
 - (BOOL)lecturesIsEmptyInActivedTimeTable;
 

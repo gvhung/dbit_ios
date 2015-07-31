@@ -62,6 +62,7 @@
 		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
 		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
 		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
+		C1B7C0FB1B6BD799001E59A6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B81AAC4A8E002D6983 /* DataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -826,6 +827,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */,
+				C1B7C0FB1B6BD799001E59A6 /* DataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
