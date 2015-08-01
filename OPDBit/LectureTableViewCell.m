@@ -7,9 +7,13 @@
 //
 
 #import "LectureTableViewCell.h"
+
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+
+#import "LectureObject.h"
+#import "LectureDetailObject.h"
 
 #import <Masonry/Masonry.h>
 #import <MZClockView/MZClockView.h>
@@ -93,29 +97,27 @@
 
 #pragma mark - Setter
 
-- (void)setLectureDetailDictionary:(NSDictionary *)lectureDetailDictionary
+- (void)setLectureDetail:(LectureDetailObject *)lectureDetail
 {
-    _lectureDetailDictionary = lectureDetailDictionary;
-    _clockView.themeColor = [UIColor op_lectureTheme:[lectureDetailDictionary[@"theme"] integerValue]];
-    NSInteger startTime = [lectureDetailDictionary[@"timeStart"] integerValue];
-    NSInteger endTime = [lectureDetailDictionary[@"timeEnd"] integerValue];
+    _lectureDetail = lectureDetail;
+    
+    NSInteger startTime = lectureDetail.timeStart;
+    NSInteger endTime = lectureDetail.timeEnd;
     
     _clockView.hours = startTime/100;
     _clockView.minutes = startTime%100;
     
     NSString *timeString = [NSString stringWithFormat:@"%@ ~ %@", [DataManager stringFromTimeInteger:startTime], [DataManager stringFromTimeInteger:endTime]];
     
-    _lectureNameLabel.text = lectureDetailDictionary[@"lectureName"];
-    _lectureLocationLabel.text = lectureDetailDictionary[@"lectureLocation"];
+    _lectureLocationLabel.text = lectureDetail.lectureLocation;
     _lectureTimeLabel.text = timeString;
 }
 
-#pragma mark - Getter
-
-- (NSInteger)ulid
+- (void)setLecture:(LectureObject *)lecture
 {
-    if (!_lectureDetailDictionary[@"ulid"])
-        return -1;
-    return [_lectureDetailDictionary[@"ulid"] integerValue];
+    _lecture = lecture;
+    _clockView.themeColor = [UIColor op_lectureTheme:lecture.theme];
+    _lectureNameLabel.text = lecture.lectureName;
 }
+
 @end

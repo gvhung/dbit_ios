@@ -6,6 +6,8 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class LectureObject;
+
 #import <UIKit/UIKit.h>
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
@@ -14,10 +16,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSDictionary *serverLectureDictionary;
-@property (nonatomic, strong) NSArray *lectureDetails;
-
-@property (nonatomic) NSInteger ulidToEdit;
+@property (nonatomic, strong) LectureObject *lecture;
 
 @property (nonatomic, strong) RMDateSelectionViewController *timePickerViewController;
 
