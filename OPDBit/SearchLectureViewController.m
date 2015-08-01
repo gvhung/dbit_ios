@@ -6,27 +6,36 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+// Controller
 #import "SearchLectureViewController.h"
-#import "SearchLectureCell.h"
-#import "DataManager.h"
 
+// View
+#import "SearchLectureCell.h"
+
+// Utility
+#import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "ServerSemesterObject.h"
+#import "ServerLectureObject.h"
+
+// Library
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
-@interface SearchLectureViewController ()
+@interface SearchLectureViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UITextField *searchTextField;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
 
-@property (nonatomic, strong) NSArray *lectureResults;
+@property (nonatomic, strong) RLMArray *lectureResults;
 
-@property (nonatomic, strong) NSDictionary *selectedLectureDictionary;
+@property (nonatomic, strong) ServerLectureObject *selectedServerLecture;
 
 @end
 
@@ -38,8 +47,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     self = [super init];
     if (self) {
-        _lectureResults = [[NSArray alloc] init];
-        _delegate = nil;
+        _lectureResults = [[RLMArray alloc] initWithObjectClassName:ServerLectureObjectID];
         _segmentedControl = [[HMSegmentedControl alloc] init];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _searchTextField = [[UITextField alloc] init];
@@ -53,7 +61,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    NSArray *segmentedControlSectionTitles = @[@"강의명", @"과목코드", @"교수명"];
+    NSArray *segmentedControlSectionTitles = @[@"강의명", @"학수번호", @"교수명"];
     _segmentedControl.sectionTitles = segmentedControlSectionTitles;
     _segmentedControl.borderType = HMSegmentedControlBorderTypeBottom;
     _segmentedControl.borderColor = [UIColor op_dividerDark];
@@ -67,7 +75,9 @@ static CGFloat const rowHeight = 80.0f;
     _segmentedControl.selectionIndicatorColor = [UIColor op_primary];
     _segmentedControl.selectionIndicatorHeight = 2.0f;
     
-    [_segmentedControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    [_segmentedControl addTarget:self
+                          action:@selector(segmentedControlDidChange:)
+                forControlEvents:UIControlEventValueChanged];
     
     [_tableView registerClass:[SearchLectureCell class] forCellReuseIdentifier:@"SearchLectureCell"];
     _tableView.delegate = self;
@@ -98,7 +108,7 @@ static CGFloat const rowHeight = 80.0f;
     [_searchTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _searchTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [_searchTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    _searchTextField.delegate = self;
     
     self.navigationItem.titleView = _searchTextField;
     self.navigationItem.rightBarButtonItem = selectServerLectureButton;
@@ -130,13 +140,17 @@ static CGFloat const rowHeight = 80.0f;
 
 - (void)selectServerLectureAction
 {
-    if (_selectedLectureDictionary == nil) {
+    if (!_selectedServerLecture) {
         [_searchTextField resignFirstResponder];
         [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
         return;
     }
-    self.delegate.serverLectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
-    [self.navigationController popToViewController:self.delegate animated:YES];
+    
+    if ([_delegate respondsToSelector:@selector(searchLectureViewController:didDoneWithServerLectureObject:)]) {
+        [_delegate searchLectureViewController:self didDoneWithServerLectureObject:_selectedServerLecture];
+    }
+//    self.delegate.serverLectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setter
@@ -147,6 +161,11 @@ static CGFloat const rowHeight = 80.0f;
     _lectureResults = serverLectures;
     [self hideTableView:[self lectureResultsAreEmpty]];
     [_tableView reloadData];
+}
+
+- (void)setServerSemester:(ServerSemesterObject *)serverSemester
+{
+    _serverSemester = serverSemester;
 }
 
 - (void)setLectureResults:(NSArray *)lectureResults
@@ -289,18 +308,21 @@ static CGFloat const rowHeight = 80.0f;
 
 #pragma mark - Text Field Delegate
 
-- (void)textFieldDidChange:(UITextField *)textField
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if(textField.text.length == 0)
-        self.lectureResults = _serverLectures;
+        self.lectureResults = _serverSemester.serverLectures;
     else
     {
-        NSMutableArray *searchArray = [NSMutableArray arrayWithArray:_serverLectures];
-        NSPredicate *predicate = [self getPredicateWithString:textField.text];
-        self.lectureResults = [NSMutableArray arrayWithArray:[searchArray filteredArrayUsingPredicate:predicate]];
+#warning 검색 로직
+//        NSMutableArray *searchArray = [NSMutableArray arrayWithArray:_serverLectures];
+//        NSPredicate *predicate = [self getPredicateWithString:textField.text];
+//        self.lectureResults = [NSMutableArray arrayWithArray:[searchArray filteredArrayUsingPredicate:predicate]];
     }
     
     [_tableView reloadData];
+    
+    return YES;
 }
 
 #pragma mark - Segmented Control Delegate

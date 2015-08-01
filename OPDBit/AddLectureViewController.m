@@ -21,6 +21,7 @@
 #import "DataManager.h"
 
 // Model
+#import "TimeTableObject.h"
 #import "LectureObject.h"
 #import "LectureDetailObject.h"
 
@@ -118,6 +119,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 #pragma mark - Setter
 
+/*
 - (void)setServerLectureDictionary:(NSDictionary *)serverLectureDictionary
 {
     _serverLectureDictionary = serverLectureDictionary;
@@ -144,6 +146,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     
     [_tableView reloadData];
 }
+*/
 
 #pragma mark - Table View Data Source
 
@@ -348,7 +351,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)searchLectureAction
 {
-    if([_dataManager.activedTimeTable[@"serverId"] integerValue] == -1) {
+    if(!_dataManager.activedTimeTable.serverSemesterObject) {
         [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
         return;
     }
@@ -412,10 +415,10 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (_ulidToEdit == -1)
-        [self setTitle:@"강의 추가"];
-    else
+    if (_lecture.ulid == -1)
         [self setTitle:@"강의 수정"];
+    else
+        [self setTitle:@"강의 추가"];
 }
 
 @end

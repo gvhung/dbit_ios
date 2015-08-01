@@ -7,6 +7,7 @@
 //
 
 #import "LectureObject.h"
+#import "ServerLectureObject.h"
 
 @implementation LectureObject
 
@@ -35,6 +36,12 @@
     self.lectureName = @"";
     self.lectureDetails = nil;
     self.theme = 0;
+}
+
+#warning SearchLectureViewController 참조해서 ServerLecture -> Lecture로 변환하는 거 가져오기
+- (void)lectureWithServerLecture:(ServerLectureObject *)serverLecture
+{
+    
 }
 
 @end
