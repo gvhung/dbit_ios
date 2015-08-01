@@ -128,7 +128,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _ulidToEdit = ulidToEdit;
     [self setTitle:@"강의 수정"];
     
-    NSDictionary *lectureDictionary = [_dataManager lectureWithId:ulidToEdit];
+    NSDictionary *lectureDictionary = [_dataManager lectureWithUlid:ulidToEdit];
     _lectureDictionary[@"lectureName"] = lectureDictionary[@"lectureName"];
     _lectureDictionary[@"theme"] = lectureDictionary[@"theme"];
     self.lectureDetails = lectureDictionary[@"lectureDetails"];

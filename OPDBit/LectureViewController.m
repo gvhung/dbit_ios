@@ -8,14 +8,22 @@
 
 #import "AppDelegate.h"
 
+// Controller
 #import "LectureViewController.h"
-#import "LectureTableViewCell.h"
 #import "AddLectureViewController.h"
-#import "DataManager.h"
 
+// Utility
+#import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "TimeTableObject.h"
+
+// View
+#import "LectureTableViewCell.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
@@ -46,7 +54,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (void)initialize
 {
-    [self setTitle:_dataManager.activedTimeTable[@"timeTableName"]];
+    [self setTitle:_dataManager.activedTimeTable.timeTableName];
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd

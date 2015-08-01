@@ -127,11 +127,15 @@
 //    timeTableObject.timeTableName = name;
 //    timeTableObject.serverSemesterObject = ServerSemesterObject;
     RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", timeTableObject.utid];
+    NSInteger utid;
     if (timeTableResults.count) {
+        utid = ((TimeTableObject *)timeTableResults[0]).utid;
         [_realm deleteObjects:timeTableResults];
         hasDuplicated = YES;
+    } else {
+        utid = [self lastUtid] + 1;
     }
-    timeTableObject.utid = [self lastUtid] + 1;
+    timeTableObject.utid = utid;
     
     if (timeTableObject.active) {
         RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
@@ -189,6 +193,7 @@
     [self refreshTimeTableSetting];
 }
 
+/*
 - (void)updateTimeTableWithUtid:(NSInteger)utid
                            name:(NSString *)name
                      semesterID:(NSInteger)semesterID
@@ -222,6 +227,7 @@
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
     completion();
 }
+*/
 
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
@@ -372,16 +378,6 @@
     return timeTableResults[0];
 }
 
-- (RLMArray *)serverLecturesWithSemesterID:(NSInteger)semesterID
-{
-    RLMResults *serverLectureResults = [ServerLectureObject objectsInRealm:_realm where:@"semesterID == %ld", semesterID];
-    if (serverLectureResults.count == 0) {
-        NSLog(@"Server Lectures (timeTableId : %ld) are NOT exist!", semesterID);
-        return nil;
-    }
-    return [self realmArrayFromResult:serverLectureResults className:ServerLectureObjectID];
-}
-
 - (RLMArray *)lectureDetailsWithDay:(NSInteger)day
 {
     RLMArray *lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
@@ -429,18 +425,30 @@
     return lectureResults[0];
 }
 
-- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(RLMArray *)lectureDetails
+- (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable
 {
-    for (LectureDetailObject *lectureDetailObject in lectureDetails) {
-        RLMResults *sameDayObjectResult = [LectureDetailObject objectsInRealm:_realm
-                                                                        where:@"day == %ld", lectureDetailObject.day];
-        RLMResults *containedTimeStartObjectResult = [sameDayObjectResult objectsWhere:@"timeStart <= %ld && %ld < timeEnd", lectureDetailObject.timeStart, lectureDetailObject.timeStart];
-        if (containedTimeStartObjectResult) {
-            return YES;
+    RLMArray *lectureDetailsInTimeTable = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+    for (LectureObject *otherLecture in timeTable.lectures) {
+        if (otherLecture.ulid == lecture.ulid) {
+            continue;
         }
-        RLMResults *containedTimeEndObjectResult = [sameDayObjectResult objectsWhere:@"timetart < %ld && %ld <= timeEnd", lectureDetailObject.timeEnd, lectureDetailObject.timeEnd];
-        if (containedTimeEndObjectResult.count) {
-            return YES;
+        for (LectureDetailObject *lectureDetail in otherLecture.lectureDetails) {
+            [lectureDetailsInTimeTable addObject:lectureDetail];
+        }
+    }
+    
+    for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+        for (LectureDetailObject *otherLectureDetail in lectureDetailsInTimeTable) {
+            if (lectureDetail.day == otherLectureDetail.day) {
+                if (otherLectureDetail.timeStart <= lectureDetail.timeStart &&
+                    lectureDetail.timeStart < otherLectureDetail.timeEnd) {
+                    return YES;
+                }
+                if (otherLectureDetail.timeStart < lectureDetail.timeEnd &&
+                    lectureDetail.timeEnd <= otherLectureDetail.timeEnd) {
+                    return YES;
+                }
+            }
         }
     }
     return NO;

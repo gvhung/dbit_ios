@@ -64,7 +64,7 @@
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
 - (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid;
-- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(RLMArray *)lectureDetails;
+- (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
 - (NSArray *)daySectionTitles;
 
 #pragma mark - Lecture Theme

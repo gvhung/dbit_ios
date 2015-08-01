@@ -122,7 +122,7 @@
     _switchImageView.image = [UIImage imageNamed:switchImageName];
     
     _timeTableNameLabel.text = timeTable.timeTableName;
-    if (timeTable.semesterID == -1) {
+    if (!timeTable.serverSemesterObject) {
         _serverTimeTableNameLabel.text = @"유드림스와 연결되어 있지 않음";
     }
     _subLabel.text = (timeTable.active) ? @"기본 시간표" : @"활성화 되지 않은 시간표";
