@@ -19,6 +19,8 @@
  
  */
 
+static NSString * const LectureDetailObjectID = @"LectureDetailObject";
+
 @interface LectureDetailObject : RLMObject
 
 @property NSString *lectureLocation;

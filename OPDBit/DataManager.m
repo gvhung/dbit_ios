@@ -17,12 +17,6 @@
 
 #define REALMPATH @"VERSION2.realm"
 
-static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
-static NSString * const ServerLectureObjectID  = @"ServerLectureObject";
-static NSString * const TimeTableObjectID      = @"TimeTableObject";
-static NSString * const LectureObjectID        = @"LectureObject";
-static NSString * const LectureDetailObjectID  = @"LectureDetailObject";
-
 @interface DataManager ()
 
 @property (nonatomic, strong) RLMRealm *realm;
@@ -102,7 +96,7 @@ static NSString * const LectureDetailObjectID  = @"LectureDetailObject";
                             completion:(void (^)())completion
 {
     [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerLectureObject objectsWhere:@"semesterID == %ld", semesterID]];
+    [_realm deleteObjects:[ServerLectureObject objectsInRealm:_realm where:@"semesterID == %ld", semesterID]];
     for (NSDictionary *serverLectureDictionary in response) {
         ServerLectureObject *serverLectureObject = [[ServerLectureObject alloc] init];
         
@@ -448,7 +442,7 @@ static NSString * const LectureDetailObjectID  = @"LectureDetailObject";
 
 - (TimeTableObject *)activedTimeTable
 {
-    RLMResults *activedTimeTableResults = [TimeTableObject objectsWhere:[NSString stringWithFormat:@"active == YES"]];
+    RLMResults *activedTimeTableResults = [TimeTableObject objectsInRealm:_realm where:@"active == YES"];
     if (activedTimeTableResults.count == 0) {
         NSLog(@"Actived TimeTable is NOT exist! (Object)");
         return nil;

@@ -20,6 +20,7 @@
  NSString *lectureDaytime : 강의요일 / 강의시간
  
  */
+static NSString * const ServerLectureObjectID  = @"ServerLectureObject";
 
 @interface ServerLectureObject : RLMObject
 

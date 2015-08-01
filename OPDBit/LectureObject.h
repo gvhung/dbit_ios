@@ -19,6 +19,8 @@
  * @param   theme   시계 색깔 (테마) (NSInteger)
  */
 
+static NSString * const LectureObjectID = @"LectureObject";
+
 @interface LectureObject : RLMObject
 
 @property NSInteger ulid;

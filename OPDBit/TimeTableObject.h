@@ -32,6 +32,7 @@
  BOOL sun : 일요일
  
  */
+static NSString * const TimeTableObjectID = @"TimeTableObject";
 
 @interface TimeTableObject : RLMObject
 

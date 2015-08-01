@@ -8,6 +8,8 @@
 
 #import "RLMObject.h"
 
+static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
+
 @interface ServerSemesterObject : RLMObject
 
 @property NSInteger semesterVersion;
