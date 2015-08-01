@@ -26,14 +26,15 @@
 
 #pragma mark - Database Manage Method
 
-- (void)saveServerSemestersWithResponse:(NSArray *)response
-                             completion:(void (^)())completion;
+- (void)saveServerSemester:(ServerSemesterObject *)serverSemester
+                completion:(void (^)(BOOL isUpdated))completion;
+/*
 - (void)saveServerLecturesWithResponse:(NSArray *)response
                             semesterID:(NSInteger)semesterID
                             completion:(void (^)())completion;
-- (void)saveTimeTableWithName:(NSString *)name
-                   semesterID:(NSInteger)semesterID
-                       active:(BOOL)active;
+*/
+- (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
+                   completion:(void (^)(BOOL isUpdated))completion;
 - (void)saveLectureWithLectureName:(NSString *)lectureName
                              theme:(NSInteger)theme
                     lectureDetails:(RLMArray *)lectureDetails;
@@ -42,11 +43,6 @@
                           timeEnd:(NSInteger)timeEnd
                         timeStart:(NSInteger)timeStart
                               day:(NSInteger)day;
-- (void)updateTimeTableWithUtid:(NSInteger)utid
-                           name:(NSString *)name
-                     semesterID:(NSInteger)semesterID
-                         active:(BOOL)active
-                        failure:(void (^)(NSString *reason))failure;
 - (void)updateLectureWithUlid:(NSInteger)ulid
                          name:(NSString *)name
                         theme:(NSInteger)theme
@@ -61,17 +57,15 @@
 
 #pragma mark - Get Objects
 
+- (RLMArray *)savedServerSemesters;
 - (RLMArray *)timeTables;
 - (TimeTableObject *)timeTableWithUtid:(NSInteger)utid;
-- (RLMArray *)serverLecturesWithSemesterID:(NSInteger)semesterID;
-
 - (RLMArray *)lectureDetailsWithDay:(NSInteger)day;
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
 - (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid;
 - (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(RLMArray *)lectureDetails;
 - (NSArray *)daySectionTitles;
-- (BOOL)lecturesIsEmptyInActivedTimeTable;
 
 #pragma mark - Lecture Theme
 

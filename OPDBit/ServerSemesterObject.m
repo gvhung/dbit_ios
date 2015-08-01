@@ -24,4 +24,12 @@
     return @[@""];
 }
 
+- (void)setPropertiesWithResponse:(NSDictionary *)response
+{
+    self.semesterVersion = [response[@"version"] integerValue];
+    self.semesterName = response[@"name"];
+    self.semesterKey = response[@"key"];
+    self.semesterID = [response[@"id"] integerValue];
+}
+
 @end

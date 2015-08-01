@@ -18,8 +18,8 @@
 - (void)getServerSemestersWithCompletion:(void (^)(id response))success
                                  failure:(void (^)(NSError *error))failure;
 
-- (void)getServerLecturesWithTimeTableID:(NSInteger)timeTableId
-                              completion:(void (^)(id response))success
-                                 failure:(void (^)(NSError *error))failure;
+- (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                             completion:(void (^)(id response))success
+                                failure:(void (^)(NSError *error))failure;
 
 @end

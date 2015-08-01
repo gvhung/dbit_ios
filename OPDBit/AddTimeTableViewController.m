@@ -6,21 +6,27 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+// Controllers
 #import "AddTimeTableViewController.h"
 #import "ServerTimeTableViewController.h"
-#import "DataManager.h"
 
+// Utility
+#import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Models
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
 @interface AddTimeTableViewController ()
 
 @property (nonatomic, strong) DataManager *dataManager;
-@property (nonatomic, strong) NSDictionary *serverTimeTableDictionary;
-@property (nonatomic, strong) NSDictionary *timeTableDictionary;
+@property (nonatomic, strong) ServerSemesterObject *serverSemester;
+@property (nonatomic, strong) TimeTableObject *timeTable;
 
 // UI Part
 @property (nonatomic, strong) UILabel *timeTableNameLabel;
@@ -97,7 +103,7 @@
     [_timeTableNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
     [_serverTimeTableButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
-    [_serverTimeTableButton setTitle:@"서버 시간표를 선택해 주세요!" forState:UIControlStateNormal];
+    [_serverTimeTableButton setTitle:@"여기를 눌러 유드림스로부터 강의목록을 받아주세요!" forState:UIControlStateNormal];
     _serverTimeTableButton.titleLabel.font = [UIFont op_primary];
     _serverTimeTableButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];
@@ -170,15 +176,15 @@
 {
     _timeTableId = timeTableId;
     [self setTitle:@"시간표 수정"];
-    self.timeTableDictionary = [_dataManager timeTableWithId:timeTableId];
+    self.timeTable = [_dataManager timeTableWithUtid:timeTableId];
 }
 
-- (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
+- (void)setTimeTable:(TimeTableObject *)timeTable
 {
-    _timeTableDictionary = timeTableDictionary;
-    self.selectedServerTimeTableId = [timeTableDictionary[@"serverId"] integerValue];
-    _timeTableNameField.text = timeTableDictionary[@"timeTableName"];
-    [_primaryTimeTableSwitch setOn:[timeTableDictionary[@"active"] boolValue]];
+    _timeTable = timeTable;
+    self.selectedSemesterID = timeTable.semesterID;
+    _timeTableNameField.text = timeTable.timeTableName;
+    [_primaryTimeTableSwitch setOn:timeTable.active];
 }
 
 #pragma mark - Bar Button Action
@@ -193,17 +199,18 @@
     
     if (_timeTableId != -1) {
         [_dataManager updateTimeTableWithUtid:_timeTableId
-                                       name:_timeTableNameField.text
-                                   serverId:_selectedServerTimeTableId
-                                     active:_primaryTimeTableSwitch.isOn
-                                      failure:^(NSString *reason){
+                                         name:_timeTableNameField.text
+                                   semesterID:_selectedSemesterID
+                                       active:_primaryTimeTableSwitch.isOn
+                                   completion:^{
+                                       [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
+                                       }
+                                      failure:^(NSString *reason) {
                                           [KVNProgress showErrorWithStatus:reason];
-                                          return;
-                                       }];
-        [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
+                                      }];
     } else {
         [_dataManager saveTimeTableWithName:_timeTableNameField.text
-                                   serverId:_selectedServerTimeTableId
+                                 semesterID:_selectedSemesterID
                                      active:_primaryTimeTableSwitch.isOn];
         [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
     }
@@ -212,7 +219,7 @@
 
 #pragma mark - Action
 
-- (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
+- (void)setSelectedSemesterID:(NSInteger)selectedSemesterID
 {
     _selectedServerTimeTableId = selectedServerTimeTableId;
     _serverTimeTableDictionary = [_dataManager serverTimeTableWithId:_selectedServerTimeTableId];
@@ -223,6 +230,10 @@
     NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
     if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
     [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];
+}
+
+- (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
+{
 }
 
 - (void)selectServerTimeTable

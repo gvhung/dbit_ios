@@ -44,12 +44,12 @@
     }];
 }
 
-- (void)getServerLecturesWithTimeTableID:(NSInteger)timeTableId
-                              completion:(void (^)(id response))success
-                                 failure:(void (^)(NSError *error))failure
+- (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                             completion:(void (^)(id response))success
+                                failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *parameter = [NSString stringWithFormat:@"/%ld", timeTableId];
+    NSString *parameter = [NSString stringWithFormat:@"/%ld", semesterID];
     NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
                                  stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

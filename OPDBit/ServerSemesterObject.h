@@ -7,6 +7,7 @@
 //
 
 #import "RLMObject.h"
+#import "ServerLectureObject.h"
 
 static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
 
@@ -17,8 +18,12 @@ static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
 @property NSString *semesterKey;
 @property NSString *semesterName;
 
+@property RLMArray<ServerLectureObject> *serverLectures;
+
+- (void)setPropertiesWithResponse:(NSDictionary *)response;
+
 @end
 
 // This protocol enables typed collections. i.e.:
 // RLMArray<ServerLectureObject>
-RLM_ARRAY_TYPE(ServerLectureObject)
+RLM_ARRAY_TYPE(ServerSemesterObject)

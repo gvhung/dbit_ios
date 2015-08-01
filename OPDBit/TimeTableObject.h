@@ -8,6 +8,7 @@
 
 #import <Realm/Realm.h>
 #import "LectureObject.h"
+#import "ServerSemesterObject.h"
 
 /*
  
@@ -40,8 +41,8 @@ static NSString * const TimeTableObjectID = @"TimeTableObject";
 @property NSString *timeTableName;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
-@property NSInteger semesterID; // serverId -> semesterId
 
+@property ServerSemesterObject *serverSemesterObject;
 @property RLMArray<LectureObject> *lectures;
 @property BOOL active;
 

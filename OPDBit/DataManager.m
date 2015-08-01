@@ -72,25 +72,24 @@
 
 #pragma mark - Save Objects
 
-- (void)saveServerSemestersWithResponse:(NSArray *)response
-                             completion:(void (^)())completion
+- (void)saveServerSemester:(ServerSemesterObject *)serverSemester
+                completion:(void (^)(BOOL isUpdated))completion
 {
+    BOOL hasDuplicated = NO;
+    
     [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerSemesterObject allObjectsInRealm:_realm]];
-    for (NSDictionary *serverSemesterResponse in response) {
-        ServerSemesterObject *serverSemesterObject = [[ServerSemesterObject alloc] init];
-        
-        serverSemesterObject.semesterVersion = [serverSemesterResponse[@"version"] integerValue];
-        serverSemesterObject.semesterID = [serverSemesterResponse[@"id"] integerValue];
-        serverSemesterObject.semesterKey = serverSemesterResponse[@"key"];
-        serverSemesterObject.semesterName = serverSemesterResponse[@"name"];
-        
-        [_realm addObject:serverSemesterObject];
+    RLMResults *result = [ServerSemesterObject objectsInRealm:_realm where:@"semesterID == %ld", serverSemester.semesterID];
+    if (result.count) {
+        hasDuplicated = YES;
+        [_realm deleteObjects:result];
     }
+    
+    [_realm addObject:serverSemester];
     [_realm commitWriteTransaction];
-    completion();
+    completion(hasDuplicated);
 }
 
+/*
 - (void)saveServerLecturesWithResponse:(NSArray *)response
                             semesterID:(NSInteger)semesterID
                             completion:(void (^)())completion
@@ -115,30 +114,39 @@
     [_realm commitWriteTransaction];
     completion();
 }
+*/
 
-- (void)saveTimeTableWithName:(NSString *)name
-                   semesterID:(NSInteger)semesterID
-                       active:(BOOL)active
+- (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
+                   completion:(void (^)(BOOL isUpdated))completion
 {
-    [_realm beginWriteTransaction];
-    TimeTableObject *timeTableObject = [[TimeTableObject alloc] init];
-    timeTableObject.timeTableName = name;
-    timeTableObject.semesterID = semesterID;
+    BOOL hasDuplicated = NO;
     
-    if (active) {
+    [_realm beginWriteTransaction];
+    
+//    TimeTableObject *timeTableObject = [[TimeTableObject alloc] init];
+//    timeTableObject.timeTableName = name;
+//    timeTableObject.serverSemesterObject = ServerSemesterObject;
+    RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", timeTableObject.utid];
+    if (timeTableResults.count == 0) {
+        [_realm deleteObjects:timeTableResults];
+        hasDuplicated = YES;
+        return;
+    }
+    
+    if (timeTableObject.active) {
         RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
         for (TimeTableObject *resultTimeTableObject in timeTableResults) {
             resultTimeTableObject.active = NO;
         }
     }
     
-    timeTableObject.active = active;
-    timeTableObject.utid = [self lastUtid]+1;
-    timeTableObject.timeStart = -1;
-    timeTableObject.timeEnd = -1;
-    timeTableObject.workAtWeekend = NO;
+//    timeTableObject.active = active;
+//    timeTableObject.utid = [self lastUtid]+1;
+//    timeTableObject.timeStart = -1;
+//    timeTableObject.timeEnd = -1;
+//    timeTableObject.workAtWeekend = NO;
     
-    [_realm addObject:timeTableObject];
+    [_realm addOrUpdateObject:timeTableObject];
     [_realm commitWriteTransaction];
     
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
@@ -185,7 +193,8 @@
                            name:(NSString *)name
                      semesterID:(NSInteger)semesterID
                          active:(BOOL)active
-                        failure:(void (^)(NSString *reason))failure
+                     completion:(void (^)())completion
+                        failure:(void (^)(NSString *))failure
 {
     [_realm beginWriteTransaction];
     RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", utid];
@@ -211,6 +220,7 @@
     [_realm commitWriteTransaction];
     
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
+    completion();
 }
 
 - (void)updateLectureWithUlid:(NSInteger)ulid
@@ -233,8 +243,6 @@
 }
 
 #pragma mark - Delete Object in Realm
-
-//- (void)deleteLectureWithUlid:(NSInteger)ulid;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid
 {
@@ -330,6 +338,18 @@
 }
 
 #pragma mark - Get Objects
+
+- (RLMArray *)savedServerSemesters
+{
+    [_realm beginWriteTransaction];
+    RLMResults *downloadedServerSemesterResult = [ServerSemesterObject allObjectsInRealm:_realm];
+    if (!downloadedServerSemesterResult.count) {
+        NSLog(@"Downloaded Server Semesters are NOT exist!");
+        return nil;
+    }
+    
+    return [self realmArrayFromResult:downloadedServerSemesterResult className:ServerSemesterObjectID];
+}
 
 - (RLMArray *)timeTables
 {
