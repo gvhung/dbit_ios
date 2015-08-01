@@ -127,11 +127,11 @@
 //    timeTableObject.timeTableName = name;
 //    timeTableObject.serverSemesterObject = ServerSemesterObject;
     RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", timeTableObject.utid];
-    if (timeTableResults.count == 0) {
+    if (timeTableResults.count) {
         [_realm deleteObjects:timeTableResults];
         hasDuplicated = YES;
-        return;
     }
+    timeTableObject.utid = [self lastUtid] + 1;
     
     if (timeTableObject.active) {
         RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];

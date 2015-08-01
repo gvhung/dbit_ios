@@ -41,12 +41,13 @@ static NSString * const TimeTableObjectID = @"TimeTableObject";
 @property NSString *timeTableName;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
+@property BOOL active;
+@property BOOL workAtWeekend;
 
 @property ServerSemesterObject *serverSemesterObject;
 @property RLMArray<LectureObject> *lectures;
-@property BOOL active;
 
-@property BOOL workAtWeekend;
+- (void)setDefaultProperties;
 
 @end
 
