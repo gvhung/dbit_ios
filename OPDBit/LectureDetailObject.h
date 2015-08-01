@@ -30,6 +30,8 @@ static NSString * const LectureDetailObjectID = @"LectureDetailObject";
 @property NSInteger timeEnd;
 @property NSInteger day;
 
+- (void)setDefaultProperties;
+
 @end
 
 // This protocol enables typed collections. i.e.:

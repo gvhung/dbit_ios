@@ -29,4 +29,12 @@
     return @"ulid";
 }
 
+- (void)setDefaultProperties
+{
+    self.ulid = -1;
+    self.lectureName = @"";
+    self.lectureDetails = nil;
+    self.theme = 0;
+}
+
 @end

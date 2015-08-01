@@ -6,24 +6,34 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+
+// Controller
+#import "SearchLectureViewController.h"
 #import "AddLectureViewController.h"
+
+// View
 #import "AddLectureHeaderCell.h"
 #import "AddLectureDetailCell.h"
 #import "AddLectureFooterCell.h"
 
+// Utility
 #import "UIColor+OPTheme.h"
-
-#import "SearchLectureViewController.h"
 #import "DataManager.h"
 
+// Model
+#import "LectureObject.h"
+#import "LectureDetailObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
-@interface AddLectureViewController ()
+@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate>
 
 @property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
-@property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
+
+@property (nonatomic, strong) RLMArray *lectureDetails;
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
@@ -45,10 +55,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         _timePickerViewController = [RMDateSelectionViewController dateSelectionController];
-        _lectureDictionary = [[NSMutableDictionary alloc] init];
+        _lecture = [[LectureObject alloc] init];
+        [_lecture setDefaultProperties];
+        
         _dataManager = [DataManager sharedInstance];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _lectureDetails = [[NSMutableArray alloc] init];
+        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+        
         [self initialize];
     }
     return self;
@@ -59,13 +72,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     self.view.backgroundColor = [UIColor whiteColor];
     [self setTitle:@"강의 추가"];
     
-    _ulidToEdit = -1;
-    
     _dateFormatter.dateFormat = @"HHmm";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
     _dateFormatter.locale = locale;
-    
-    _lectureDictionary[@"theme"] = @(0);
     
     _timePickerViewController.delegate = self;
     _timePickerViewController.hideNowButton = YES;
@@ -215,6 +224,48 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }
 }
 
+#pragma mark - Header Cell Delegate
+
+- (void)addLectureHeaderCell:(AddLectureHeaderCell *)addLectureHeaderCell didChangedName:(NSString *)name
+{
+    
+}
+
+- (void)addLectureHeaderCell:(AddLectureHeaderCell *)addLectureHeaderCell didChangedTheme:(NSInteger)themeID
+{
+    
+}
+
+#pragma mark - Detail Cell Delegate
+
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedLocation:(NSString *)location
+{
+    
+}
+
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedDay:(NSInteger)day
+{
+    
+}
+
+- (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell
+{
+    
+}
+
+- (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell
+{
+    
+}
+
+#pragma mark - Footer Cell Delegate
+
+- (void)addLectureFooterCellDidTapped:(AddLectureFooterCell *)addLectureFooterCell
+{
+    
+}
+
+/*
 #pragma mark - Text Field Delegate
 
 - (void)textFieldDidChanged:(UITextField *)textField
@@ -244,6 +295,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _timePickerViewController.datePicker.tag = button.tag;
     [_timePickerViewController show];
 }
+*/
 
 #pragma mark - RMDateSelectionViewController Delegate
 

@@ -29,6 +29,8 @@ static NSString * const LectureObjectID = @"LectureObject";
 
 @property NSInteger theme;
 
+- (void)setDefaultProperties;
+
 @end
 
 // This protocol enables typed collections. i.e.:

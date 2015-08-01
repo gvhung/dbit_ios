@@ -6,8 +6,18 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class AddLectureDetailCell;
+
 #import <UIKit/UIKit.h>
-#import "AddLectureViewController.h"
+
+@protocol AddLectureDetailCellDelegate <NSObject>
+
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedLocation:(NSString *)location;
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedDay:(NSInteger)day;
+- (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell;
+- (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell;
+
+@end
 
 @interface AddLectureDetailCell : UITableViewCell
 
@@ -17,7 +27,7 @@
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
 
-@property (nonatomic, strong) AddLectureViewController *delegate;
+@property (nonatomic, weak) id<AddLectureDetailCellDelegate> delegate;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
