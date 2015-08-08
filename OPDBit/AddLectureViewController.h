@@ -21,10 +21,7 @@
 @property (nonatomic, strong) RMDateSelectionViewController *timePickerViewController;
 
 - (instancetype)init;
-- (void)addLectureDetailAction;
 
-- (void)textFieldDidChanged:(UITextField *)textField;
-- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl;
 - (void)timeButtonTapped:(UIButton *)button;
 
 @end
