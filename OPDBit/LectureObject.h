@@ -31,7 +31,7 @@ static NSString * const LectureObjectID = @"LectureObject";
 @property NSInteger theme;
 
 - (void)setDefaultProperties;
-- (void)lectureWithServerLecture:(ServerLectureObject *)serverLecture;
+- (void)lectureFromServerLecture:(ServerLectureObject *)serverLecture;
 
 @end
 

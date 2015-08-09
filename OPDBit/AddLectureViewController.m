@@ -162,13 +162,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         
         cell.delegate = self;
         
+        LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
         
-        _lectureDetails[indexPath.row][@"index"] = @(indexPath.row+1);
-        cell.lectureDetailIndex = [_lectureDetails[indexPath.row][@"index"] integerValue];
-        cell.lectureLocation = _lectureDetails[indexPath.row][@"lectureLocation"];
-        cell.timeStart = [_lectureDetails[indexPath.row][@"timeStart"] integerValue];
-        cell.timeEnd = [_lectureDetails[indexPath.row][@"timeEnd"] integerValue];
-        cell.day = [_lectureDetails[indexPath.row][@"day"] integerValue];
+        cell.lectureDetailIndex = indexPath.row;
+        cell.lectureLocation = lectureDetail.lectureLocation;
+        cell.timeStart = lectureDetail.timeStart;
+        cell.timeEnd = lectureDetail.timeEnd;
+        cell.day = lectureDetail.day;
         
         return cell;
     } else {
