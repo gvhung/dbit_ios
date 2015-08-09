@@ -44,7 +44,7 @@ static NSString * const TimeTableObjectID = @"TimeTableObject";
 @property BOOL active;
 @property BOOL workAtWeekend;
 
-@property ServerSemesterObject *serverSemesterObject;
+@property ServerSemesterObject *serverSemesterObject; // 요고 문제
 @property RLMArray<LectureObject> *lectures;
 
 - (void)setDefaultProperties;

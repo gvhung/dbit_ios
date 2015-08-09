@@ -50,7 +50,7 @@
 {
     [RLMRealm setSchemaVersion:1
                 forRealmAtPath:[RLMRealm defaultRealmPath]
-            withMigrationBlock:^(RLMMigration *migration, NSUInteger oldSchemaVersion) {
+            withMigrationBlock:^(RLMMigration *migration, uint64_t oldSchemaVersion) {
 //                @property NSInteger semesterID;
 //                @property NSString *lectureName;
 //                @property NSString *lectureKey;    // lectureCode 학수번호
@@ -92,7 +92,7 @@
         hasDuplicated = YES;
         [_realm deleteObjects:result];
     }
-    
+    [_realm addObjects:serverSemester.serverLectures];
     [_realm addObject:serverSemester];
     [_realm commitWriteTransaction];
     completion(hasDuplicated);
