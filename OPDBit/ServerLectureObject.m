@@ -36,8 +36,8 @@
     self.lectureLanguage = response[@"lecture_lang"];
     self.lectureLocation = response[@"lecture_location"];
     self.lectureDaytime = response[@"lecture_daytime"];
-    self.lecturePoint = response[@"lecture_point"];
-    self.lectureCampus = response[@"lecture_campus"];
+    self.lecturePoint = [response[@"lecture_point"] integerValue];
+    self.lectureCampus = [response[@"lecture_campus"] integerValue];
     self.serverLectureID = [response[@"id"] integerValue];
 }
 @end

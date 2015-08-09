@@ -37,7 +37,7 @@ static NSString * const ServerLectureObjectID  = @"ServerLectureObject";
 @property NSString *lectureEtc;
 @property NSString *lectureLanguage;
 @property NSInteger lecturePoint;
-@property NSString *lectureCampus;
+@property NSInteger lectureCampus;
 @property NSInteger serverLectureID;
 
 - (void)setPropertiesWithResponse:(NSDictionary *)response;

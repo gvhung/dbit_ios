@@ -159,9 +159,16 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
 - (void)actionToFetchServerLectures
 {
     [self downloadServerSemstersWithCompletion:^(id response) {
+        if (!_downloadedSemesters) {
+            _downloadedSemesters = [[RLMArray alloc] initWithObjectClassName:ServerSemesterObjectID];
+        } else {
+            [_downloadedSemesters removeAllObjects];
+        }
+        
         for (NSDictionary *responseDictionary in response) {
             ServerSemesterObject *downloadedSemester = [[ServerSemesterObject alloc] init];
             [downloadedSemester setPropertiesWithResponse:responseDictionary];
+            
             [_downloadedSemesters addObject:downloadedSemester];
         }
         

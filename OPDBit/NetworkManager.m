@@ -36,6 +36,7 @@
     [self statusBarIndicator:YES];
     NSString *url = [SERVER_URL stringByAppendingString:SEMESTER];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ServerSemesters:\n%@", responseObject);
         success(responseObject);
         [self statusBarIndicator:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -53,6 +54,7 @@
     NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
                                  stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ServerLectures:\n%@", responseObject);
         success(responseObject);
         [self statusBarIndicator:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

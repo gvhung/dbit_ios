@@ -203,6 +203,9 @@
         return;
     }
     
+    _timeTable.timeTableName = _timeTableNameField.text;
+    _timeTable.active = _primaryTimeTableSwitch.isOn;
+    
     [_dataManager saveOrUpdateTimeTable:_timeTable completion:^(BOOL isUpdated) {
         if (isUpdated) {
             [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
