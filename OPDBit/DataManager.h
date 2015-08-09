@@ -57,6 +57,8 @@
 - (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
 - (NSArray *)daySectionTitles;
 
+- (ServerSemesterObject *)serverSemesterWithSemesterID:(NSInteger)semesterID;
+
 #pragma mark - Convert
 
 + (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className;

@@ -375,6 +375,17 @@
     return YES;
 }
 
+- (ServerSemesterObject *)serverSemesterWithSemesterID:(NSInteger)semesterID
+{
+    RLMResults *serverSemesterResults = [ServerSemesterObject objectsInRealm:_realm where:@"semesterID == %ld", semesterID];
+    if (serverSemesterResults.count == 0) {
+        NSLog(@"serverSemester (semesterID : %ld) is NOT exist", semesterID);
+        return nil;
+    }
+    ServerSemesterObject *serverSemester = serverSemesterResults[0];
+    return serverSemester;
+}
+
 #pragma mark - Getter
 
 - (TimeTableObject *)activedTimeTable
@@ -467,10 +478,10 @@
 
 - (void)synchronizeUserDefaultWithTimeTable:(TimeTableObject *)timeTable
 {
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
-    
-    [sharedDefaults setObject:timeTable forKey:@"ActivedTimeTable"];
-    [sharedDefaults synchronize];
+//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+//    
+//    [sharedDefaults setObject:timeTable forKey:@"ActivedTimeTable"];
+//    [sharedDefaults synchronize];
 }
 
 @end

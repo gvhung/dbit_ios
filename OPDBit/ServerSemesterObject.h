@@ -18,7 +18,7 @@ static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
 @property NSString *semesterKey;
 @property NSString *semesterName;
 
-@property RLMArray<ServerLectureObject *><ServerLectureObject> *serverLectures;
+@property RLMArray<ServerLectureObject> *serverLectures;
 
 - (void)setPropertiesWithResponse:(NSDictionary *)response;
 

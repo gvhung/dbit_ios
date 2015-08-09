@@ -71,6 +71,7 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
     
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = @"종합강의 시간표가 없어요! XD\n우측 상단 다운로드 버튼을 눌러서 다운로드 받아주세요!";
+    _emptyLabel.numberOfLines = 0;
     
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];

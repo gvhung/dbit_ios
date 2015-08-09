@@ -184,12 +184,15 @@
 {
     _serverSemester = serverSemester;
     
-    if (!serverSemester)
+    if (!serverSemester) {
+        _timeTable.semesterID = -1;
         return;
+    }
     
-    _timeTable.serverSemesterObject = serverSemester;
+    _timeTable.semesterID = serverSemester.semesterID;
     NSString *buttonTitle = [NSString stringWithFormat:@"동국대학교 %@", serverSemester.semesterName];
-    if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
+    if (_timeTableNameField.text.length == 0)
+        _timeTableNameField.text = buttonTitle;
     [_serverSemesterButton setTitle:serverSemester.semesterName forState:UIControlStateNormal];
 }
 
@@ -203,7 +206,7 @@
         return;
     }
     
-    _timeTable.timeTableName = _timeTableNameField.text;
+    _timeTable.timeTableName = (NSString *)_timeTableNameField.text;
     _timeTable.active = _primaryTimeTableSwitch.isOn;
     
     [_dataManager saveOrUpdateTimeTable:_timeTable completion:^(BOOL isUpdated) {

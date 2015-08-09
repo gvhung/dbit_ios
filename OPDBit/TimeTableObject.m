@@ -8,6 +8,8 @@
 
 #import "TimeTableObject.h"
 
+#import "DataManager.h"
+
 @implementation TimeTableObject
 
 // Specify default values for properties
@@ -38,8 +40,13 @@
     self.active = NO;
     self.workAtWeekend = NO;
     
-    self.serverSemesterObject = nil;
+    self.semesterID = -1;
     self.lectures = nil;
+}
+
+- (ServerSemesterObject *)serverSemesterObject
+{
+    return [[DataManager sharedInstance] serverSemesterWithSemesterID:_semesterID];
 }
 
 @end
