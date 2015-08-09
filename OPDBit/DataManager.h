@@ -26,13 +26,9 @@
 
 #pragma mark - Database Manage Method
 
-- (void)saveServerSemester:(ServerSemesterObject *)serverSemester
-                completion:(void (^)(BOOL isUpdated))completion;
-/*
-- (void)saveServerLecturesWithResponse:(NSArray *)response
-                            semesterID:(NSInteger)semesterID
-                            completion:(void (^)())completion;
-*/
+- (void)saveOrUpdateServerSemester:(ServerSemesterObject *)serverSemester
+                        completion:(void (^)(BOOL isUpdated))completion;
+
 - (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
                    completion:(void (^)(BOOL isUpdated))completion;
 - (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
@@ -56,8 +52,6 @@
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid;
 - (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
 - (NSArray *)daySectionTitles;
-
-- (ServerSemesterObject *)serverSemesterWithSemesterID:(NSInteger)semesterID;
 
 #pragma mark - Convert
 

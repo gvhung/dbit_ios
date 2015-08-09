@@ -40,13 +40,8 @@
     self.active = NO;
     self.workAtWeekend = NO;
     
-    self.semesterID = -1;
+    self.serverSemesterObject = nil;
     self.lectures = nil;
-}
-
-- (ServerSemesterObject *)serverSemesterObject
-{
-    return [[DataManager sharedInstance] serverSemesterWithSemesterID:_semesterID];
 }
 
 @end

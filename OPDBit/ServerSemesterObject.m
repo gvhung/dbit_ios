@@ -19,6 +19,11 @@
 
 // Specify properties to ignore (Realm won't persist these)
 
++ (NSString *)primaryKey
+{
+    return @"semesterID";
+}
+
 + (NSArray *)ignoredProperties
 {
     return @[@""];

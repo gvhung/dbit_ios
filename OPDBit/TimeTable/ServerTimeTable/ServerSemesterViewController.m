@@ -184,7 +184,7 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                 [self downloadServerLectureWithServerSemester:downloadedSemester
                                                    completion:^(ServerSemesterObject *serverSemester)
                 {
-                    [_dataManager saveServerSemester:serverSemester completion:^(BOOL isUpdated) {
+                    [_dataManager saveOrUpdateServerSemester:serverSemester completion:^(BOOL isUpdated) {
                         self.savedServerSemesters = [_dataManager savedServerSemesters];
                         [_tableView reloadData];
                         [KVNProgress showSuccessWithStatus:@"성공!"];

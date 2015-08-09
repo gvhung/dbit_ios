@@ -124,6 +124,8 @@
     _timeTableNameLabel.text = timeTable.timeTableName;
     if (!timeTable.serverSemesterObject) {
         _serverTimeTableNameLabel.text = @"유드림스와 연결되어 있지 않음";
+    } else {
+        _serverTimeTableNameLabel.text = timeTable.serverSemesterObject.semesterName;
     }
     _subLabel.text = (timeTable.active) ? @"기본 시간표" : @"활성화 되지 않은 시간표";
 }

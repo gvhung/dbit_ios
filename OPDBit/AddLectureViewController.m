@@ -317,7 +317,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
+    SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] initWithLecture:_lecture];
     searchLectureViewController.serverSemester = _dataManager.activedTimeTable.serverSemesterObject;
     searchLectureViewController.delegate = self;
     [self setTitle:@""];

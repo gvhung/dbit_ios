@@ -185,11 +185,10 @@
     _serverSemester = serverSemester;
     
     if (!serverSemester) {
-        _timeTable.semesterID = -1;
         return;
     }
     
-    _timeTable.semesterID = serverSemester.semesterID;
+    _timeTable.serverSemesterObject = serverSemester;
     NSString *buttonTitle = [NSString stringWithFormat:@"동국대학교 %@", serverSemester.semesterName];
     if (_timeTableNameField.text.length == 0)
         _timeTableNameField.text = buttonTitle;

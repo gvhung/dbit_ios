@@ -81,8 +81,8 @@
 
 #pragma mark - Save Objects
 
-- (void)saveServerSemester:(ServerSemesterObject *)serverSemester
-                completion:(void (^)(BOOL isUpdated))completion
+- (void)saveOrUpdateServerSemester:(ServerSemesterObject *)serverSemester
+                        completion:(void (^)(BOOL isUpdated))completion
 {
     BOOL hasDuplicated = NO;
     
@@ -90,10 +90,14 @@
     RLMResults *result = [ServerSemesterObject objectsInRealm:_realm where:@"semesterID == %ld", serverSemester.semesterID];
     if (result.count) {
         hasDuplicated = YES;
+        if ([[result firstObject] serverLectures].count) {
+            [_realm deleteObjects:[[result firstObject] serverLectures]];
+        }
         [_realm deleteObjects:result];
     }
+    
     [_realm addObjects:serverSemester.serverLectures];
-    [_realm addObject:serverSemester];
+    [_realm addOrUpdateObject:serverSemester];
     [_realm commitWriteTransaction];
     completion(hasDuplicated);
 }
@@ -373,17 +377,6 @@
     if (self.activedTimeTable.lectures.count != 0)
         return NO;
     return YES;
-}
-
-- (ServerSemesterObject *)serverSemesterWithSemesterID:(NSInteger)semesterID
-{
-    RLMResults *serverSemesterResults = [ServerSemesterObject objectsInRealm:_realm where:@"semesterID == %ld", semesterID];
-    if (serverSemesterResults.count == 0) {
-        NSLog(@"serverSemester (semesterID : %ld) is NOT exist", semesterID);
-        return nil;
-    }
-    ServerSemesterObject *serverSemester = serverSemesterResults[0];
-    return serverSemester;
 }
 
 #pragma mark - Getter

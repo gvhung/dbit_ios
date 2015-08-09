@@ -28,14 +28,13 @@
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
-@interface SearchLectureViewController () <UITextFieldDelegate>
+@interface SearchLectureViewController ()
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UITextField *searchTextField;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
 
-@property (nonatomic, strong) RLMArray *serverLectures;
 @property (nonatomic, strong) RLMArray *lectureResults;
 
 @property (nonatomic, strong) ServerLectureObject *selectedServerLecture;
@@ -114,7 +113,9 @@ static CGFloat const rowHeight = 80.0f;
     [_searchTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _searchTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    _searchTextField.delegate = self;
+    [_searchTextField addTarget:self
+                         action:@selector(textFieldDidChange:)
+               forControlEvents:UIControlEventEditingChanged];
     
     self.navigationItem.titleView = _searchTextField;
     self.navigationItem.rightBarButtonItem = selectServerLectureButton;
@@ -164,7 +165,6 @@ static CGFloat const rowHeight = 80.0f;
 - (void)setServerSemester:(ServerSemesterObject *)serverSemester
 {
     _serverSemester = serverSemester;
-    _serverLectures = serverSemester.serverLectures;
     _lectureResults = serverSemester.serverLectures;
     
     [self hideTableView:[self lectureResultsAreEmpty]];
@@ -274,13 +274,14 @@ static CGFloat const rowHeight = 80.0f;
 
 - (NSPredicate *)predicateWithString:(NSString *)searchString
 {
+//    searchString = [NSString stringWithFormat:@"*%@*", searchString];
     switch (_segmentedControl.selectedSegmentIndex) {
         case 0:
-            return [NSPredicate predicateWithFormat:@"lectureName CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureName", searchString];
         case 1:
-            return [NSPredicate predicateWithFormat:@"lectureKey CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureKey", searchString];
         case 2:
-            return [NSPredicate predicateWithFormat:@"lectureProf CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureProf", searchString];
         default:
             return [NSPredicate predicateWithFormat:@""];
     }
@@ -323,22 +324,23 @@ static CGFloat const rowHeight = 80.0f;
 
 #pragma mark - Text Field Delegate
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (void)textFieldDidChange:(UITextField *)textField
 {
-    if(textField.text.length == 0) {
+    NSString *keyword = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSLog(@"%@", keyword);
+    
+    if(keyword.length == 0) {
         _lectureResults = _serverSemester.serverLectures;
         [self hideTableView:[self lectureResultsAreEmpty]];
     }
     else {
-        NSPredicate *predicate = [self predicateWithString:textField.text];
-        RLMResults *searchResults = [_serverLectures objectsWithPredicate:predicate];
+        NSPredicate *predicate = [self predicateWithString:keyword];
+        RLMResults *searchResults = [_serverSemester.serverLectures objectsWithPredicate:predicate];
         _lectureResults = [DataManager realmArrayFromResult:searchResults className:ServerLectureObjectID];
         [self hideTableView:[self lectureResultsAreEmpty]];
     }
     
     [_tableView reloadData];
-    
-    return YES;
 }
 
 #pragma mark - Segmented Control Delegate
@@ -347,7 +349,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     _tableView.contentOffset = CGPointMake(0, 0);
     _searchTextField.text = @"";
-    _lectureResults = _serverLectures;
+    _lectureResults = _serverSemester.serverLectures;
     
     [self hideTableView:[self lectureResultsAreEmpty]];
     [_tableView reloadData];
