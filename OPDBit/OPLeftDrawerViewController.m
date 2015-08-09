@@ -12,10 +12,16 @@
 #import "LectureViewController.h"
 #import "ShowTimeTableViewController.h"
 #import "AppDelegate.h"
+
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "LectureObject.h"
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
@@ -113,7 +119,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
-        if ([_dataManager lecturesIsEmptyInActivedTimeTable]) {
+        if (_dataManager.activedTimeTable.lectures) {
             [KVNProgress showErrorWithStatus:@"아직 수업이 없습니다!"];
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;

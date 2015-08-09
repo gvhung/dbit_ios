@@ -6,13 +6,24 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+// Controller
 #import "SearchLectureViewController.h"
-#import "SearchLectureCell.h"
-#import "DataManager.h"
 
+// View
+#import "SearchLectureCell.h"
+
+// Utility
+#import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "ServerSemesterObject.h"
+#import "ServerLectureObject.h"
+#import "LectureObject.h"
+#import "LectureDetailObject.h"
+
+// Library
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
@@ -24,9 +35,9 @@
 
 @property (nonatomic, strong) UILabel *emptyLabel;
 
-@property (nonatomic, strong) NSArray *lectureResults;
+@property (nonatomic, strong) RLMArray *lectureResults;
 
-@property (nonatomic, strong) NSDictionary *selectedLectureDictionary;
+@property (nonatomic, strong) ServerLectureObject *selectedServerLecture;
 
 @end
 
@@ -34,16 +45,18 @@
 
 static CGFloat const rowHeight = 80.0f;
 
-- (instancetype)init
+- (instancetype)initWithLecture:(LectureObject *)lecture
 {
     self = [super init];
     if (self) {
-        _lectureResults = [[NSArray alloc] init];
-        _delegate = nil;
+        _lectureResults = [[RLMArray alloc] initWithObjectClassName:ServerLectureObjectID];
         _segmentedControl = [[HMSegmentedControl alloc] init];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _searchTextField = [[UITextField alloc] init];
         _emptyLabel = [[UILabel alloc] init];
+        
+        _currentLecture = lecture;
+        
         [self initialize];
     }
     return self;
@@ -53,7 +66,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    NSArray *segmentedControlSectionTitles = @[@"강의명", @"과목코드", @"교수명"];
+    NSArray *segmentedControlSectionTitles = @[@"강의명", @"학수번호", @"교수명"];
     _segmentedControl.sectionTitles = segmentedControlSectionTitles;
     _segmentedControl.borderType = HMSegmentedControlBorderTypeBottom;
     _segmentedControl.borderColor = [UIColor op_dividerDark];
@@ -67,7 +80,9 @@ static CGFloat const rowHeight = 80.0f;
     _segmentedControl.selectionIndicatorColor = [UIColor op_primary];
     _segmentedControl.selectionIndicatorHeight = 2.0f;
     
-    [_segmentedControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    [_segmentedControl addTarget:self
+                          action:@selector(segmentedControlDidChange:)
+                forControlEvents:UIControlEventValueChanged];
     
     [_tableView registerClass:[SearchLectureCell class] forCellReuseIdentifier:@"SearchLectureCell"];
     _tableView.delegate = self;
@@ -98,7 +113,9 @@ static CGFloat const rowHeight = 80.0f;
     [_searchTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _searchTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [_searchTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_searchTextField addTarget:self
+                         action:@selector(textFieldDidChange:)
+               forControlEvents:UIControlEventEditingChanged];
     
     self.navigationItem.titleView = _searchTextField;
     self.navigationItem.rightBarButtonItem = selectServerLectureButton;
@@ -130,28 +147,26 @@ static CGFloat const rowHeight = 80.0f;
 
 - (void)selectServerLectureAction
 {
-    if (_selectedLectureDictionary == nil) {
+    if (!_selectedServerLecture) {
         [_searchTextField resignFirstResponder];
         [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
         return;
     }
-    self.delegate.serverLectureDictionary = [self getConvertedDictionaryWithDictionary:_selectedLectureDictionary];
-    [self.navigationController popToViewController:self.delegate animated:YES];
+    
+    if ([_delegate respondsToSelector:@selector(searchLectureViewController:didDoneWithLectureObject:)]) {
+        [_delegate searchLectureViewController:self didDoneWithLectureObject:_currentLecture];
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setter
 
-- (void)setServerLectures:(NSArray *)serverLectures
+- (void)setServerSemester:(ServerSemesterObject *)serverSemester
 {
-    _serverLectures = serverLectures;
-    _lectureResults = serverLectures;
-    [self hideTableView:[self lectureResultsAreEmpty]];
-    [_tableView reloadData];
-}
-
-- (void)setLectureResults:(NSArray *)lectureResults
-{
-    _lectureResults = lectureResults;
+    _serverSemester = serverSemester;
+    _lectureResults = serverSemester.serverLectures;
+    
     [self hideTableView:[self lectureResultsAreEmpty]];
     [_tableView reloadData];
 }
@@ -173,81 +188,100 @@ static CGFloat const rowHeight = 80.0f;
 
 #pragma mark - Getter
 
-- (NSDictionary *)getConvertedDictionaryWithDictionary:(NSDictionary *)dictionary
+- (void)lectureFromServerLecture:(ServerLectureObject *)serverLecture
 {
-    NSInteger detailCount = 0;
+    _currentLecture.lectureName = serverLecture.lectureName;
     
-    NSMutableDictionary *convertedDictionary = [[NSMutableDictionary alloc] init];
-    convertedDictionary[@"lectureName"] = dictionary[@"lectureName"];
-    NSMutableArray *lectureDetailArray = [[NSMutableArray alloc] init];
+    RLMArray *lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
     
     // ,로 Location 을 나눌경우 생기는 에러 (ex. 405-250(원흥관 1,3 E250 강의실))
-    NSArray *lectureLocationArray = [dictionary[@"lectureLocation"] componentsSeparatedByString:@"),"];
+    NSMutableArray *lectureLocationArray = [serverLecture.lectureLocation componentsSeparatedByString:@"),"].mutableCopy;
     for (NSInteger i = 0; i < lectureLocationArray.count; i++) {
         NSString *lectureLocationString = lectureLocationArray[i];
+        
         if (i < lectureLocationArray.count-1) {
             NSString *convertedString = [lectureLocationString stringByAppendingString:@")"];
-            [(NSMutableArray *)lectureLocationArray replaceObjectAtIndex:i withObject:convertedString];
+            [lectureLocationArray replaceObjectAtIndex:i withObject:convertedString];
         }
     }
-
     
-    NSArray *lectureDaytimeArray = [dictionary[@"lectureDaytime"] componentsSeparatedByString:@","];
-    detailCount = lectureLocationArray.count;
-    if (lectureLocationArray.count != lectureDaytimeArray.count)
-        if (lectureDaytimeArray.count >= detailCount)
-            detailCount = lectureDaytimeArray.count;
+    NSMutableArray *lectureDaytimeArray = [serverLecture.lectureDaytime componentsSeparatedByString:@","].mutableCopy;
+    NSInteger detailCount = MAX(lectureLocationArray.count, lectureDaytimeArray.count);
     
     for (NSInteger i = 0; i < detailCount; i++) {
-        NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
-        lectureDetailDictionary[@"lectureLocation"] = (lectureLocationArray[i] == nil) ? @"" : lectureLocationArray[i];
-        lectureDetailDictionary[@"timeStart"] =
-        (lectureDaytimeArray.count < i+1) ? @"" : [self timeStartWithString:lectureDaytimeArray[i]];
-        lectureDetailDictionary[@"timeEnd"] =
-        (lectureDaytimeArray.count < i+1) ? @"" : [self timeEndWithString:lectureDaytimeArray[i]];
-        lectureDetailDictionary[@"day"] =
-        (lectureDaytimeArray.count < i+1) ? @"0" : [self dayWithString:lectureDaytimeArray[i]];
-        [lectureDetailArray addObject:lectureDetailDictionary];
+        LectureDetailObject *lectureDetail = [[LectureDetailObject alloc] init];
+        [lectureDetail setDefaultProperties];
+        lectureDetail.ulid = _currentLecture.ulid;
+        
+        lectureDetail.lectureLocation = [self locationWithString:lectureLocationArray[i]];
+        lectureDetail.timeStart = [self timeStartWithString:lectureDaytimeArray[i]];
+        lectureDetail.timeEnd = [self timeEndWithString:lectureDaytimeArray[i]];
+        lectureDetail.day = [self dayWithString:lectureDaytimeArray[i]];
+        [lectureDetails addObject:lectureDetail];
     }
-    convertedDictionary[@"lectureDetails"] = lectureDetailArray;
+    [_currentLecture.lectureDetails removeAllObjects];
+    [_currentLecture.lectureDetails addObjects:lectureDetails];
+}
+- (NSString *)locationWithString:(NSString *)string
+{
+    if (!string) {
+        return @"";
+    }
     
-    return convertedDictionary;
+    return string;
 }
 
-- (NSNumber *)dayWithString:(NSString *)string
+- (NSInteger)dayWithString:(NSString *)string
 {
+    if (!string) {
+        return 0;
+    }
+    
     NSString *pureDaytimeString = [string substringToIndex:1];
+    
     NSArray *dayStringArray = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
     NSInteger dayInteger = 0;
-    for (NSString *dayString in dayStringArray)
-        if ([dayString isEqualToString:pureDaytimeString])
+    for (NSString *dayString in dayStringArray) {
+        if ([dayString isEqualToString:pureDaytimeString]) {
             dayInteger = [dayStringArray indexOfObject:dayString];
-    return @(dayInteger);
+        }
+    }
+    
+    return dayInteger;
 }
 
-- (NSNumber *)timeStartWithString:(NSString *)string
+- (NSInteger)timeStartWithString:(NSString *)string
 {
+    if (!string) {
+        return 0;
+    }
+    
     NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
     NSString *timeStartString = [pureDaytimeString componentsSeparatedByString:@"-"][0];
-    return @([DataManager integerFromTimeString:timeStartString]);
+    return [DataManager integerFromTimeString:timeStartString];
 }
 
-- (NSNumber *)timeEndWithString:(NSString *)string
+- (NSInteger)timeEndWithString:(NSString *)string
 {
+    if (!string) {
+        return 0;
+    }
+    
     NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
     NSString *timeEndString = [pureDaytimeString componentsSeparatedByString:@"-"][1];
-    return @([DataManager integerFromTimeString:timeEndString]);
+    return [DataManager integerFromTimeString:timeEndString];
 }
 
-- (NSPredicate *)getPredicateWithString:(NSString *)searchString
+- (NSPredicate *)predicateWithString:(NSString *)searchString
 {
+//    searchString = [NSString stringWithFormat:@"*%@*", searchString];
     switch (_segmentedControl.selectedSegmentIndex) {
         case 0:
-            return [NSPredicate predicateWithFormat:@"lectureName CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureName", searchString];
         case 1:
-            return [NSPredicate predicateWithFormat:@"lectureCode CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureKey", searchString];
         case 2:
-            return [NSPredicate predicateWithFormat:@"lectureProf CONTAINS[cd] %@", searchString];
+            return [NSPredicate predicateWithFormat:@"%K CONTAINS %@", @"lectureProf", searchString];
         default:
             return [NSPredicate predicateWithFormat:@""];
     }
@@ -275,7 +309,8 @@ static CGFloat const rowHeight = 80.0f;
     SearchLectureCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SearchLectureCell" forIndexPath:indexPath];
     if (!cell)
         cell = [[SearchLectureCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchLectureCell"];
-    cell.serverLectureDictionary = _lectureResults[indexPath.row];
+    
+    cell.serverLecture = _lectureResults[indexPath.row];
     
     return cell;
 }
@@ -291,13 +326,18 @@ static CGFloat const rowHeight = 80.0f;
 
 - (void)textFieldDidChange:(UITextField *)textField
 {
-    if(textField.text.length == 0)
-        self.lectureResults = _serverLectures;
-    else
-    {
-        NSMutableArray *searchArray = [NSMutableArray arrayWithArray:_serverLectures];
-        NSPredicate *predicate = [self getPredicateWithString:textField.text];
-        self.lectureResults = [NSMutableArray arrayWithArray:[searchArray filteredArrayUsingPredicate:predicate]];
+    NSString *keyword = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSLog(@"%@", keyword);
+    
+    if(keyword.length == 0) {
+        _lectureResults = _serverSemester.serverLectures;
+        [self hideTableView:[self lectureResultsAreEmpty]];
+    }
+    else {
+        NSPredicate *predicate = [self predicateWithString:keyword];
+        RLMResults *searchResults = [_serverSemester.serverLectures objectsWithPredicate:predicate];
+        _lectureResults = [DataManager realmArrayFromResult:searchResults className:ServerLectureObjectID];
+        [self hideTableView:[self lectureResultsAreEmpty]];
     }
     
     [_tableView reloadData];
@@ -309,14 +349,17 @@ static CGFloat const rowHeight = 80.0f;
 {
     _tableView.contentOffset = CGPointMake(0, 0);
     _searchTextField.text = @"";
-    self.lectureResults = _serverLectures;
+    _lectureResults = _serverSemester.serverLectures;
+    
+    [self hideTableView:[self lectureResultsAreEmpty]];
+    [_tableView reloadData];
 }
 
 #pragma mark - Table View Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _selectedLectureDictionary = _lectureResults[indexPath.row];
+    _selectedServerLecture = _lectureResults[indexPath.row];
 }
 
 #pragma mark - Life Cycle

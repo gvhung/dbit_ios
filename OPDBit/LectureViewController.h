@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
-
+#import <Realm/Realm.h>
 
 @interface LectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) HMSegmentedControl *daySegmentedControl;
 
 @property (nonatomic, strong) UITableView *lectureTableView;
-
-@property (nonatomic, strong) NSArray *lectureDetails;
 
 - (instancetype)init;
 

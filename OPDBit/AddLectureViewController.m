@@ -6,30 +6,44 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+
+// Controller
+#import "SearchLectureViewController.h"
 #import "AddLectureViewController.h"
+
+// View
 #import "AddLectureHeaderCell.h"
 #import "AddLectureDetailCell.h"
 #import "AddLectureFooterCell.h"
 
+// Utility
 #import "UIColor+OPTheme.h"
-
-#import "SearchLectureViewController.h"
 #import "DataManager.h"
 
+// Model
+#import "TimeTableObject.h"
+#import "LectureObject.h"
+#import "LectureDetailObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
-@interface AddLectureViewController ()
+@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate>
 
-@property (nonatomic) NSInteger lectureDetailCount;
 @property (nonatomic, strong) DataManager *dataManager;
-@property (nonatomic, strong) NSMutableDictionary *lectureDictionary;
+
+@property (nonatomic, strong) RLMArray *lectureDetails;
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @end
 
 @implementation AddLectureViewController
+
+static NSInteger const headerCellSection = 0;
+static NSInteger const detailCellSection = 1;
+static NSInteger const footerCellSection = 2;
 
 static CGFloat const headerCellHeight = 150.0f;
 static CGFloat const detailCellHeight = 255.0f;
@@ -45,10 +59,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         _timePickerViewController = [RMDateSelectionViewController dateSelectionController];
-        _lectureDictionary = [[NSMutableDictionary alloc] init];
+        _lecture = [[LectureObject alloc] init];
+        [_lecture setDefaultProperties];
+        
         _dataManager = [DataManager sharedInstance];
         _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-        _lectureDetails = [[NSMutableArray alloc] init];
+        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+        
         [self initialize];
     }
     return self;
@@ -59,15 +76,10 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     self.view.backgroundColor = [UIColor whiteColor];
     [self setTitle:@"강의 추가"];
     
-    _ulidToEdit = -1;
-    
     _dateFormatter.dateFormat = @"HHmm";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
     _dateFormatter.locale = locale;
     
-    _lectureDictionary[@"theme"] = @(0);
-    
-    _timePickerViewController.delegate = self;
     _timePickerViewController.hideNowButton = YES;
     _timePickerViewController.disableBouncingWhenShowing = YES;
     _timePickerViewController.datePicker.locale = locale;
@@ -103,37 +115,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)makeAutoLayoutConstraints
 {
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 0, 0));
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
     }];
-}
-
-#pragma mark - Setter
-
-- (void)setServerLectureDictionary:(NSDictionary *)serverLectureDictionary
-{
-    _serverLectureDictionary = serverLectureDictionary;
-    _lectureDictionary[@"lectureName"] = serverLectureDictionary[@"lectureName"];
-    self.lectureDetails = serverLectureDictionary[@"lectureDetails"];
-    [_tableView reloadData];
-}
-
-- (void)setLectureDetails:(NSArray *)lectureDetails
-{
-    _lectureDetails = lectureDetails;
-    _lectureDetailCount = lectureDetails.count;
-}
-
-- (void)setUlidToEdit:(NSInteger)ulidToEdit
-{
-    _ulidToEdit = ulidToEdit;
-    [self setTitle:@"강의 수정"];
-    
-    NSDictionary *lectureDictionary = [_dataManager lectureWithId:ulidToEdit];
-    _lectureDictionary[@"lectureName"] = lectureDictionary[@"lectureName"];
-    _lectureDictionary[@"theme"] = lectureDictionary[@"theme"];
-    self.lectureDetails = lectureDictionary[@"lectureDetails"];
-    
-    [_tableView reloadData];
 }
 
 #pragma mark - Table View Data Source
@@ -145,39 +128,40 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 || section == 2)
+    if (section == headerCellSection || section == footerCellSection)
         return 1;
     return _lectureDetails.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    if (indexPath.section == headerCellSection)
         return headerCellHeight;
-    if (indexPath.section == 1)
+    if (indexPath.section == detailCellSection)
         return detailCellHeight;
     return footerCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == headerCellSection) {
         AddLectureHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:headerCellIdentifier forIndexPath:indexPath];
         if (!cell)
             cell = [[AddLectureHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:headerCellIdentifier];
         
         cell.delegate = self;
         
-        cell.lectureName = _lectureDictionary[@"lectureName"];
-        cell.lectureTheme = [_lectureDictionary[@"theme"] integerValue];
+        cell.lectureName = _lecture.lectureName;
+        cell.lectureTheme = _lecture.theme;
         
         return cell;
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == detailCellSection) {
         AddLectureDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:detailCellIdentifier forIndexPath:indexPath];
         if (!cell)
             cell = [[AddLectureDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:detailCellIdentifier];
         
         cell.delegate = self;
+        
         
         _lectureDetails[indexPath.row][@"index"] = @(indexPath.row+1);
         cell.lectureDetailIndex = [_lectureDetails[indexPath.row][@"index"] integerValue];
@@ -200,109 +184,141 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return YES if you want the specified item to be editable.
-    if (indexPath.section == 1)
+    if (indexPath.section == detailCellSection)
         return YES;
     return NO;
 }
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSMutableArray *lectureDetailMutableArray = [[NSMutableArray alloc] initWithArray:_lectureDetails];
-        [lectureDetailMutableArray removeObjectAtIndex:indexPath.row];
-        _lectureDetails = lectureDetailMutableArray;
+        [_lectureDetails removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
-#pragma mark - Text Field Delegate
+#pragma mark - Header Cell Delegate
 
-- (void)textFieldDidChanged:(UITextField *)textField
+- (void)addLectureHeaderCell:(AddLectureHeaderCell *)addLectureHeaderCell didChangedName:(NSString *)name
 {
-    if (textField.tag == -1) {
-        _lectureDictionary[@"lectureName"] = textField.text;
-    } else {
-        _lectureDetails[textField.tag-1][@"lectureLocation"] = textField.text;
-    }
+    _lecture.lectureName = name;
 }
 
-#pragma mark - Segmented Control Delegate
-
-- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
+- (void)addLectureHeaderCell:(AddLectureHeaderCell *)addLectureHeaderCell didChangedTheme:(NSInteger)themeID
 {
-    if (segmentedControl.tag == -1)
-        _lectureDictionary[@"theme"] = @(segmentedControl.selectedSegmentIndex);
-    else
-        _lectureDetails[segmentedControl.tag-1][@"day"] = @(segmentedControl.selectedSegmentIndex);
-    [_tableView reloadData];
+    _lecture.theme = themeID;
 }
 
-#pragma mark - Time Change Method
+#pragma mark - Detail Cell Delegate
 
-- (void)timeButtonTapped:(UIButton *)button
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedLocation:(NSString *)location
 {
-    _timePickerViewController.datePicker.tag = button.tag;
-    [_timePickerViewController show];
+    NSInteger index = addLectureDetailCell.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    lectureDetail.lectureLocation = location;
+    [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
 }
 
-#pragma mark - RMDateSelectionViewController Delegate
-
-- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate
+- (void)addLectureDetailCell:(AddLectureDetailCell *)addLectureDetailCell didChangedDay:(NSInteger)day
 {
-    NSInteger lectureDetailIndex = labs(vc.datePicker.tag)-1;
-    NSString *timeString = [_dateFormatter stringFromDate:aDate];
-    NSString *timeKey = (vc.datePicker.tag > 0) ? @"timeStart" : @"timeEnd";
-    if (vc.datePicker.tag < 0 && _lectureDetails[lectureDetailIndex][@"timeStart"]) {
-        if ([_lectureDetails[lectureDetailIndex][@"timeStart"] integerValue] > [timeString integerValue]) {
-            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
-            return;
-        }
-    }
+    NSInteger index = addLectureDetailCell.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    lectureDetail.day = day;
+    [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
+}
 
-    if (vc.datePicker.tag > 0 && _lectureDetails[lectureDetailIndex][@"timeEnd"]) {
-        if ([_lectureDetails[lectureDetailIndex][@"timeEnd"] integerValue] < [timeString integerValue]) {
+- (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell
+{
+    NSIndexPath *detailCellIndexPath = [_tableView indexPathForCell:addLectureDetailCell];
+    _timePickerViewController.datePicker.tag = detailCellIndexPath.row;
+    [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
+        NSInteger selectedStartTime = [[_dateFormatter stringFromDate:aDate] integerValue];
+        NSInteger index = addLectureDetailCell.lectureDetailIndex;
+        
+        LectureDetailObject *lectureDetail = _lectureDetails[index];
+        NSInteger endTime = lectureDetail.timeEnd;
+        
+        if (endTime && selectedStartTime < endTime) {
             [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
-    }
+        
+        lectureDetail.timeStart = selectedStartTime;
+        [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
+        
+        NSIndexPath *indexPathToReload = [_tableView indexPathForCell:addLectureDetailCell];
+        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
+    } andCancelHandler:nil];
+}
 
-    _lectureDetails[lectureDetailIndex][timeKey] = timeString;
-    NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:lectureDetailIndex inSection:1];
-    [_tableView reloadRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+- (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell
+{
+    NSIndexPath *detailCellIndexPath = [_tableView indexPathForCell:addLectureDetailCell];
+    _timePickerViewController.datePicker.tag = -(detailCellIndexPath.row);
+    [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
+        NSInteger selectedEndTime = [[_dateFormatter stringFromDate:aDate] integerValue];
+        NSInteger index = addLectureDetailCell.lectureDetailIndex;
+        
+        LectureDetailObject *lectureDetail = _lectureDetails[index];
+        NSInteger startTime = lectureDetail.timeStart;
+        
+        if (startTime && selectedEndTime < startTime) {
+            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
+            return;
+        }
+        
+        lectureDetail.timeEnd = selectedEndTime;
+        [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
+        
+        NSIndexPath *indexPathToReload = [_tableView indexPathForCell:addLectureDetailCell];
+        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
+    } andCancelHandler:nil];
+}
+
+#pragma mark - Footer Cell Delegate
+
+- (void)addLectureFooterCellDidTapped:(AddLectureFooterCell *)addLectureFooterCell
+{
+    LectureDetailObject *newLectureDetail = [[LectureDetailObject alloc] init];
+    [newLectureDetail setDefaultProperties];
+    newLectureDetail.ulid = _lecture.ulid;
+    [_lectureDetails addObject:newLectureDetail];
+    
+    NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:_lectureDetails.count-1 inSection:1];
+    [_tableView endEditing:YES];
+    [_tableView insertRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [_tableView scrollToRowAtIndexPath:newCellIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+#pragma mark - Search Lecture View Controller Delegate
+
+- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject
+{
+    _lecture = lectureObject;
+    _lectureDetails = lectureObject.lectureDetails;
+    
+    [_tableView reloadData];
 }
 
 #pragma mark - Scroll View Delegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [scrollView endEditing:YES];
-}
-
-#pragma mark - Add Action
-
-- (void)addLectureDetailAction
-{
-    NSMutableDictionary *dummyLectureDetail = [[NSMutableDictionary alloc] init];
-    NSMutableArray *lectureDetailMutableArray = [[NSMutableArray alloc] initWithArray:_lectureDetails];
-    [lectureDetailMutableArray addObject:dummyLectureDetail];
-    self.lectureDetails = lectureDetailMutableArray;
-    NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:_lectureDetailCount-1 inSection:1];
-    [_tableView endEditing:YES];
-    [_tableView insertRowsAtIndexPaths:@[newCellIndexPath] withRowAnimation:UITableViewRowAnimationTop];
-    [_tableView scrollToRowAtIndexPath:newCellIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - Bar Button Action
 
 - (void)searchLectureAction
 {
-    if([_dataManager.activedTimeTable[@"serverId"] integerValue] == -1) {
+    if(!_dataManager.activedTimeTable.serverSemesterObject) {
         [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
         return;
     }
     
-    SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] init];
-    searchLectureViewController.serverLectures = [_dataManager serverLecturesWithServerTimeTableId:[_dataManager.activedTimeTable[@"serverId"] integerValue]];
+    SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] initWithLecture:_lecture];
+    searchLectureViewController.serverSemester = _dataManager.activedTimeTable.serverSemesterObject;
     searchLectureViewController.delegate = self;
     [self setTitle:@""];
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
@@ -311,11 +327,11 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)addLectureAction
 {
     [_tableView endEditing:YES];
-    if (!_lectureDictionary[@"lectureName"]) {
+    if (!_lecture.lectureName.length) {
         [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
         return;
     }
-    if (!_lectureDictionary[@"theme"]) {
+    if (_lecture.theme == -1) {
         [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
@@ -325,27 +341,24 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    for (NSInteger i = 0; i < _lectureDetails.count; i++) {
-        if (!_lectureDetails[i][@"lectureLocation"]) {
-            _lectureDetails[i][@"lectureLocation"] = @"";
-        }
+    _lecture.lectureDetails = nil;
+    [_lecture.lectureDetails addObjects:_lectureDetails];
+    
+    if ([_dataManager lectureAreDuplicatedOtherLecture:_lecture inTimeTable:_dataManager.activedTimeTable]) {
+        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
+        return;
     }
     
-    if (_ulidToEdit == -1) {
-        if ([_dataManager lectureDetailsAreDuplicatedOtherLectureDetails:_lectureDetails]) {
-            [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
-            return;
-        }
-        [_dataManager saveLectureWithLectureName:_lectureDictionary[@"lectureName"]
-                                           theme:[_lectureDictionary[@"theme"] integerValue]
-                                  lectureDetails:_lectureDetails];
-        [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
-    } else {
-        [_dataManager updateLectureWithUlid:_ulidToEdit
-                                       name:_lectureDictionary[@"lectureName"]
-                                      theme:[_lectureDictionary[@"theme"] integerValue]
-                             lectureDetails:_lectureDetails];
-        [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
+    [_dataManager saveOrUpdateLectureWithLecture:_lecture
+                                      completion:^(BOOL isUpdated) {
+                                          if (isUpdated) {
+                                              [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
+                                          } else {
+                                              [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
+                                          }
+                                      }];
+    if ([_delegate respondsToSelector:@selector(addLectureViewControllerDidDone:)]) {
+        [_delegate addLectureViewControllerDidDone:self];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -356,14 +369,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    if (_ulidToEdit == -1)
-        [self setTitle:@"강의 추가"];
-    else
-        [self setTitle:@"강의 수정"];
 }
 
 @end

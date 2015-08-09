@@ -6,9 +6,10 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class ServerLectureObject;
+
 #import <Realm/Realm.h>
 #import "LectureDetailObject.h"
-
 
 /**
  * 수업을 저장하기 위한 RealmObject
@@ -28,6 +29,9 @@ static NSString * const LectureObjectID = @"LectureObject";
 @property NSString *lectureName;
 
 @property NSInteger theme;
+
+- (void)setDefaultProperties;
+- (void)lectureWithServerLecture:(ServerLectureObject *)serverLecture;
 
 @end
 

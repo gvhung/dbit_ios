@@ -6,11 +6,13 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class ServerLectureObject;
+
 #import <UIKit/UIKit.h>
 
 @interface SearchLectureCell : UITableViewCell
 
-@property (nonatomic, strong) NSDictionary *serverLectureDictionary;
+@property (nonatomic, strong) ServerLectureObject *serverLecture;
 
 @property (nonatomic, strong) UILabel *lectureTitleLabel;
 @property (nonatomic, strong) UILabel *lectureCodeLabel;

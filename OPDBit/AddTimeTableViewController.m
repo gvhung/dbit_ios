@@ -8,7 +8,7 @@
 
 // Controllers
 #import "AddTimeTableViewController.h"
-#import "ServerTimeTableViewController.h"
+#import "ServerSemesterViewController.h"
 
 // Utility
 #import "DataManager.h"
@@ -22,11 +22,10 @@
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 
-@interface AddTimeTableViewController ()
+@interface AddTimeTableViewController () <ServerSemesterViewControllerDelegate>
 
 @property (nonatomic, strong) DataManager *dataManager;
 @property (nonatomic, strong) ServerSemesterObject *serverSemester;
-@property (nonatomic, strong) TimeTableObject *timeTable;
 
 // UI Part
 @property (nonatomic, strong) UILabel *timeTableNameLabel;
@@ -36,7 +35,7 @@
 @property (nonatomic, strong) UIView *textFieldBottomBorder;
 
 @property (nonatomic, strong) UITextField *timeTableNameField;
-@property (nonatomic, strong) UIButton *serverTimeTableButton;
+@property (nonatomic, strong) UIButton *serverSemesterButton;
 @property (nonatomic, strong) UISwitch *primaryTimeTableSwitch;
 
 @end
@@ -48,8 +47,8 @@
     self = [super init];
     if (self) {
         _dataManager = [DataManager sharedInstance];
-        _timeTableId = -1;
-        _selectedServerTimeTableId = -1;
+        _timeTable = [[TimeTableObject alloc] init];
+        [_timeTable setDefaultProperties];
         
         _timeTableNameLabel = [[UILabel alloc] init];
         _serverTimeTableLabel = [[UILabel alloc] init];
@@ -58,7 +57,7 @@
         _textFieldBottomBorder = [[UIView alloc] init];
         
         _timeTableNameField = [[UITextField alloc] initWithFrame:CGRectZero];
-        _serverTimeTableButton = [[UIButton alloc] initWithFrame:CGRectZero];
+        _serverSemesterButton = [[UIButton alloc] initWithFrame:CGRectZero];
         _primaryTimeTableSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
         
         [_timeTableNameField becomeFirstResponder];
@@ -83,7 +82,7 @@
     _timeTableNameLabel.textColor = [UIColor op_primary];
     _timeTableNameLabel.font = [UIFont op_secondary];
     
-    _serverTimeTableLabel.text = @"학교 시간표 연동";
+    _serverTimeTableLabel.text = @"유드림스 종합강의시간표";
     _serverTimeTableLabel.textColor = [UIColor op_textSecondaryDark];
     _serverTimeTableLabel.font = [UIFont op_secondary];
     
@@ -102,11 +101,11 @@
     _timeTableNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [_timeTableNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
-    [_serverTimeTableButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
-    [_serverTimeTableButton setTitle:@"여기를 눌러 유드림스로부터 강의목록을 받아주세요!" forState:UIControlStateNormal];
-    _serverTimeTableButton.titleLabel.font = [UIFont op_primary];
-    _serverTimeTableButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_serverTimeTableButton addTarget:self action:@selector(selectServerTimeTable) forControlEvents:UIControlEventTouchUpInside];
+    [_serverSemesterButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
+    [_serverSemesterButton setTitle:@"여기를 눌러 유드림스로부터 강의목록을 받아주세요!" forState:UIControlStateNormal];
+    _serverSemesterButton.titleLabel.font = [UIFont op_primary];
+    _serverSemesterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_serverSemesterButton addTarget:self action:@selector(selectServerSemester) forControlEvents:UIControlEventTouchUpInside];
     
     _primaryTimeTableSwitch.on = YES;
     
@@ -117,7 +116,7 @@
     [self.view addSubview:_textFieldBottomBorder];
     
     [self.view addSubview:_timeTableNameField];
-    [self.view addSubview:_serverTimeTableButton];
+    [self.view addSubview:_serverSemesterButton];
     [self.view addSubview:_primaryTimeTableSwitch];
     [self makeAutoLayoutConstraints];
 }
@@ -142,7 +141,7 @@
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
     }];
     [_primaryTimeTableLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_serverTimeTableButton.mas_bottom).with.offset(gapBetweenSections);
+        make.top.equalTo(_serverSemesterButton.mas_bottom).with.offset(gapBetweenSections);
         make.left.equalTo(self.view.mas_left).with.offset(edgePadding);
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
     }];
@@ -152,7 +151,7 @@
         make.left.equalTo(self.view.mas_left).with.offset(edgePadding);
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
     }];
-    [_serverTimeTableButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_serverSemesterButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_serverTimeTableLabel.mas_bottom).with.offset(gapBetweenLabelAndFactor);
         make.left.equalTo(self.view.mas_left).with.offset(edgePadding);
         make.right.equalTo(self.view.mas_right).with.offset(-edgePadding);
@@ -172,19 +171,28 @@
 
 #pragma mark - Setter
 
-- (void)setTimeTableId:(NSInteger)timeTableId
-{
-    _timeTableId = timeTableId;
-    [self setTitle:@"시간표 수정"];
-    self.timeTable = [_dataManager timeTableWithUtid:timeTableId];
-}
-
 - (void)setTimeTable:(TimeTableObject *)timeTable
 {
     _timeTable = timeTable;
-    self.selectedSemesterID = timeTable.semesterID;
+    [self setTitle:@"시간표 수정"];
+    self.serverSemester = timeTable.serverSemesterObject;
     _timeTableNameField.text = timeTable.timeTableName;
     [_primaryTimeTableSwitch setOn:timeTable.active];
+}
+
+- (void)setServerSemester:(ServerSemesterObject *)serverSemester
+{
+    _serverSemester = serverSemester;
+    
+    if (!serverSemester) {
+        return;
+    }
+    
+    _timeTable.serverSemesterObject = serverSemester;
+    NSString *buttonTitle = [NSString stringWithFormat:@"동국대학교 %@", serverSemester.semesterName];
+    if (_timeTableNameField.text.length == 0)
+        _timeTableNameField.text = buttonTitle;
+    [_serverSemesterButton setTitle:serverSemester.semesterName forState:UIControlStateNormal];
 }
 
 #pragma mark - Bar Button Action
@@ -197,50 +205,34 @@
         return;
     }
     
-    if (_timeTableId != -1) {
-        [_dataManager updateTimeTableWithUtid:_timeTableId
-                                         name:_timeTableNameField.text
-                                   semesterID:_selectedSemesterID
-                                       active:_primaryTimeTableSwitch.isOn
-                                   completion:^{
-                                       [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
-                                       }
-                                      failure:^(NSString *reason) {
-                                          [KVNProgress showErrorWithStatus:reason];
-                                      }];
-    } else {
-        [_dataManager saveTimeTableWithName:_timeTableNameField.text
-                                 semesterID:_selectedSemesterID
-                                     active:_primaryTimeTableSwitch.isOn];
-        [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
-    }
+    _timeTable.timeTableName = (NSString *)_timeTableNameField.text;
+    _timeTable.active = _primaryTimeTableSwitch.isOn;
+    
+    [_dataManager saveOrUpdateTimeTable:_timeTable completion:^(BOOL isUpdated) {
+        if (isUpdated) {
+            [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
+        } else {
+            [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
+        }
+    }];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Action
 
-- (void)setSelectedSemesterID:(NSInteger)selectedSemesterID
+- (void)selectServerSemester
 {
-    _selectedServerTimeTableId = selectedServerTimeTableId;
-    _serverTimeTableDictionary = [_dataManager serverTimeTableWithId:_selectedServerTimeTableId];
-    if (!_serverTimeTableDictionary)
-        return;
-    NSString *schoolName = [_dataManager schoolNameWithServerTimeTableId:_selectedServerTimeTableId];
-    NSString *semesterName = [_dataManager semesterString:_serverTimeTableDictionary[@"semester"]];
-    NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", schoolName, semesterName];
-    if (_timeTableNameField.text.length == 0) _timeTableNameField.text = buttonTitle;
-    [_serverTimeTableButton setTitle:buttonTitle forState:UIControlStateNormal];
+    ServerSemesterViewController *serverSemesterViewController = [[ServerSemesterViewController alloc] init];
+    serverSemesterViewController.delegate = self;
+    [self.navigationController pushViewController:serverSemesterViewController animated:YES];
 }
 
-- (void)setSelectedServerTimeTableId:(NSInteger)selectedServerTimeTableId
-{
-}
+#pragma mark - Server Semester Delegate
 
-- (void)selectServerTimeTable
+- (void)serverSemesterViewController:(ServerSemesterViewController *)serverSemesterViewController didSelectedSemesterObject:(ServerSemesterObject *)semesterObject
 {
-    ServerTimeTableViewController *timeTableViewController = [[ServerTimeTableViewController alloc] init];
-    timeTableViewController.delegate = self;
-    [self.navigationController pushViewController:timeTableViewController animated:YES];
+    self.serverSemester = semesterObject;
 }
 
 #pragma mark - Life Cycle

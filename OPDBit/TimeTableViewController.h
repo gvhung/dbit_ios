@@ -13,6 +13,6 @@
 @property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)init;
-- (void)editTimeTableWithId:(NSInteger)utid;
+- (void)editTimeTableWithIndexPath:(NSIndexPath *)indexPath;
 
 @end

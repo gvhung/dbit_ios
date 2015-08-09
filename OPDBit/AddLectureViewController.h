@@ -6,26 +6,28 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class LectureObject;
+@class AddLectureViewController;
+
 #import <UIKit/UIKit.h>
 #import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
 
-@interface AddLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, RMDateSelectionViewControllerDelegate>
+@protocol AddLectureViewControllerDelegate <NSObject>
 
+- (void)addLectureViewControllerDidDone:(AddLectureViewController *)addLectureViewController;
+
+@end
+
+@interface AddLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+
+@property (nonatomic, weak) id<AddLectureViewControllerDelegate> delegate;
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSDictionary *serverLectureDictionary;
-@property (nonatomic, strong) NSArray *lectureDetails;
-
-@property (nonatomic) NSInteger ulidToEdit;
+@property (nonatomic, strong) LectureObject *lecture;
 
 @property (nonatomic, strong) RMDateSelectionViewController *timePickerViewController;
 
 - (instancetype)init;
-- (void)addLectureDetailAction;
-
-- (void)textFieldDidChanged:(UITextField *)textField;
-- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl;
-- (void)timeButtonTapped:(UIButton *)button;
 
 @end

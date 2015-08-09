@@ -8,18 +8,23 @@
 
 #import "AppDelegate.h"
 
+
+// Controller
 #import "TimeTableViewController.h"
 #import "TimeTableCell.h"
 #import "AddTimeTableViewController.h"
-#import "ServerTimeTableViewController.h"
+#import "ServerSemesterViewController.h"
 #import "LectureViewController.h"
-#import "DataManager.h"
 
-#import "TimeTableObject.h"
-
+// Utility
 #import "UIFont+OPTheme.h"
 #import "UIColor+OPTheme.h"
+#import "DataManager.h"
 
+// Model
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 #import <KVNProgress/KVNProgress.h>
 #import <Realm/Realm.h>
@@ -174,8 +179,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        TimeTableObject *timeTableToEdit = _timeTables[indexPath.row];
-        [self editTimeTableWithUtid:timeTableToEdit.utid];
+        [self editTimeTableWithIndexPath:indexPath];
     }
 }
 
@@ -206,8 +210,8 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 
 - (void)downloadServerTimeTable
 {
-    ServerTimeTableViewController *serverTimeTableViewController = [[ServerTimeTableViewController alloc] init];
-    [self.navigationController pushViewController:serverTimeTableViewController animated:YES];
+    ServerSemesterViewController *serverSemesterViewController = [[ServerSemesterViewController alloc] init];
+    [self.navigationController pushViewController:serverSemesterViewController animated:YES];
 }
 
 - (void)addTimeTable
@@ -222,10 +226,10 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (void)editTimeTableWithUtid:(NSInteger)utid
+- (void)editTimeTableWithIndexPath:(NSIndexPath *)indexPath
 {
     AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
-    editTimeTableViewController.timeTableId = utid;
+    editTimeTableViewController.timeTable = _timeTables[indexPath.row];
     [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 

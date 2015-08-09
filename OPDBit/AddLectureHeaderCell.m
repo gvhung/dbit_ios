@@ -14,7 +14,7 @@
 #import <Masonry/Masonry.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
 
-@interface AddLectureHeaderCell ()
+@interface AddLectureHeaderCell () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UIView *separator;
 
@@ -70,7 +70,7 @@
     _lectureNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _lectureNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _lectureNameField.tag = -1;
-    [_lectureNameField addTarget:self.delegate action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
+    _lectureNameField.delegate = self;
     
     _lectureThemeSegmentedControl.borderColor = [UIColor op_dividerDark];
     _lectureThemeSegmentedControl.selectionIndicatorColor = [UIColor op_primary];
@@ -79,7 +79,9 @@
     _lectureThemeSegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _lectureThemeSegmentedControl.selectionIndicatorBoxOpacity = 0;
     _lectureThemeSegmentedControl.tag = -1;
-    [_lectureThemeSegmentedControl addTarget:self.delegate action:@selector(segmentedControlDidChanged:) forControlEvents:UIControlEventValueChanged];
+    [_lectureThemeSegmentedControl addTarget:self
+                                      action:@selector(segmentedControlDidChanged:)
+                            forControlEvents:UIControlEventValueChanged];
     
     [self.contentView addSubview:_separator];
     
@@ -124,6 +126,24 @@
         make.right.equalTo(self.contentView);
         make.height.equalTo(@0.5f);
     }];
+}
+
+#pragma mark - Text Field Delegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if ([_delegate respondsToSelector:@selector(addLectureHeaderCell:didChangedName:)]) {
+        [_delegate addLectureHeaderCell:self didChangedName:textField.text];
+    }
+}
+
+#pragma mark - Segmented Control Delegate
+
+- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
+{
+    if ([_delegate respondsToSelector:@selector(addLectureHeaderCell:didChangedTheme:)]) {
+        [_delegate addLectureHeaderCell:self didChangedTheme:segmentedControl.selectedSegmentIndex];
+    }
 }
 
 #pragma mark - Getter

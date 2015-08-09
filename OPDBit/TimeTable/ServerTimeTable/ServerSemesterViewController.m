@@ -71,6 +71,7 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
     
     _emptyLabel = [[UILabel alloc] init];
     _emptyLabel.text = @"종합강의 시간표가 없어요! XD\n우측 상단 다운로드 버튼을 눌러서 다운로드 받아주세요!";
+    _emptyLabel.numberOfLines = 0;
     
     [self.view addSubview:_tableView];
     [self.view addSubview:_emptyLabel];
@@ -159,9 +160,16 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
 - (void)actionToFetchServerLectures
 {
     [self downloadServerSemstersWithCompletion:^(id response) {
+        if (!_downloadedSemesters) {
+            _downloadedSemesters = [[RLMArray alloc] initWithObjectClassName:ServerSemesterObjectID];
+        } else {
+            [_downloadedSemesters removeAllObjects];
+        }
+        
         for (NSDictionary *responseDictionary in response) {
             ServerSemesterObject *downloadedSemester = [[ServerSemesterObject alloc] init];
             [downloadedSemester setPropertiesWithResponse:responseDictionary];
+            
             [_downloadedSemesters addObject:downloadedSemester];
         }
         
@@ -171,18 +179,21 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
         for (ServerSemesterObject *downloadedSemester in _downloadedSemesters) {
             UIAlertAction *semesterAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@", downloadedSemester.semesterName]
                                                                      style:UIAlertActionStyleDefault
-                                                                   handler:^(UIAlertAction *action) {
-                                                                       [self downloadServerLectureWithServerSemester:downloadedSemester
-                                                                                                          completion:^(ServerSemesterObject *serverSemester){
-                                                                                                              [_dataManager saveServerSemester:serverSemester completion:^(BOOL isUpdated) {
-                                                                                                                  self.savedServerSemesters = [_dataManager savedServerSemesters];
-                                                                                                                  [_tableView reloadData];
-                                                                                                                  [KVNProgress showSuccessWithStatus:@"성공!"];
-                                                                                                              }];
-                                                                                                          } failure:^(NSString *message) {
-                                                                                                              [KVNProgress showErrorWithStatus:message];
-                                                                                                          }];
-                                                                   }];
+                                                                   handler:^(UIAlertAction *action)
+            {
+                [self downloadServerLectureWithServerSemester:downloadedSemester
+                                                   completion:^(ServerSemesterObject *serverSemester)
+                {
+                    [_dataManager saveOrUpdateServerSemester:serverSemester completion:^(BOOL isUpdated) {
+                        self.savedServerSemesters = [_dataManager savedServerSemesters];
+                        [_tableView reloadData];
+                        [KVNProgress showSuccessWithStatus:@"성공!"];
+                    }];
+                } failure:^(NSString *message)
+                {
+                    [KVNProgress showErrorWithStatus:message];
+                }];
+            }];
             [alertController addAction:semesterAction];
         }
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"취소"
@@ -217,21 +228,23 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                                         failure:(void (^)(NSString *message))failure
 {
     [_networkManager getServerLecturesWithSemesterID:serverSemester.semesterID
-                                          completion:^(id response) {
-                                              for (NSDictionary *responseDictionary in response) {
-                                                  ServerLectureObject *serverLecture = [[ServerLectureObject alloc] init];
-                                                  [serverLecture setPropertiesWithResponse:responseDictionary];
-                                                  [serverSemester.serverLectures addObject:serverLecture];
-                                              }
-                                              completion(serverSemester);
-                                          } failure:^(NSError *error) {
-                                              NSString *errorMessage = @"오류!";
-                                              if (error.code == -1003 || error.code == -1009)
-                                                  errorMessage = @"인터넷 연결을 확인해주세요!";
-                                              else
-                                                  errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
-                                              failure(errorMessage);
-                                          }];
+                                          completion:^(id response)
+    {
+        for (NSDictionary *responseDictionary in response) {
+            ServerLectureObject *serverLecture = [[ServerLectureObject alloc] init];
+            [serverLecture setPropertiesWithResponse:responseDictionary];
+            [serverSemester.serverLectures addObject:serverLecture];
+        }
+        completion(serverSemester);
+    } failure:^(NSError *error)
+    {
+        NSString *errorMessage = @"오류!";
+        if (error.code == -1003 || error.code == -1009)
+            errorMessage = @"인터넷 연결을 확인해주세요!";
+        else
+            errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+        failure(errorMessage);
+    }];
 }
 
 #pragma mark - Life Cycle

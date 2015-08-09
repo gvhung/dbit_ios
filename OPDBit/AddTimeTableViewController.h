@@ -6,12 +6,13 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class TimeTableObject;
+
 #import <UIKit/UIKit.h>
 
 @interface AddTimeTableViewController : UIViewController
 
-@property (nonatomic) NSInteger selectedSemesterID;
-@property (nonatomic) NSInteger timeTableId;
+@property (nonatomic, strong) TimeTableObject *timeTable;
 
 - (instancetype)init;
 

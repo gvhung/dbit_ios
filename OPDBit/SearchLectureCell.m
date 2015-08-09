@@ -7,9 +7,15 @@
 //
 
 #import "SearchLectureCell.h"
+
+// Model
+#import "ServerLectureObject.h"
+
+// Utility
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Library
 #import <Masonry/Masonry.h>
 
 @implementation SearchLectureCell
@@ -75,23 +81,23 @@
     }];
 }
 
-- (void)setServerLectureDictionary:(NSDictionary *)serverLectureDictionary
+- (void)setServerLecture:(ServerLectureObject *)serverLecture
 {
-    _serverLectureDictionary = serverLectureDictionary;
+    _serverLecture = serverLecture;
     [self reloadLabels];
 }
 
 - (void)reloadLabels
 {
-    _lectureTitleLabel.text = [self getTitleStringWithServerLectureDictionary:_serverLectureDictionary];
-    _lectureCodeLabel.text = _serverLectureDictionary[@"lectureCode"];
-    _lectureLocationLabel.text = _serverLectureDictionary[@"lectureLocation"];
-    _lectureTimeLabel.text = _serverLectureDictionary[@"lectureDaytime"];
+    _lectureTitleLabel.text = [self titleStringWithServerLecture:_serverLecture];
+    _lectureCodeLabel.text = _serverLecture.lectureKey;
+    _lectureLocationLabel.text = _serverLecture.lectureLocation;
+    _lectureTimeLabel.text = _serverLecture.lectureDaytime;
 }
 
-- (NSString *)getTitleStringWithServerLectureDictionary:(NSDictionary *)serverLectureDictionary
+- (NSString *)titleStringWithServerLecture:(ServerLectureObject *)serverLecture
 {
-    return [NSString stringWithFormat:@"%@ (%@)", serverLectureDictionary[@"lectureName"], serverLectureDictionary[@"lectureProf"]];
+    return [NSString stringWithFormat:@"%@ (%@)", _serverLecture.lectureName, _serverLecture.lectureProf];
 }
 
 - (void)prepareForReuse
