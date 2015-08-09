@@ -50,7 +50,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     if (self) {
         _dataManager = [DataManager sharedInstance];
         
-        _lectureDatas = [[NSMutableArray alloc] init];
+        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
         [self initialize];
     }
     return self;

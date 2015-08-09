@@ -8,13 +8,14 @@
 
 @class SearchLectureViewController;
 @class ServerSemesterObject;
-@class ServerLectureObject;
+@class LectureObject;
 
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 
 @protocol SearchLectureViewControllerDelegate <NSObject>
 
-- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithServerLectureObject:(ServerLectureObject *)serverLectureObject;
+- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject;
 
 @end
 
@@ -23,8 +24,9 @@
 @property (nonatomic, weak) id<SearchLectureViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) ServerSemesterObject *serverSemester;
+@property (nonatomic, strong) LectureObject *currentLecture;
 @property (nonatomic, strong) UITableView *tableView;
 
-- (instancetype)init;
+- (instancetype)initWithLecture:(LectureObject *)lecture;
 
 @end

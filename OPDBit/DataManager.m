@@ -15,7 +15,7 @@
 
 #import "UIColor+OPTheme.h"
 
-#define REALMPATH @"VERSION2.realm"
+#define REALM_V2_NAME @"VERSION2"
 
 @interface DataManager ()
 
@@ -35,6 +35,15 @@
     });
     
     return shared;
+}
+
++ (NSString *)pathToRealmDB:(NSString *)database
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docsPath = [paths objectAtIndex:0];
+    NSString *dbFileName = [NSString stringWithFormat:@"%@.realm", database];
+    NSString *path = [docsPath stringByAppendingPathComponent:dbFileName];
+    return path;
 }
 
 - (void)migrateV1toV2
@@ -65,7 +74,7 @@
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-        _realm = [RLMRealm realmWithPath:REALMPATH];
+        _realm = [RLMRealm realmWithPath:[DataManager pathToRealmDB:REALM_V2_NAME]];
     }
     return self;
 }
@@ -138,7 +147,7 @@
     timeTableObject.utid = utid;
     
     if (timeTableObject.active) {
-        RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
+        RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"active == YES"];
         for (TimeTableObject *resultTimeTableObject in timeTableResults) {
             resultTimeTableObject.active = NO;
         }
@@ -153,97 +162,35 @@
     [_realm addOrUpdateObject:timeTableObject];
     [_realm commitWriteTransaction];
     
-    [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
-}
-
-- (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSInteger)theme
-                    lectureDetails:(RLMArray *)lectureDetails
-{
-    [_realm beginWriteTransaction];
-    LectureObject *lectureObject = [[LectureObject alloc] init];
-    lectureObject.ulid = [self lastUlid]+1;
-    lectureObject.lectureName = lectureName;
-    lectureObject.theme = theme;
-    [lectureObject.lectureDetails removeAllObjects];
-    [lectureObject.lectureDetails addObjects:lectureDetails];
-    
-    [self.activedTimeTable.lectures addObject:lectureObject];
-    [_realm commitWriteTransaction];
+    completion(hasDuplicated);
     
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
 }
 
-- (void)saveLectureDetailWithUlid:(NSInteger)ulid
-                  lectureLocation:(NSString *)lectureLocation
-                          timeEnd:(NSInteger)timeEnd
-                        timeStart:(NSInteger)timeStart
-                              day:(NSInteger)day
+- (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
+                            completion:(void (^)(BOOL isUpdated))completion
 {
-    [_realm beginWriteTransaction];
-    LectureObject *lectureObject = [self lectureObjectWithUlid:ulid];
-    LectureDetailObject *lectureDetailObject = [[LectureDetailObject alloc] init];
-    lectureDetailObject.lectureLocation = lectureLocation;
-    lectureDetailObject.timeEnd = timeEnd;
-    lectureDetailObject.timeStart = timeStart;
-    lectureDetailObject.day = day;
-    [lectureObject.lectureDetails addObject:lectureDetailObject];
-    [_realm commitWriteTransaction];
+    BOOL hasDuplicated = NO;
     
-    [self refreshTimeTableSetting];
-}
-
-/*
-- (void)updateTimeTableWithUtid:(NSInteger)utid
-                           name:(NSString *)name
-                     semesterID:(NSInteger)semesterID
-                         active:(BOOL)active
-                     completion:(void (^)())completion
-                        failure:(void (^)(NSString *))failure
-{
     [_realm beginWriteTransaction];
-    RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", utid];
-    if (timeTableResults.count == 0) {
-        NSString *reason = [NSString stringWithFormat:@"TimeTable (utid : %ld) for edit is NOT exist", utid];
-        NSLog(@"%@", reason);
-        failure(reason);
-        [_realm commitWriteTransaction];
-        return;
-    }
-    TimeTableObject *timeTableObject = timeTableResults[0];
-    timeTableObject.timeTableName = name;
-    timeTableObject.semesterID = semesterID;
-    if (active) {
-        RLMResults *timeTableResults = [TimeTableObject allObjectsInRealm:_realm];
-        for (TimeTableObject *resultTimeTableObject in timeTableResults) {
-            resultTimeTableObject.active = NO;
-        }
+    
+    RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"ulid == %ld", lectureObject.ulid];
+    NSInteger ulid;
+    if (timeTableResults.count) {
+        ulid = ((TimeTableObject *)timeTableResults[0]).utid;
+        [_realm deleteObjects:timeTableResults];
+        hasDuplicated = YES;
+    } else {
+        ulid = [self lastUlid] + 1;
     }
     
-    timeTableObject.active = active;
-    [_realm addOrUpdateObject:timeTableObject];
-    [_realm commitWriteTransaction];
+    lectureObject.ulid = ulid;
     
-    [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
-    completion();
-}
-*/
-
-- (void)updateLectureWithUlid:(NSInteger)ulid
-                         name:(NSString *)name
-                        theme:(NSInteger)theme
-               lectureDetails:(RLMArray *)lectureDetails;
-{
-    [_realm beginWriteTransaction];
-    RLMResults *lectureObjectResult = [LectureObject objectsInRealm:_realm where:@"ulid == %ld", ulid];
-    LectureObject *lectureObject = [lectureObjectResult firstObject];
-    lectureObject.lectureName = name;
-    lectureObject.theme = theme;
-    [lectureObject.lectureDetails removeAllObjects];
-    [lectureObject.lectureDetails addObjects:lectureDetails];
-    
+    [_realm addOrUpdateObjectsFromArray:lectureObject.lectureDetails];
     [_realm addOrUpdateObject:lectureObject];
     [_realm commitWriteTransaction];
+    
+    completion(hasDuplicated);
     
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
 }
@@ -354,7 +301,7 @@
         return nil;
     }
     
-    return [self realmArrayFromResult:downloadedServerSemesterResult className:ServerSemesterObjectID];
+    return [DataManager realmArrayFromResult:downloadedServerSemesterResult className:ServerSemesterObjectID];
 }
 
 - (RLMArray *)timeTables
@@ -365,7 +312,7 @@
         return nil;
     }
     
-    return [self realmArrayFromResult:timeTableResults className:TimeTableObjectID];
+    return [DataManager realmArrayFromResult:timeTableResults className:TimeTableObjectID];
 }
 
 - (TimeTableObject *)timeTableWithUtid:(NSInteger)utid
@@ -395,7 +342,7 @@
     
     RLMResults *sortedResult = [lectureDetails sortedResultsUsingProperty:@"timeStart" ascending:YES];
     
-    return [self realmArrayFromResult:sortedResult className:LectureDetailObjectID];
+    return [DataManager realmArrayFromResult:sortedResult className:LectureDetailObjectID];
 }
 
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid
@@ -416,7 +363,7 @@
         NSLog(@"LectureDetails (ulid : %ld) is NOT exist", ulid);
         return nil;
     }
-    return [self realmArrayFromResult:lectureDetailResults className:LectureDetailObjectID];
+    return [DataManager realmArrayFromResult:lectureDetailResults className:LectureDetailObjectID];
 }
 
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid
@@ -481,7 +428,7 @@
 
 #pragma mark - Results To Array
 
-- (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className
++ (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className
 {
     RLMArray *array = [[RLMArray alloc] initWithObjectClassName:className];
     for (id object in result) {

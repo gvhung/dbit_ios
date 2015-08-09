@@ -35,18 +35,8 @@
 */
 - (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
                    completion:(void (^)(BOOL isUpdated))completion;
-- (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSInteger)theme
-                    lectureDetails:(RLMArray *)lectureDetails;
-- (void)saveLectureDetailWithUlid:(NSInteger)ulid
-                  lectureLocation:(NSString *)lectureLocation
-                          timeEnd:(NSInteger)timeEnd
-                        timeStart:(NSInteger)timeStart
-                              day:(NSInteger)day;
-- (void)updateLectureWithUlid:(NSInteger)ulid
-                         name:(NSString *)name
-                        theme:(NSInteger)theme
-               lectureDetails:(RLMArray *)lectureDetails;
+- (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
+                            completion:(void (^)(BOOL isUpdated))completion;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
@@ -66,6 +56,10 @@
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid;
 - (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
 - (NSArray *)daySectionTitles;
+
+#pragma mark - Convert
+
++ (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className;
 
 #pragma mark - Lecture Theme
 
