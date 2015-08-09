@@ -97,34 +97,6 @@
     [_realm commitWriteTransaction];
     completion(hasDuplicated);
 }
-
-/*
-- (void)saveServerLecturesWithResponse:(NSArray *)response
-                            semesterID:(NSInteger)semesterID
-                            completion:(void (^)())completion
-{
-    [_realm beginWriteTransaction];
-    [_realm deleteObjects:[ServerLectureObject objectsInRealm:_realm where:@"semesterID == %ld", semesterID]];
-    for (NSDictionary *serverLectureDictionary in response) {
-        ServerLectureObject *serverLectureObject = [[ServerLectureObject alloc] init];
-        
-        serverLectureObject.semesterID = [serverLectureDictionary[@"semester_id"] integerValue];
-        serverLectureObject.lectureDaytime = serverLectureDictionary[@"lecture_daytime"];
-        serverLectureObject.lectureLocation = serverLectureDictionary[@"lecture_location"];
-        serverLectureObject.lectureName = serverLectureDictionary[@"lecture_name"];
-        serverLectureObject.lectureKey = serverLectureDictionary[@"lecture_key"];
-        serverLectureObject.lectureProf = serverLectureDictionary[@"lecture_prof"];
-        
-        serverLectureObject.lectureCourse = serverLectureDictionary[@""];
-        
-        
-        [_realm addObject:serverLectureObject];
-    }
-    [_realm commitWriteTransaction];
-    completion();
-}
-*/
-
 - (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
                    completion:(void (^)(BOOL isUpdated))completion
 {
@@ -132,9 +104,6 @@
     
     [_realm beginWriteTransaction];
     
-//    TimeTableObject *timeTableObject = [[TimeTableObject alloc] init];
-//    timeTableObject.timeTableName = name;
-//    timeTableObject.serverSemesterObject = ServerSemesterObject;
     RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", timeTableObject.utid];
     NSInteger utid;
     if (timeTableResults.count) {
@@ -152,12 +121,6 @@
             resultTimeTableObject.active = NO;
         }
     }
-    
-//    timeTableObject.active = active;
-//    timeTableObject.utid = [self lastUtid]+1;
-//    timeTableObject.timeStart = -1;
-//    timeTableObject.timeEnd = -1;
-//    timeTableObject.workAtWeekend = NO;
     
     [_realm addOrUpdateObject:timeTableObject];
     [_realm commitWriteTransaction];
@@ -294,7 +257,6 @@
 
 - (RLMArray *)savedServerSemesters
 {
-    [_realm beginWriteTransaction];
     RLMResults *downloadedServerSemesterResult = [ServerSemesterObject allObjectsInRealm:_realm];
     if (!downloadedServerSemesterResult.count) {
         NSLog(@"Downloaded Server Semesters are NOT exist!");

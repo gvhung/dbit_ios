@@ -171,18 +171,21 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
         for (ServerSemesterObject *downloadedSemester in _downloadedSemesters) {
             UIAlertAction *semesterAction = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%@", downloadedSemester.semesterName]
                                                                      style:UIAlertActionStyleDefault
-                                                                   handler:^(UIAlertAction *action) {
-                                                                       [self downloadServerLectureWithServerSemester:downloadedSemester
-                                                                                                          completion:^(ServerSemesterObject *serverSemester){
-                                                                                                              [_dataManager saveServerSemester:serverSemester completion:^(BOOL isUpdated) {
-                                                                                                                  self.savedServerSemesters = [_dataManager savedServerSemesters];
-                                                                                                                  [_tableView reloadData];
-                                                                                                                  [KVNProgress showSuccessWithStatus:@"성공!"];
-                                                                                                              }];
-                                                                                                          } failure:^(NSString *message) {
-                                                                                                              [KVNProgress showErrorWithStatus:message];
-                                                                                                          }];
-                                                                   }];
+                                                                   handler:^(UIAlertAction *action)
+            {
+                [self downloadServerLectureWithServerSemester:downloadedSemester
+                                                   completion:^(ServerSemesterObject *serverSemester)
+                {
+                    [_dataManager saveServerSemester:serverSemester completion:^(BOOL isUpdated) {
+                        self.savedServerSemesters = [_dataManager savedServerSemesters];
+                        [_tableView reloadData];
+                        [KVNProgress showSuccessWithStatus:@"성공!"];
+                    }];
+                } failure:^(NSString *message)
+                {
+                    [KVNProgress showErrorWithStatus:message];
+                }];
+            }];
             [alertController addAction:semesterAction];
         }
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"취소"
@@ -217,21 +220,23 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                                         failure:(void (^)(NSString *message))failure
 {
     [_networkManager getServerLecturesWithSemesterID:serverSemester.semesterID
-                                          completion:^(id response) {
-                                              for (NSDictionary *responseDictionary in response) {
-                                                  ServerLectureObject *serverLecture = [[ServerLectureObject alloc] init];
-                                                  [serverLecture setPropertiesWithResponse:responseDictionary];
-                                                  [serverSemester.serverLectures addObject:serverLecture];
-                                              }
-                                              completion(serverSemester);
-                                          } failure:^(NSError *error) {
-                                              NSString *errorMessage = @"오류!";
-                                              if (error.code == -1003 || error.code == -1009)
-                                                  errorMessage = @"인터넷 연결을 확인해주세요!";
-                                              else
-                                                  errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
-                                              failure(errorMessage);
-                                          }];
+                                          completion:^(id response)
+    {
+        for (NSDictionary *responseDictionary in response) {
+            ServerLectureObject *serverLecture = [[ServerLectureObject alloc] init];
+            [serverLecture setPropertiesWithResponse:responseDictionary];
+            [serverSemester.serverLectures addObject:serverLecture];
+        }
+        completion(serverSemester);
+    } failure:^(NSError *error)
+    {
+        NSString *errorMessage = @"오류!";
+        if (error.code == -1003 || error.code == -1009)
+            errorMessage = @"인터넷 연결을 확인해주세요!";
+        else
+            errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+        failure(errorMessage);
+    }];
 }
 
 #pragma mark - Life Cycle
