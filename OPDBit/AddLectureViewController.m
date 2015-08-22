@@ -27,7 +27,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 @interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate>
 
@@ -257,7 +256,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         NSInteger endTime = lectureDetail.timeEnd;
         
         if (endTime && selectedStartTime < endTime) {
-            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
+//            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
         
@@ -281,7 +280,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         NSInteger startTime = lectureDetail.timeStart;
         
         if (startTime && selectedEndTime < startTime) {
-            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
+//            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
             return;
         }
         
@@ -330,7 +329,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)searchLectureAction
 {
     if(!_dataManager.activedTimeTable.serverSemesterObject) {
-        [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
+//        [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
         return;
     }
     
@@ -345,21 +344,21 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     [_tableView endEditing:YES];
     if (!_lecture.lectureName.length) {
-        [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
+//        [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
         return;
     }
     if (_lecture.theme == -1) {
-        [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
+//        [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
         return;
     }
     
     if (_lectureDetails.count == 0){
-        [KVNProgress showErrorWithStatus:@"수업이 하나도 추가되지 않았습니다!"];
+//        [KVNProgress showErrorWithStatus:@"수업이 하나도 추가되지 않았습니다!"];
         return;
     }
     
     if ([_dataManager lectureAreDuplicatedOtherLecture:_lecture inTimeTable:_dataManager.activedTimeTable]) {
-        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
+//        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
         return;
     }
     
@@ -367,9 +366,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
                                   lectureDetails:_lectureDetails
                                       completion:^(BOOL isUpdated) {
                                           if (isUpdated) {
-                                              [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
+//                                              [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
                                           } else {
-                                              [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
+//                                              [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
                                           }
                                       }];
     if ([_delegate respondsToSelector:@selector(addLectureViewControllerDidDone:)]) {

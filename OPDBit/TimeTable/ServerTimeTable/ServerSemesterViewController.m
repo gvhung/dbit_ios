@@ -21,7 +21,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 
 static NSString * const ServerSemesterCellIdentifier = @"ServerTimeTableCell";
@@ -187,11 +186,11 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                     [_dataManager saveOrUpdateServerSemester:serverSemester completion:^(BOOL isUpdated) {
                         self.savedServerSemesters = [_dataManager savedServerSemesters];
                         [_tableView reloadData];
-                        [KVNProgress showSuccessWithStatus:@"성공!"];
+//                        [KVNProgress showSuccessWithStatus:@"성공!"];
                     }];
                 } failure:^(NSString *message)
                 {
-                    [KVNProgress showErrorWithStatus:message];
+//                    [KVNProgress showErrorWithStatus:message];
                 }];
             }];
             [alertController addAction:semesterAction];
@@ -202,7 +201,7 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
         [alertController addAction:cancelAction];
         [self presentViewController:alertController animated:YES completion:nil];
     } failure:^(NSString *message) {
-        [KVNProgress showErrorWithStatus:message];
+//        [KVNProgress showErrorWithStatus:message];
     }];
 }
 

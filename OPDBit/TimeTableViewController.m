@@ -26,7 +26,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 #import <Realm/Realm.h>
 
 @interface TimeTableViewController ()
@@ -166,7 +165,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TimeTableObject *timeTableToDelete = _timeTables[indexPath.row];
         [_dataManager deleteTimeTableWithUtid:timeTableToDelete.utid];
-        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+//        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
         self.timeTables = [_dataManager timeTables];
     }
 }

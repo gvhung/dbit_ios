@@ -26,7 +26,6 @@
 // Library
 #import <HMSegmentedControl/HMSegmentedControl.h>
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 @interface SearchLectureViewController ()
 
@@ -149,7 +148,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     if (!_selectedServerLecture) {
         [_searchTextField resignFirstResponder];
-        [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
+//        [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
         return;
     }
     

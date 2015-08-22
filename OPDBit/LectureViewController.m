@@ -25,7 +25,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 @interface LectureViewController ()
 
@@ -194,7 +193,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
         [_dataManager deleteLectureWithUlid:lectureDetail.ulid];
-        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
+//        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
         
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
         if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
@@ -240,7 +239,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)addLectureAction
 {
     if (_dataManager.activedTimeTable == nil) {
-        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+//        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
         return;
     }
     

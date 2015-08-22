@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0BFA85380EC6558488E3D733 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
-		44A0E4C8DC54C1E0DF915EFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
+		00CC235C5197B325A5DB3531 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
 		B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */; };
 		B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */; };
 		B514384E1ACFCA7A00EED7A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */; };
 		B51438511ACFCA7A00EED7A5 /* TimeTableWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B52C3E4D1AD02AE9001BB5B8 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */; };
 		B52C3E5A1AD04853001BB5B8 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4E1AD04853001BB5B8 /* done.png */; };
 		B52C3E5B1AD04853001BB5B8 /* done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4F1AD04853001BB5B8 /* done@2x.png */; };
 		B52C3E5C1AD04853001BB5B8 /* done@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E501AD04853001BB5B8 /* done@3x.png */; };
@@ -101,7 +99,6 @@
 		B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		B51438551ACFCA8E00EED7A5 /* TimeTableWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TimeTableWidget.entitlements; sourceTree = "<group>"; };
-		B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KVNProgressView.xib; sourceTree = "<group>"; };
 		B52C3E4E1AD04853001BB5B8 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
 		B52C3E4F1AD04853001BB5B8 /* done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "done@2x.png"; sourceTree = "<group>"; };
 		B52C3E501AD04853001BB5B8 /* done@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "done@3x.png"; sourceTree = "<group>"; };
@@ -192,7 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */,
-				0BFA85380EC6558488E3D733 /* libPods.a in Frameworks */,
+				00CC235C5197B325A5DB3531 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +199,6 @@
 			files = (
 				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
 				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
-				44A0E4C8DC54C1E0DF915EFF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +412,6 @@
 			children = (
 				B5530B281AECE5AE0096F39C /* Crashlytics.framework */,
 				B5530B291AECE5AE0096F39C /* Fabric.framework */,
-				B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */,
 				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
 				B593AA401ACC3DB50063F09E /* TimeTableView */,
 				B53655C81ABCA8BD00626416 /* Theme */,
@@ -757,7 +752,6 @@
 				B52C3E621AD04853001BB5B8 /* menu@3x.png in Resources */,
 				B52C3E611AD04853001BB5B8 /* menu@2x.png in Resources */,
 				B596828B1AAC2EB7002D6983 /* LaunchScreen.xib in Resources */,
-				B52C3E4D1AD02AE9001BB5B8 /* KVNProgressView.xib in Resources */,
 				B593AA3F1ACC0BBA0063F09E /* off.png in Resources */,
 				B52C3E651AD04853001BB5B8 /* search@3x.png in Resources */,
 				B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */,
@@ -831,7 +825,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OPDBit/Pods-OPDBit-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B5530B131AECE3230096F39C /* ShellScript */ = {
@@ -928,6 +922,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -943,6 +938,8 @@
 				CODE_SIGN_ENTITLEMENTS = TimeTableWidget/TimeTableWidget.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

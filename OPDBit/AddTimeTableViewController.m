@@ -20,7 +20,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 @interface AddTimeTableViewController () <ServerSemesterViewControllerDelegate>
 
@@ -213,7 +212,7 @@
 {
     if (_timeTableNameField.text.length == 0) {
         [_timeTableNameField resignFirstResponder];
-        [KVNProgress showErrorWithStatus:@"시간표 이름을 입력해주세요!"];
+//        [KVNProgress showErrorWithStatus:@"시간표 이름을 입력해주세요!"];
         return;
     }
     
@@ -223,9 +222,9 @@
     [_dataManager saveOrUpdateTimeTable:_timeTable
                              completion:^(BOOL isUpdated) {
         if (isUpdated) {
-            [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
+//            [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
         } else {
-            [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
+//            [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
         }
     }];
     

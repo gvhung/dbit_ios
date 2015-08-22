@@ -10,7 +10,16 @@ pod 'MMDrawerController', '0.5.7'
 pod 'RMDateSelectionViewController', '1.4.3'
 pod 'MZClockView', '1.0.2'
 pod 'AFNetworking', '2.5.1'
-pod 'KVNProgress', '2.2.1'
+
+post_install do |installer_representation|
+    installer_representation.project.targets.each do |target|
+        if target.name == "Pods-TimeTableWidget-AFNetworking"
+            target.build_configurations.each do |config|
+                    config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', 'AF_APP_EXTENSIONS=1']
+            end
+        end
+    end
+end
 
 post_install do | installer |
     require 'fileutils'

@@ -117,8 +117,11 @@
     
     if (timeTableObject.active) {
         RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"active == YES AND utid != %ld", timeTableObject.utid];
-        for (TimeTableObject *resultTimeTableObject in timeTableResults) {
+        NSInteger count = timeTableResults.count;
+        for (NSInteger i = 0; i < count; i++) {
+            TimeTableObject *resultTimeTableObject = timeTableResults[i];
             resultTimeTableObject.active = NO;
+            [_realm addOrUpdateObject:resultTimeTableObject];
         }
     }
     
