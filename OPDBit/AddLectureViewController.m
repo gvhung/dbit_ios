@@ -124,7 +124,15 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)setLecture:(LectureObject *)lecture
 {
     _lecture = lecture;
-    _lectureDetails = lecture.lectureDetails;
+    _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+    for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+        LectureDetailObject *copiedLectureDetail = [[LectureDetailObject alloc] init];
+        copiedLectureDetail.lectureLocation = lectureDetail.lectureLocation;
+        copiedLectureDetail.timeStart = lectureDetail.timeStart;
+        copiedLectureDetail.timeEnd = lectureDetail.timeEnd;
+        copiedLectureDetail.day = lectureDetail.day;
+        [_lectureDetails addObject:copiedLectureDetail];
+    }
     [_tableView reloadData];
 }
 
@@ -350,15 +358,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    _lecture.lectureDetails = nil;
-    [_lecture.lectureDetails addObjects:_lectureDetails];
-    
     if ([_dataManager lectureAreDuplicatedOtherLecture:_lecture inTimeTable:_dataManager.activedTimeTable]) {
         [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
         return;
     }
     
     [_dataManager saveOrUpdateLectureWithLecture:_lecture
+                                  lectureDetails:_lectureDetails
                                       completion:^(BOOL isUpdated) {
                                           if (isUpdated) {
                                               [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];

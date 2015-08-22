@@ -135,6 +135,7 @@
 }
 
 - (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
+                        lectureDetails:(RLMArray *)lectureDetails
                             completion:(void (^)(BOOL isUpdated))completion
 {
     BOOL hasDuplicated = NO;
@@ -142,22 +143,14 @@
     [_realm beginWriteTransaction];
     
     RLMResults *lectureResults = [LectureObject objectsInRealm:_realm where:@"ulid == %ld", lectureObject.ulid];
-    NSInteger ulid;
     if (lectureResults.count) {
-        ulid = ((LectureObject *)lectureResults[0]).ulid;
-        [_realm deleteObjects:lectureResults];
         hasDuplicated = YES;
     } else {
-        ulid = [self lastUlid] + 1;
+        lectureObject.ulid = [self lastUlid] + 1;
     }
     
-    lectureObject.ulid = ulid;
-    
-    for (NSInteger i; i < lectureObject.lectureDetails.count; i++) {
-        LectureDetailObject *lectureDetail = lectureObject.lectureDetails[i];
-        lectureDetail.ulid = ulid;
-        lectureObject.lectureDetails[i] = lectureDetail;
-    }
+    lectureObject.lectureDetails = nil;
+    [lectureObject.lectureDetails addObjects:lectureDetails];
     
     [_realm addObjects:lectureObject.lectureDetails];
     [_realm addOrUpdateObject:lectureObject];

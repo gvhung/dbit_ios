@@ -32,6 +32,7 @@
 - (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
                    completion:(void (^)(BOOL isUpdated))completion;
 - (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
+                        lectureDetails:(RLMArray *)lectureDetails
                             completion:(void (^)(BOOL isUpdated))completion;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
