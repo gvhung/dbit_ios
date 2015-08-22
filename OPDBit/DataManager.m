@@ -109,18 +109,14 @@
     [_realm beginWriteTransaction];
     
     RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"utid == %ld", timeTableObject.utid];
-    NSInteger utid;
     if (timeTableResults.count) {
-        utid = ((TimeTableObject *)timeTableResults[0]).utid;
-        [_realm deleteObjects:timeTableResults];
         hasDuplicated = YES;
     } else {
-        utid = [self lastUtid] + 1;
+        timeTableObject.utid = [self lastUtid] + 1;
     }
-    timeTableObject.utid = utid;
     
     if (timeTableObject.active) {
-        RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"active == YES"];
+        RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"active == YES AND utid != %ld", timeTableObject.utid];
         for (TimeTableObject *resultTimeTableObject in timeTableResults) {
             resultTimeTableObject.active = NO;
         }

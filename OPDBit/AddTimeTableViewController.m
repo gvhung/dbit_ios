@@ -173,9 +173,21 @@
 
 - (void)setTimeTable:(TimeTableObject *)timeTable
 {
-    _timeTable = timeTable;
-    [self setTitle:@"시간표 수정"];
+    TimeTableObject *copiedTimeTable = [[TimeTableObject alloc] init];
+    copiedTimeTable.timeTableName = timeTable.timeTableName;
+    copiedTimeTable.timeStart = timeTable.timeStart;
+    copiedTimeTable.timeEnd = timeTable.timeEnd;
+    copiedTimeTable.serverSemesterObject = timeTable.serverSemesterObject;
+    copiedTimeTable.utid = timeTable.utid;
+    copiedTimeTable.active = timeTable.active;
+    copiedTimeTable.workAtWeekend = timeTable.workAtWeekend;
+    copiedTimeTable.lectures = timeTable.lectures;
+    
+    _timeTable = copiedTimeTable;
     self.serverSemester = timeTable.serverSemesterObject;
+    
+    [self setTitle:@"시간표 수정"];
+    
     _timeTableNameField.text = timeTable.timeTableName;
     [_primaryTimeTableSwitch setOn:timeTable.active];
 }
@@ -208,7 +220,8 @@
     _timeTable.timeTableName = (NSString *)_timeTableNameField.text;
     _timeTable.active = _primaryTimeTableSwitch.isOn;
     
-    [_dataManager saveOrUpdateTimeTable:_timeTable completion:^(BOOL isUpdated) {
+    [_dataManager saveOrUpdateTimeTable:_timeTable
+                             completion:^(BOOL isUpdated) {
         if (isUpdated) {
             [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
         } else {
