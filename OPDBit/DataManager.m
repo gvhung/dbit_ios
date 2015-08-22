@@ -141,11 +141,11 @@
     
     [_realm beginWriteTransaction];
     
-    RLMResults *timeTableResults = [TimeTableObject objectsInRealm:_realm where:@"ulid == %ld", lectureObject.ulid];
+    RLMResults *lectureResults = [LectureObject objectsInRealm:_realm where:@"ulid == %ld", lectureObject.ulid];
     NSInteger ulid;
-    if (timeTableResults.count) {
-        ulid = ((TimeTableObject *)timeTableResults[0]).utid;
-        [_realm deleteObjects:timeTableResults];
+    if (lectureResults.count) {
+        ulid = ((LectureObject *)lectureResults[0]).ulid;
+        [_realm deleteObjects:lectureResults];
         hasDuplicated = YES;
     } else {
         ulid = [self lastUlid] + 1;
@@ -153,7 +153,7 @@
     
     lectureObject.ulid = ulid;
     
-    [_realm addOrUpdateObjectsFromArray:lectureObject.lectureDetails];
+    [_realm addObjects:lectureObject.lectureDetails];
     [_realm addOrUpdateObject:lectureObject];
     [_realm commitWriteTransaction];
     
