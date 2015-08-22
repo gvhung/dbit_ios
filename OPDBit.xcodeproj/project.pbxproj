@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55B8495F730042A6986A0411 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
-		94A2D421BFEB810A27DDDE62 /* libPods-OPDBit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B8A6D7AE42256B3A5516C5F /* libPods-OPDBit.a */; };
+		0BFA85380EC6558488E3D733 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
+		44A0E4C8DC54C1E0DF915EFF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
 		B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */; };
 		B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */; };
 		B514384E1ACFCA7A00EED7A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */; };
@@ -59,11 +59,9 @@
 		B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
 		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
 		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
-		BB5FE88C92DD9F27B57642A4 /* libPods-TimeTableWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A89053A64E5402D645CE083 /* libPods-TimeTableWidget.a */; };
 		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
 		C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */; };
 		C15F23D01B6CBF1E00AD707F /* ServerSemesterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */; };
-		DA4042D9649FABCA5AACA231 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,8 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */,
-				BB5FE88C92DD9F27B57642A4 /* libPods-TimeTableWidget.a in Frameworks */,
-				DA4042D9649FABCA5AACA231 /* libPods.a in Frameworks */,
+				0BFA85380EC6558488E3D733 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,9 +201,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
-				55B8495F730042A6986A0411 /* libPods.a in Frameworks */,
 				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
-				94A2D421BFEB810A27DDDE62 /* libPods-OPDBit.a in Frameworks */,
+				44A0E4C8DC54C1E0DF915EFF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -835,7 +831,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OPDBit/Pods-OPDBit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B5530B131AECE3230096F39C /* ShellScript */ = {

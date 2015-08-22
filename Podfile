@@ -1,6 +1,8 @@
 platform :ios, '7.0'
 xcodeproj 'OPDBit.xcodeproj'
 
+link_with 'TimeTableWidget'
+
 pod 'Realm', '0.94.0'
 pod 'HMSegmentedControl', '1.5'
 pod 'Masonry', '0.6.1'
