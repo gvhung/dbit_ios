@@ -119,6 +119,15 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }];
 }
 
+#pragma mark - Setter
+
+- (void)setLecture:(LectureObject *)lecture
+{
+    _lecture = lecture;
+    _lectureDetails = lecture.lectureDetails;
+    [_tableView reloadData];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -153,8 +153,18 @@
     
     lectureObject.ulid = ulid;
     
+    for (NSInteger i; i < lectureObject.lectureDetails.count; i++) {
+        LectureDetailObject *lectureDetail = lectureObject.lectureDetails[i];
+        lectureDetail.ulid = ulid;
+        lectureObject.lectureDetails[i] = lectureDetail;
+    }
+    
     [_realm addObjects:lectureObject.lectureDetails];
     [_realm addOrUpdateObject:lectureObject];
+    
+    TimeTableObject *activedTimeTable = self.activedTimeTable;
+    [activedTimeTable.lectures addObject:lectureObject];
+    [_realm addOrUpdateObject:activedTimeTable];
     [_realm commitWriteTransaction];
     
     completion(hasDuplicated);
@@ -293,12 +303,16 @@
 
 - (RLMArray *)lectureDetailsWithDay:(NSInteger)day
 {
-    RLMArray *lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+    RLMResults *lectureDetailResults = [LectureDetailObject objectsInRealm:_realm where:@"day == %d", day];
+    RLMResults *sortedResult = [lectureDetailResults sortedResultsUsingProperty:@"timeStart" ascending:YES];
+
+    RLMArray *lectureDetails = [DataManager realmArrayFromResult:sortedResult className:LectureDetailObjectID];
     
-    for (LectureObject *lectureObject in self.activedTimeTable.lectures) {
-        RLMResults *lecturesResults = [lectureObject.lectureDetails objectsWhere:@"day == %d", day];
-        for (LectureDetailObject *lectureDetail in lecturesResults) {
-            [lectureDetails addObject:lectureDetail];
+    NSLog(@"%ld", lectureDetails.count);
+    for (NSInteger i = 0; i < lectureDetails.count; i++) {
+        LectureDetailObject *lectureDetail = lectureDetails[i];
+        if (![lectureDetail isContainedWithUtid:self.activedTimeTable.utid]) {
+            [lectureDetails removeObjectAtIndex:i--];
         }
     }
     if (lectureDetails.count == 0) {
@@ -306,9 +320,11 @@
         return nil;
     }
     
-    RLMResults *sortedResult = [lectureDetails sortedResultsUsingProperty:@"timeStart" ascending:YES];
+//    RLMResults *sortedResult = [lectureDetails sortedResultsUsingProperty:@"timeStart" ascending:YES];
     
-    return [DataManager realmArrayFromResult:sortedResult className:LectureDetailObjectID];
+//    return [DataManager realmArrayFromResult:sortedResult className:LectureDetailObjectID];
+    NSLog(@"lectureDetailInDataManager: %@", lectureDetails);
+    return lectureDetails;
 }
 
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid

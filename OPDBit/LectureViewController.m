@@ -155,9 +155,9 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
         cell = [[LectureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LectureCellIdentifier];
     
     LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
-    LectureObject *lecture = [_dataManager lectureWithUlid:lectureDetail.ulid];
+    NSLog(@"lectureDetail: %@", lectureDetail);
     cell.lectureDetail = lectureDetail;
-    cell.lecture = lecture;
+    cell.lecture = [lectureDetail lecture];
 
     return cell;
 }
@@ -214,6 +214,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (void)setLectureDetails:(RLMArray *)lectureDetails
 {
+
     _lectureDetails = lectureDetails;
     [self hideTableView:[self lectureDetailsAreEmpty]];
 }
