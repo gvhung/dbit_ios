@@ -129,7 +129,8 @@
     [_realm commitWriteTransaction];
     
     completion(hasDuplicated);
-    
+
+    [self refreshTimeTableSetting];
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
 }
 
@@ -161,6 +162,7 @@
     
     completion(hasDuplicated);
     
+    [self refreshTimeTableSetting];
     [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
 }
 
@@ -223,8 +225,7 @@
     self.activedTimeTable.timeEnd = -1;
     
     for (LectureObject *lectureObject in self.activedTimeTable.lectures) {
-        RLMResults *lectureDetailResults = [lectureObject.lectureDetails objectsWhere:@"ulid == %ld", lectureObject.ulid];
-        for (LectureDetailObject *lectureDetailObject in lectureDetailResults) {
+        for (LectureDetailObject *lectureDetailObject in lectureObject.lectureDetails) {
             if (self.activedTimeTable.timeStart == -1 ||
                 self.activedTimeTable.timeStart > lectureDetailObject.timeStart) {
                 self.activedTimeTable.timeStart = lectureDetailObject.timeStart;
@@ -479,10 +480,44 @@
 
 - (void)synchronizeUserDefaultWithTimeTable:(TimeTableObject *)timeTable
 {
-//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
-//    
-//    [sharedDefaults setObject:timeTable forKey:@"ActivedTimeTable"];
-//    [sharedDefaults synchronize];
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    
+    [sharedDefaults setObject:[self dictionaryWithTimetable:timeTable] forKey:@"ActivedTimeTable"];
+    [sharedDefaults synchronize];
+}
+
+- (NSDictionary *)dictionaryWithTimetable:(TimeTableObject *)timetable
+{
+    NSMutableDictionary *timetableDictionary = [[NSMutableDictionary alloc] init];
+    // utid, timeTableName, timeStart, timeEnd, active, workAtWeekend, serverSemesterObject, lectures
+    [timetableDictionary setValue:@(timetable.utid) forKey:@"utid"];
+    [timetableDictionary setValue:timetable.timeTableName forKey:@"timeTableName"];
+    [timetableDictionary setValue:@(timetable.timeStart) forKey:@"timeStart"];
+    [timetableDictionary setValue:@(timetable.timeEnd) forKey:@"timeEnd"];
+    [timetableDictionary setValue:@(timetable.active) forKey:@"active"];
+    [timetableDictionary setValue:@(timetable.workAtWeekend) forKey:@"workAtWeekend"];
+    
+    NSMutableArray *lectures = [[NSMutableArray alloc] init];
+    for (LectureObject *lecture in timetable.lectures) {
+        NSMutableDictionary *lectureDictionary = [[NSMutableDictionary alloc] init];
+        [lectureDictionary setValue:lecture.lectureName forKey:@"lectureName"];
+        [lectureDictionary setValue:@(lecture.ulid) forKey:@"ulid"];
+        [lectureDictionary setValue:@(lecture.theme) forKey:@"theme"];
+        NSMutableArray *lectureDetails = [[NSMutableArray alloc] init];
+        for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+            NSMutableDictionary *lectureDetailDictionary = [[NSMutableDictionary alloc] init];
+            [lectureDetailDictionary setValue:lectureDetail.lectureLocation forKey:@"lectureLocation"];
+            [lectureDetailDictionary setValue:@(lectureDetail.timeStart) forKey:@"timeStart"];
+            [lectureDetailDictionary setValue:@(lectureDetail.timeEnd) forKey:@"timeEnd"];
+            [lectureDetailDictionary setValue:@(lectureDetail.day) forKey:@"day"];
+            [lectureDetails addObject:lectureDetailDictionary];
+        }
+        [lectureDictionary setValue:lectureDetails forKey:@"lectureDetails"];
+        [lectures addObject:lectureDictionary];
+    }
+    [timetableDictionary setValue:lectures forKey:@"lectures"];
+    
+    return timetableDictionary;
 }
 
 @end

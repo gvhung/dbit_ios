@@ -25,8 +25,6 @@ static NSString * const LectureDetailObjectID = @"LectureDetailObject";
 
 @interface LectureDetailObject : RLMObject
 
-@property NSInteger ulid;
-
 @property NSString *lectureLocation;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;

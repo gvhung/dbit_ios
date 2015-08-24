@@ -62,7 +62,6 @@
     for (NSInteger i = 0; i < detailCount; i++) {
         LectureDetailObject *lectureDetail = [[LectureDetailObject alloc] init];
         [lectureDetail setDefaultProperties];
-        lectureDetail.ulid = self.ulid;
         
         lectureDetail.lectureLocation = [self locationWithString:lectureLocationArray[i]];
         lectureDetail.timeStart = [self timeStartWithString:lectureDaytimeArray[i]];

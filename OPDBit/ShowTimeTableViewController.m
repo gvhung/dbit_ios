@@ -12,6 +12,8 @@
 #import "TimeTableView.h"
 #import "DataManager.h"
 
+#import "TimeTableObject.h"
+
 #import <Masonry/Masonry.h>
 
 @interface ShowTimeTableViewController ()
@@ -31,11 +33,7 @@
         _dataManager = [DataManager sharedInstance];
         
         self.view.backgroundColor = [UIColor whiteColor];
-        _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
-                                                     lectures:_activedTimeTable[@"lectures"]
-                                                sectionTitles:[_dataManager daySectionTitles]
-                                                    timeStart:[_activedTimeTable[@"timeStart"] integerValue]
-                                                      timeEnd:[_activedTimeTable[@"timeEnd"] integerValue]];
+        _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero timetable:_activedTimeTable];
         [self.view addSubview:_timeTableView];
         
         [self initialize];
@@ -73,13 +71,10 @@
 
 #pragma mark - Setter
 
-- (void)setActivedTimeTable:(NSDictionary *)activedTimeTable
+- (void)setActivedTimeTable:(TimeTableObject *)activedTimeTable
 {
     _activedTimeTable = activedTimeTable;
-    _timeTableView.lectures = _activedTimeTable[@"lectures"];
-    _timeTableView.sectionTitles = [_dataManager daySectionTitles];
-    _timeTableView.timeStart = [_activedTimeTable[@"timeStart"] integerValue];
-    _timeTableView.timeEnd = [_activedTimeTable[@"timeEnd"] integerValue];
+    _timeTableView.timetable = activedTimeTable;
     [_timeTableView setNeedsDisplay];
 }
 

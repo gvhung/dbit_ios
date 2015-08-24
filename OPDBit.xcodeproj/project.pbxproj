@@ -56,6 +56,10 @@
 		B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DA1AAC5892002D6983 /* TimeTableCell.m */; };
 		B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
 		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
+		B5B597EB1B8B5C6B00DE6526 /* TimeTableViewForWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */; };
+		B5B597F41B8B5F0000DE6526 /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
+		B5B597F51B8B5F0600DE6526 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B5B597F61B8B5F1000DE6526 /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
 		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
 		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
 		C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */; };
@@ -172,6 +176,8 @@
 		B59682DE1AAC69CE002D6983 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		B59682E31AAC6DC2002D6983 /* AddTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTimeTableViewController.h; sourceTree = "<group>"; };
 		B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B5B597E91B8B5C6B00DE6526 /* TimeTableViewForWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeTableViewForWidget.h; path = View/TimeTableViewForWidget.h; sourceTree = "<group>"; };
+		B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeTableViewForWidget.m; path = View/TimeTableViewForWidget.m; sourceTree = "<group>"; };
 		B5FF49891B321F7A00E411B1 /* ShowLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowLectureViewController.h; sourceTree = "<group>"; };
 		B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowLectureViewController.m; sourceTree = "<group>"; };
 		C148A5E71B63EA7C005167E8 /* ServerSemesterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerSemesterObject.h; sourceTree = "<group>"; };
@@ -224,6 +230,7 @@
 				B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */,
 				B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */,
 				B51438481ACFCA7A00EED7A5 /* Supporting Files */,
+				B5B597EC1B8B5C7500DE6526 /* View */,
 			);
 			path = TimeTableWidget;
 			sourceTree = "<group>";
@@ -612,6 +619,15 @@
 			name = ServerSemester;
 			sourceTree = "<group>";
 		};
+		B5B597EC1B8B5C7500DE6526 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5B597E91B8B5C6B00DE6526 /* TimeTableViewForWidget.h */,
+				B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		B5FF49881B321F6A00E411B1 /* ShowLecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -848,6 +864,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B597F61B8B5F1000DE6526 /* LectureDetailView.m in Sources */,
+				B5B597F41B8B5F0000DE6526 /* UIFont+OPTheme.m in Sources */,
+				B5B597F51B8B5F0600DE6526 /* UIColor+OPTheme.m in Sources */,
+				B5B597EB1B8B5C6B00DE6526 /* TimeTableViewForWidget.m in Sources */,
 				B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

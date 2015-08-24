@@ -27,7 +27,6 @@
 
 - (void)setDefaultProperties
 {
-    self.ulid = -1;
     self.lectureLocation = @"";
     self.timeStart = -1;
     self.timeEnd = -1;

@@ -192,7 +192,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
-        [_dataManager deleteLectureWithUlid:lectureDetail.ulid];
+        [_dataManager deleteLectureWithUlid:lectureDetail.lecture.ulid];
 //        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
         
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];

@@ -298,7 +298,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 {
     LectureDetailObject *newLectureDetail = [[LectureDetailObject alloc] init];
     [newLectureDetail setDefaultProperties];
-    newLectureDetail.ulid = _lecture.ulid;
     [_lectureDetails addObject:newLectureDetail];
     
     NSIndexPath *newCellIndexPath = [NSIndexPath indexPathForRow:_lectureDetails.count-1 inSection:1];
