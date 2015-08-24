@@ -239,11 +239,6 @@
 - (void)setLectureDetailIndex:(NSInteger)lectureDetailIndex
 {
     _lectureDetailIndex = lectureDetailIndex;
-    _lectureLocationField.tag = lectureDetailIndex;
-    _timeStartButton.tag = lectureDetailIndex;
-    _timeEndButton.tag = -(lectureDetailIndex);
-    _daySegmentedControl.tag = lectureDetailIndex;
-    
     _titleLabel.text = [self titleString];
 }
 
@@ -271,7 +266,7 @@
 
 - (NSString *)titleString
 {
-    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex];
+    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex+1];
 }
 
 - (NSString *)lectureLocation

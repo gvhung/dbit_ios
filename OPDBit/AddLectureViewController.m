@@ -246,8 +246,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell
 {
-    NSIndexPath *detailCellIndexPath = [_tableView indexPathForCell:addLectureDetailCell];
-    _timePickerViewController.datePicker.tag = detailCellIndexPath.row;
     [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
         NSInteger selectedStartTime = [[_dateFormatter stringFromDate:aDate] integerValue];
         NSInteger index = addLectureDetailCell.lectureDetailIndex;
@@ -255,7 +253,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         LectureDetailObject *lectureDetail = _lectureDetails[index];
         NSInteger endTime = lectureDetail.timeEnd;
         
-        if (endTime && selectedStartTime < endTime) {
+        if (endTime && selectedStartTime > endTime) {
 //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
@@ -270,8 +268,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell
 {
-    NSIndexPath *detailCellIndexPath = [_tableView indexPathForCell:addLectureDetailCell];
-    _timePickerViewController.datePicker.tag = -(detailCellIndexPath.row);
     [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
         NSInteger selectedEndTime = [[_dateFormatter stringFromDate:aDate] integerValue];
         NSInteger index = addLectureDetailCell.lectureDetailIndex;

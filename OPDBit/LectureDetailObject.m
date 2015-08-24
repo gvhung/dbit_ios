@@ -28,9 +28,9 @@
 - (void)setDefaultProperties
 {
     self.lectureLocation = @"";
-    self.timeStart = -1;
-    self.timeEnd = -1;
-    self.day = -1;
+    self.timeStart = 0;
+    self.timeEnd = 0;
+    self.day = 0;
 }
 
 - (LectureObject *)lecture
