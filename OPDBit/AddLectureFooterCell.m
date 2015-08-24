@@ -35,7 +35,9 @@
     [_addLectureDetailButton setTitle:@"수업 추가" forState:UIControlStateNormal];
     [_addLectureDetailButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
     _addLectureDetailButton.titleLabel.font = [UIFont op_title];
-    [_addLectureDetailButton addTarget:self.delegate action:@selector(addLectureDetailAction) forControlEvents:UIControlEventTouchUpInside];
+    [_addLectureDetailButton addTarget:self
+                                action:@selector(addLectureDetailAction)
+                      forControlEvents:UIControlEventTouchUpInside];
     
     [self.contentView addSubview:_addLectureDetailButton];
     [self makeAutoLayoutConstraints];
@@ -46,6 +48,15 @@
     [_addLectureDetailButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.contentView).insets(UIEdgeInsetsMake(5, 5, 5, 5));
     }];
+}
+
+#pragma mark - Action
+
+- (void)addLectureDetailAction
+{
+    if ([_delegate respondsToSelector:@selector(addLectureFooterCellDidTapped:)]) {
+        [_delegate addLectureFooterCellDidTapped:self];
+    }
 }
 
 @end

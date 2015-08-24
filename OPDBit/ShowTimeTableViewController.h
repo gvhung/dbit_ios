@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class TimeTableObject;
+
 @interface ShowTimeTableViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary *activedTimeTable;
+@property (nonatomic, strong) TimeTableObject *activedTimeTable;
 
 - (id)init;
 

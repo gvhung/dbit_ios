@@ -8,22 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class TimeTableObject;
+
 @interface TimeTableView : UIView
 
-/**
- *  Section Titles
- */
-@property (nonatomic, strong) NSArray *sectionTitles;
+@property (strong, nonatomic) TimeTableObject *timetable;
 
-@property (nonatomic, strong) NSArray *lectures;
-
-@property (nonatomic) NSInteger timeStart;
-@property (nonatomic) NSInteger timeEnd;
-
-- (id)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
-
-- (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd;
-- (id)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable;
+- (instancetype)initWithFrame:(CGRect)frame;
 
 - (void)drawLines;
 

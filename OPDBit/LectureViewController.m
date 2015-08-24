@@ -8,16 +8,23 @@
 
 #import "AppDelegate.h"
 
+// Controller
 #import "LectureViewController.h"
-#import "LectureTableViewCell.h"
 #import "AddLectureViewController.h"
-#import "DataManager.h"
 
+// Utility
+#import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "TimeTableObject.h"
+
+// View
+#import "LectureTableViewCell.h"
+
+// Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
 
 @interface LectureViewController ()
 
@@ -25,6 +32,8 @@
 @property (nonatomic, strong) UILabel *emptyLabel;
 
 @property (nonatomic, strong) DataManager *dataManager;
+
+@property (nonatomic, strong) RLMArray *lectureDetails;
 
 @end
 
@@ -39,6 +48,8 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     self = [super init];
     if (self) {
         _dataManager = [DataManager sharedInstance];
+        
+        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
         [self initialize];
     }
     return self;
@@ -46,7 +57,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (void)initialize
 {
-    [self setTitle:_dataManager.activedTimeTable[@"timeTableName"]];
+    [self setTitle:_dataManager.activedTimeTable.timeTableName];
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -141,7 +152,12 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     LectureTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LectureCellIdentifier];
     if (!cell)
         cell = [[LectureTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LectureCellIdentifier];
-    cell.lectureDetailDictionary = _lectureDetails[indexPath.row];
+    
+    LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
+    NSLog(@"lectureDetail: %@", lectureDetail);
+    cell.lectureDetail = lectureDetail;
+    cell.lecture = [lectureDetail lecture];
+
     return cell;
 }
 
@@ -161,9 +177,10 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    LectureTableViewCell *cell = (LectureTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     
     AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
-    editLectureViewController.ulidToEdit = [_lectureDetails[indexPath.row][@"ulid"] integerValue];
+    editLectureViewController.lecture = cell.lecture;
     [self.navigationController pushViewController:editLectureViewController animated:YES];
 }
 
@@ -174,8 +191,10 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_dataManager deleteLectureWithUlid:[_lectureDetails[indexPath.row][@"ulid"] integerValue]];
-        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
+        LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
+        [_dataManager deleteLectureWithUlid:lectureDetail.lecture.ulid];
+//        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
+        
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
         if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
         _daySegmentedControl.sectionTitles = [_dataManager daySectionTitles];
@@ -192,8 +211,9 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 
 #pragma mark - Setter
 
-- (void)setLectureDetails:(NSArray *)lectureDetails
+- (void)setLectureDetails:(RLMArray *)lectureDetails
 {
+
     _lectureDetails = lectureDetails;
     [self hideTableView:[self lectureDetailsAreEmpty]];
 }
@@ -219,7 +239,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)addLectureAction
 {
     if (_dataManager.activedTimeTable == nil) {
-        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+//        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
         return;
     }
     

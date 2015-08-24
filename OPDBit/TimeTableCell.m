@@ -6,16 +6,20 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+// View
 #import "TimeTableCell.h"
+
+// Utility
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
-#import "DataManager.h"
 
+// Model
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
 
 @interface TimeTableCell ()
-
-@property (nonatomic, strong) DataManager *dataManager;
 
 @property (nonatomic, strong) UIImageView *switchImageView;
 
@@ -33,9 +37,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _dataManager = [DataManager sharedInstance];
-        
-        _timeTableDictionary = [[NSDictionary alloc] init];
+        _timeTable = [[TimeTableObject alloc] init];
         
         _switchImageView = [[UIImageView alloc] init];
         
@@ -112,23 +114,20 @@
 
 #pragma mark - Setter
 
-- (void)setTimeTableDictionary:(NSDictionary *)timeTableDictionary
+- (void)setTimeTable:(TimeTableObject *)timeTable
 {
-    _timeTableDictionary = timeTableDictionary;
+    _timeTable = timeTable;
     
-    UIImage *switchImage = ([timeTableDictionary[@"active"] integerValue]) ? [UIImage imageNamed:@"on.png"] : [UIImage imageNamed:@"off.png"];
-    _switchImageView.image = switchImage;
+    NSString *switchImageName = (timeTable.active) ? @"on.png" : @"off.png";
+    _switchImageView.image = [UIImage imageNamed:switchImageName];
     
-    _timeTableNameLabel.text = timeTableDictionary[@"timeTableName"];
-    if ([timeTableDictionary[@"serverId"] integerValue] == -1) {
-        _serverTimeTableNameLabel.text = @"서버 연동 시간표가 없습니다.";
+    _timeTableNameLabel.text = timeTable.timeTableName;
+    if (!timeTable.serverSemesterObject) {
+        _serverTimeTableNameLabel.text = @"유드림스와 연결되어 있지 않음";
     } else {
-        NSDictionary *serverTimeTableDictionary = [_dataManager serverTimeTableWithId:[timeTableDictionary[@"serverId"] integerValue]];
-        NSString *schoolName = [_dataManager schoolNameWithServerTimeTableId:[timeTableDictionary[@"serverId"] integerValue]];
-        NSString *semesterName = [_dataManager semesterString:serverTimeTableDictionary[@"semester"]];
-        _serverTimeTableNameLabel.text = [NSString stringWithFormat:@"%@ : %@", schoolName, semesterName];
+        _serverTimeTableNameLabel.text = timeTable.serverSemesterObject.semesterName;
     }
-    _subLabel.text = ([timeTableDictionary[@"active"] integerValue]) ? @"기본 시간표" : @"활성화 되지 않은 시간표";
+    _subLabel.text = (timeTable.active) ? @"기본 시간표" : @"활성화 되지 않은 시간표";
 }
 
 @end

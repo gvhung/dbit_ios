@@ -6,17 +6,27 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class SearchLectureViewController;
+@class ServerSemesterObject;
+@class LectureObject;
+
 #import <UIKit/UIKit.h>
-#import "AddLectureViewController.h"
+#import <Realm/Realm.h>
+
+@protocol SearchLectureViewControllerDelegate <NSObject>
+
+- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject;
+
+@end
 
 @interface SearchLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, strong) AddLectureViewController *delegate;
+@property (nonatomic, weak) id<SearchLectureViewControllerDelegate> delegate;
 
-@property (nonatomic, strong) NSArray *serverLectures;
-
+@property (nonatomic, strong) ServerSemesterObject *serverSemester;
+@property (nonatomic, strong) LectureObject *currentLecture;
 @property (nonatomic, strong) UITableView *tableView;
 
-- (instancetype)init;
+- (instancetype)initWithLecture:(LectureObject *)lecture;
 
 @end

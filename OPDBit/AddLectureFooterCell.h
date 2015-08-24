@@ -6,12 +6,19 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class AddLectureFooterCell;
+
 #import <UIKit/UIKit.h>
-#import "AddLectureViewController.h"
+
+@protocol AddLectureFooterCellDelegate <NSObject>
+
+- (void)addLectureFooterCellDidTapped:(AddLectureFooterCell *)addLectureFooterCell;
+
+@end
 
 @interface AddLectureFooterCell : UITableViewCell
 
-@property (nonatomic, strong) AddLectureViewController *delegate;
+@property (nonatomic, weak) id<AddLectureFooterCellDelegate> delegate;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 

@@ -15,19 +15,11 @@
 
 + (NetworkManager *)sharedInstance;
 
+- (void)getServerSemestersWithCompletion:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure;
 
-// 학교목록 가져오기
-- (void)getServerSchoolsWithCompletion:(void (^)(id response))success
-                               failure:(void (^)(NSError *error))failure;
-
-// 학기목록 가져오기
-- (void)getServerTimeTableWithWithSchoolID:(NSInteger)schoolId
-                                completion:(void (^)(id response))success
-                                   failure:(void (^)(NSError *error))failure;
-
-// 학기별로 강의목록 가져오기
-- (void)getServerLecturesWithTimeTableID:(NSInteger)timeTableId
-                         completion:(void (^)(id response))success
-                            failure:(void (^)(NSError *error))failure;
+- (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                             completion:(void (^)(id response))success
+                                failure:(void (^)(NSError *error))failure;
 
 @end

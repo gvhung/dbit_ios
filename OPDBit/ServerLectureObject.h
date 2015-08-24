@@ -20,15 +20,27 @@
  NSString *lectureDaytime : 강의요일 / 강의시간
  
  */
+static NSString * const ServerLectureObjectID  = @"ServerLectureObject";
 
 @interface ServerLectureObject : RLMObject
 
-@property NSInteger timeTableId;
-@property NSString *lectureProf;
-@property NSString *lectureCode;
+@property NSInteger semesterID;
 @property NSString *lectureName;
+@property NSString *lectureKey;    // lectureCode 학수번호
+@property NSString *lectureProf;
 @property NSString *lectureLocation;
 @property NSString *lectureDaytime;
+
+// Addtional Meta Data
+@property NSString *lectureCourse;
+@property NSString *lectureType;
+@property NSString *lectureEtc;
+@property NSString *lectureLanguage;
+@property NSInteger lecturePoint;
+@property NSInteger lectureCampus;
+@property NSInteger serverLectureID;
+
+- (void)setPropertiesWithResponse:(NSDictionary *)response;
 
 @end
 

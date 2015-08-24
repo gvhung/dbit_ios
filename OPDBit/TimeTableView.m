@@ -12,7 +12,18 @@
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+#import "LectureObject.h"
+#import "TimeTableObject.h"
+#import <Realm/Realm.h>
+
 @interface TimeTableView ()
+
+@property (nonatomic, strong) NSArray *sectionTitles;
+
+@property (nonatomic, strong) RLMArray<LectureObject> *lectures;
+
+@property (nonatomic) NSInteger timeStart;
+@property (nonatomic) NSInteger timeEnd;
 
 @property (nonatomic) NSInteger blockStart;
 @property (nonatomic) NSInteger blockEnd;
@@ -30,8 +41,37 @@ static CGFloat SectionHeadHeight = 30.0f;
 static CGFloat TimeHeadWidth = 20.0f;
 static CGFloat LineWidth = 0.5f;
 
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
+        NSArray *sections = (timetable.workAtWeekend) ? @[@"월", @"화", @"수", @"목", @"금"] : @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
+        
+        self.sectionTitles = sections;
+        self.lectures = timetable.lectures;
+        
+        self.timeStart = timetable.timeStart;
+        self.timeEnd = timetable.timeEnd;
+        self.timeBlockCount = [self timeBlockCount];
+        
+        [self initializeLayout];
+    }
+    return self;
+}
 
-- (id)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
+- (instancetype)initForWidgetWithFrame:(CGRect)frame timetable:(NSDictionary *)timetable
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+    }
+    return self;
+}
+
+/*
+- (instancetype)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -48,24 +88,7 @@ static CGFloat LineWidth = 0.5f;
     }
     return self;
 }
-
-- (id)initWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor op_background];
-        
-        self.sectionTitles = sectionTitles;
-        self.lectures = lectures;
-        
-        self.timeStart = timeStart;
-        self.timeEnd = timeEnd;
-        self.timeBlockCount = [self timeBlockCount];
-        
-        [self initializeLayout];
-    }
-    return self;
-}
+*/
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -79,7 +102,7 @@ static CGFloat LineWidth = 0.5f;
                                                    object:nil];
         
         _sectionTitles = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
-        _lectures = [[NSArray alloc] init];
+        _lectures = nil;
         
         _timeStart = 800;
         _timeEnd = 2000;
@@ -95,26 +118,25 @@ static CGFloat LineWidth = 0.5f;
     _sectionWidth = (self.frame.size.width-TimeHeadWidth)/_sectionTitles.count;
     _timeHeight = (self.frame.size.height-SectionHeadHeight)/_timeBlockCount;
     
-    for (NSDictionary *lectureDictionary in _lectures) {
-        for (NSDictionary *lectureDetailDictionary in lectureDictionary[@"lectureDetails"]) {
-            
-            NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue] - _timeStart;
+    for (LectureObject *lecture in _lectures) {
+        for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+            NSInteger convertedStartTime = lectureDetail.timeStart - _timeStart;
             CGFloat startHours = convertedStartTime/100;
             CGFloat startMinutes = convertedStartTime%100;
             
-            NSInteger convertedEndTime = [lectureDetailDictionary[@"timeEnd"] integerValue] - [lectureDetailDictionary[@"timeStart"] integerValue];
+            NSInteger convertedEndTime = lectureDetail.timeEnd - lectureDetail.timeStart;
             CGFloat endHours = convertedEndTime/100;
             CGFloat endMinutes = convertedEndTime%100;
             
-            CGFloat x = TimeHeadWidth + _sectionWidth*[lectureDetailDictionary[@"day"] integerValue];
-            CGFloat y = SectionHeadHeight + _timeHeight*(startHours + startMinutes/60);
+            CGFloat x = TimeHeadWidth + _sectionWidth * lectureDetail.day;
+            CGFloat y = SectionHeadHeight + _timeHeight * (startHours + startMinutes/60);
             CGFloat height = _timeHeight*(endHours + endMinutes/60);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
             LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
-                                                                                      theme:[lectureDictionary[@"theme"] integerValue]
-                                                                                lectureName:lectureDictionary[@"lectureName"]
-                                                                            lectureLocation:lectureDetailDictionary[@"lectureLocation"]];
+                                                                                      theme:lecture.theme
+                                                                                lectureName:lecture.lectureName
+                                                                            lectureLocation:lectureDetail.lectureLocation];
             [self addSubview:lectureDetailView];
         }
     }
@@ -122,6 +144,14 @@ static CGFloat LineWidth = 0.5f;
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    NSArray *sections = (_timetable.workAtWeekend) ? @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"] : @[@"월", @"화", @"수", @"목", @"금"];
+    
+    self.sectionTitles = sections;
+    self.lectures = _timetable.lectures;
+    
+    self.timeStart = _timetable.timeStart;
+    self.timeEnd = _timetable.timeEnd;
+
     [self drawLines];
 }
 

@@ -14,7 +14,7 @@
 #import <Masonry/Masonry.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
 
-@interface AddLectureDetailCell ()
+@interface AddLectureDetailCell () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *lectureLocationLabel;
@@ -85,10 +85,7 @@
     [_lectureLocationField setAutocorrectionType:UITextAutocorrectionTypeNo];
     _lectureLocationField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _lectureLocationField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [_lectureLocationField addTarget:self.delegate
-                              action:@selector(textFieldDidChanged:)
-                    forControlEvents:UIControlEventEditingChanged];
-    
+    _lectureLocationField.delegate = self;
     
     NSArray *sectionTitles = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
     _daySegmentedControl.sectionTitles = sectionTitles;
@@ -103,20 +100,24 @@
     _daySegmentedControl.selectionStyle = HMSegmentedControlSelectionStyleBox;
     _daySegmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     _daySegmentedControl.selectionIndicatorBoxOpacity = 0;
-    [_daySegmentedControl addTarget:self.delegate action:@selector(segmentedControlDidChanged:) forControlEvents:UIControlEventValueChanged];
+    [_daySegmentedControl addTarget:self
+                             action:@selector(segmentedControlDidChanged:)
+                   forControlEvents:UIControlEventValueChanged];
 
     [_timeStartButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
     _timeStartButton.titleLabel.font = [UIFont op_title];
     _timeStartButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_timeStartButton addTarget:self.delegate
-                         action:@selector(timeButtonTapped:)
+    _timeStartButton.tag = 1;
+    [_timeStartButton addTarget:self
+                         action:@selector(timeButtonAction:)
                forControlEvents:UIControlEventTouchUpInside];
     
     [_timeEndButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
     _timeEndButton.titleLabel.font = [UIFont op_title];
     _timeEndButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_timeEndButton addTarget:self.delegate
-                         action:@selector(timeButtonTapped:)
+    _timeEndButton.tag = 2;
+    [_timeEndButton addTarget:self
+                         action:@selector(timeButtonAction:)
                forControlEvents:UIControlEventTouchUpInside];
     
     _separator.backgroundColor = [UIColor op_dividerDark];
@@ -200,6 +201,39 @@
     }];
 }
 
+#pragma mark - Text Field Delegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if ([_delegate respondsToSelector:@selector(addLectureDetailCell:didChangedLocation:)]) {
+        [_delegate addLectureDetailCell:self didChangedLocation:textField.text];
+    }
+}
+
+#pragma mark - Segmented control delegate
+
+- (void)segmentedControlDidChanged:(HMSegmentedControl *)segmentedControl
+{
+    if ([_delegate respondsToSelector:@selector(addLectureDetailCell:didChangedDay:)]) {
+        [_delegate addLectureDetailCell:self didChangedDay:segmentedControl.selectedSegmentIndex];
+    }
+}
+
+#pragma mark - Action
+
+- (void)timeButtonAction:(UIButton *)button
+{
+    if (button.tag == 1) {
+        if ([_delegate respondsToSelector:@selector(addLectureDetailCellDidTappedTimeStartButton:)]) {
+            [_delegate addLectureDetailCellDidTappedTimeStartButton:self];
+        }
+    } else if (button.tag == 2) {
+        if ([_delegate respondsToSelector:@selector(addLectureDetailCellDidTappedTimeEndButton:)]) {
+            [_delegate addLectureDetailCellDidTappedTimeEndButton:self];
+        }
+    }
+}
+
 #pragma mark - Setter
 
 - (void)setLectureDetailIndex:(NSInteger)lectureDetailIndex
@@ -237,7 +271,7 @@
 
 - (NSString *)titleString
 {
-    return [NSString stringWithFormat:@"수업 %d", _lectureDetailIndex];
+    return [NSString stringWithFormat:@"수업 %ld", _lectureDetailIndex];
 }
 
 - (NSString *)lectureLocation

@@ -8,6 +8,7 @@
 
 #import <Realm/Realm.h>
 #import "LectureObject.h"
+#import "ServerSemesterObject.h"
 
 /*
  
@@ -33,24 +34,32 @@
  
  */
 
+/**
+ *  Realm Array를 초기화할 때 사용할 키입니다.
+ */
+static NSString * const TimeTableObjectID = @"TimeTableObject";
+
+
+/**
+ *  TimeTable을 감싸는 모델입니다.
+ *  properties : utid, timeTableName, timeStart, timeEnd, active, workAtWeekend, serverSemesterObject, lectures
+ */
 @interface TimeTableObject : RLMObject
 
+/**
+ *  TimeTable의 고유 ID입니다.
+ */
 @property NSInteger utid;
 @property NSString *timeTableName;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
-@property NSInteger serverId;
-
-@property RLMArray<LectureObject> *lectures;
 @property BOOL active;
+@property BOOL workAtWeekend;
 
-@property BOOL mon;
-@property BOOL tue;
-@property BOOL wed;
-@property BOOL thu;
-@property BOOL fri;
-@property BOOL sat;
-@property BOOL sun;
+@property ServerSemesterObject *serverSemesterObject;
+@property RLMArray<LectureObject> *lectures;
+
+- (void)setDefaultProperties;
 
 @end
 

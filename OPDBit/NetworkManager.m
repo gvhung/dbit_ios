@@ -30,31 +30,13 @@
     return shared;
 }
 
-- (void)getServerSchoolsWithCompletion:(void (^)(id response))success
-                               failure:(void (^)(NSError *error))failure
+- (void)getServerSemestersWithCompletion:(void (^)(id response))success
+                                 failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
     NSString *url = [SERVER_URL stringByAppendingString:SEMESTER];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-//        success(responseObject);
-        [self statusBarIndicator:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
-        [self statusBarIndicator:NO];
-    }];
-}
-
-// 학기목록 가져오기
-- (void)getServerTimeTableWithWithSchoolID:(NSInteger)schoolId
-                                completion:(void (^)(id response))success
-                                   failure:(void (^)(NSError *error))failure
-{
-    [self statusBarIndicator:YES];
-    NSString *parameter = [NSString stringWithFormat:@"/%ld", schoolId];
-    NSString *url = [[SERVER_URL stringByAppendingString:SEMESTER]
-                                  stringByAppendingString:parameter];
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ServerSemesters:\n%@", responseObject);
         success(responseObject);
         [self statusBarIndicator:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -63,16 +45,16 @@
     }];
 }
 
-// 학기별로 강의목록 가져오기
-- (void)getServerLecturesWithTimeTableID:(NSInteger)timeTableId
-                               completion:(void (^)(id response))success
-                                  failure:(void (^)(NSError *error))failure
+- (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                             completion:(void (^)(id response))success
+                                failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *parameter = [NSString stringWithFormat:@"/%ld", timeTableId];
+    NSString *parameter = [NSString stringWithFormat:@"/%ld", semesterID];
     NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
                                  stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"ServerLectures:\n%@", responseObject);
         success(responseObject);
         [self statusBarIndicator:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

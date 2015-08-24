@@ -6,9 +6,10 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class ServerLectureObject;
+
 #import <Realm/Realm.h>
 #import "LectureDetailObject.h"
-
 
 /**
  * 수업을 저장하기 위한 RealmObject
@@ -19,6 +20,8 @@
  * @param   theme   시계 색깔 (테마) (NSInteger)
  */
 
+static NSString * const LectureObjectID = @"LectureObject";
+
 @interface LectureObject : RLMObject
 
 @property NSInteger ulid;
@@ -26,6 +29,9 @@
 @property NSString *lectureName;
 
 @property NSInteger theme;
+
+- (void)setDefaultProperties;
+- (void)lectureFromServerLecture:(ServerLectureObject *)serverLecture;
 
 @end
 

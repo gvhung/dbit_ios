@@ -8,22 +8,29 @@
 
 #import "AppDelegate.h"
 
+
+// Controller
 #import "TimeTableViewController.h"
 #import "TimeTableCell.h"
 #import "AddTimeTableViewController.h"
-#import "ServerTimeTableViewController.h"
+#import "ServerSemesterViewController.h"
 #import "LectureViewController.h"
-#import "DataManager.h"
 
+// Utility
 #import "UIFont+OPTheme.h"
 #import "UIColor+OPTheme.h"
+#import "DataManager.h"
 
+// Model
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
+#import <Realm/Realm.h>
 
 @interface TimeTableViewController ()
 
-@property (nonatomic, strong) NSArray *timeTables;
+@property (nonatomic, strong) RLMArray *timeTables;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
@@ -40,7 +47,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     self = [super init];
     if (self) {
         _dataManager = [DataManager sharedInstance];
-        _timeTables = [[NSArray alloc] init];
+        _timeTables = [[RLMArray alloc] initWithObjectClassName:TimeTableObjectID];
         [self initialize];
     }
     return self;
@@ -115,9 +122,11 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TimeTableCell *cell = [tableView dequeueReusableCellWithIdentifier:TimeTableCellIdentifier forIndexPath:indexPath];
-    if (!cell)
+    if (!cell) {
         cell = [[TimeTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeTableCellIdentifier];
-    cell.timeTableDictionary = _timeTables[indexPath.row];
+    }
+    
+    cell.timeTable = _timeTables[indexPath.row];
     
     return cell;
 }
@@ -128,7 +137,9 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [_dataManager setActiveWithUtid:[_timeTables[indexPath.row][@"utid"] integerValue]];
+    TimeTableObject *timeTable = _timeTables[indexPath.row];
+    
+    [_dataManager setActiveWithUtid:timeTable.utid];
     self.timeTables = [_dataManager timeTables];
     
     LectureViewController *lectureViewController = [[LectureViewController alloc] init];
@@ -152,8 +163,9 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_dataManager deleteTimeTableWithUtid:[_timeTables[indexPath.row][@"utid"] integerValue]];
-        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+        TimeTableObject *timeTableToDelete = _timeTables[indexPath.row];
+        [_dataManager deleteTimeTableWithUtid:timeTableToDelete.utid];
+//        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
         self.timeTables = [_dataManager timeTables];
     }
 }
@@ -165,13 +177,14 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     CGPoint p = [gestureRecognizer locationInView:_tableView];
     
     NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:p];
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
-        [self editTimeTableWithId:[_timeTables[indexPath.row][@"utid"] integerValue]];
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self editTimeTableWithIndexPath:indexPath];
+    }
 }
 
 #pragma mark - Setter
 
-- (void)setTimeTables:(NSArray *)timeTables
+- (void)setTimeTables:(RLMArray *)timeTables
 {
     _timeTables = timeTables;
     [self hideTableView:[self timeTablesAreEmpty]];
@@ -196,8 +209,8 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 
 - (void)downloadServerTimeTable
 {
-    ServerTimeTableViewController *serverTimeTableViewController = [[ServerTimeTableViewController alloc] init];
-    [self.navigationController pushViewController:serverTimeTableViewController animated:YES];
+    ServerSemesterViewController *serverSemesterViewController = [[ServerSemesterViewController alloc] init];
+    [self.navigationController pushViewController:serverSemesterViewController animated:YES];
 }
 
 - (void)addTimeTable
@@ -212,10 +225,10 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-- (void)editTimeTableWithId:(NSInteger)utid
+- (void)editTimeTableWithIndexPath:(NSIndexPath *)indexPath
 {
     AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
-    editTimeTableViewController.timeTableId = utid;
+    editTimeTableViewController.timeTable = _timeTables[indexPath.row];
     [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 

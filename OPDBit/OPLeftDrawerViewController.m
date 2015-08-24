@@ -12,12 +12,18 @@
 #import "LectureViewController.h"
 #import "ShowTimeTableViewController.h"
 #import "AppDelegate.h"
+
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
 
+// Model
+#import "LectureObject.h"
+#import "TimeTableObject.h"
+
+// Library
 #import <Masonry/Masonry.h>
-#import <KVNProgress/KVNProgress.h>
+//#import <KVNProgress/KVNProgress.h>
 
 @interface OPLeftDrawerViewController ()
 
@@ -113,13 +119,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
-        if ([_dataManager lecturesIsEmptyInActivedTimeTable]) {
-            [KVNProgress showErrorWithStatus:@"아직 수업이 없습니다!"];
+        if (!_dataManager.activedTimeTable.lectures) {
+//            [KVNProgress showErrorWithStatus:@"아직 수업이 없습니다!"];
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }
         if (!_dataManager.activedTimeTable) {
-            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+//            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }
@@ -128,7 +134,7 @@
     }
     if (indexPath.row == 1) {
         if (!_dataManager.activedTimeTable) {
-            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+//            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }

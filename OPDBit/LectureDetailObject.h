@@ -8,6 +8,8 @@
 
 #import <Realm/Realm.h>
 
+@class LectureObject;
+
 /*
  
  강의를 저장하기 위한 RealmObject
@@ -19,13 +21,18 @@
  
  */
 
+static NSString * const LectureDetailObjectID = @"LectureDetailObject";
+
 @interface LectureDetailObject : RLMObject
 
-@property NSInteger ulid;
 @property NSString *lectureLocation;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;
 @property NSInteger day;
+
+- (void)setDefaultProperties;
+- (LectureObject *)lecture;
+- (BOOL)isContainedWithUtid:(NSInteger)utid;
 
 @end
 

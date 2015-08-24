@@ -6,237 +6,67 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+@class TimeTableObject;
+@class ServerSemesterObject;
+@class ServerLectureObject;
+@class LectureObject;
+@class LectureDetailObject;
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Realm/Realm.h>
 
 @interface DataManager : NSObject
 
-@property (nonatomic, strong) NSDictionary *activedTimeTable;
+@property (nonatomic, strong) TimeTableObject *activedTimeTable;
 
 + (DataManager *)sharedInstance;
 
+- (void)migrateV1toV2;
+
 #pragma mark - Database Manage Method
 
-/**
- *
- */
+- (void)saveOrUpdateServerSemester:(ServerSemesterObject *)serverSemester
+                        completion:(void (^)(BOOL isUpdated))completion;
 
-- (void)saveServerSchoolsWithResponse:(NSArray *)response;
-
-/**
- *
- */
-
-- (void)saveServerTimeTablesWithResponse:(NSArray *)response;
-
-/**
- *
- */
-
-- (void)saveServerLecturesWithResponse:(NSArray *)response
-                     serverTimeTableId:(NSInteger)serverTimeTableId
-                                update:(void (^)(NSInteger progressIndex))update;
-
-/**
- *
- */
-
-- (void)saveTimeTableWithName:(NSString *)name
-                     serverId:(NSInteger)serverId
-                       active:(BOOL)active;
-
-/**
- *
- */
-
-- (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSInteger)theme
-                    lectureDetails:(NSArray *)lectureDetails;
-
-/**
- *
- */
-
-- (void)saveLectureWithLectureName:(NSString *)lectureName
-                             theme:(NSInteger)theme
-                    lectureDetails:(NSArray *)lectureDetails
-                              ulid:(NSInteger)ulid;
-
-/**
- *
- */
-
-- (void)saveLectureDetailWithUlid:(NSInteger)ulid
-                  lectureLocation:(NSString *)lectureLocation
-                          timeEnd:(NSInteger)timeEnd
-                        timeStart:(NSInteger)timeStart
-                              day:(NSInteger)day;
-
-/**
- *
- */
-
-- (void)updateTimeTableWithUtid:(NSInteger)utid
-                         name:(NSString *)name
-                     serverId:(NSInteger)serverId
-                       active:(BOOL)active
-                      failure:(void (^)(NSString *reason))failure;
-
-/**
- *
- */
-
-- (void)updateLectureWithUlid:(NSInteger)ulid
-                         name:(NSString *)name
-                        theme:(NSInteger)theme
-               lectureDetails:(NSArray *)lectureDetails;
-
-/**
- *
- */
+- (void)saveOrUpdateTimeTable:(TimeTableObject *)timeTableObject
+                   completion:(void (^)(BOOL isUpdated))completion;
+- (void)saveOrUpdateLectureWithLecture:(LectureObject *)lectureObject
+                        lectureDetails:(RLMArray *)lectureDetails
+                            completion:(void (^)(BOOL isUpdated))completion;
 
 - (void)deleteTimeTableWithUtid:(NSInteger)utid;
-
-/**
- *
- */
-
 - (void)deleteLectureWithUlid:(NSInteger)ulid;
 
 #pragma mark - Set Attributes
-
-/**
- *
- */
 
 - (void)setActiveWithUtid:(NSInteger)utid;
 
 #pragma mark - Get Objects
 
-/**
- *
- */
-
-- (NSArray *)downloadedTimeTables;
-
-/**
- *
- */
-
-- (NSArray *)serverTimeTablesWithSchoolId:(NSInteger)schoolId;
-
-/**
- *
- */
-
-- (NSArray *)schools;
-
-/**
- *
- */
-
-- (NSDictionary *)serverTimeTableWithId:(NSInteger)serverTimeTableId;
-
-/**
- *
- */
-
-- (NSArray *)timeTables;
-
-/**
- *
- */
-
-- (NSDictionary *)timeTableWithId:(NSInteger)timeTableId;
-
-/**
- *
- */
-
-- (NSArray *)serverLecturesWithServerTimeTableId:(NSInteger)serverTimeTableId;
-
-/**
- *
- */
-
-- (NSString *)schoolNameWithServerTimeTableId:(NSInteger)timeTableId;
-
-/**
- *
- */
-
-- (NSString *)semesterString:(NSString *)semester;
-
-/**
- *
- */
-
-- (NSDictionary *)lectureWithId:(NSInteger)ulid;
-
-/**
- *
- */
-
-- (BOOL)lectureDetailsAreDuplicatedOtherLectureDetails:(NSArray *)lectureDetails;
-
-/**
- * Lecture Details to display
- *
- *  @param  day day (ex. mon, tue, ...) to display Lecture Detail in active TimeTable
- *
- *  @return lectureName Lecture Name
- *  @return theme       Color Theme
- *  @return timeStart   Start time (NSInteger)
- *  @return timeEnd     End time (NSInteger)
- *  @return lectureLocation Lecture Location
- */
-
-- (NSArray *)lectureDetailsWithDay:(NSInteger)day;
-
-/**
- *
- */
-
+- (RLMArray *)savedServerSemesters;
+- (RLMArray *)timeTables;
+- (TimeTableObject *)timeTableWithUtid:(NSInteger)utid;
+- (RLMArray *)lectureDetailsWithDay:(NSInteger)day;
+- (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
+- (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
+- (LectureObject *)lectureWithUlid:(NSInteger)ulid;
+- (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
 - (NSArray *)daySectionTitles;
 
-/**
- *
- */
+#pragma mark - Convert
 
-- (BOOL)lecturesIsEmptyInActivedTimeTable;
++ (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className;
 
 #pragma mark - Lecture Theme
 
-/**
- *
- */
-
 + (NSInteger)lectureThemeCount;
-
-/**
- *
- */
-
 + (NSArray *)lectureThemeThumbnailArray;
-
-/**
- *
- */
-
 + (UIImage *)lectureThemeThumbnail:(NSInteger)themeId;
 
 #pragma mark - Time Convert Method
 
-/**
- *
- */
-
 + (NSString *)stringFromTimeInteger:(NSInteger)timeInteger;
-
-/**
- *
- */
-
 + (NSInteger)integerFromTimeString:(NSString *)timeString;
 
 @end

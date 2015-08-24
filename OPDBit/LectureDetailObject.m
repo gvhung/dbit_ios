@@ -6,6 +6,7 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
+#import "TimeTableObject.h"
 #import "LectureDetailObject.h"
 
 @implementation LectureDetailObject
@@ -23,5 +24,36 @@
 //{
 //    return @[];
 //}
+
+- (void)setDefaultProperties
+{
+    self.lectureLocation = @"";
+    self.timeStart = -1;
+    self.timeEnd = -1;
+    self.day = -1;
+}
+
+- (LectureObject *)lecture
+{
+    NSArray *lectures = [self linkingObjectsOfClass:@"LectureObject" forProperty:@"lectureDetails"];
+    if (lectures.count) {
+        return [lectures firstObject];
+    }
+    return nil;
+}
+
+- (BOOL)isContainedWithUtid:(NSInteger)utid
+{
+    NSArray *lectures = [self linkingObjectsOfClass:@"LectureObject" forProperty:@"lectureDetails"];
+    if (lectures.count) {
+        NSArray *timetables = [[lectures firstObject] linkingObjectsOfClass:@"TimeTableObject" forProperty:@"lectures"];
+        if (timetables.count) {
+            if (((TimeTableObject *)timetables[0]).utid == utid) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
 
 @end

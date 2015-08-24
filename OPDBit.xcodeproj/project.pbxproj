@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55B8495F730042A6986A0411 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
+		00CC235C5197B325A5DB3531 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC2BC34DD53E7F748851752 /* libPods.a */; };
 		B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */; };
 		B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */; };
 		B514384E1ACFCA7A00EED7A5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */; };
 		B51438511ACFCA7A00EED7A5 /* TimeTableWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B52C3E4D1AD02AE9001BB5B8 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */; };
 		B52C3E5A1AD04853001BB5B8 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4E1AD04853001BB5B8 /* done.png */; };
 		B52C3E5B1AD04853001BB5B8 /* done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E4F1AD04853001BB5B8 /* done@2x.png */; };
 		B52C3E5C1AD04853001BB5B8 /* done@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E501AD04853001BB5B8 /* done@3x.png */; };
@@ -26,7 +25,6 @@
 		B52C3E641AD04853001BB5B8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E581AD04853001BB5B8 /* search@2x.png */; };
 		B52C3E651AD04853001BB5B8 /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52C3E591AD04853001BB5B8 /* search@3x.png */; };
 		B533CE3D1ABD430300907A7C /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
-		B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */; };
 		B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */; };
 		B534EAD61AB43B3400EBE3EB /* SearchLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD51AB43B3400EBE3EB /* SearchLectureViewController.m */; };
 		B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAD91AB44D3800EBE3EB /* SearchLectureCell.m */; };
@@ -34,8 +32,6 @@
 		B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF41AB47DB100EBE3EB /* AddLectureFooterCell.m */; };
 		B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B534EAF71AB47DBF00EBE3EB /* AddLectureDetailCell.m */; };
 		B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
-		B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
-		B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
 		B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B281AECE5AE0096F39C /* Crashlytics.framework */; };
 		B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B291AECE5AE0096F39C /* Fabric.framework */; };
 		B593AA3E1ACC0BBA0063F09E /* on.png in Resources */ = {isa = PBXBuildFile; fileRef = B593AA3C1ACC0BBA0063F09E /* on.png */; };
@@ -47,7 +43,6 @@
 		B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827F1AAC2EB7002D6983 /* AppDelegate.m */; };
 		B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
 		B596828B1AAC2EB7002D6983 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59682891AAC2EB7002D6983 /* LaunchScreen.xib */; };
-		B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682961AAC2EB7002D6983 /* OPDBitTests.m */; };
 		B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682A11AAC314D002D6983 /* OPLeftDrawerViewController.m */; };
 		B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682A61AAC3378002D6983 /* OPLeftDrawerTableViewCell.m */; };
 		B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682AD1AAC3741002D6983 /* LectureViewController.m */; };
@@ -58,14 +53,17 @@
 		B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C11AAC4CDB002D6983 /* TimeTableObject.m */; };
 		B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */; };
 		B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D01AAC4E12002D6983 /* ServerLectureObject.m */; };
-		B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */; };
-		B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */; };
 		B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DA1AAC5892002D6983 /* TimeTableCell.m */; };
 		B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
 		B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */; };
-		B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */; };
-		B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */; };
+		B5B597EB1B8B5C6B00DE6526 /* TimeTableViewForWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */; };
+		B5B597F41B8B5F0000DE6526 /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
+		B5B597F51B8B5F0600DE6526 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
+		B5B597F61B8B5F1000DE6526 /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
 		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
+		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
+		C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */; };
+		C15F23D01B6CBF1E00AD707F /* ServerSemesterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,13 +73,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B51438441ACFCA7900EED7A5;
 			remoteInfo = TimeTableWidget;
-		};
-		B59682911AAC2EB7002D6983 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B596826F1AAC2EB7002D6983 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B59682761AAC2EB7002D6983;
-			remoteInfo = OPDBit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -101,14 +92,17 @@
 
 /* Begin PBXFileReference section */
 		36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4A89053A64E5402D645CE083 /* libPods-TimeTableWidget.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TimeTableWidget.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E83F81388747EA9A0AD5DEB /* Pods-TimeTableWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTableWidget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeTableWidget/Pods-TimeTableWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		7AC2BC34DD53E7F748851752 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B8A6D7AE42256B3A5516C5F /* libPods-OPDBit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OPDBit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A98C2A9EC3DA5D20904A1675 /* Pods-TimeTableWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeTableWidget.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeTableWidget/Pods-TimeTableWidget.release.xcconfig"; sourceTree = "<group>"; };
 		B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeTableWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51438491ACFCA7A00EED7A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B514384A1ACFCA7A00EED7A5 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		B51438551ACFCA8E00EED7A5 /* TimeTableWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TimeTableWidget.entitlements; sourceTree = "<group>"; };
-		B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KVNProgressView.xib; sourceTree = "<group>"; };
 		B52C3E4E1AD04853001BB5B8 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
 		B52C3E4F1AD04853001BB5B8 /* done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "done@2x.png"; sourceTree = "<group>"; };
 		B52C3E501AD04853001BB5B8 /* done@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "done@3x.png"; sourceTree = "<group>"; };
@@ -123,8 +117,6 @@
 		B52C3E591AD04853001BB5B8 /* search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@3x.png"; sourceTree = "<group>"; };
 		B533CE3B1ABD430300907A7C /* UIFont+OPTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+OPTheme.h"; sourceTree = "<group>"; };
 		B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+OPTheme.m"; sourceTree = "<group>"; };
-		B534EACD1AB43A2900EBE3EB /* ServerTimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableCell.h; sourceTree = "<group>"; };
-		B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableCell.m; sourceTree = "<group>"; };
 		B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AddLectureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddLectureViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B534EAD41AB43B3400EBE3EB /* SearchLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchLectureViewController.h; sourceTree = "<group>"; };
@@ -158,9 +150,6 @@
 		B596827F1AAC2EB7002D6983 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B59682871AAC2EB7002D6983 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B596828A1AAC2EB7002D6983 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OPDBitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B59682951AAC2EB7002D6983 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B59682961AAC2EB7002D6983 /* OPDBitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPDBitTests.m; sourceTree = "<group>"; };
 		B59682A01AAC314D002D6983 /* OPLeftDrawerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPLeftDrawerViewController.h; sourceTree = "<group>"; };
 		B59682A11AAC314D002D6983 /* OPLeftDrawerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPLeftDrawerViewController.m; sourceTree = "<group>"; };
 		B59682A51AAC3378002D6983 /* OPLeftDrawerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPLeftDrawerTableViewCell.h; sourceTree = "<group>"; };
@@ -181,22 +170,22 @@
 		B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureDetailObject.m; sourceTree = "<group>"; };
 		B59682CF1AAC4E12002D6983 /* ServerLectureObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerLectureObject.h; sourceTree = "<group>"; };
 		B59682D01AAC4E12002D6983 /* ServerLectureObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerLectureObject.m; sourceTree = "<group>"; };
-		B59682D21AAC4E1B002D6983 /* ServerSchoolObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerSchoolObject.h; sourceTree = "<group>"; };
-		B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerSchoolObject.m; sourceTree = "<group>"; };
-		B59682D51AAC4E27002D6983 /* ServerTimeTableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableObject.h; sourceTree = "<group>"; };
-		B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableObject.m; sourceTree = "<group>"; };
 		B59682D91AAC5892002D6983 /* TimeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableCell.h; sourceTree = "<group>"; };
 		B59682DA1AAC5892002D6983 /* TimeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableCell.m; sourceTree = "<group>"; };
 		B59682DD1AAC69CE002D6983 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		B59682DE1AAC69CE002D6983 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		B59682E31AAC6DC2002D6983 /* AddTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTimeTableViewController.h; sourceTree = "<group>"; };
 		B59682E41AAC6DC2002D6983 /* AddTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		B59682E71AAC7069002D6983 /* ServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTimeTableViewController.h; sourceTree = "<group>"; };
-		B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTimeTableViewController.m; sourceTree = "<group>"; };
-		B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DownloadServerTimeTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DownloadServerTimeTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B5B597E91B8B5C6B00DE6526 /* TimeTableViewForWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeTableViewForWidget.h; path = View/TimeTableViewForWidget.h; sourceTree = "<group>"; };
+		B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeTableViewForWidget.m; path = View/TimeTableViewForWidget.m; sourceTree = "<group>"; };
 		B5FF49891B321F7A00E411B1 /* ShowLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowLectureViewController.h; sourceTree = "<group>"; };
 		B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowLectureViewController.m; sourceTree = "<group>"; };
+		C148A5E71B63EA7C005167E8 /* ServerSemesterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerSemesterObject.h; sourceTree = "<group>"; };
+		C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerSemesterObject.m; sourceTree = "<group>"; };
+		C15F23CA1B6CBD6B00AD707F /* ServerSemesterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSemesterViewController.h; path = TimeTable/ServerTimeTable/ServerSemesterViewController.h; sourceTree = "<group>"; };
+		C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerSemesterViewController.m; path = TimeTable/ServerTimeTable/ServerSemesterViewController.m; sourceTree = "<group>"; };
+		C15F23CE1B6CBF1E00AD707F /* ServerSemesterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSemesterCell.h; path = TimeTable/ServerTimeTable/Cell/ServerSemesterCell.h; sourceTree = "<group>"; };
+		C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerSemesterCell.m; path = TimeTable/ServerTimeTable/Cell/ServerSemesterCell.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51438461ACFCA7A00EED7A5 /* NotificationCenter.framework in Frameworks */,
+				00CC235C5197B325A5DB3531 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,15 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
-				55B8495F730042A6986A0411 /* libPods.a in Frameworks */,
 				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B596828D1AAC2EB7002D6983 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +216,8 @@
 			children = (
 				FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */,
 				36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */,
+				6E83F81388747EA9A0AD5DEB /* Pods-TimeTableWidget.debug.xcconfig */,
+				A98C2A9EC3DA5D20904A1675 /* Pods-TimeTableWidget.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -246,6 +230,7 @@
 				B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */,
 				B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */,
 				B51438481ACFCA7A00EED7A5 /* Supporting Files */,
+				B5B597EC1B8B5C7500DE6526 /* View */,
 			);
 			path = TimeTableWidget;
 			sourceTree = "<group>";
@@ -289,8 +274,8 @@
 		B534EACC1AB43A1000EBE3EB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B534EACD1AB43A2900EBE3EB /* ServerTimeTableCell.h */,
-				B534EACE1AB43A2900EBE3EB /* ServerTimeTableCell.m */,
+				C15F23CE1B6CBF1E00AD707F /* ServerSemesterCell.h */,
+				C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -413,7 +398,6 @@
 			isa = PBXGroup;
 			children = (
 				B59682791AAC2EB7002D6983 /* OPDBit */,
-				B59682931AAC2EB7002D6983 /* OPDBitTests */,
 				B51438471ACFCA7A00EED7A5 /* TimeTableWidget */,
 				B59682781AAC2EB7002D6983 /* Products */,
 				50E9E19CC8AB086F75932C27 /* Pods */,
@@ -425,7 +409,6 @@
 			isa = PBXGroup;
 			children = (
 				B59682771AAC2EB7002D6983 /* OPDBit.app */,
-				B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */,
 				B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */,
 			);
 			name = Products;
@@ -436,7 +419,6 @@
 			children = (
 				B5530B281AECE5AE0096F39C /* Crashlytics.framework */,
 				B5530B291AECE5AE0096F39C /* Fabric.framework */,
-				B52C3E4C1AD02AE9001BB5B8 /* KVNProgressView.xib */,
 				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
 				B593AA401ACC3DB50063F09E /* TimeTableView */,
 				B53655C81ABCA8BD00626416 /* Theme */,
@@ -458,23 +440,6 @@
 				B593AA3B1ACC0BA90063F09E /* Resource */,
 				B596827B1AAC2EB7002D6983 /* Info.plist */,
 				B596827C1AAC2EB7002D6983 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B59682931AAC2EB7002D6983 /* OPDBitTests */ = {
-			isa = PBXGroup;
-			children = (
-				B59682961AAC2EB7002D6983 /* OPDBitTests.m */,
-				B59682941AAC2EB7002D6983 /* Supporting Files */,
-			);
-			path = OPDBitTests;
-			sourceTree = "<group>";
-		};
-		B59682941AAC2EB7002D6983 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B59682951AAC2EB7002D6983 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -518,7 +483,7 @@
 				B59682B01AAC374D002D6983 /* TimeTableViewController.m */,
 				B59682D81AAC586D002D6983 /* Cell */,
 				B59682E21AAC6D7E002D6983 /* AddTimeTable */,
-				B59682E61AAC7054002D6983 /* ServerTimeTable */,
+				B59682E61AAC7054002D6983 /* ServerSemester */,
 			);
 			name = TimeTable;
 			sourceTree = "<group>";
@@ -555,8 +520,7 @@
 		B59682BA1AAC4AC4002D6983 /* Realm Model */ = {
 			isa = PBXGroup;
 			children = (
-				B59682CE1AAC4E00002D6983 /* ServerTimeTable */,
-				B59682CD1AAC4DA9002D6983 /* ServerSchool */,
+				C148A5E31B63EA1C005167E8 /* ServerSemester */,
 				B59682CC1AAC4D82002D6983 /* ServerLecture */,
 				B59682BF1AAC4CBC002D6983 /* TimeTable */,
 				B59682BE1AAC4CB7002D6983 /* Lecture */,
@@ -599,24 +563,6 @@
 				B59682D01AAC4E12002D6983 /* ServerLectureObject.m */,
 			);
 			name = ServerLecture;
-			sourceTree = "<group>";
-		};
-		B59682CD1AAC4DA9002D6983 /* ServerSchool */ = {
-			isa = PBXGroup;
-			children = (
-				B59682D21AAC4E1B002D6983 /* ServerSchoolObject.h */,
-				B59682D31AAC4E1B002D6983 /* ServerSchoolObject.m */,
-			);
-			name = ServerSchool;
-			sourceTree = "<group>";
-		};
-		B59682CE1AAC4E00002D6983 /* ServerTimeTable */ = {
-			isa = PBXGroup;
-			children = (
-				B59682D51AAC4E27002D6983 /* ServerTimeTableObject.h */,
-				B59682D61AAC4E27002D6983 /* ServerTimeTableObject.m */,
-			);
-			name = ServerTimeTable;
 			sourceTree = "<group>";
 		};
 		B59682D81AAC586D002D6983 /* Cell */ = {
@@ -663,24 +609,23 @@
 			name = AddTimeTable;
 			sourceTree = "<group>";
 		};
-		B59682E61AAC7054002D6983 /* ServerTimeTable */ = {
+		B59682E61AAC7054002D6983 /* ServerSemester */ = {
 			isa = PBXGroup;
 			children = (
-				B59682E71AAC7069002D6983 /* ServerTimeTableViewController.h */,
-				B59682E81AAC7069002D6983 /* ServerTimeTableViewController.m */,
 				B534EACC1AB43A1000EBE3EB /* Cell */,
-				B59682EA1AAC7B1C002D6983 /* DownloadServerTimeTable */,
+				C15F23CA1B6CBD6B00AD707F /* ServerSemesterViewController.h */,
+				C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */,
 			);
-			name = ServerTimeTable;
+			name = ServerSemester;
 			sourceTree = "<group>";
 		};
-		B59682EA1AAC7B1C002D6983 /* DownloadServerTimeTable */ = {
+		B5B597EC1B8B5C7500DE6526 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B59682EB1AAC7B37002D6983 /* DownloadServerTimeTableViewController.h */,
-				B59682EC1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m */,
+				B5B597E91B8B5C6B00DE6526 /* TimeTableViewForWidget.h */,
+				B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */,
 			);
-			name = DownloadServerTimeTable;
+			name = View;
 			sourceTree = "<group>";
 		};
 		B5FF49881B321F6A00E411B1 /* ShowLecture */ = {
@@ -692,11 +637,22 @@
 			name = ShowLecture;
 			sourceTree = "<group>";
 		};
+		C148A5E31B63EA1C005167E8 /* ServerSemester */ = {
+			isa = PBXGroup;
+			children = (
+				C148A5E71B63EA7C005167E8 /* ServerSemesterObject.h */,
+				C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */,
+			);
+			name = ServerSemester;
+			sourceTree = "<group>";
+		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				7AC2BC34DD53E7F748851752 /* libPods.a */,
 				B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */,
+				9B8A6D7AE42256B3A5516C5F /* libPods-OPDBit.a */,
+				4A89053A64E5402D645CE083 /* libPods-TimeTableWidget.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -708,9 +664,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B51438521ACFCA7A00EED7A5 /* Build configuration list for PBXNativeTarget "TimeTableWidget" */;
 			buildPhases = (
+				411EE1B7BEFAEA6576CA28E0 /* Check Pods Manifest.lock */,
 				B51438411ACFCA7900EED7A5 /* Sources */,
 				B51438421ACFCA7900EED7A5 /* Frameworks */,
 				B51438431ACFCA7900EED7A5 /* Resources */,
+				446791ED04DB3D954610BEE0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -743,24 +701,6 @@
 			productReference = B59682771AAC2EB7002D6983 /* OPDBit.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B596828F1AAC2EB7002D6983 /* OPDBitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B596829D1AAC2EB7002D6983 /* Build configuration list for PBXNativeTarget "OPDBitTests" */;
-			buildPhases = (
-				B596828C1AAC2EB7002D6983 /* Sources */,
-				B596828D1AAC2EB7002D6983 /* Frameworks */,
-				B596828E1AAC2EB7002D6983 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B59682921AAC2EB7002D6983 /* PBXTargetDependency */,
-			);
-			name = OPDBitTests;
-			productName = OPDBitTests;
-			productReference = B59682901AAC2EB7002D6983 /* OPDBitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -788,10 +728,6 @@
 							};
 						};
 					};
-					B596828F1AAC2EB7002D6983 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = B59682761AAC2EB7002D6983;
-					};
 				};
 			};
 			buildConfigurationList = B59682721AAC2EB7002D6983 /* Build configuration list for PBXProject "OPDBit" */;
@@ -808,7 +744,6 @@
 			projectRoot = "";
 			targets = (
 				B59682761AAC2EB7002D6983 /* OPDBit */,
-				B596828F1AAC2EB7002D6983 /* OPDBitTests */,
 				B51438441ACFCA7900EED7A5 /* TimeTableWidget */,
 			);
 		};
@@ -833,7 +768,6 @@
 				B52C3E621AD04853001BB5B8 /* menu@3x.png in Resources */,
 				B52C3E611AD04853001BB5B8 /* menu@2x.png in Resources */,
 				B596828B1AAC2EB7002D6983 /* LaunchScreen.xib in Resources */,
-				B52C3E4D1AD02AE9001BB5B8 /* KVNProgressView.xib in Resources */,
 				B593AA3F1ACC0BBA0063F09E /* off.png in Resources */,
 				B52C3E651AD04853001BB5B8 /* search@3x.png in Resources */,
 				B59682881AAC2EB7002D6983 /* Images.xcassets in Resources */,
@@ -844,13 +778,6 @@
 				B593AA3E1ACC0BBA0063F09E /* on.png in Resources */,
 				B52C3E5A1AD04853001BB5B8 /* done.png in Resources */,
 				B52C3E5C1AD04853001BB5B8 /* done@3x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B596828E1AAC2EB7002D6983 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +797,36 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		411EE1B7BEFAEA6576CA28E0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		446791ED04DB3D954610BEE0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		656F88DC312AB4CE62D717DF /* Copy Pods Resources */ = {
@@ -907,6 +864,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B597F61B8B5F1000DE6526 /* LectureDetailView.m in Sources */,
+				B5B597F41B8B5F0000DE6526 /* UIFont+OPTheme.m in Sources */,
+				B5B597F51B8B5F0600DE6526 /* UIColor+OPTheme.m in Sources */,
+				B5B597EB1B8B5C6B00DE6526 /* TimeTableViewForWidget.m in Sources */,
 				B514384C1ACFCA7A00EED7A5 /* TodayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -916,47 +877,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				B534EADA1AB44D3800EBE3EB /* SearchLectureCell.m in Sources */,
+				C15F23D01B6CBF1E00AD707F /* ServerSemesterCell.m in Sources */,
 				B534EAF51AB47DB100EBE3EB /* AddLectureFooterCell.m in Sources */,
 				B59682DB1AAC5892002D6983 /* TimeTableCell.m in Sources */,
 				B59682C21AAC4CDC002D6983 /* TimeTableObject.m in Sources */,
 				B59682A71AAC3378002D6983 /* OPLeftDrawerTableViewCell.m in Sources */,
+				C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */,
 				B59682E51AAC6DC2002D6983 /* AddTimeTableViewController.m in Sources */,
 				B59682D11AAC4E12002D6983 /* ServerLectureObject.m in Sources */,
 				B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */,
 				B59682BD1AAC4AD9002D6983 /* LectureObject.m in Sources */,
-				B59682D41AAC4E1B002D6983 /* ServerSchoolObject.m in Sources */,
 				B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */,
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
 				B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */,
-				B59682ED1AAC7B37002D6983 /* DownloadServerTimeTableViewController.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
 				B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */,
 				B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */,
 				B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
-				B59682E91AAC7069002D6983 /* ServerTimeTableViewController.m in Sources */,
+				C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */,
 				B533CE3D1ABD430300907A7C /* UIFont+OPTheme.m in Sources */,
 				B534EAEF1AB47D8000EBE3EB /* AddLectureHeaderCell.m in Sources */,
 				B59682B11AAC374D002D6983 /* TimeTableViewController.m in Sources */,
 				B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */,
-				B534EACF1AB43A2900EBE3EB /* ServerTimeTableCell.m in Sources */,
-				B59682D71AAC4E27002D6983 /* ServerTimeTableObject.m in Sources */,
 				B596827D1AAC2EB7002D6983 /* main.m in Sources */,
 				B534EAD61AB43B3400EBE3EB /* SearchLectureViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B596828C1AAC2EB7002D6983 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B542273E1ACEB03200BBBD3F /* UIColor+OPTheme.m in Sources */,
-				B59682971AAC2EB7002D6983 /* OPDBitTests.m in Sources */,
-				B542273D1ACEB02F00BBBD3F /* UIFont+OPTheme.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -967,11 +916,6 @@
 			isa = PBXTargetDependency;
 			target = B51438441ACFCA7900EED7A5 /* TimeTableWidget */;
 			targetProxy = B514384F1ACFCA7A00EED7A5 /* PBXContainerItemProxy */;
-		};
-		B59682921AAC2EB7002D6983 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B59682761AAC2EB7002D6983 /* OPDBit */;
-			targetProxy = B59682911AAC2EB7002D6983 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -989,6 +933,7 @@
 /* Begin XCBuildConfiguration section */
 		B51438531ACFCA7A00EED7A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TimeTableWidget/TimeTableWidget.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -997,6 +942,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1007,10 +953,13 @@
 		};
 		B51438541ACFCA7A00EED7A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TimeTableWidget/TimeTableWidget.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = TimeTableWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1141,44 +1090,6 @@
 			};
 			name = Release;
 		};
-		B596829E1AAC2EB7002D6983 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = OPDBitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPDBit.app/OPDBit";
-			};
-			name = Debug;
-		};
-		B596829F1AAC2EB7002D6983 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = OPDBitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OPDBit.app/OPDBit";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1205,15 +1116,6 @@
 			buildConfigurations = (
 				B596829B1AAC2EB7002D6983 /* Debug */,
 				B596829C1AAC2EB7002D6983 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B596829D1AAC2EB7002D6983 /* Build configuration list for PBXNativeTarget "OPDBitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B596829E1AAC2EB7002D6983 /* Debug */,
-				B596829F1AAC2EB7002D6983 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
