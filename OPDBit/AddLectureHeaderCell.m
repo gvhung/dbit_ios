@@ -128,6 +128,11 @@
     }];
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [_lectureThemeSegmentedControl setSelectedSegmentIndex:_lectureTheme animated:NO];
+}
+
 #pragma mark - Text Field Delegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField

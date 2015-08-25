@@ -36,6 +36,8 @@
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
+@property (nonatomic) BOOL isModifying;
+
 @end
 
 @implementation AddLectureViewController
@@ -73,7 +75,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)initialize
 {
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setTitle:@"강의 추가"];
+    _isModifying = NO;
     
     _dateFormatter.dateFormat = @"HHmm";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
@@ -106,6 +108,10 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _tableView.allowsSelection = NO;
     _tableView.rowHeight = UITableViewRowAnimationAutomatic;
 
+    LectureDetailObject *lectureDetail = [[LectureDetailObject alloc] init];
+    [lectureDetail setDefaultProperties];
+    [_lectureDetails addObject:lectureDetail];
+    
     [self.view addSubview:_tableView];
     
     [self makeAutoLayoutConstraints];
@@ -118,21 +124,35 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }];
 }
 
+#pragma mark - Life Cycle
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (_isModifying) {
+        self.title = @"강의 수정";
+    } else {
+        self.title = @"강의 추가";
+    }
+}
+
 #pragma mark - Setter
 
 - (void)setLecture:(LectureObject *)lecture
 {
     _lecture = lecture;
-    _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
-    for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
-        LectureDetailObject *copiedLectureDetail = [[LectureDetailObject alloc] init];
-        copiedLectureDetail.lectureLocation = lectureDetail.lectureLocation;
-        copiedLectureDetail.timeStart = lectureDetail.timeStart;
-        copiedLectureDetail.timeEnd = lectureDetail.timeEnd;
-        copiedLectureDetail.day = lectureDetail.day;
-        [_lectureDetails addObject:copiedLectureDetail];
+    if (lecture) {
+        _isModifying = YES;
+        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+        for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+            LectureDetailObject *copiedLectureDetail = [[LectureDetailObject alloc] init];
+            copiedLectureDetail.lectureLocation = lectureDetail.lectureLocation;
+            copiedLectureDetail.timeStart = lectureDetail.timeStart;
+            copiedLectureDetail.timeEnd = lectureDetail.timeEnd;
+            copiedLectureDetail.day = lectureDetail.day;
+            [_lectureDetails addObject:copiedLectureDetail];
+        }
+        [_tableView reloadData];
     }
-    [_tableView reloadData];
 }
 
 #pragma mark - Table View Data Source

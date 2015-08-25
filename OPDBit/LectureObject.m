@@ -36,7 +36,7 @@
     self.ulid = -1;
     self.lectureName = @"";
     self.lectureDetails = nil;
-    self.theme = 0;
+    self.theme = arc4random()%[DataManager lectureThemeCount];
 }
 
 - (void)lectureFromServerLecture:(ServerLectureObject *)serverLecture
