@@ -258,6 +258,8 @@
     }
     timeTableObject.active = YES;
     [_realm commitWriteTransaction];
+    
+    [self synchronizeUserDefaultWithTimeTable:self.activedTimeTable];
 }
 
 #pragma mark - Get Objects

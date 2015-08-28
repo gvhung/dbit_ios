@@ -99,17 +99,13 @@ static CGFloat const TimeHeadWidth = 20.0f;
     for (NSDictionary *lectureDictionary in _lectures) {
         for (NSDictionary *lectureDetailDictionary in lectureDictionary[@"lectureDetails"]) {
             
-            NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue] - _timeStart;
-            CGFloat startHours = convertedStartTime/100;
-            CGFloat startMinutes = convertedStartTime%100;
+            NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
+            NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue]/100*60 + [lectureDetailDictionary[@"timeStart"] integerValue]%100;
+            NSInteger convertedStartEnd = [lectureDetailDictionary[@"timeEnd"] integerValue]/100*60 + [lectureDetailDictionary[@"timeEnd"] integerValue]%100;
             
-            NSInteger convertedEndTime = [lectureDetailDictionary[@"timeEnd"] integerValue] - [lectureDetailDictionary[@"timeStart"] integerValue];
-            CGFloat endHours = convertedEndTime/100;
-            CGFloat endMinutes = convertedEndTime%100;
-            
-            CGFloat x = TimeHeadWidth + _sectionWidth*[lectureDetailDictionary[@"day"] integerValue];
-            CGFloat y = SectionHeadHeight + _timeHeight*(startHours + startMinutes/60);
-            CGFloat height = _timeHeight*(endHours + endMinutes/60);
+            CGFloat x = TimeHeadWidth + _sectionWidth * [lectureDetailDictionary[@"day"] integerValue];
+            CGFloat y = SectionHeadHeight + _timeHeight * ((convertedStartTime - convertedTimeTableStart)/60.0f);
+            CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
             UIView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame

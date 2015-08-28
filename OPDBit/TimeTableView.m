@@ -120,17 +120,19 @@ static CGFloat LineWidth = 0.5f;
     
     for (LectureObject *lecture in _lectures) {
         for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
-            NSInteger convertedStartTime = lectureDetail.timeStart - _timeStart;
-            CGFloat startHours = convertedStartTime/100;
-            CGFloat startMinutes = convertedStartTime%100;
+            // timeStart : 1330
+            // timeEnd : 1500
+            // _timeStart : 900
+            // _timeEnd : 1630
             
-            NSInteger convertedEndTime = lectureDetail.timeEnd - lectureDetail.timeStart;
-            CGFloat endHours = convertedEndTime/100;
-            CGFloat endMinutes = convertedEndTime%100;
+            // 분 단위로 계산
+            NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
+            NSInteger convertedStartTime = lectureDetail.timeStart/100*60 + lectureDetail.timeStart%100;
+            NSInteger convertedStartEnd = lectureDetail.timeEnd/100*60 + lectureDetail.timeEnd%100;
             
             CGFloat x = TimeHeadWidth + _sectionWidth * lectureDetail.day;
-            CGFloat y = SectionHeadHeight + _timeHeight * (startHours + startMinutes/60);
-            CGFloat height = _timeHeight*(endHours + endMinutes/60);
+            CGFloat y = SectionHeadHeight + _timeHeight * ((convertedStartTime - convertedTimeTableStart)/60.0f);
+            CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
             LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
