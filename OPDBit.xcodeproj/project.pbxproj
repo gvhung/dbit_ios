@@ -264,6 +264,7 @@
 		B534EACB1AB439BF00EBE3EB /* AddLecture */ = {
 			isa = PBXGroup;
 			children = (
+				C1A3A0F01B90C0BD0011397F /* TimePicker */,
 				B534EAD01AB43A8B00EBE3EB /* AddLectureViewController.h */,
 				B534EAD11AB43A8B00EBE3EB /* AddLectureViewController.m */,
 				B534EADB1AB474D400EBE3EB /* Cell */,
@@ -644,6 +645,13 @@
 				C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */,
 			);
 			name = ServerSemester;
+			sourceTree = "<group>";
+		};
+		C1A3A0F01B90C0BD0011397F /* TimePicker */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TimePicker;
 			sourceTree = "<group>";
 		};
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {

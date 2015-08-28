@@ -20,14 +20,17 @@
 
 @implementation LectureDetailView
 
-- (id)initWithFrame:(CGRect)frame theme:(NSInteger)theme lectureName:(NSString *)lectureName lectureLocation:(NSString *)lectureLocation
+- (id)initWithFrame:(CGRect)frame theme:(NSInteger)theme lectureName:(NSString *)lectureName lectureLocation:(NSString *)lectureLocation type:(LectureDetailViewType)type
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.type = type;
+        
         self.selectedLectureDetail = NO;
         self.lectureName = lectureName;
         self.lectureLocation = lectureLocation;
         self.theme = theme;
+        
         [self initialize];
     }
     return self;
@@ -37,6 +40,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.type = LectureDetailViewTypeApp;
+        
         self.selectedLectureDetail = NO;
         self.lectureName = @"";
         self.lectureLocation = @"";
@@ -63,6 +68,15 @@
     _lectureLocationLabel.textColor = [UIColor op_textSecondary];
     _lectureLocationLabel.font = [UIFont op_secondary];
     
+    if (_type == LectureDetailViewTypeWidget) {
+        _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
+        _lectureLocationLabel.numberOfLines = 3;
+        _lectureLocationLabel.textColor = [UIColor op_textPrimary];
+        _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+        
+        self.backgroundColor = [[UIColor op_lectureTheme:_theme] colorWithAlphaComponent:0.5f];
+    }
+    
     [self addSubview:_lectureNameLabel];
     [self addSubview:_lectureLocationLabel];
 }
@@ -81,12 +95,21 @@
     CGSize lectureLocationLabelSize = _lectureLocationLabel.frame.size;
     
     _lectureNameLabel.frame = CGRectMake(0, 10.0f, self.bounds.size.width, lectureNameLabelSize.height);
-    _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + 10.0f + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
+    if (_type == LectureDetailViewTypeApp) {
+        _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + 10.0f + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
+    } else {
+        _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
+    }
     
     if ((_lectureNameLabel.frame.origin.y + _lectureNameLabel.frame.size.height) >= _lectureLocationLabel.frame.origin.y)
     {
-        _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
-        _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+        if (_type == LectureDetailViewTypeApp) {
+            _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
+            _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+        } else {
+            _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
+            _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:8];
+        }
         
         CGRect lectureNameLabelFrame = _lectureNameLabel.frame;
         CGRect lectureLocationLabelFrame = _lectureLocationLabel.frame;
@@ -121,7 +144,8 @@
 - (void)setTheme:(NSInteger)theme
 {
     _theme = theme;
-    self.backgroundColor = [[UIColor op_lectureTheme:theme] colorWithAlphaComponent:0.7f];
+    self.backgroundColor = [[UIColor op_lectureTheme:theme] colorWithAlphaComponent:(_type == LectureDetailViewTypeApp)? 0.7f : 0.5f];
+    self.clipsToBounds = YES;
     [self setNeedsDisplay];
 }
 

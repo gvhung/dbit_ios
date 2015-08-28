@@ -138,7 +138,8 @@ static CGFloat LineWidth = 0.5f;
             LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
                                                                                       theme:lecture.theme
                                                                                 lectureName:lecture.lectureName
-                                                                            lectureLocation:lectureDetail.lectureLocation];
+                                                                            lectureLocation:lectureDetail.lectureLocation
+                                                                                       type:LectureDetailViewTypeApp];
             [self addSubview:lectureDetailView];
         }
     }

@@ -111,7 +111,8 @@ static CGFloat const TimeHeadWidth = 20.0f;
             UIView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
                                                                            theme:[lectureDictionary[@"theme"] integerValue]
                                                                      lectureName:lectureDictionary[@"lectureName"]
-                                                                 lectureLocation:lectureDetailDictionary[@"lectureLocation"]];
+                                                                 lectureLocation:lectureDetailDictionary[@"lectureLocation"]
+                                                                            type:LectureDetailViewTypeWidget];
             [self addSubview:lectureDetailView];
         }
     }
