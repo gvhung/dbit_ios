@@ -347,7 +347,7 @@
     return lectureResults[0];
 }
 
-- (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable
+- (NSString *)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture lectureDetails:(RLMArray *)lectureDetails inTimeTable:(TimeTableObject *)timeTable
 {
     RLMArray *lectureDetailsInTimeTable = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
     for (LectureObject *otherLecture in timeTable.lectures) {
@@ -359,21 +359,57 @@
         }
     }
     
-    for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
+    for (LectureDetailObject *lectureDetail in lectureDetails) {
         for (LectureDetailObject *otherLectureDetail in lectureDetailsInTimeTable) {
             if (lectureDetail.day == otherLectureDetail.day) {
                 if (otherLectureDetail.timeStart <= lectureDetail.timeStart &&
                     lectureDetail.timeStart < otherLectureDetail.timeEnd) {
-                    return YES;
+                    return otherLectureDetail.lecture.lectureName;
                 }
                 if (otherLectureDetail.timeStart < lectureDetail.timeEnd &&
                     lectureDetail.timeEnd <= otherLectureDetail.timeEnd) {
-                    return YES;
+                    return otherLectureDetail.lecture.lectureName;
                 }
             }
         }
     }
-    return NO;
+    return nil;
+}
+
+- (NSString *)lectureDetailTimeIsEmpty:(LectureObject *)lecture lectureDetails:(RLMArray *)lectureDetails
+{
+    BOOL isEmpty = NO;
+    NSString *errorMessage = @"";
+    for (LectureDetailObject *lectureDetail in lectureDetails) {
+        errorMessage = [errorMessage stringByAppendingFormat:@"%ld번째 수업의", [lectureDetails indexOfObject:lectureDetail]+1];
+        if (lectureDetail.timeStart == -1) {
+            isEmpty = YES;
+            errorMessage = [errorMessage stringByAppendingString:@" 시작시간"];
+        }
+        if (lectureDetail.timeEnd == -1) {
+            if (isEmpty) {
+                errorMessage = [errorMessage stringByAppendingString:@"과"];
+            }
+            isEmpty = YES;
+            errorMessage = [errorMessage stringByAppendingString:@" 종료시간"];
+        }
+        
+        if (!lectureDetail.lectureLocation.length) {
+            if (isEmpty) {
+                errorMessage = [errorMessage stringByAppendingString:@"과"];
+            }
+            isEmpty = YES;
+            errorMessage = [errorMessage stringByAppendingString:@" 강의실"];
+        }
+        
+        if (isEmpty) {
+            errorMessage = [errorMessage stringByAppendingString:@"이 비어있습니다."];
+            return errorMessage;
+        } else {
+            errorMessage = @"";
+        }
+    }
+    return nil;
 }
 
 - (NSArray *)daySectionTitles
@@ -463,6 +499,9 @@
 
 + (NSString *)stringFromTimeInteger:(NSInteger)timeInteger
 {
+    if (timeInteger == -1) {
+        return @"--:--";
+    }
     NSInteger hours = timeInteger/100;
     NSInteger minutes = timeInteger%100;
     return [NSString stringWithFormat:@"%02ld:%02ld", (long)hours, (long)minutes];
@@ -470,6 +509,9 @@
 
 + (NSInteger)integerFromTimeString:(NSString *)timeString
 {
+    if ([timeString isEqualToString:@"--:--"]) {
+        return 0;
+    }
     NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
     NSInteger hours = [timeStringComponents[0] integerValue];
     NSInteger minutes = [timeStringComponents[1] integerValue];

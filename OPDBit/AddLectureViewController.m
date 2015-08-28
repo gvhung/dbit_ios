@@ -32,7 +32,7 @@
 
 @property (nonatomic, strong) DataManager *dataManager;
 
-@property (nonatomic, strong) RLMArray *lectureDetails;
+@property (nonatomic, strong) RLMArray<LectureDetailObject> *lectureDetails;
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
@@ -142,7 +142,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _lecture = lecture;
     if (lecture) {
         _isModifying = YES;
-        _lectureDetails = [[RLMArray alloc] initWithObjectClassName:LectureDetailObjectID];
+        [_lectureDetails removeAllObjects];
         for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
             LectureDetailObject *copiedLectureDetail = [[LectureDetailObject alloc] init];
             copiedLectureDetail.lectureLocation = lectureDetail.lectureLocation;
@@ -231,6 +231,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [_lectureDetails removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [tableView reloadData];
     }
 }
 
@@ -273,7 +274,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         LectureDetailObject *lectureDetail = _lectureDetails[index];
         NSInteger endTime = lectureDetail.timeEnd;
         
-        if (endTime && selectedStartTime > endTime) {
+        if (endTime != -1 && selectedStartTime > endTime) {
 //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
@@ -295,7 +296,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         LectureDetailObject *lectureDetail = _lectureDetails[index];
         NSInteger startTime = lectureDetail.timeStart;
         
-        if (startTime && selectedEndTime < startTime) {
+        if (startTime != -1 && selectedEndTime < startTime) {
 //            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
             return;
         }
@@ -358,6 +359,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)addLectureAction
 {
     [_tableView endEditing:YES];
+    
+    NSString *errorMessage;
+    
     if (!_lecture.lectureName.length) {
 //        [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
         return;
@@ -372,8 +376,16 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         return;
     }
     
-    if ([_dataManager lectureAreDuplicatedOtherLecture:_lecture inTimeTable:_dataManager.activedTimeTable]) {
+    errorMessage = [_dataManager lectureAreDuplicatedOtherLecture:_lecture lectureDetails:_lectureDetails inTimeTable:_dataManager.activedTimeTable];
+    if (errorMessage) {
 //        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
+        NSLog(@"duplicatedLectureName: %@", errorMessage);
+        return;
+    }
+    
+    errorMessage = [_dataManager lectureDetailTimeIsEmpty:_lecture lectureDetails:_lectureDetails];
+    if (errorMessage) {
+        NSLog(@"empty : %@", errorMessage);
         return;
     }
     

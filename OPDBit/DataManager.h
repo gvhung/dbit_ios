@@ -51,7 +51,8 @@
 - (LectureObject *)lectureObjectWithUlid:(NSInteger)ulid;
 - (RLMArray *)lectureDetailObjectsWithUlid:(NSInteger)ulid;
 - (LectureObject *)lectureWithUlid:(NSInteger)ulid;
-- (BOOL)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture inTimeTable:(TimeTableObject *)timeTable;
+- (NSString *)lectureAreDuplicatedOtherLecture:(LectureObject *)lecture lectureDetails:(RLMArray *)lectureDetails inTimeTable:(TimeTableObject *)timeTable;
+- (NSString *)lectureDetailTimeIsEmpty:(LectureObject *)lecture lectureDetails:(RLMArray *)lectureDetails;
 - (NSArray *)daySectionTitles;
 
 #pragma mark - Convert

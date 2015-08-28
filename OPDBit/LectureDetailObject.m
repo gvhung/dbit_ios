@@ -28,8 +28,8 @@
 - (void)setDefaultProperties
 {
     self.lectureLocation = @"";
-    self.timeStart = 900;
-    self.timeEnd = 1100;
+    self.timeStart = -1;
+    self.timeEnd = -1;
     self.day = 0;
 }
 
