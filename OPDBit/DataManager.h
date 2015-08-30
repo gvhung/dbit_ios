@@ -22,7 +22,6 @@
 
 + (DataManager *)sharedInstance;
 
-- (void)migrateV1toV2;
 
 #pragma mark - Database Manage Method
 

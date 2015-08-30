@@ -25,6 +25,8 @@ static NSString * const LectureDetailObjectID = @"LectureDetailObject";
 
 @interface LectureDetailObject : RLMObject
 
+@property NSInteger ulid;    // 마이그레이션용
+
 @property NSString *lectureLocation;
 @property NSInteger timeStart;
 @property NSInteger timeEnd;

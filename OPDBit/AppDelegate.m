@@ -17,6 +17,10 @@
 
 #import "MZSnackBar.h"
 
+// Models
+#import "ServerLectureObject.h"
+#import "TimeTableObject.h"
+
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
@@ -31,6 +35,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [RLMRealm setSchemaVersion:1
+                forRealmAtPath:[RLMRealm defaultRealmPath]
+            withMigrationBlock:^(RLMMigration *migration, uint64_t oldSchemaVersion) {
+                if (oldSchemaVersion < 1) {
+                    [migration enumerateObjects:ServerLectureObject.className
+                                          block:^(RLMObject *newObject, RLMObject *oldObject) {
+                                              newObject[@"lectureKey"] = oldObject[@"lectureCode"];
+                                          }];
+                    [migration enumerateObjects:TimeTableObject.className
+                                          block:^(RLMObject *newObject, RLMObject *oldObject) {
+                                              if ([oldObject[@"sat"] boolValue] || [oldObject[@"sun"] boolValue]) {
+                                                  newObject[@"workAtWeekend"] = @(YES);
+                                              } else {
+                                                  newObject[@"workAtWeekend"] = @(NO);
+                                              }
+                                          }];
+                }
+            }];
     
     [Fabric with:@[CrashlyticsKit]];
     

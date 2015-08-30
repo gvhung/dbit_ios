@@ -15,8 +15,6 @@
 
 #import "UIColor+OPTheme.h"
 
-#define REALM_V2_NAME @"VERSION2"
-
 @interface DataManager ()
 
 @property (nonatomic, strong) RLMRealm *realm;
@@ -37,44 +35,13 @@
     return shared;
 }
 
-+ (NSString *)pathToRealmDB:(NSString *)database
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docsPath = [paths objectAtIndex:0];
-    NSString *dbFileName = [NSString stringWithFormat:@"%@.realm", database];
-    NSString *path = [docsPath stringByAppendingPathComponent:dbFileName];
-    return path;
-}
-
-- (void)migrateV1toV2
-{
-    [RLMRealm setSchemaVersion:1
-                forRealmAtPath:[RLMRealm defaultRealmPath]
-            withMigrationBlock:^(RLMMigration *migration, uint64_t oldSchemaVersion) {
-//                @property NSInteger semesterID;
-//                @property NSString *lectureName;
-//                @property NSString *lectureKey;    // lectureCode 학수번호
-//                @property NSString *lectureProf;
-//                @property NSString *lectureLocation;
-//                @property NSString *lectureDaytime;
-//                
-//                // Addtional Meta Data
-//                @property NSString *lectureCourse;
-//                @property NSString *lectureType;
-//                @property NSString *lectureEtc;
-//                @property NSString *lectureLanguage;
-//                @property NSInteger lecturePoint;
-//                @property NSInteger serverLectureID;
-    }];
-}
-
 - (id)init
 {
     self = [super init];
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-        _realm = [RLMRealm realmWithPath:[DataManager pathToRealmDB:REALM_V2_NAME]];
+        _realm = [RLMRealm defaultRealm];
     }
     return self;
 }
