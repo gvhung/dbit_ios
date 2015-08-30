@@ -54,6 +54,7 @@
                                           }];
                 }
             }];
+    [[DataManager sharedInstance] synchronizeUserDefaultWithTimeTable:[DataManager sharedInstance].activedTimeTable];
     
     [Fabric with:@[CrashlyticsKit]];
     

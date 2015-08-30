@@ -57,6 +57,7 @@
 #pragma mark - Convert
 
 + (RLMArray *)realmArrayFromResult:(RLMResults *)result className:(NSString *)className;
+- (void)synchronizeUserDefaultWithTimeTable:(TimeTableObject *)timeTable;
 
 #pragma mark - Lecture Theme
 

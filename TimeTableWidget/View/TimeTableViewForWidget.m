@@ -66,6 +66,8 @@ static CGFloat const TimeHeadWidth = 20.0f;
 
 - (void)drawTimeTableLines
 {
+    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     UIView *timeTableView = [[UIView alloc] initWithFrame:self.frame];
     timeTableView.backgroundColor = [UIColor clearColor];
     
