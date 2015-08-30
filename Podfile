@@ -7,7 +7,6 @@ pod 'Realm', '0.94.0'
 pod 'HMSegmentedControl', '1.5'
 pod 'Masonry', '0.6.1'
 pod 'MMDrawerController', '0.5.7'
-pod 'RMDateSelectionViewController', '1.4.3'
 pod 'MZClockView', '1.0.2'
 pod 'AFNetworking', '2.5.1'
 
