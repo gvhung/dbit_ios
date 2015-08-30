@@ -8,9 +8,9 @@
 
 @class LectureObject;
 @class AddLectureViewController;
+@class MZTimePickerView;
 
 #import <UIKit/UIKit.h>
-#import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 #import <HMSegmentedControl/HMSegmentedControl.h>
 
 @protocol AddLectureViewControllerDelegate <NSObject>
@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) LectureObject *lecture;
 
-@property (nonatomic, strong) RMDateSelectionViewController *timePickerViewController;
+@property (nonatomic, strong) MZTimePickerView *timePickerView;
 
 - (instancetype)init;
 

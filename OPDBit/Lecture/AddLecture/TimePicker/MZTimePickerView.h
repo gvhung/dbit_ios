@@ -25,10 +25,15 @@ typedef void (^MZTimePickerAnimationHandler) (BOOL finished);
 
 @end
 
+static const CGFloat MZTimePickerToolbarHeight = 44.0f;
+static const CGFloat UIDatePickerDefaultHeight = 216.0f;
+
 @interface MZTimePickerView : UIView
 
 @property (nonatomic) MZTimePickerType type;
 @property (nonatomic) BOOL isAnimating;
+
+@property (nonatomic) NSInteger lectureDetailIndex;
 
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIToolbar *toolbar;
@@ -40,6 +45,6 @@ typedef void (^MZTimePickerAnimationHandler) (BOOL finished);
 
 - (void)animateToAppear;
 - (void)animateToDisappearWithCompletion:(MZTimePickerAnimationHandler)completion;
-- (void)setType:(MZTimePickerType)type startTime:(NSDate *)startDate endTime:(NSDate *)endDate;
+- (void)setType:(MZTimePickerType)type startTime:(NSDate *)startDate endTime:(NSDate *)endDate lectureDetailIndex:(NSInteger)lectureDetailIndex;
 
 @end

@@ -16,6 +16,8 @@
 #import "AddLectureDetailCell.h"
 #import "AddLectureFooterCell.h"
 
+#import "MZTimePickerView.h"
+
 // Utility
 #import "UIColor+OPTheme.h"
 #import "DataManager.h"
@@ -28,7 +30,7 @@
 // Library
 #import <Masonry/Masonry.h>
 
-@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate>
+@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate, MZTimePickerDelegate>
 
 @property (nonatomic, strong) DataManager *dataManager;
 
@@ -59,7 +61,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     self = [super init];
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        _timePickerViewController = [RMDateSelectionViewController dateSelectionController];
         _lecture = [[LectureObject alloc] init];
         [_lecture setDefaultProperties];
         
@@ -80,13 +81,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     _dateFormatter.dateFormat = @"HHmm";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
     _dateFormatter.locale = locale;
-    
-    _timePickerViewController.hideNowButton = YES;
-    _timePickerViewController.disableBouncingWhenShowing = YES;
-    _timePickerViewController.datePicker.locale = locale;
-    _timePickerViewController.datePicker.datePickerMode = UIDatePickerModeTime;
-    _timePickerViewController.datePicker.minuteInterval = 5;
-    _timePickerViewController.datePicker.timeZone = [NSTimeZone localTimeZone];
     
     UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"]
                                                                             style:UIBarButtonItemStylePlain
@@ -267,46 +261,58 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell
 {
-    [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
-        NSInteger selectedStartTime = [[_dateFormatter stringFromDate:aDate] integerValue];
-        NSInteger index = addLectureDetailCell.lectureDetailIndex;
-        
-        LectureDetailObject *lectureDetail = _lectureDetails[index];
-        NSInteger endTime = lectureDetail.timeEnd;
-        
-        if (endTime != -1 && selectedStartTime > endTime) {
-//            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
-            return;
-        }
-        
-        lectureDetail.timeStart = selectedStartTime;
-        [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
-        
-        NSIndexPath *indexPathToReload = [_tableView indexPathForCell:addLectureDetailCell];
-        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
-    } andCancelHandler:nil];
+    NSInteger index = addLectureDetailCell.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    NSDate *timeStart;
+    NSDate *timeEnd;
+    if (lectureDetail.timeStart >= 0) {
+        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeStart]];
+    }
+    if (lectureDetail.timeEnd >= 0) {
+        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeEnd]];
+    }
+    
+    if (!_timePickerView) {
+        _timePickerView = [[MZTimePickerView alloc] initWithFrame:self.view.bounds];
+        _timePickerView.delegate = self;
+        [self.view addSubview:_timePickerView];
+    }
+    [_timePickerView setType:MZTimePickerTypeStart startTime:timeStart endTime:timeEnd lectureDetailIndex:index];
+    
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, UIDatePickerDefaultHeight + MZTimePickerToolbarHeight, 0);
+    [_tableView setContentInset:insets];
+    [_tableView setScrollIndicatorInsets:insets];
+    NSIndexPath *indexPathToReload = [NSIndexPath indexPathForRow:index inSection:1];
+    [_tableView scrollToRowAtIndexPath:indexPathToReload atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [_timePickerView animateToAppear];
 }
 
 - (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell
 {
-    [_timePickerViewController showWithSelectionHandler:^(RMDateSelectionViewController *vc, NSDate *aDate) {
-        NSInteger selectedEndTime = [[_dateFormatter stringFromDate:aDate] integerValue];
-        NSInteger index = addLectureDetailCell.lectureDetailIndex;
-        
-        LectureDetailObject *lectureDetail = _lectureDetails[index];
-        NSInteger startTime = lectureDetail.timeStart;
-        
-        if (startTime != -1 && selectedEndTime < startTime) {
-//            [KVNProgress showErrorWithStatus:@"강의시작보다 이릅니다!"];
-            return;
-        }
-        
-        lectureDetail.timeEnd = selectedEndTime;
-        [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
-        
-        NSIndexPath *indexPathToReload = [_tableView indexPathForCell:addLectureDetailCell];
-        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
-    } andCancelHandler:nil];
+    NSInteger index = addLectureDetailCell.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    NSDate *timeStart;
+    NSDate *timeEnd;
+    if (lectureDetail.timeStart >= 0) {
+        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeStart]];
+    }
+    if (lectureDetail.timeEnd >= 0) {
+        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeEnd]];
+    }
+    
+    if (!_timePickerView) {
+        _timePickerView = [[MZTimePickerView alloc] initWithFrame:self.view.bounds];
+        _timePickerView.delegate = self;
+        [self.view addSubview:_timePickerView];
+    }
+    [_timePickerView setType:MZTimePickerTypeEnd startTime:timeStart endTime:timeEnd lectureDetailIndex:index];
+    
+    UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, UIDatePickerDefaultHeight + MZTimePickerToolbarHeight, 0);
+    [_tableView setContentInset:insets];
+    [_tableView setScrollIndicatorInsets:insets];
+    NSIndexPath *indexPathToReload = [NSIndexPath indexPathForRow:index inSection:1];
+    [_tableView scrollToRowAtIndexPath:indexPathToReload atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [_timePickerView animateToAppear];
 }
 
 #pragma mark - Footer Cell Delegate
@@ -403,6 +409,66 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     }
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Time Picker Delegate
+
+- (void)timePickerView:(MZTimePickerView *)timePickerView didChangedTime:(NSDate *)newDate
+{
+    
+}
+
+- (void)timePickerView:(MZTimePickerView *)timePickerView doneWithTime:(NSDate *)newDate
+{
+    NSInteger selectedTime = [[_dateFormatter stringFromDate:newDate] integerValue];
+    NSInteger index = timePickerView.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    if (timePickerView.type == MZTimePickerTypeStart) {
+        NSInteger endTime = lectureDetail.timeEnd;
+        
+        if (endTime != -1 && selectedTime > endTime) {
+            //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
+            return;
+        }
+        
+        lectureDetail.timeStart = selectedTime;
+    } else {
+        NSInteger startTime = lectureDetail.timeStart;
+        
+        if (startTime != -1 && selectedTime > startTime) {
+            //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
+            return;
+        }
+        
+        lectureDetail.timeEnd = selectedTime;
+    }
+    
+    [_lectureDetails replaceObjectAtIndex:index withObject:lectureDetail];
+    
+    [UIView animateWithDuration:.35f animations:^{
+        [_tableView setContentInset:UIEdgeInsetsZero];
+        [_tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+    }];
+    [timePickerView animateToDisappearWithCompletion:^(BOOL finished) {
+        NSIndexPath *indexPathToReload = [NSIndexPath indexPathForRow:timePickerView.lectureDetailIndex inSection:1];
+        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
+        [timePickerView removeFromSuperview];
+        _timePickerView = nil;
+    }];
+}
+
+- (void)timePickerViewDidCanceled:(MZTimePickerView *)timePickerView
+{
+    [UIView animateWithDuration:.35f animations:^{
+        [_tableView setContentInset:UIEdgeInsetsZero];
+        [_tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+    }];
+    [timePickerView animateToDisappearWithCompletion:^(BOOL finished) {
+        NSIndexPath *indexPathToReload = [NSIndexPath indexPathForRow:timePickerView.lectureDetailIndex inSection:1];
+        [_tableView reloadRowsAtIndexPaths:@[indexPathToReload] withRowAnimation:UITableViewRowAnimationNone];
+        [timePickerView removeFromSuperview];
+        _timePickerView = nil;
+    }];
 }
 
 #pragma mark - Life Cycle

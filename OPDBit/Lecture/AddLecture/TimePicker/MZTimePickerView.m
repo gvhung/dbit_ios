@@ -10,8 +10,7 @@
 
 #import "MZTimePickerView.h"
 
-static const CGFloat MZTimePickerToolbarHeight = 44.0f;
-static const CGFloat UIDatePickerDefaultHeight = 216.0f;
+#import "UIColor+OPTheme.h"
 
 @interface MZTimePickerView ()
 
@@ -33,25 +32,30 @@ static const CGFloat UIDatePickerDefaultHeight = 216.0f;
                         action:@selector(datePickerValueChanged:)
               forControlEvents:UIControlEventValueChanged];
         _datePicker.backgroundColor = [UIColor whiteColor];
-        _datePicker.datePickerMode = UIDatePickerModeDate;
+        _datePicker.datePickerMode = UIDatePickerModeTime;
         _datePicker.timeZone = [NSTimeZone systemTimeZone];
+        _datePicker.minuteInterval = 5;
         
         _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,
-                                                                   self.datePicker.frame.origin.y - MZTimePickerToolbarHeight,
-                                                                   self.bounds.size.width,
-                                                                   MZTimePickerToolbarHeight)];
-        _cancelButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"alert_cancel", )
-                                                             style:UIBarButtonItemStylePlain
-                                                            target:self
-                                                            action:@selector(cancelToTimePick:)];
-        _doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"alert_done", )
-                                                           style:UIBarButtonItemStyleDone
-                                                          target:self
-                                                          action:@selector(doneToTimePick:)];
+                                                               self.datePicker.frame.origin.y - MZTimePickerToolbarHeight,
+                                                               self.bounds.size.width,
+                                                               MZTimePickerToolbarHeight)];
+        [_toolbar setBarTintColor:[UIColor op_primary]];
+        _cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"취소"
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(cancelToTimePick:)];
+        _doneButton = [[UIBarButtonItem alloc] initWithTitle:@"완료"
+                                                       style:UIBarButtonItemStyleDone
+                                                      target:self
+                                                      action:@selector(doneToTimePick:)];
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         _toolbar.items = @[_cancelButton, flexibleItem, _doneButton];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelToTimePick:)];
+        UITapGestureRecognizer *minuteIntervalTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeMinuteInterval:)];
+        minuteIntervalTap.numberOfTapsRequired = 2;
+        [_datePicker addGestureRecognizer:minuteIntervalTap];
         
         self.backgroundColor = [UIColor clearColor];
         [self addGestureRecognizer:tap];
@@ -147,9 +151,10 @@ static const CGFloat UIDatePickerDefaultHeight = 216.0f;
     _type = type;
 }
 
-- (void)setType:(MZTimePickerType)type startTime:(NSDate *)startDate endTime:(NSDate *)endDate
+- (void)setType:(MZTimePickerType)type startTime:(NSDate *)startDate endTime:(NSDate *)endDate lectureDetailIndex:(NSInteger)lectureDetailIndex
 {
     _type = type;
+    _lectureDetailIndex = lectureDetailIndex;
     
     _datePicker.timeZone = [NSTimeZone systemTimeZone];
     
@@ -172,6 +177,15 @@ static const CGFloat UIDatePickerDefaultHeight = 216.0f;
             _selectedTime = endDate;
             _datePicker.date = _selectedTime;
         }
+    }
+}
+
+- (void)changeMinuteInterval:(UITapGestureRecognizer *)gestureRecognizer
+{
+    if (_datePicker.minuteInterval == 5) {
+        _datePicker.minuteInterval = 1;
+    } else {
+        _datePicker.minuteInterval = 5;
     }
 }
 
