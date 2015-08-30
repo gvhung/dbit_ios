@@ -14,6 +14,8 @@
 
 #import "LectureObject.h"
 #import "TimeTableObject.h"
+#import "ServerLectureObject.h"
+
 #import <Realm/Realm.h>
 
 @interface TimeTableView ()
@@ -21,6 +23,7 @@
 @property (nonatomic, strong) NSArray *sectionTitles;
 
 @property (nonatomic, strong) RLMArray<LectureObject> *lectures;
+@property (nonatomic, strong) ServerLectureObject *serverLecture;
 
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
@@ -43,6 +46,11 @@ static CGFloat LineWidth = 0.5f;
 
 - (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable
 {
+    return [self initWithFrame:frame timetable:timetable serverLecture:nil];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture
+{
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -56,39 +64,15 @@ static CGFloat LineWidth = 0.5f;
         self.timeEnd = timetable.timeEnd;
         self.timeBlockCount = [self timeBlockCount];
         
-        [self initializeLayout];
-    }
-    return self;
-}
-
-- (instancetype)initForWidgetWithFrame:(CGRect)frame timetable:(NSDictionary *)timetable
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-    }
-    return self;
-}
-
-/*
-- (instancetype)initForWidgetWithFrame:(CGRect)frame lectures:(NSArray *)lectures sectionTitles:(NSArray *)sectionTitles timeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.backgroundColor = [UIColor clearColor];
-        
-        self.sectionTitles = sectionTitles;
-        self.lectures = lectures;
-        
-        self.timeStart = timeStart;
-        self.timeEnd = timeEnd;
-        self.timeBlockCount = [self timeBlockCount];
+        if (serverLecture) {
+            self.serverLecture = serverLecture;
+        }
         
         [self initializeLayout];
     }
     return self;
 }
-*/
+
 
 - (id)initWithFrame:(CGRect)frame
 {

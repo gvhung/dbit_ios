@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class TimeTableObject;
+@class ServerLectureObject;
 
 @interface TimeTableView : UIView
 
 @property (strong, nonatomic) TimeTableObject *timetable;
 
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture;
 - (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable;
 - (instancetype)initWithFrame:(CGRect)frame;
 
