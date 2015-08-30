@@ -512,7 +512,7 @@
 + (NSInteger)integerFromTimeString:(NSString *)timeString
 {
     if ([timeString isEqualToString:@"--:--"]) {
-        return 0;
+        return -1;
     }
     NSArray *timeStringComponents = [timeString componentsSeparatedByString:@":"];
     NSInteger hours = [timeStringComponents[0] integerValue];

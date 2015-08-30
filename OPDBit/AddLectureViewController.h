@@ -15,7 +15,7 @@
 
 @protocol AddLectureViewControllerDelegate <NSObject>
 
-- (void)addLectureViewControllerDidDone:(AddLectureViewController *)addLectureViewController;
+- (void)addLectureViewControllerDidDone:(AddLectureViewController *)addLectureViewController isModfiying:(BOOL)isModifying;
 
 @end
 

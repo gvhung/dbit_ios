@@ -17,6 +17,7 @@
 #import "AddLectureFooterCell.h"
 
 #import "MZTimePickerView.h"
+#import "MZSnackBar.h"
 
 // Utility
 #import "UIColor+OPTheme.h"
@@ -32,10 +33,10 @@
 
 @interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate, MZTimePickerDelegate>
 
+@property (strong, nonatomic) MZSnackBar *snackBar;
+
 @property (nonatomic, strong) DataManager *dataManager;
-
 @property (nonatomic, strong) RLMArray<LectureDetailObject> *lectureDetails;
-
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @property (nonatomic) BOOL isModifying;
@@ -61,6 +62,9 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     self = [super init];
     if (self) {
         _dateFormatter = [[NSDateFormatter alloc] init];
+        _dateFormatter.timeZone = [NSTimeZone systemTimeZone];
+        _dateFormatter.locale = [NSLocale systemLocale];
+        
         _lecture = [[LectureObject alloc] init];
         [_lecture setDefaultProperties];
         
@@ -82,16 +86,20 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko_KR"];
     _dateFormatter.locale = locale;
     
-    UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"]
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(searchLectureAction)];
     UIBarButtonItem *addLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
                                                                          style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(addLectureAction)];
     
-    self.navigationItem.rightBarButtonItems = @[addLectureButton, searchLectureButton];
+    if(_dataManager.activedTimeTable.serverSemesterObject) {
+        UIBarButtonItem *searchLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"]
+                                                                                style:UIBarButtonItemStylePlain
+                                                                               target:self
+                                                                               action:@selector(searchLectureAction)];
+        self.navigationItem.rightBarButtonItems = @[addLectureButton, searchLectureButton];
+    } else {
+        self.navigationItem.rightBarButtonItems = @[addLectureButton];
+    }
     
     [_tableView registerClass:[AddLectureHeaderCell class] forCellReuseIdentifier:headerCellIdentifier];
     [_tableView registerClass:[AddLectureDetailCell class] forCellReuseIdentifier:detailCellIdentifier];
@@ -262,14 +270,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)addLectureDetailCellDidTappedTimeStartButton:(AddLectureDetailCell *)addLectureDetailCell
 {
     NSInteger index = addLectureDetailCell.lectureDetailIndex;
-    LectureDetailObject *lectureDetail = _lectureDetails[index];
     NSDate *timeStart;
     NSDate *timeEnd;
-    if (lectureDetail.timeStart >= 0) {
-        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeStart]];
+    if (addLectureDetailCell.timeStart >= 0) {
+        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", addLectureDetailCell.timeStart]];
     }
-    if (lectureDetail.timeEnd >= 0) {
-        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeEnd]];
+    if (addLectureDetailCell.timeEnd >= 0) {
+        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", addLectureDetailCell.timeEnd]];
     }
     
     if (!_timePickerView) {
@@ -290,14 +297,14 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 - (void)addLectureDetailCellDidTappedTimeEndButton:(AddLectureDetailCell *)addLectureDetailCell
 {
     NSInteger index = addLectureDetailCell.lectureDetailIndex;
-    LectureDetailObject *lectureDetail = _lectureDetails[index];
     NSDate *timeStart;
     NSDate *timeEnd;
-    if (lectureDetail.timeStart >= 0) {
-        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeStart]];
+    if (addLectureDetailCell.timeStart >= 0) {
+        timeStart = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", addLectureDetailCell.timeStart]];
+        NSLog(@"%ld", addLectureDetailCell.timeStart);
     }
-    if (lectureDetail.timeEnd >= 0) {
-        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeEnd]];
+    if (addLectureDetailCell.timeEnd >= 0) {
+        timeEnd = [_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", addLectureDetailCell.timeEnd]];
     }
     
     if (!_timePickerView) {
@@ -350,9 +357,12 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)searchLectureAction
 {
-    if(!_dataManager.activedTimeTable.serverSemesterObject) {
-//        [KVNProgress showErrorWithStatus:@"선택한 시간표가 서버 시간표와\n연동되지 않았습니다!"];
-        return;
+    if (!_dataManager.activedTimeTable.serverSemesterObject) {
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"서버 시간표가 연동되지 않았습니다.";
+        [_snackBar animateToAppearInView:self.view];
     }
     
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] initWithLecture:_lecture];
@@ -369,53 +379,96 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     NSString *errorMessage;
     
     if (!_lecture.lectureName.length) {
-//        [KVNProgress showErrorWithStatus:@"강의 이름을 입력해주세요!"];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"강의 이름을 입력해주세요!";
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     if (_lecture.theme == -1) {
-//        [KVNProgress showErrorWithStatus:@"테마를 입력해주세요!"];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"테마를 추가해주세요!";
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     
     if (_lectureDetails.count == 0){
-//        [KVNProgress showErrorWithStatus:@"수업이 하나도 추가되지 않았습니다!"];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        
+        _snackBar.message = @"수업이 하나도 추가되지 않았습니다!";
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     
     errorMessage = [_dataManager lectureAreDuplicatedOtherLecture:_lecture lectureDetails:_lectureDetails inTimeTable:_dataManager.activedTimeTable];
     if (errorMessage) {
-//        [KVNProgress showErrorWithStatus:@"다른 수업과 시간이 겹칩니다!"];
-        NSLog(@"duplicatedLectureName: %@", errorMessage);
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        
+        _snackBar.message = [errorMessage stringByAppendingString:@" 수업과 시간이 겹칩니다!"];
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     
     errorMessage = [_dataManager lectureDetailTimeIsEmpty:_lecture lectureDetails:_lectureDetails];
     if (errorMessage) {
-        NSLog(@"empty : %@", errorMessage);
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        
+        _snackBar.message = errorMessage;
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     
     [_dataManager saveOrUpdateLectureWithLecture:_lecture
                                   lectureDetails:_lectureDetails
                                       completion:^(BOOL isUpdated) {
-                                          if (isUpdated) {
-//                                              [KVNProgress showSuccessWithStatus:@"강의 수정 성공!"];
-                                          } else {
-//                                              [KVNProgress showSuccessWithStatus:@"강의 추가 성공!"];
+                                          
+                                          if ([_delegate respondsToSelector:@selector(addLectureViewControllerDidDone:isModfiying:)]) {
+                                              [_delegate addLectureViewControllerDidDone:self isModfiying:isUpdated];
                                           }
+                                          
+                                          [self.navigationController popViewControllerAnimated:YES];
                                       }];
-    if ([_delegate respondsToSelector:@selector(addLectureViewControllerDidDone:)]) {
-        [_delegate addLectureViewControllerDidDone:self];
-    }
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Time Picker Delegate
 
 - (void)timePickerView:(MZTimePickerView *)timePickerView didChangedTime:(NSDate *)newDate
 {
-    
+    NSInteger selectedTime = [[_dateFormatter stringFromDate:newDate] integerValue];
+    NSInteger index = timePickerView.lectureDetailIndex;
+    LectureDetailObject *lectureDetail = _lectureDetails[index];
+    if (timePickerView.type == MZTimePickerTypeStart) {
+        NSInteger endTime = lectureDetail.timeEnd;
+        
+        if (endTime != -1 && selectedTime > endTime) {
+            if (!_snackBar) {
+                _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+            }
+            _snackBar.message = @"강의종료보다 늦습니다!";
+            [_snackBar animateToAppearInView:self.view];
+            [timePickerView.datePicker setDate:[_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeEnd]] animated:YES];
+        }
+    } else {
+        NSInteger startTime = lectureDetail.timeStart;
+        
+        if (startTime != -1 && selectedTime < startTime) {
+            if (!_snackBar) {
+                _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+            }
+            _snackBar.message = @"강의시작보다 이릅니다!";
+            [_snackBar animateToAppearInView:self.view];
+            [timePickerView.datePicker setDate:[_dateFormatter dateFromString:[NSString stringWithFormat:@"%04ld", lectureDetail.timeStart]] animated:YES];
+        }
+    }
 }
 
 - (void)timePickerView:(MZTimePickerView *)timePickerView doneWithTime:(NSDate *)newDate
@@ -427,7 +480,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
         NSInteger endTime = lectureDetail.timeEnd;
         
         if (endTime != -1 && selectedTime > endTime) {
-            //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
             return;
         }
         
@@ -435,8 +487,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     } else {
         NSInteger startTime = lectureDetail.timeStart;
         
-        if (startTime != -1 && selectedTime > startTime) {
-            //            [KVNProgress showErrorWithStatus:@"강의종료보다 늦습니다!"];
+        if (startTime != -1 && selectedTime < startTime) {
             return;
         }
         

@@ -193,6 +193,12 @@
     return [self colorWithHexString:@"#DEDEDE"];
 }
 
+#pragma mark - Snack Bar
+
++ (UIColor *)op_snackBarColor
+{
+    return [self colorWithHexString:@"#323232"];
+}
 
 #pragma mark - Convert
 

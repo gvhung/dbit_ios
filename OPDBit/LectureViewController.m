@@ -22,16 +22,18 @@
 
 // View
 #import "LectureTableViewCell.h"
+#import "MZSnackBar.h"
 
 // Library
 #import <Masonry/Masonry.h>
 
-@interface LectureViewController ()
+@interface LectureViewController () <AddLectureViewControllerDelegate>
 
 @property (nonatomic, strong) UIView *clockLine;
 @property (nonatomic, strong) UILabel *emptyLabel;
 
 @property (nonatomic, strong) DataManager *dataManager;
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @property (nonatomic, strong) RLMArray *lectureDetails;
 
@@ -181,6 +183,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     
     AddLectureViewController *editLectureViewController = [[AddLectureViewController alloc] init];
     editLectureViewController.lecture = cell.lecture;
+    editLectureViewController.delegate = self;
     [self.navigationController pushViewController:editLectureViewController animated:YES];
 }
 
@@ -244,6 +247,7 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     }
     
     AddLectureViewController *addLectureViewController = [[AddLectureViewController alloc] init];
+    addLectureViewController.delegate = self;
     [self.navigationController pushViewController:addLectureViewController animated:YES];
 }
 
@@ -251,6 +255,25 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+#pragma mark - Add Lecture View Controller Delegate
+
+- (void)addLectureViewControllerDidDone:(AddLectureViewController *)addLectureViewController isModfiying:(BOOL)isModifying
+{
+    if (isModifying) {
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"강의 수정 성공!";
+        [_snackBar animateToAppearInView:self.view];
+    } else {
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"강의 추가 성공!";
+        [_snackBar animateToAppearInView:self.view];
+    }
 }
 
 #pragma mark - Life Cycle

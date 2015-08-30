@@ -159,8 +159,6 @@
     _datePicker.timeZone = [NSTimeZone systemTimeZone];
     
     if (type == MZTimePickerTypeStart) {
-        _datePicker.minimumDate = nil;
-        _datePicker.maximumDate = endDate;
         if (!startDate) {
             [self datePickerValueChanged:_datePicker];
         } else {
@@ -169,8 +167,6 @@
         }
     }
     else {
-        _datePicker.minimumDate = startDate;
-        _datePicker.maximumDate = nil;
         if (!endDate) {
             [self datePickerValueChanged:_datePicker];
         } else {

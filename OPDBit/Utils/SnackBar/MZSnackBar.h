@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, MZSnackBarType){
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
-- (void)animateToAppear;
+- (void)animateToAppearInView:(UIView *)view;
 - (void)animateToDisappearWithCompletion:(MZSnackBarAnimationCompletion)completion;
 
 @end

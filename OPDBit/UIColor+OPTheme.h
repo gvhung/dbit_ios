@@ -129,4 +129,9 @@
 
 + (UIColor *)op_newLecutre;
 
+/**
+ *  #323232
+ */
++ (UIColor *)op_snackBarColor;
+
 @end
