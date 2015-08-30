@@ -64,6 +64,7 @@
 		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
 		C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */; };
 		C15F23D01B6CBF1E00AD707F /* ServerSemesterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */; };
+		C180F7EF1B91F1AB008A66D9 /* MZTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C180F7EE1B91F1AB008A66D9 /* MZTimePickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,8 @@
 		C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerSemesterViewController.m; path = TimeTable/ServerTimeTable/ServerSemesterViewController.m; sourceTree = "<group>"; };
 		C15F23CE1B6CBF1E00AD707F /* ServerSemesterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSemesterCell.h; path = TimeTable/ServerTimeTable/Cell/ServerSemesterCell.h; sourceTree = "<group>"; };
 		C15F23CF1B6CBF1E00AD707F /* ServerSemesterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerSemesterCell.m; path = TimeTable/ServerTimeTable/Cell/ServerSemesterCell.m; sourceTree = "<group>"; };
+		C180F7ED1B91F1AB008A66D9 /* MZTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZTimePickerView.h; path = Lecture/AddLecture/TimePicker/MZTimePickerView.h; sourceTree = "<group>"; };
+		C180F7EE1B91F1AB008A66D9 /* MZTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZTimePickerView.m; path = Lecture/AddLecture/TimePicker/MZTimePickerView.m; sourceTree = "<group>"; };
 		FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -650,6 +653,8 @@
 		C1A3A0F01B90C0BD0011397F /* TimePicker */ = {
 			isa = PBXGroup;
 			children = (
+				C180F7ED1B91F1AB008A66D9 /* MZTimePickerView.h */,
+				C180F7EE1B91F1AB008A66D9 /* MZTimePickerView.m */,
 			);
 			name = TimePicker;
 			sourceTree = "<group>";
@@ -905,6 +910,7 @@
 				B59682A21AAC314D002D6983 /* OPLeftDrawerViewController.m in Sources */,
 				B59682DF1AAC69CE002D6983 /* NetworkManager.m in Sources */,
 				B534EAD21AB43A8B00EBE3EB /* AddLectureViewController.m in Sources */,
+				C180F7EF1B91F1AB008A66D9 /* MZTimePickerView.m in Sources */,
 				B534EAF81AB47DBF00EBE3EB /* AddLectureDetailCell.m in Sources */,
 				B59682B91AAC4A8E002D6983 /* DataManager.m in Sources */,
 				C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */,
