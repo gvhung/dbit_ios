@@ -14,6 +14,8 @@
 
 @interface ShowLectureViewController ()
 
+@property (strong, nonatomic) UIScrollView *scorllView;
+
 @property (nonatomic, strong) TimeTableView *timeTableView;
 
 @property (nonatomic, strong) DataManager *dataManager;
