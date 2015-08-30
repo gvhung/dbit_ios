@@ -50,6 +50,7 @@ static CGFloat const EmptyButtonPadding = 10.0f;
         self.preferredContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, EmptyButtonPadding+EmptyButtonHeight);
         [_emptyButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _emptyButton.titleLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:20];
+        [_emptyButton addTarget:self action:@selector(openDBitApp) forControlEvents:UIControlEventTouchUpInside];
         
         [_emptyButton setTitle:@"시간표를 등록하세요!" forState:UIControlStateNormal];
         if ([_activedTimeTable[@"timeStart"] integerValue] == -1)
@@ -77,7 +78,9 @@ static CGFloat const EmptyButtonPadding = 10.0f;
 {
     NSExtensionContext *context = self.extensionContext;
     NSURL *dbitURL;
-    if (_activedTimeTable)
+    if ([_activedTimeTable[@"timeStart"] integerValue] == -1)
+        dbitURL = [NSURL URLWithString:@"dbit://widget/lecture"];
+    else if (_activedTimeTable)
         dbitURL = [NSURL URLWithString:@"dbit://widget/show"];
     else
         dbitURL = [NSURL URLWithString:@"dbit://widget"];

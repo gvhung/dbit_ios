@@ -109,6 +109,11 @@
             [_centerNavigationController setViewControllers:@[showTiemTableViewController]];
             return YES;
         }
+        if ([[url path] isEqualToString:@"/lecture"]) {
+            LectureViewController *lectureViewController = [[LectureViewController alloc] init];
+            [_centerNavigationController setViewControllers:@[lectureViewController]];
+            return YES;
+        }
         return YES;
     }
     return NO;
