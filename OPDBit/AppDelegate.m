@@ -15,11 +15,14 @@
 #import "UIFont+OPTheme.h"
 #import "DataManager.h"
 
+#import "MZSnackBar.h"
+
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
-@interface AppDelegate ()
+@interface AppDelegate () <OPLeftDrawerViewControllerDelegate>
 
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @end
 
@@ -36,7 +39,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
     OPLeftDrawerViewController *leftDrawerViewController = [[OPLeftDrawerViewController alloc] init];
-    
+    leftDrawerViewController.delegate = self;
     
     if ([DataManager sharedInstance].activedTimeTable) {
         LectureViewController *lectureViewController = [[LectureViewController alloc] init];
@@ -109,6 +112,17 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - Left Drawer View Controller Delegate
+
+- (void)leftDrawerViewController:(OPLeftDrawerViewController *)viewController didFailedToTransitionWithMessage:(NSString *)message
+{
+    if (!_snackBar) {
+        _snackBar = [[MZSnackBar alloc] initWithFrame:self.window.rootViewController.view.bounds];
+    }
+    _snackBar.message = message;
+    [_snackBar animateToAppearInView:self.window.rootViewController.view];
 }
 
 @end

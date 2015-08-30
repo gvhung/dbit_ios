@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class OPLeftDrawerViewController;
+
+@protocol OPLeftDrawerViewControllerDelegate <NSObject>
+
+- (void)leftDrawerViewController:(OPLeftDrawerViewController *)viewController didFailedToTransitionWithMessage:(NSString *)message;
+
+@end
+
 @interface OPLeftDrawerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, weak) id<OPLeftDrawerViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) UITableView *tableView;
 

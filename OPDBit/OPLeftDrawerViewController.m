@@ -118,13 +118,17 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if (indexPath.row == 0) {
-        if (!_dataManager.activedTimeTable.lectures) {
-//            [KVNProgress showErrorWithStatus:@"아직 수업이 없습니다!"];
+        if (!_dataManager.activedTimeTable.lectures.count) {
+            if ([_delegate respondsToSelector:@selector(leftDrawerViewController:didFailedToTransitionWithMessage:)]) {
+                [_delegate leftDrawerViewController:self didFailedToTransitionWithMessage:@"아직 수업이 없습니다!"];
+            }
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }
         if (!_dataManager.activedTimeTable) {
-//            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+            if ([_delegate respondsToSelector:@selector(leftDrawerViewController:didFailedToTransitionWithMessage:)]) {
+                [_delegate leftDrawerViewController:self didFailedToTransitionWithMessage:@"기본 시간표가 설정되지 않았습니다!"];
+            }
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }
@@ -133,7 +137,9 @@
     }
     if (indexPath.row == 1) {
         if (!_dataManager.activedTimeTable) {
-//            [KVNProgress showErrorWithStatus:@"기본 시간표가 설정되지 않았습니다!"];
+            if ([_delegate respondsToSelector:@selector(leftDrawerViewController:didFailedToTransitionWithMessage:)]) {
+                [_delegate leftDrawerViewController:self didFailedToTransitionWithMessage:@"기본 시간표가 설정되지 않았습니다!"];
+            }
             [appDelegate.drawerController closeDrawerAnimated:YES completion:nil];
             return;
         }
