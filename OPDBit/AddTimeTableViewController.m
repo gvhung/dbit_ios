@@ -10,6 +10,9 @@
 #import "AddTimeTableViewController.h"
 #import "ServerSemesterViewController.h"
 
+// View
+#import "MZSnackBar.h"
+
 // Utility
 #import "DataManager.h"
 #import "UIColor+OPTheme.h"
@@ -36,6 +39,8 @@
 @property (nonatomic, strong) UITextField *timeTableNameField;
 @property (nonatomic, strong) UIButton *serverSemesterButton;
 @property (nonatomic, strong) UISwitch *primaryTimeTableSwitch;
+
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @end
 
@@ -212,7 +217,13 @@
 {
     if (_timeTableNameField.text.length == 0) {
         [_timeTableNameField resignFirstResponder];
-//        [KVNProgress showErrorWithStatus:@"시간표 이름을 입력해주세요!"];
+        
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"시간표 이름을 입력해주세요!";
+        [_snackBar animateToAppearInView:self.view];
+        
         return;
     }
     
@@ -220,15 +231,14 @@
     _timeTable.active = _primaryTimeTableSwitch.isOn;
     
     [_dataManager saveOrUpdateTimeTable:_timeTable
-                             completion:^(BOOL isUpdated) {
-        if (isUpdated) {
-//            [KVNProgress showSuccessWithStatus:@"시간표 수정 성공!"];
-        } else {
-//            [KVNProgress showSuccessWithStatus:@"시간표 추가 성공!"];
+                             completion:^(BOOL isUpdated)
+    {
+        if ([_delegate respondsToSelector:@selector(addTimeTableViewController:didDoneWithIsModifying:)]) {
+            [_delegate addTimeTableViewController:self didDoneWithIsModifying:isUpdated];
         }
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Action

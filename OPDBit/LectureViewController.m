@@ -196,7 +196,12 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         LectureDetailObject *lectureDetail = _lectureDetails[indexPath.row];
         [_dataManager deleteLectureWithUlid:lectureDetail.lecture.ulid];
-//        [KVNProgress showSuccessWithStatus:@"강의 삭제 성공!"];
+        
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"강의 삭제 성공!";
+        [_snackBar animateToAppearInView:self.view];
         
         self.lectureDetails = [_dataManager lectureDetailsWithDay:_daySegmentedControl.selectedSegmentIndex];
         if (_daySegmentedControl.selectedSegmentIndex > 4) _daySegmentedControl.selectedSegmentIndex = 4;
@@ -242,7 +247,11 @@ static NSString * const LectureCellIdentifier = @"LectureCell";
 - (void)addLectureAction
 {
     if (_dataManager.activedTimeTable == nil) {
-//        [KVNProgress showErrorWithStatus:@"기본 시간표가\n선택되지 않았습니다!"];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"기본 시간표가 선택되지 않았습니다!";
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     

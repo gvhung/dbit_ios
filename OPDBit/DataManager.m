@@ -372,6 +372,9 @@
                     lectureDetail.timeEnd <= otherLectureDetail.timeEnd) {
                     return otherLectureDetail.lecture.lectureName;
                 }
+                if (lectureDetail.timeStart <= otherLectureDetail.timeStart && otherLectureDetail.timeEnd <= lectureDetail.timeEnd) {
+                    return otherLectureDetail.lecture.lectureName;
+                }
             }
         }
     }

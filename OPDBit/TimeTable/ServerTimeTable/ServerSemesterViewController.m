@@ -11,6 +11,7 @@
 
 // View
 #import "ServerSemesterCell.h"
+#import "MZSnackBar.h"
 
 // Model
 #import "ServerSemesterObject.h"
@@ -35,6 +36,8 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
 @property (nonatomic, strong) UILabel *emptyLabel;
 
 @property (nonatomic, strong) RLMArray *downloadedSemesters;
+
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @end
 
@@ -186,11 +189,19 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                     [_dataManager saveOrUpdateServerSemester:serverSemester completion:^(BOOL isUpdated) {
                         self.savedServerSemesters = [_dataManager savedServerSemesters];
                         [_tableView reloadData];
-//                        [KVNProgress showSuccessWithStatus:@"성공!"];
+                        if (!_snackBar) {
+                            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+                        }
+                        _snackBar.message = @"다운로드 성공했습니다!";
+                        [_snackBar animateToAppearInView:self.view];
                     }];
                 } failure:^(NSString *message)
                 {
-//                    [KVNProgress showErrorWithStatus:message];
+                    if (!_snackBar) {
+                        _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+                    }
+                    _snackBar.message = message;
+                    [_snackBar animateToAppearInView:self.view];
                 }];
             }];
             [alertController addAction:semesterAction];
@@ -201,7 +212,11 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
         [alertController addAction:cancelAction];
         [self presentViewController:alertController animated:YES completion:nil];
     } failure:^(NSString *message) {
-//        [KVNProgress showErrorWithStatus:message];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = message;
+        [_snackBar animateToAppearInView:self.view];
     }];
 }
 

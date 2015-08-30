@@ -23,7 +23,6 @@
 
 // Library
 #import <Masonry/Masonry.h>
-//#import <KVNProgress/KVNProgress.h>
 
 @interface OPLeftDrawerViewController ()
 

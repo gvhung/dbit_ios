@@ -11,6 +11,7 @@
 
 // View
 #import "SearchLectureCell.h"
+#import "MZSnackBar.h"
 
 // Utility
 #import "DataManager.h"
@@ -37,6 +38,8 @@
 @property (nonatomic, strong) RLMArray *lectureResults;
 
 @property (nonatomic, strong) ServerLectureObject *selectedServerLecture;
+
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @end
 
@@ -148,7 +151,12 @@ static CGFloat const rowHeight = 80.0f;
 {
     if (!_selectedServerLecture) {
         [_searchTextField resignFirstResponder];
-//        [KVNProgress showErrorWithStatus:@"강의를 선택해주세요!"];
+        
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"강의를 선택해주세요!";
+        [_snackBar animateToAppearInView:self.view];
         return;
     }
     

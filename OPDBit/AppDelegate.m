@@ -15,7 +15,6 @@
 #import "UIFont+OPTheme.h"
 #import "DataManager.h"
 
-#import <RMDateSelectionViewController/RMDateSelectionViewController.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
@@ -33,9 +32,6 @@
     [Fabric with:@[CrashlyticsKit]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [RMDateSelectionViewController setLocalizedTitleForSelectButton:@"선택"];
-    [RMDateSelectionViewController setLocalizedTitleForCancelButton:@"취소"];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 

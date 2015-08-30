@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+// View
+#import "MZSnackBar.h"
 
 // Controller
 #import "TimeTableViewController.h"
@@ -28,12 +30,13 @@
 #import <Masonry/Masonry.h>
 #import <Realm/Realm.h>
 
-@interface TimeTableViewController ()
+@interface TimeTableViewController () <AddTimeTableViewControllerDelegate>
 
 @property (nonatomic, strong) RLMArray *timeTables;
 @property (nonatomic, strong) DataManager *dataManager;
 
 @property (nonatomic, strong) UILabel *emptyLabel;
+@property (strong, nonatomic) MZSnackBar *snackBar;
 
 @end
 
@@ -165,7 +168,11 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TimeTableObject *timeTableToDelete = _timeTables[indexPath.row];
         [_dataManager deleteTimeTableWithUtid:timeTableToDelete.utid];
-//        [KVNProgress showSuccessWithStatus:@"시간표 삭제 성공!"];
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"시간표 삭제 성공!";
+        [_snackBar animateToAppearInView:self.view];
         self.timeTables = [_dataManager timeTables];
     }
 }
@@ -216,6 +223,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 - (void)addTimeTable
 {
     AddTimeTableViewController *addTimeTableViewController = [[AddTimeTableViewController alloc] init];
+    addTimeTableViewController.delegate = self;
     [self.navigationController pushViewController:addTimeTableViewController animated:YES];
 }
 
@@ -229,9 +237,28 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 {
     AddTimeTableViewController *editTimeTableViewController = [[AddTimeTableViewController alloc] init];
     editTimeTableViewController.timeTable = _timeTables[indexPath.row];
+    editTimeTableViewController.delegate = self;
     [self.navigationController pushViewController:editTimeTableViewController animated:YES];
 }
 
+#pragma mark - Add Time Table Delegate
+
+- (void)addTimeTableViewController:(AddTimeTableViewController *)addTimeTableViewController didDoneWithIsModifying:(BOOL)isModifying
+{
+    if (isModifying) {
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"시간표 수정 성공!";
+        [_snackBar animateToAppearInView:self.view];
+    } else {
+        if (!_snackBar) {
+            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
+        }
+        _snackBar.message = @"시간표 추가 성공!";
+        [_snackBar animateToAppearInView:self.view];
+    }
+}
 
 #pragma mark - Life Cycle
 
