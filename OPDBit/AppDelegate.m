@@ -41,11 +41,11 @@
             withMigrationBlock:^(RLMMigration *migration, uint64_t oldSchemaVersion) {
                 if (oldSchemaVersion < 1) {
                     [migration enumerateObjects:ServerLectureObject.className
-                                          block:^(RLMObject *newObject, RLMObject *oldObject) {
-                                              newObject[@"lectureKey"] = oldObject[@"lectureCode"];
+                                          block:^(RLMObject *oldObject, RLMObject *newObject) {
+                                              newObject[@"lectureKey"] = [NSString stringWithFormat:@"%@", oldObject[@"lectureCode"]];
                                           }];
                     [migration enumerateObjects:TimeTableObject.className
-                                          block:^(RLMObject *newObject, RLMObject *oldObject) {
+                                          block:^(RLMObject *oldObject, RLMObject *newObject) {
                                               if ([oldObject[@"sat"] boolValue] || [oldObject[@"sun"] boolValue]) {
                                                   newObject[@"workAtWeekend"] = @(YES);
                                               } else {
