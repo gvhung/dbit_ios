@@ -64,12 +64,7 @@ static CGFloat const TimeTableCellHeight = 75.0f;
     UIBarButtonItem *addTimeTableButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                                                           target:self
                                                                           action:@selector(addTimeTable)];
-    UIBarButtonItem *downloadServerTimeTableButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download"]
-                                                                                      style:UIBarButtonItemStylePlain
-                                                                                     target:self
-                                                                                     action:@selector(downloadServerTimeTable)];
-    
-    self.navigationItem.rightBarButtonItems = @[downloadServerTimeTableButton, addTimeTableButton];
+    self.navigationItem.rightBarButtonItems = @[addTimeTableButton];
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu"]
                                                                    style:UIBarButtonItemStylePlain
@@ -213,12 +208,6 @@ static CGFloat const TimeTableCellHeight = 75.0f;
 }
 
 #pragma mark - Bar Button Action
-
-- (void)downloadServerTimeTable
-{
-    ServerSemesterViewController *serverSemesterViewController = [[ServerSemesterViewController alloc] init];
-    [self.navigationController pushViewController:serverSemesterViewController animated:YES];
-}
 
 - (void)addTimeTable
 {
