@@ -106,7 +106,7 @@
     [_timeTableNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
     [_serverSemesterButton setTitleColor:[UIColor op_textPrimaryDark] forState:UIControlStateNormal];
-    [_serverSemesterButton setTitle:@"여기를 눌러 유드림스로부터 강의목록을 받아주세요!" forState:UIControlStateNormal];
+    [_serverSemesterButton setTitle:@"여기를 눌러 유드림스에서 강의목록을 받아주세요!" forState:UIControlStateNormal];
     _serverSemesterButton.titleLabel.font = [UIFont op_primary];
     _serverSemesterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_serverSemesterButton addTarget:self action:@selector(selectServerSemester) forControlEvents:UIControlEventTouchUpInside];
