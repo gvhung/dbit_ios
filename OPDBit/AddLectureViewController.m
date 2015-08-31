@@ -141,8 +141,13 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 - (void)setLecture:(LectureObject *)lecture
 {
-    _lecture = lecture;
     if (lecture) {
+        LectureObject *copiedLecture = [[LectureObject alloc] init];
+        copiedLecture.ulid = lecture.ulid;
+        copiedLecture.lectureName = lecture.lectureName;
+        copiedLecture.theme = lecture.theme;
+        _lecture = copiedLecture;
+        
         _isModifying = YES;
         [_lectureDetails removeAllObjects];
         for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
@@ -154,6 +159,8 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
             [_lectureDetails addObject:copiedLectureDetail];
         }
         [_tableView reloadData];
+    } else {
+        _lecture = lecture;
     }
 }
 
