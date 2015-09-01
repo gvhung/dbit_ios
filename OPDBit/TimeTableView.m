@@ -111,11 +111,12 @@ static CGFloat LineWidth = 0.5f;
             
             // 분 단위로 계산
             NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
+            NSInteger startMargin = convertedTimeTableStart%60;
             NSInteger convertedStartTime = lectureDetail.timeStart/100*60 + lectureDetail.timeStart%100;
             NSInteger convertedStartEnd = lectureDetail.timeEnd/100*60 + lectureDetail.timeEnd%100;
             
             CGFloat x = TimeHeadWidth + _sectionWidth * lectureDetail.day;
-            CGFloat y = SectionHeadHeight + _timeHeight * ((convertedStartTime - convertedTimeTableStart)/60.0f);
+            CGFloat y = SectionHeadHeight + _timeHeight * ((startMargin + convertedStartTime - convertedTimeTableStart)/60.0f);
             CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
@@ -202,10 +203,7 @@ static CGFloat LineWidth = 0.5f;
 
 - (NSInteger)timeBlockCount
 {
-    if (_timeStart%100 == 0)
-        _blockStart = _timeStart/100;
-    else
-        _blockStart = (_timeStart/100)-1;
+    _blockStart = _timeStart/100;
     
     if (_timeEnd%100 == 0)
         _blockEnd = _timeEnd/100;

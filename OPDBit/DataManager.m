@@ -109,8 +109,12 @@
     
     [_realm beginWriteTransaction];
     
+    
+    TimeTableObject *activedTimeTable = self.activedTimeTable;
+    
     RLMResults *lectureResults = [LectureObject objectsInRealm:_realm where:@"ulid == %ld", lectureObject.ulid];
     if (lectureResults.count) {
+        [activedTimeTable.lectures removeObjectAtIndex:[activedTimeTable.lectures indexOfObject:lectureResults[0]]];
         hasDuplicated = YES;
     } else {
         lectureObject.ulid = [self lastUlid] + 1;
@@ -122,7 +126,6 @@
     [_realm addObjects:lectureObject.lectureDetails];
     [_realm addOrUpdateObject:lectureObject];
     
-    TimeTableObject *activedTimeTable = self.activedTimeTable;
     [activedTimeTable.lectures addObject:lectureObject];
     [_realm addOrUpdateObject:activedTimeTable];
     [_realm commitWriteTransaction];

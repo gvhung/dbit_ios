@@ -60,10 +60,11 @@ static CGFloat const EmptyButtonPadding = 10.0f;
         
     } else {
         self.preferredContentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, TimeTableViewHeight+100.0f);
-        
-        _timeTableView = [[TimeTableViewForWidget alloc] initForWidgetWithFrame:CGRectMake(0, 0, TimeTableViewWidth, TimeTableViewHeight) timetable:_activedTimeTable];
-        _timeTableView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:_timeTableView];
+        if (!_timeTableView) {
+            _timeTableView = [[TimeTableViewForWidget alloc] initForWidgetWithFrame:CGRectMake(0, 0, TimeTableViewWidth, TimeTableViewHeight) timetable:_activedTimeTable];
+            _timeTableView.backgroundColor = [UIColor clearColor];
+            [self.view addSubview:_timeTableView];
+        }
         
         [self updateTimeTable];
     }

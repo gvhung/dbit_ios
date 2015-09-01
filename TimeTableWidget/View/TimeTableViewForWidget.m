@@ -66,8 +66,6 @@ static CGFloat const TimeHeadWidth = 20.0f;
 
 - (void)drawTimeTableLines
 {
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
     UIView *timeTableView = [[UIView alloc] initWithFrame:self.frame];
     timeTableView.backgroundColor = [UIColor clearColor];
     
@@ -102,11 +100,12 @@ static CGFloat const TimeHeadWidth = 20.0f;
         for (NSDictionary *lectureDetailDictionary in lectureDictionary[@"lectureDetails"]) {
             
             NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
+            NSInteger startMargin = convertedTimeTableStart%60;
             NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue]/100*60 + [lectureDetailDictionary[@"timeStart"] integerValue]%100;
             NSInteger convertedStartEnd = [lectureDetailDictionary[@"timeEnd"] integerValue]/100*60 + [lectureDetailDictionary[@"timeEnd"] integerValue]%100;
             
             CGFloat x = TimeHeadWidth + _sectionWidth * [lectureDetailDictionary[@"day"] integerValue];
-            CGFloat y = SectionHeadHeight + _timeHeight * ((convertedStartTime - convertedTimeTableStart)/60.0f);
+            CGFloat y = SectionHeadHeight + _timeHeight * ((startMargin + convertedStartTime - convertedTimeTableStart)/60.0f);
             CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
             
             CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
@@ -124,10 +123,7 @@ static CGFloat const TimeHeadWidth = 20.0f;
 
 - (NSInteger)timeBlockCount
 {
-    if (_timeStart%100 == 0)
-        _blockStart = _timeStart/100;
-    else
-        _blockStart = (_timeStart/100)-1;
+    _blockStart = _timeStart/100;
     
     if (_timeEnd%100 == 0)
         _blockEnd = _timeEnd/100;
