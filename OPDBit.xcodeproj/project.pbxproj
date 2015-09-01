@@ -66,6 +66,7 @@
 		B557D1671B9600860036DCF6 /* OPIconAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */; };
 		B557D1681B9600860036DCF6 /* OPIconAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */; };
 		B557D1691B9603220036DCF6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
+		B557D16A1B9606890036DCF6 /* NSString+api.m in Sources */ = {isa = PBXBuildFile; fileRef = B557D0CC1B95F79E0036DCF6 /* NSString+api.m */; };
 		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
 		B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */; };
 		B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
@@ -1047,6 +1048,7 @@
 				B557D15B1B95FD7A0036DCF6 /* OPLeftDrawerViewController.m in Sources */,
 				B557D15C1B95FD7A0036DCF6 /* OPLeftDrawerTableViewCell.m in Sources */,
 				B557D15D1B95FD7A0036DCF6 /* AppDelegate.m in Sources */,
+				B557D16A1B9606890036DCF6 /* NSString+api.m in Sources */,
 				B557D15E1B95FD7A0036DCF6 /* MZSnackBar.m in Sources */,
 				B557D15F1B95FD7A0036DCF6 /* NetworkManager.m in Sources */,
 				B557D1601B95FD7A0036DCF6 /* DataManager.m in Sources */,

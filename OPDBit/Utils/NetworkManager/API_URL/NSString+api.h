@@ -12,6 +12,6 @@
 
 + (NSString *)api_cdn_rawgit;
 + (NSString *)api_semester_list;
-+ (NSString *)api_lecture_list;
++ (NSString *)api_lecture_list_with_id:(NSInteger)semesterID;
 
 @end

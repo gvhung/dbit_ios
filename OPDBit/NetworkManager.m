@@ -6,13 +6,8 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
-#define SERVER_URL @"https://dbit.plusquare.com/api"
-
-#define SEMESTER @"/semester"
-#define LECTURE_LIST @"/lecture/list"
-
-
 #import "NetworkManager.h"
+#import "NSString+api.h"
 
 @implementation NetworkManager
 
@@ -34,7 +29,7 @@
                                  failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *url = [SERVER_URL stringByAppendingString:SEMESTER];
+    NSString *url = [NSString api_semester_list];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ServerSemesters:\n%@", responseObject);
         success(responseObject);
@@ -51,10 +46,7 @@
 {
     [self statusBarIndicator:YES];
     
-    NSString *url = [NSString stringWithFormat:@"https://cdn.rawgit.com/OVERTHEPIXEL/dbit/master/static/2015-2.json"];
-//    NSString *parameter = [NSString stringWithFormat:@"/%ld", semesterID];
-//    NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
-//                                 stringByAppendingString:parameter];
+    NSString *url = [NSString api_lecture_list_with_id:semesterID];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ServerLectures:\n%@", responseObject);
         success(responseObject);
