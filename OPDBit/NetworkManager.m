@@ -50,9 +50,11 @@
                                 failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
-    NSString *parameter = [NSString stringWithFormat:@"/%ld", semesterID];
-    NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
-                                 stringByAppendingString:parameter];
+    
+    NSString *url = [NSString stringWithFormat:@"https://cdn.rawgit.com/OVERTHEPIXEL/dbit/master/static/2015-2.json"];
+//    NSString *parameter = [NSString stringWithFormat:@"/%ld", semesterID];
+//    NSString *url = [[SERVER_URL stringByAppendingString:LECTURE_LIST]
+//                                 stringByAppendingString:parameter];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ServerLectures:\n%@", responseObject);
         success(responseObject);

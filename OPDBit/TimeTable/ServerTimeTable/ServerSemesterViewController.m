@@ -232,7 +232,8 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
         if (error.code == -1003 || error.code == -1009)
             errorMessage = @"인터넷 연결을 확인해주세요!";
         else
-            errorMessage = @"내려받는 도중에\n오류가 발생했습니다!";
+            errorMessage = @"내려받는 도중에 오류가 발생했습니다!";
+        NSLog(@"%@", error);
         failure(errorMessage);
     }];
 }

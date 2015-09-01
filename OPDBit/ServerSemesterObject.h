@@ -6,7 +6,6 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
-#import "RLMObject.h"
 #import "ServerLectureObject.h"
 
 static NSString * const ServerSemesterObjectID = @"ServerSemesterObject";
