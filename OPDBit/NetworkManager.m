@@ -30,6 +30,7 @@
 {
     [self statusBarIndicator:YES];
     NSString *url = [NSString api_semester_list];
+    _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ServerSemesters:\n%@", responseObject);
         success(responseObject);
@@ -41,12 +42,14 @@
 }
 
 - (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                                version:(NSInteger)version
                              completion:(void (^)(id response))success
                                 failure:(void (^)(NSError *error))failure
 {
     [self statusBarIndicator:YES];
     
-    NSString *url = [NSString api_lecture_list_with_id:semesterID];
+    NSString *url = [NSString api_lecture_list_with_id:semesterID version:version];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"ServerLectures:\n%@", responseObject);
         success(responseObject);

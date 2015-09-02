@@ -24,14 +24,24 @@
     return @"";
 }
 
-+ (NSString *)api_semester_list
++ (NSString *)api_raw_github
 {
-    return [[NSString api_cdn_rawgit] stringByAppendingString:@"semester_list.json"];
+    if ([APP_TYPE isEqualToString:RELEASE]) {
+        return @"https://raw.githubusercontent.com/OVERTHEPIXEL/dbit/master/static/";
+    } else if ([APP_TYPE isEqualToString:ALPHA]) {
+        return @"https://raw.githubusercontent.com/MinJunKweon/dbit/master/static/";
+    }
+    return @"";
 }
 
-+ (NSString *)api_lecture_list_with_id:(NSInteger)semesterID
++ (NSString *)api_semester_list
 {
-    return [[NSString api_cdn_rawgit] stringByAppendingFormat:@"%ld.json", semesterID];
+    return [[NSString api_raw_github] stringByAppendingString:@"semester_list.json"];
+}
+
++ (NSString *)api_lecture_list_with_id:(NSInteger)semesterID version:(NSInteger)version
+{
+    return [[NSString api_cdn_rawgit] stringByAppendingFormat:@"%ld-v%ld.json", semesterID, version];
 }
 
 @end

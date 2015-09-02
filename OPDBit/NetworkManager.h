@@ -19,6 +19,7 @@
                                  failure:(void (^)(NSError *error))failure;
 
 - (void)getServerLecturesWithSemesterID:(NSInteger)semesterID
+                                version:(NSInteger)version
                              completion:(void (^)(id response))success
                                 failure:(void (^)(NSError *error))failure;
 

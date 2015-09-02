@@ -243,6 +243,7 @@ static CGFloat const ServerSemesterCellHeight = 75.0f;
                                         failure:(void (^)(NSString *message))failure
 {
     [_networkManager getServerLecturesWithSemesterID:serverSemester.semesterID
+                                             version:serverSemester.semesterVersion
                                           completion:^(id response)
     {
         for (NSDictionary *responseDictionary in response) {
