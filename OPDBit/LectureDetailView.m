@@ -149,4 +149,12 @@
     [self setNeedsDisplay];
 }
 
+- (void)setType:(LectureDetailViewType)type
+{
+    _type = type;
+    if (type == LectureDetailViewTypeServerLecture) {
+        
+    }
+}
+
 @end

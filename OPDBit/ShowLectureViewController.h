@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class ServerLectureObject;
+@class TimeTableObject;
+
 @interface ShowLectureViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary *activedTimeTable;
+@property (nonatomic, strong) ServerLectureObject *serverLecture;
+@property (nonatomic, strong) TimeTableObject *activedTimeTable;
 
 - (id)init;
 

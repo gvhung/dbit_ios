@@ -107,6 +107,9 @@
 + (UIColor *)op_lectureTheme:(NSInteger)themeId
 {
     switch (themeId) {
+        case -1:
+            return [self colorWithHexString:@"#FF5532"];    // 새로운 서버 강의 색깔 임시
+            break;
         case 0:
             return [self colorWithHexString:@"#F44336"];
             break;

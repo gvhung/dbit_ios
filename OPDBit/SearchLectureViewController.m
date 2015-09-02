@@ -6,8 +6,10 @@
 //  Copyright (c) 2015년 Minz. All rights reserved.
 //
 
-// Controller
 #import "SearchLectureViewController.h"
+
+// Controller
+#import "ShowLectureViewController.h"
 
 // View
 #import "SearchLectureCell.h"
@@ -285,6 +287,9 @@ static CGFloat const rowHeight = 80.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _selectedServerLecture = _lectureResults[indexPath.row];
+    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] init];
+    showLectureViewController.serverLecture = _selectedServerLecture;
+    [self.navigationController pushViewController:showLectureViewController animated:YES];
 }
 
 #pragma mark - Life Cycle

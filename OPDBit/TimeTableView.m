@@ -16,6 +16,8 @@
 #import "TimeTableObject.h"
 #import "ServerLectureObject.h"
 
+#import "DataManager.h"
+
 #import <Realm/Realm.h>
 
 @interface TimeTableView ()
@@ -23,7 +25,7 @@
 @property (nonatomic, strong) NSArray *sectionTitles;
 
 @property (nonatomic, strong) RLMArray<LectureObject> *lectures;
-@property (nonatomic, strong) ServerLectureObject *serverLecture;
+@property (nonatomic, strong) NSMutableArray *serverLectureDetails;
 
 @property (nonatomic) NSInteger timeStart;
 @property (nonatomic) NSInteger timeEnd;
@@ -60,13 +62,13 @@ static CGFloat LineWidth = 0.5f;
         self.sectionTitles = sections;
         self.lectures = timetable.lectures;
         
-        self.timeStart = timetable.timeStart;
-        self.timeEnd = timetable.timeEnd;
-        self.timeBlockCount = [self timeBlockCount];
-        
         if (serverLecture) {
             self.serverLecture = serverLecture;
         }
+        
+        self.timeStart = timetable.timeStart;
+        self.timeEnd = timetable.timeEnd;
+        self.timeBlockCount = [self timeBlockCount];
         
         [self initializeLayout];
     }
@@ -104,28 +106,34 @@ static CGFloat LineWidth = 0.5f;
     
     for (LectureObject *lecture in _lectures) {
         for (LectureDetailObject *lectureDetail in lecture.lectureDetails) {
-            // timeStart : 1330
-            // timeEnd : 1500
-            // _timeStart : 900
-            // _timeEnd : 1630
-            
-            // 분 단위로 계산
-            NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
-            NSInteger startMargin = convertedTimeTableStart%60;
-            NSInteger convertedStartTime = lectureDetail.timeStart/100*60 + lectureDetail.timeStart%100;
-            NSInteger convertedStartEnd = lectureDetail.timeEnd/100*60 + lectureDetail.timeEnd%100;
-            
-            CGFloat x = TimeHeadWidth + _sectionWidth * lectureDetail.day;
-            CGFloat y = SectionHeadHeight + _timeHeight * ((startMargin + convertedStartTime - convertedTimeTableStart)/60.0f);
-            CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
-            
-            CGRect lectureDetailViewFrame = CGRectMake(x, y, _sectionWidth, height);
+            CGRect lectureDetailViewFrame = [self lectureDetailViewFrameWithTimeStart:lectureDetail.timeStart
+                                                                              timeEnd:lectureDetail.timeEnd
+                                                                                  day:lectureDetail.day];
             LectureDetailView *lectureDetailView = [[LectureDetailView alloc] initWithFrame:lectureDetailViewFrame
                                                                                       theme:lecture.theme
                                                                                 lectureName:lecture.lectureName
                                                                             lectureLocation:lectureDetail.lectureLocation
                                                                                        type:LectureDetailViewTypeApp];
             [self addSubview:lectureDetailView];
+        }
+    }
+    
+    if (_serverLecture) {
+        for (NSDictionary *serverLectureDetail in _serverLectureDetails) {
+            NSInteger day = [serverLectureDetail[@"day"] integerValue];
+            NSInteger timeStart = [serverLectureDetail[@"timeStart"] integerValue];
+            NSInteger timeEnd = [serverLectureDetail[@"timeEnd"] integerValue];
+            NSString *lectureLocation = serverLectureDetail[@"location"];
+            
+            CGRect serverLectureViewFrame = [self lectureDetailViewFrameWithTimeStart:timeStart
+                                                                              timeEnd:timeEnd
+                                                                                  day:day];
+            LectureDetailView *serverLectureView = [[LectureDetailView alloc] initWithFrame:serverLectureViewFrame
+                                                                                      theme:-1
+                                                                                lectureName:_serverLecture.lectureName
+                                                                            lectureLocation:lectureLocation
+                                                                                       type:LectureDetailViewTypeServerLecture];
+            [self addSubview:serverLectureView];
         }
     }
 }
@@ -137,8 +145,10 @@ static CGFloat LineWidth = 0.5f;
     self.sectionTitles = sections;
     self.lectures = _timetable.lectures;
     
-    self.timeStart = _timetable.timeStart;
-    self.timeEnd = _timetable.timeEnd;
+    if (!_serverLecture) {
+        self.timeStart = _timetable.timeStart;
+        self.timeEnd = _timetable.timeEnd;
+    }
 
     [self drawLines];
 }
@@ -199,6 +209,49 @@ static CGFloat LineWidth = 0.5f;
     }
 }
 
+#pragma mark - Setter
+
+
+- (void)setServerLecture:(ServerLectureObject *)serverLecture
+{
+    _serverLecture = serverLecture;
+    if (!_serverLectureDetails) {
+        _serverLectureDetails = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    
+    NSMutableArray *lectureLocationArray = [_serverLecture.lectureLocation componentsSeparatedByString:@"),"].mutableCopy;
+    for (NSInteger i = 0; i < lectureLocationArray.count; i++) {
+        NSString *lectureLocationString = lectureLocationArray[i];
+        
+        if (i < lectureLocationArray.count-1) {
+            NSString *convertedString = [lectureLocationString stringByAppendingString:@")"];
+            [lectureLocationArray replaceObjectAtIndex:i withObject:convertedString];
+        }
+    }
+    
+    NSMutableArray *lectureDaytimeArray = [_serverLecture.lectureDaytime componentsSeparatedByString:@","].mutableCopy;
+    NSInteger detailCount = MAX(lectureLocationArray.count, lectureDaytimeArray.count);
+    
+    for (NSInteger i = 0; i < detailCount ; i++) {
+        NSInteger day = [self dayWithString:lectureDaytimeArray[i]];
+        NSInteger timeStart = [self timeStartWithString:lectureDaytimeArray[i]];
+        NSInteger timeEnd = [self timeEndWithString:lectureDaytimeArray[i]];
+        if (_timeStart == -1 || _timeStart > timeStart) {
+            _timeStart = timeStart;
+        }
+        
+        if (_timeEnd == -1 || _timeEnd < timeEnd) {
+            _timeEnd = timeEnd;
+        }
+        
+        NSString *lectureLocation = @"";
+        if ([lectureLocationArray[i] length]) {
+            lectureLocation = lectureLocationArray[i];
+        }
+        [_serverLectureDetails addObject:@{@"day" : @(day), @"timeStart" : @(timeStart), @"timeEnd" : @(timeEnd), @"location" : lectureLocation}];
+    }
+}
+
 #pragma mark - Instance Method
 
 - (NSInteger)timeBlockCount
@@ -213,5 +266,59 @@ static CGFloat LineWidth = 0.5f;
     return _blockEnd - _blockStart;
 }
 
+- (NSInteger)dayWithString:(NSString *)string
+{
+    if (!string) {
+        return 0;
+    }
+    
+    NSString *pureDaytimeString = [string substringToIndex:1];
+    
+    NSArray *dayStringArray = @[@"월", @"화", @"수", @"목", @"금", @"토", @"일"];
+    NSInteger dayInteger = 0;
+    for (NSString *dayString in dayStringArray) {
+        if ([dayString isEqualToString:pureDaytimeString]) {
+            dayInteger = [dayStringArray indexOfObject:dayString];
+        }
+    }
+    
+    return dayInteger;
+}
+
+- (NSInteger)timeStartWithString:(NSString *)string
+{
+    if (!string) {
+        return 0;
+    }
+    
+    NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
+    NSString *timeStartString = [pureDaytimeString componentsSeparatedByString:@"-"][0];
+    return [DataManager integerFromTimeString:timeStartString];
+}
+
+- (NSInteger)timeEndWithString:(NSString *)string
+{
+    if (!string) {
+        return 0;
+    }
+    
+    NSString *pureDaytimeString = [string componentsSeparatedByString:@"/"][1];
+    NSString *timeEndString = [pureDaytimeString componentsSeparatedByString:@"-"][1];
+    return [DataManager integerFromTimeString:timeEndString];
+}
+
+- (CGRect)lectureDetailViewFrameWithTimeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd day:(NSInteger)day
+{
+    NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
+    NSInteger startMargin = convertedTimeTableStart%60;
+    NSInteger convertedStartTime = timeStart/100*60 + timeStart%100;
+    NSInteger convertedStartEnd = timeEnd/100*60 + timeEnd%100;
+    
+    CGFloat x = TimeHeadWidth + _sectionWidth * day;
+    CGFloat y = SectionHeadHeight + _timeHeight * ((startMargin + convertedStartTime - convertedTimeTableStart)/60.0f);
+    CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
+    
+    return CGRectMake(x, y, _sectionWidth, height);
+}
 
 @end

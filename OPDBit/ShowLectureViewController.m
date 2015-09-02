@@ -8,13 +8,14 @@
 
 #import <Masonry/Masonry.h>
 
+#import "TimeTableObject.h"
+#import "ServerLectureObject.h"
+
 #import "ShowLectureViewController.h"
 #import "TimeTableView.h"
 #import "DataManager.h"
 
 @interface ShowLectureViewController ()
-
-@property (strong, nonatomic) UIScrollView *scorllView;
 
 @property (nonatomic, strong) TimeTableView *timeTableView;
 
@@ -33,8 +34,13 @@
     if (self)
     {
         _dataManager = [DataManager sharedInstance];
-//        _timeTableView = [[TimeTableView alloc] initWithFrame:<#(CGRect)#> lectures:<#(NSArray *)#> sectionTitles:<#(NSArray *)#> timeStart:<#(NSInteger)#> timeEnd:<#(NSInteger)#>]
+        _activedTimeTable = _dataManager.activedTimeTable;
+        _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
+                                                    timetable:_activedTimeTable
+                                                serverLecture:_serverLecture];
+        [self.view addSubview:_timeTableView];
         
+        self.view.backgroundColor = [UIColor whiteColor];
         [self initialize];
     }
     
@@ -48,7 +54,18 @@
 
 - (void)makeAutoLayoutContraints
 {
-    
+    [_timeTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(0, 5, 0, 0));
+    }];
+}
+
+#pragma mark - Setter
+
+- (void)setServerLecture:(ServerLectureObject *)serverLecture
+{
+    _serverLecture = serverLecture;
+    _timeTableView.serverLecture = serverLecture;
+    [_timeTableView setNeedsDisplay];
 }
 
 #pragma mark - Life Cycle

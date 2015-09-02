@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, LectureDetailViewType) {
     LectureDetailViewTypeApp = 0,
-    LectureDetailViewTypeWidget
+    LectureDetailViewTypeWidget,
+    LectureDetailViewTypeServerLecture // 뒤에 은은하게 퍼지는 애니메이션을 주기위해서
 };
 
 @interface LectureDetailView : UIView
