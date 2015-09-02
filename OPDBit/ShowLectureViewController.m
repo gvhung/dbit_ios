@@ -29,15 +29,26 @@
 
 - (id)init
 {
+    return [self initWithServerLecture:nil];
+}
+
+- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture
+{
     self = [super init];
     
     if (self)
     {
         _dataManager = [DataManager sharedInstance];
         _activedTimeTable = _dataManager.activedTimeTable;
-        _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
-                                                    timetable:_activedTimeTable
-                                                serverLecture:_serverLecture];
+        _serverLecture = serverLecture;
+        if (serverLecture) {
+            _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
+                                                        timetable:_activedTimeTable
+                                                    serverLecture:serverLecture];
+        } else {
+            _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
+                                                        timetable:_activedTimeTable];
+        }
         [self.view addSubview:_timeTableView];
         
         self.view.backgroundColor = [UIColor whiteColor];
@@ -60,13 +71,6 @@
 }
 
 #pragma mark - Setter
-
-- (void)setServerLecture:(ServerLectureObject *)serverLecture
-{
-    _serverLecture = serverLecture;
-    _timeTableView.serverLecture = serverLecture;
-    [_timeTableView setNeedsDisplay];
-}
 
 #pragma mark - Life Cycle
 

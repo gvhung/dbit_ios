@@ -66,6 +66,8 @@
 		B557D1681B9600860036DCF6 /* OPIconAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */; };
 		B557D1691B9603220036DCF6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59682871AAC2EB7002D6983 /* Images.xcassets */; };
 		B557D16A1B9606890036DCF6 /* NSString+api.m in Sources */ = {isa = PBXBuildFile; fileRef = B557D0CC1B95F79E0036DCF6 /* NSString+api.m */; };
+		B57302F61B972FAD0002FE42 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57302F51B972FAD0002FE42 /* QuartzCore.framework */; };
+		B57302F71B972FB40002FE42 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57302F51B972FAD0002FE42 /* QuartzCore.framework */; };
 		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
 		B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */; };
 		B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
@@ -168,6 +170,7 @@
 		B557D0D21B95FA0A0036DCF6 /* OPDBit Alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OPDBit Alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B557D0F81B95FAB60036DCF6 /* Info_alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_alpha.plist; sourceTree = "<group>"; };
 		B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = OPIconAsset.xcassets; path = "Supporting Files/Resource/OPIconAsset.xcassets"; sourceTree = "<group>"; };
+		B57302F51B972FAD0002FE42 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B593AA411ACC3DDF0063F09E /* TimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableView.h; sourceTree = "<group>"; };
 		B593AA421ACC3DDF0063F09E /* TimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableView.m; sourceTree = "<group>"; };
 		B593AA441ACC4E7D0063F09E /* ShowTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTimeTableViewController.h; sourceTree = "<group>"; };
@@ -240,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57302F61B972FAD0002FE42 /* QuartzCore.framework in Frameworks */,
 				B557D0FB1B95FC620036DCF6 /* Crashlytics.framework in Frameworks */,
 				B557D0FC1B95FC650036DCF6 /* Fabric.framework in Frameworks */,
 				059D226EAF587E0AEC5BCCC0 /* libPods.a in Frameworks */,
@@ -250,6 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57302F71B972FB40002FE42 /* QuartzCore.framework in Frameworks */,
 				B5530B2A1AECE5AE0096F39C /* Crashlytics.framework in Frameworks */,
 				B5530B2B1AECE5AE0096F39C /* Fabric.framework in Frameworks */,
 			);
@@ -725,6 +730,7 @@
 		D50F2B14238F6B1E7CE06FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B57302F51B972FAD0002FE42 /* QuartzCore.framework */,
 				7AC2BC34DD53E7F748851752 /* libPods.a */,
 				B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */,
 				9B8A6D7AE42256B3A5516C5F /* libPods-OPDBit.a */,
@@ -1167,7 +1173,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/OPDBit/Info_alpha.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1190,7 +1196,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/OPDBit/Info_alpha.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

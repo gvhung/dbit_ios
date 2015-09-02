@@ -8,8 +8,11 @@
 
 #import "LectureDetailView.h"
 
+// Utilities
 #import "UIColor+OPTheme.h"
 #import "UIFont+OPTheme.h"
+
+#define BORDER_WIDTH 1.0f
 
 @interface LectureDetailView ()
 
@@ -24,12 +27,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.type = type;
-        
         self.selectedLectureDetail = NO;
         self.lectureName = lectureName;
         self.lectureLocation = lectureLocation;
         self.theme = theme;
+        
+        self.type = type;
         
         [self initialize];
     }
@@ -54,7 +57,6 @@
 
 - (void)initialize
 {
-    self.clipsToBounds = YES;
     
     _lectureNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 10)];
     _lectureNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -95,20 +97,20 @@
     CGSize lectureLocationLabelSize = _lectureLocationLabel.frame.size;
     
     _lectureNameLabel.frame = CGRectMake(0, 10.0f, self.bounds.size.width, lectureNameLabelSize.height);
-    if (_type == LectureDetailViewTypeApp) {
-        _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + 10.0f + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
-    } else {
+    if (_type == LectureDetailViewTypeWidget) {
         _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
+    } else {
+        _lectureLocationLabel.frame = CGRectMake(0, (self.bounds.size.height + 10.0f + _lectureNameLabel.frame.size.height)/2 - (lectureLocationLabelSize.height/2), self.bounds.size.width, lectureLocationLabelSize.height);
     }
     
     if ((_lectureNameLabel.frame.origin.y + _lectureNameLabel.frame.size.height) >= _lectureLocationLabel.frame.origin.y)
     {
-        if (_type == LectureDetailViewTypeApp) {
-            _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
-            _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
-        } else {
+        if (_type == LectureDetailViewTypeWidget) {
             _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
             _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:8];
+        } else {
+            _lectureNameLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:10];
+            _lectureLocationLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:9];
         }
         
         CGRect lectureNameLabelFrame = _lectureNameLabel.frame;
@@ -144,8 +146,7 @@
 - (void)setTheme:(NSInteger)theme
 {
     _theme = theme;
-    self.backgroundColor = [[UIColor op_lectureTheme:theme] colorWithAlphaComponent:(_type == LectureDetailViewTypeApp)? 0.7f : 0.5f];
-    self.clipsToBounds = YES;
+    self.backgroundColor = [[UIColor op_lectureTheme:theme] colorWithAlphaComponent:(_type == LectureDetailViewTypeWidget)? 0.5f : 0.7f];
     [self setNeedsDisplay];
 }
 
@@ -153,7 +154,37 @@
 {
     _type = type;
     if (type == LectureDetailViewTypeServerLecture) {
+        // Spreading Animation
+        CALayer *borderLayer = [[CALayer alloc] initWithLayer:self.layer];
+        borderLayer.anchorPoint = CGPointMake(0.5f, 0.5f);
+        borderLayer.backgroundColor = [UIColor clearColor].CGColor;
+        borderLayer.frame = self.bounds;
+        borderLayer.opacity = 0.7f;
+//        borderLayer.frame = self.layer.frame;
+//        borderLayer.position = self.layer.position;
+        borderLayer.borderWidth = BORDER_WIDTH;
+        borderLayer.borderColor = [UIColor op_lectureTheme:_theme].CGColor;
         
+        CABasicAnimation *spreadAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        spreadAnimation.toValue = @(1.2f);
+        spreadAnimation.fromValue = @(1.0f);
+        
+        CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        fadeOutAnimation.toValue = @(0.0f);
+        fadeOutAnimation.fromValue = @(1.0f);
+        
+        CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+        animationGroup.animations = @[spreadAnimation, fadeOutAnimation];
+        animationGroup.speed = 1.0f;
+        animationGroup.duration = 1.0f;
+        animationGroup.repeatCount = HUGE_VALF;
+        
+        [borderLayer addAnimation:animationGroup forKey:@"spread"];
+        [self.layer insertSublayer:borderLayer atIndex:0];
+        self.clipsToBounds = NO;
+        [self setNeedsDisplay];
+    } else {
+        self.clipsToBounds = YES;
     }
 }
 

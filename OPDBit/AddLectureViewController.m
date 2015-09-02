@@ -128,13 +128,22 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 #pragma mark - Life Cycle
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (_isModifying) {
         self.title = @"강의 수정";
     } else {
         self.title = @"강의 추가";
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self setTitle:@""];
 }
 
 #pragma mark - Setter
@@ -375,7 +384,6 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
     SearchLectureViewController *searchLectureViewController = [[SearchLectureViewController alloc] initWithLecture:_lecture];
     searchLectureViewController.serverSemester = _dataManager.activedTimeTable.serverSemesterObject;
     searchLectureViewController.delegate = self;
-    [self setTitle:@""];
     [self.navigationController pushViewController:searchLectureViewController animated:YES];
 }
 

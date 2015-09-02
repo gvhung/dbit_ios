@@ -62,15 +62,14 @@ static CGFloat LineWidth = 0.5f;
         self.sectionTitles = sections;
         self.lectures = timetable.lectures;
         
-        if (serverLecture) {
-            self.serverLecture = serverLecture;
-        }
-        
         self.timeStart = timetable.timeStart;
         self.timeEnd = timetable.timeEnd;
         self.timeBlockCount = [self timeBlockCount];
+        self.timetable = timetable;
         
-        [self initializeLayout];
+        if (serverLecture) {
+            self.serverLecture = serverLecture;
+        }
     }
     return self;
 }
@@ -92,8 +91,6 @@ static CGFloat LineWidth = 0.5f;
         
         _timeStart = 800;
         _timeEnd = 2000;
-        
-        [self initializeLayout];
     }
     return self;
 }
@@ -123,6 +120,9 @@ static CGFloat LineWidth = 0.5f;
             NSInteger day = [serverLectureDetail[@"day"] integerValue];
             NSInteger timeStart = [serverLectureDetail[@"timeStart"] integerValue];
             NSInteger timeEnd = [serverLectureDetail[@"timeEnd"] integerValue];
+            
+            [self reloadTimetableLimitsWithTimeStart:timeStart timeEnd:timeEnd];
+            
             NSString *lectureLocation = serverLectureDetail[@"location"];
             
             CGRect serverLectureViewFrame = [self lectureDetailViewFrameWithTimeStart:timeStart
@@ -145,11 +145,20 @@ static CGFloat LineWidth = 0.5f;
     self.sectionTitles = sections;
     self.lectures = _timetable.lectures;
     
-    if (!_serverLecture) {
-        self.timeStart = _timetable.timeStart;
-        self.timeEnd = _timetable.timeEnd;
+    self.timeStart = _timetable.timeStart;
+    self.timeEnd = _timetable.timeEnd;
+    
+    if (_serverLectureDetails) {
+        [[self subviews] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [obj performSelector:@selector(removeFromSuperview) withObject:nil];
+        }];
+        
+        for (NSDictionary *serverLectureDetail in _serverLectureDetails) {
+            NSInteger timeStart = [serverLectureDetail[@"timeStart"] integerValue];
+            NSInteger timeEnd = [serverLectureDetail[@"timeEnd"] integerValue];
+            [self reloadTimetableLimitsWithTimeStart:timeStart timeEnd:timeEnd];
+        }
     }
-
     [self drawLines];
 }
 
@@ -236,13 +245,6 @@ static CGFloat LineWidth = 0.5f;
         NSInteger day = [self dayWithString:lectureDaytimeArray[i]];
         NSInteger timeStart = [self timeStartWithString:lectureDaytimeArray[i]];
         NSInteger timeEnd = [self timeEndWithString:lectureDaytimeArray[i]];
-        if (_timeStart == -1 || _timeStart > timeStart) {
-            _timeStart = timeStart;
-        }
-        
-        if (_timeEnd == -1 || _timeEnd < timeEnd) {
-            _timeEnd = timeEnd;
-        }
         
         NSString *lectureLocation = @"";
         if ([lectureLocationArray[i] length]) {
@@ -319,6 +321,17 @@ static CGFloat LineWidth = 0.5f;
     CGFloat height = _timeHeight*((convertedStartEnd - convertedStartTime)/60.0f);
     
     return CGRectMake(x, y, _sectionWidth, height);
+}
+
+- (void)reloadTimetableLimitsWithTimeStart:(NSInteger)timeStart timeEnd:(NSInteger)timeEnd
+{
+    if (_timeStart == -1 || _timeStart > timeStart) {
+        _timeStart = timeStart;
+    }
+    
+    if (_timeEnd == -1 || _timeEnd < timeEnd) {
+        _timeEnd = timeEnd;
+    }
 }
 
 @end

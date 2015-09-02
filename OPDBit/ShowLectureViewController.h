@@ -17,5 +17,6 @@
 @property (nonatomic, strong) TimeTableObject *activedTimeTable;
 
 - (id)init;
+- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture;
 
 @end

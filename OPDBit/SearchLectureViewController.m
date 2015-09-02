@@ -287,8 +287,7 @@ static CGFloat const rowHeight = 80.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _selectedServerLecture = _lectureResults[indexPath.row];
-    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] init];
-    showLectureViewController.serverLecture = _selectedServerLecture;
+    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] initWithServerLecture:_selectedServerLecture];
     [self.navigationController pushViewController:showLectureViewController animated:YES];
 }
 
@@ -299,9 +298,9 @@ static CGFloat const rowHeight = 80.0f;
     // Do any additional setup after loading the view.
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     [_searchTextField becomeFirstResponder];
 }
 
