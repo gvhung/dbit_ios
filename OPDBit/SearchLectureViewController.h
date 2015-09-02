@@ -10,18 +10,14 @@
 @class ServerSemesterObject;
 @class LectureObject;
 
+#import "ShowLectureViewController.h"
+
 #import <UIKit/UIKit.h>
 #import <Realm/Realm.h>
 
-@protocol SearchLectureViewControllerDelegate <NSObject>
-
-- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject;
-
-@end
-
 @interface SearchLectureViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, weak) id<SearchLectureViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<ShowLectureViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) ServerSemesterObject *serverSemester;
 @property (nonatomic, strong) LectureObject *currentLecture;

@@ -98,11 +98,6 @@ static CGFloat const rowHeight = 80.0f;
     _emptyLabel.text = @"검색결과가 없습니다! :D";
     _emptyLabel.textColor = [UIColor op_textPrimaryDark];
     _emptyLabel.font = [UIFont op_title];
-    
-    UIBarButtonItem *selectServerLectureButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"done"]
-                                                                                  style:UIBarButtonItemStylePlain
-                                                                                 target:self
-                                                                                 action:@selector(selectServerLectureAction)];
     _searchTextField.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     _searchTextField.center = CGPointMake(self.view.center.x, 22);
     
@@ -122,7 +117,6 @@ static CGFloat const rowHeight = 80.0f;
                forControlEvents:UIControlEventEditingChanged];
     
     self.navigationItem.titleView = _searchTextField;
-    self.navigationItem.rightBarButtonItem = selectServerLectureButton;
     
     [self.view addSubview:_tableView];
     [self.view addSubview:_segmentedControl];
@@ -145,30 +139,6 @@ static CGFloat const rowHeight = 80.0f;
     [_emptyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
     }];
-}
-
-#pragma mark - Bar Button Action
-
-- (void)selectServerLectureAction
-{
-    if (!_selectedServerLecture) {
-        [_searchTextField resignFirstResponder];
-        
-        if (!_snackBar) {
-            _snackBar = [[MZSnackBar alloc] initWithFrame:self.view.bounds];
-        }
-        _snackBar.message = @"강의를 선택해주세요!";
-        [_snackBar animateToAppearInView:self.view];
-        return;
-    }
-    
-    [_currentLecture lectureFromServerLecture:_selectedServerLecture];
-    
-    if ([_delegate respondsToSelector:@selector(searchLectureViewController:didDoneWithLectureObject:)]) {
-        [_delegate searchLectureViewController:self didDoneWithLectureObject:_currentLecture];
-    }
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setter
@@ -286,8 +256,10 @@ static CGFloat const rowHeight = 80.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    tableView.userInteractionEnabled = NO;
     _selectedServerLecture = _lectureResults[indexPath.row];
-    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] initWithServerLecture:_selectedServerLecture theme:_currentLecture.theme];
+    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] initWithServerLecture:_selectedServerLecture currentLecture:_currentLecture];
+    showLectureViewController.delegate = _delegate;
     [self.navigationController pushViewController:showLectureViewController animated:YES];
 }
 
@@ -302,6 +274,7 @@ static CGFloat const rowHeight = 80.0f;
 {
     [super viewDidAppear:animated];
     [_searchTextField becomeFirstResponder];
+    _tableView.userInteractionEnabled = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

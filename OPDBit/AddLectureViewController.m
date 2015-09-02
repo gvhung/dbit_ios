@@ -31,7 +31,7 @@
 // Library
 #import <Masonry/Masonry.h>
 
-@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, SearchLectureViewControllerDelegate, MZTimePickerDelegate>
+@interface AddLectureViewController () <AddLectureHeaderCellDelegate, AddLectureDetailCellDelegate, AddLectureFooterCellDelegate, ShowLectureViewControllerDelegate, MZTimePickerDelegate>
 
 @property (strong, nonatomic) MZSnackBar *snackBar;
 
@@ -354,7 +354,7 @@ static NSString * const footerCellIdentifier = @"AddLectureFooterCell";
 
 #pragma mark - Search Lecture View Controller Delegate
 
-- (void)searchLectureViewController:(SearchLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject
+- (void)showLectureViewController:(ShowLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject
 {
     _lecture = lectureObject;
     _lectureDetails = lectureObject.lectureDetails;

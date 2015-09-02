@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class LectureObject;
 @class TimeTableObject;
 @class ServerLectureObject;
 
@@ -16,7 +17,7 @@
 @property (strong, nonatomic) TimeTableObject *timetable;
 @property (nonatomic, strong) ServerLectureObject *serverLecture;
 
-- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme;
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture lecture:(LectureObject *)lecture;
 - (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable;
 - (instancetype)initWithFrame:(CGRect)frame;
 

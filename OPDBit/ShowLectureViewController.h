@@ -8,16 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+@class ShowLectureViewController;
 @class ServerLectureObject;
 @class TimeTableObject;
 
+@protocol ShowLectureViewControllerDelegate <NSObject>
+
+- (void)showLectureViewController:(ShowLectureViewController *)searchLectureViewController didDoneWithLectureObject:(LectureObject *)lectureObject;
+
+@end
+
 @interface ShowLectureViewController : UIViewController
 
-@property (nonatomic, strong) ServerLectureObject *serverLecture;
-@property (nonatomic, strong) TimeTableObject *activedTimeTable;
-@property (nonatomic) NSInteger theme;
+@property (weak, nonatomic) id<ShowLectureViewControllerDelegate> delegate;
+
+@property (strong, nonatomic) ServerLectureObject *serverLecture;
+@property (strong, nonatomic) TimeTableObject *activedTimeTable;
+@property (strong, nonatomic) LectureObject *currentLecture;
 
 - (id)init;
-- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme;
+- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture currentLecture:(LectureObject *)currentLecture;
 
 @end

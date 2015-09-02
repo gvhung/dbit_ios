@@ -38,7 +38,7 @@
 
 @property (nonatomic) NSInteger timeBlockCount;
 
-@property (nonatomic) NSInteger serverLectureTheme;
+@property (strong, nonatomic) LectureObject *lecture;
 
 @end
 
@@ -50,10 +50,10 @@ static CGFloat LineWidth = 0.5f;
 
 - (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable
 {
-    return [self initWithFrame:frame timetable:timetable serverLecture:nil theme:-1];
+    return [self initWithFrame:frame timetable:timetable serverLecture:nil lecture:nil];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture lecture:(LectureObject *)lecture
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -69,8 +69,11 @@ static CGFloat LineWidth = 0.5f;
         self.timeBlockCount = [self timeBlockCount];
         self.timetable = timetable;
         
+        if (lecture) {
+            self.lecture = lecture;
+        }
+        
         if (serverLecture) {
-            self.serverLectureTheme = theme;
             self.serverLecture = serverLecture;
         }
     }
@@ -132,7 +135,7 @@ static CGFloat LineWidth = 0.5f;
                                                                               timeEnd:timeEnd
                                                                                   day:day];
             LectureDetailView *serverLectureView = [[LectureDetailView alloc] initWithFrame:serverLectureViewFrame
-                                                                                      theme:_serverLectureTheme
+                                                                                      theme:_lecture.theme
                                                                                 lectureName:_serverLecture.lectureName
                                                                             lectureLocation:lectureLocation
                                                                                        type:LectureDetailViewTypeServerLecture];
