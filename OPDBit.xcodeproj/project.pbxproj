@@ -27,7 +27,6 @@
 		B557D0F91B95FAB60036DCF6 /* Info_alpha.plist in Resources */ = {isa = PBXBuildFile; fileRef = B557D0F81B95FAB60036DCF6 /* Info_alpha.plist */; };
 		B557D0FB1B95FC620036DCF6 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B281AECE5AE0096F39C /* Crashlytics.framework */; };
 		B557D0FC1B95FC650036DCF6 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5530B291AECE5AE0096F39C /* Fabric.framework */; };
-		B557D1411B95FD7A0036DCF6 /* ServerLectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C13C96C61B93053000736A1B /* ServerLectureDetailView.m */; };
 		B557D1421B95FD7A0036DCF6 /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
 		B557D1431B95FD7A0036DCF6 /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
 		B557D1441B95FD7A0036DCF6 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
@@ -93,7 +92,6 @@
 		B5B597F61B8B5F1000DE6526 /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
 		B5FF498B1B321F7A00E411B1 /* ShowLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */; };
 		C10145F61B92DBBF00A09EA9 /* MZSnackBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C10145F51B92DBBF00A09EA9 /* MZSnackBar.m */; };
-		C13C96C71B93053000736A1B /* ServerLectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = C13C96C61B93053000736A1B /* ServerLectureDetailView.m */; };
 		C13C96CE1B93057400736A1B /* ServerLectureInfomationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C13C96CD1B93057400736A1B /* ServerLectureInfomationView.m */; };
 		C148A5E91B63EA7C005167E8 /* ServerSemesterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C148A5E81B63EA7C005167E8 /* ServerSemesterObject.m */; };
 		C15F23CC1B6CBD6B00AD707F /* ServerSemesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C15F23CB1B6CBD6B00AD707F /* ServerSemesterViewController.m */; };
@@ -215,8 +213,6 @@
 		B5FF498A1B321F7A00E411B1 /* ShowLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowLectureViewController.m; sourceTree = "<group>"; };
 		C10145F41B92DBBF00A09EA9 /* MZSnackBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZSnackBar.h; path = Utils/SnackBar/MZSnackBar.h; sourceTree = "<group>"; };
 		C10145F51B92DBBF00A09EA9 /* MZSnackBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZSnackBar.m; path = Utils/SnackBar/MZSnackBar.m; sourceTree = "<group>"; };
-		C13C96C51B93053000736A1B /* ServerLectureDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerLectureDetailView.h; path = TimeTableView/ServerLectureDetailView/ServerLectureDetailView.h; sourceTree = "<group>"; };
-		C13C96C61B93053000736A1B /* ServerLectureDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerLectureDetailView.m; path = TimeTableView/ServerLectureDetailView/ServerLectureDetailView.m; sourceTree = "<group>"; };
 		C13C96CC1B93057400736A1B /* ServerLectureInfomationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerLectureInfomationView.h; path = Lecture/ShowLecture/ServerLectureInfomationView/ServerLectureInfomationView.h; sourceTree = "<group>"; };
 		C13C96CD1B93057400736A1B /* ServerLectureInfomationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerLectureInfomationView.m; path = Lecture/ShowLecture/ServerLectureInfomationView/ServerLectureInfomationView.m; sourceTree = "<group>"; };
 		C148A5E71B63EA7C005167E8 /* ServerSemesterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerSemesterObject.h; sourceTree = "<group>"; };
@@ -417,7 +413,6 @@
 		B593AA401ACC3DB50063F09E /* TimeTableView */ = {
 			isa = PBXGroup;
 			children = (
-				C13C96C11B9303CF00736A1B /* ServerLectureDetailView */,
 				B593AA481ACC58420063F09E /* LectureDetailView */,
 				B593AA411ACC3DDF0063F09E /* TimeTableView.h */,
 				B593AA421ACC3DDF0063F09E /* TimeTableView.m */,
@@ -698,15 +693,6 @@
 				C10145F51B92DBBF00A09EA9 /* MZSnackBar.m */,
 			);
 			name = SnackBar;
-			sourceTree = "<group>";
-		};
-		C13C96C11B9303CF00736A1B /* ServerLectureDetailView */ = {
-			isa = PBXGroup;
-			children = (
-				C13C96C51B93053000736A1B /* ServerLectureDetailView.h */,
-				C13C96C61B93053000736A1B /* ServerLectureDetailView.m */,
-			);
-			name = ServerLectureDetailView;
 			sourceTree = "<group>";
 		};
 		C13C96CB1B93055100736A1B /* ServerLectureInfomationView */ = {
@@ -1018,7 +1004,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B557D1411B95FD7A0036DCF6 /* ServerLectureDetailView.m in Sources */,
 				B557D1421B95FD7A0036DCF6 /* LectureDetailView.m in Sources */,
 				B557D1431B95FD7A0036DCF6 /* TimeTableView.m in Sources */,
 				B557D1441B95FD7A0036DCF6 /* UIColor+OPTheme.m in Sources */,
@@ -1077,7 +1062,6 @@
 				B59682B51AAC47F0002D6983 /* LectureTableViewCell.m in Sources */,
 				B53655CB1ABCA8E500626416 /* UIColor+OPTheme.m in Sources */,
 				B59682801AAC2EB7002D6983 /* AppDelegate.m in Sources */,
-				C13C96C71B93053000736A1B /* ServerLectureDetailView.m in Sources */,
 				B59682AE1AAC3741002D6983 /* LectureViewController.m in Sources */,
 				B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */,
 				B59682C71AAC4D2F002D6983 /* LectureDetailObject.m in Sources */,
