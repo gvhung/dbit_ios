@@ -15,8 +15,9 @@
 
 @property (nonatomic, strong) ServerLectureObject *serverLecture;
 @property (nonatomic, strong) TimeTableObject *activedTimeTable;
+@property (nonatomic) NSInteger theme;
 
 - (id)init;
-- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture;
+- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme;
 
 @end

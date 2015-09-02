@@ -38,6 +38,8 @@
 
 @property (nonatomic) NSInteger timeBlockCount;
 
+@property (nonatomic) NSInteger serverLectureTheme;
+
 @end
 
 @implementation TimeTableView
@@ -48,10 +50,10 @@ static CGFloat LineWidth = 0.5f;
 
 - (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable
 {
-    return [self initWithFrame:frame timetable:timetable serverLecture:nil];
+    return [self initWithFrame:frame timetable:timetable serverLecture:nil theme:-1];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture
+- (instancetype)initWithFrame:(CGRect)frame timetable:(TimeTableObject *)timetable serverLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -68,6 +70,7 @@ static CGFloat LineWidth = 0.5f;
         self.timetable = timetable;
         
         if (serverLecture) {
+            self.serverLectureTheme = theme;
             self.serverLecture = serverLecture;
         }
     }
@@ -129,7 +132,7 @@ static CGFloat LineWidth = 0.5f;
                                                                               timeEnd:timeEnd
                                                                                   day:day];
             LectureDetailView *serverLectureView = [[LectureDetailView alloc] initWithFrame:serverLectureViewFrame
-                                                                                      theme:-1
+                                                                                      theme:_serverLectureTheme
                                                                                 lectureName:_serverLecture.lectureName
                                                                             lectureLocation:lectureLocation
                                                                                        type:LectureDetailViewTypeServerLecture];

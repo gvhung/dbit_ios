@@ -287,7 +287,7 @@ static CGFloat const rowHeight = 80.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _selectedServerLecture = _lectureResults[indexPath.row];
-    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] initWithServerLecture:_selectedServerLecture];
+    ShowLectureViewController *showLectureViewController = [[ShowLectureViewController alloc] initWithServerLecture:_selectedServerLecture theme:_currentLecture.theme];
     [self.navigationController pushViewController:showLectureViewController animated:YES];
 }
 

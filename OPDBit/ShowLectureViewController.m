@@ -29,10 +29,10 @@
 
 - (id)init
 {
-    return [self initWithServerLecture:nil];
+    return [self initWithServerLecture:nil theme:-1];
 }
 
-- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture
+- (instancetype)initWithServerLecture:(ServerLectureObject *)serverLecture theme:(NSInteger)theme;
 {
     self = [super init];
     
@@ -44,7 +44,8 @@
         if (serverLecture) {
             _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
                                                         timetable:_activedTimeTable
-                                                    serverLecture:serverLecture];
+                                                    serverLecture:serverLecture
+                                                            theme:theme];
         } else {
             _timeTableView = [[TimeTableView alloc] initWithFrame:CGRectZero
                                                         timetable:_activedTimeTable];
