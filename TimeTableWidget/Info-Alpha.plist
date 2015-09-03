@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>디빛</string>
+	<string>디빛-Alpha</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Minz.OPDBit.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.Minz.alpha.OPDBit.TimeTableWidget</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -30,6 +30,6 @@
 		<string>TodayViewController</string>
 	</dict>
 	<key>OPDBitApplicationType</key>
-	<string>RELEASE</string>
+	<string>ALPHA</string>
 </dict>
 </plist>

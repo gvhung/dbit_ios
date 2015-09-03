@@ -15,6 +15,10 @@
 
 #import "UIColor+OPTheme.h"
 
+#define APP_TYPE    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"OPDBitApplicationType"]
+#define RELEASE     @"RELEASE"
+#define ALPHA       @"ALPHA"
+
 @interface DataManager ()
 
 @property (nonatomic, strong) RLMRealm *realm;
@@ -497,7 +501,14 @@
 
 - (void)synchronizeUserDefaultWithTimeTable:(TimeTableObject *)timeTable
 {
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    NSString *suiteName = @"";
+    if ([APP_TYPE isEqualToString:RELEASE]) {
+        suiteName = @"group.com.Minz.Dbit";
+    } else if ([APP_TYPE isEqualToString:ALPHA]) {
+        suiteName = @"group.com.Minz.alpha.Dbit";
+    }
+    
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:suiteName];
     
     [sharedDefaults setObject:[self dictionaryWithTimetable:timeTable] forKey:@"ActivedTimeTable"];
     [sharedDefaults synchronize];

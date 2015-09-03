@@ -13,6 +13,10 @@
 
 #define TimeTableViewWidth [UIScreen mainScreen].bounds.size.width
 
+#define APP_TYPE    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"OPDBitApplicationType"]
+#define RELEASE     @"RELEASE"
+#define ALPHA       @"ALPHA"
+
 @interface TodayViewController () <NCWidgetProviding, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) TimeTableViewForWidget *timeTableView;
@@ -79,12 +83,21 @@ static CGFloat const EmptyButtonPadding = 10.0f;
 {
     NSExtensionContext *context = self.extensionContext;
     NSURL *dbitURL;
+    
+    NSString *prefix = @"";
+    if ([APP_TYPE isEqualToString:RELEASE]) {
+        prefix = @"dbit://";
+    } else if ([APP_TYPE isEqualToString:ALPHA]) {
+        prefix = @"dbit-alpha://";
+    }
+    
     if ([_activedTimeTable[@"timeStart"] integerValue] == -1)
-        dbitURL = [NSURL URLWithString:@"dbit://widget/lecture"];
+        dbitURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@widget/lecture", prefix]];
     else if (_activedTimeTable)
-        dbitURL = [NSURL URLWithString:@"dbit://widget/show"];
+        dbitURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@widget/show", prefix]];
     else
-        dbitURL = [NSURL URLWithString:@"dbit://widget"];
+        dbitURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@widget",prefix]];
+    
     [context openURL:dbitURL completionHandler:nil];
 }
 
@@ -112,7 +125,14 @@ static CGFloat const EmptyButtonPadding = 10.0f;
     // If there's no update required, use NCUpdateResultNoData
     // If there's an update, use NCUpdateResultNewData
     
-    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.Minz.Dbit"];
+    NSString *suiteName = @"";
+    if ([APP_TYPE isEqualToString:RELEASE]) {
+        suiteName = @"group.com.Minz.Dbit";
+    } else if ([APP_TYPE isEqualToString:ALPHA]) {
+        suiteName = @"group.com.Minz.alpha.Dbit";
+    }
+    
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:suiteName];
     _activedTimeTable = [defaults objectForKey:@"ActivedTimeTable"];
 
     [self initializeWidget];

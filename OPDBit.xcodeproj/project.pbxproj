@@ -59,8 +59,6 @@
 		B557D15F1B95FD7A0036DCF6 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682DE1AAC69CE002D6983 /* NetworkManager.m */; };
 		B557D1601B95FD7A0036DCF6 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682B81AAC4A8E002D6983 /* DataManager.m */; };
 		B557D1611B95FD7A0036DCF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B596827C1AAC2EB7002D6983 /* main.m */; };
-		B557D1621B95FD7A0036DCF6 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */; };
-		B557D1631B95FD7A0036DCF6 /* TimeTableViewForWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */; };
 		B557D1641B9600080036DCF6 /* LectureDetailObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B59682C61AAC4D2F002D6983 /* LectureDetailObject.m */; };
 		B557D1671B9600860036DCF6 /* OPIconAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */; };
 		B557D1681B9600860036DCF6 /* OPIconAsset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */; };
@@ -68,6 +66,15 @@
 		B557D16A1B9606890036DCF6 /* NSString+api.m in Sources */ = {isa = PBXBuildFile; fileRef = B557D0CC1B95F79E0036DCF6 /* NSString+api.m */; };
 		B57302F61B972FAD0002FE42 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57302F51B972FAD0002FE42 /* QuartzCore.framework */; };
 		B57302F71B972FB40002FE42 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B57302F51B972FAD0002FE42 /* QuartzCore.framework */; };
+		B580BBF71B982EC200AEAB64 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B54C8D6B1ACDB1F300DF2455 /* NotificationCenter.framework */; };
+		B580BC021B982EC200AEAB64 /* TimeTableWidget Alpha.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = B580BBF61B982EC200AEAB64 /* TimeTableWidget Alpha.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B580BC081B982F5100AEAB64 /* Info-Alpha.plist in Resources */ = {isa = PBXBuildFile; fileRef = B580BC071B982F5100AEAB64 /* Info-Alpha.plist */; };
+		B580BC091B982FCD00AEAB64 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */; };
+		B580BC0A1B982FE000AEAB64 /* TimeTableViewForWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B597EA1B8B5C6B00DE6526 /* TimeTableViewForWidget.m */; };
+		B580BC0B1B982FF700AEAB64 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */; };
+		B580BC0E1B98313B00AEAB64 /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
+		B580BC0F1B98314D00AEAB64 /* UIFont+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B533CE3C1ABD430300907A7C /* UIFont+OPTheme.m */; };
+		B580BC101B98315500AEAB64 /* UIColor+OPTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B53655CA1ABCA8E500626416 /* UIColor+OPTheme.m */; };
 		B593AA431ACC3DDF0063F09E /* TimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA421ACC3DDF0063F09E /* TimeTableView.m */; };
 		B593AA461ACC4E7D0063F09E /* ShowTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA451ACC4E7D0063F09E /* ShowTimeTableViewController.m */; };
 		B593AA4B1ACC58610063F09E /* LectureDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B593AA4A1ACC58610063F09E /* LectureDetailView.m */; };
@@ -109,12 +116,12 @@
 			remoteGlobalIDString = B51438441ACFCA7900EED7A5;
 			remoteInfo = TimeTableWidget;
 		};
-		B557D10F1B95FCE00036DCF6 /* PBXContainerItemProxy */ = {
+		B580BC001B982EC200AEAB64 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B596826F1AAC2EB7002D6983 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B51438441ACFCA7900EED7A5;
-			remoteInfo = TimeTableWidget;
+			remoteGlobalIDString = B580BBF51B982EC200AEAB64;
+			remoteInfo = "TimeTableWidget Alpha";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -126,6 +133,17 @@
 			dstSubfolderSpec = 13;
 			files = (
 				B51438511ACFCA7A00EED7A5 /* TimeTableWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B580BC061B982EC200AEAB64 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B580BC021B982EC200AEAB64 /* TimeTableWidget Alpha.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +189,10 @@
 		B557D0F81B95FAB60036DCF6 /* Info_alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_alpha.plist; sourceTree = "<group>"; };
 		B557D1661B9600860036DCF6 /* OPIconAsset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = OPIconAsset.xcassets; path = "Supporting Files/Resource/OPIconAsset.xcassets"; sourceTree = "<group>"; };
 		B57302F51B972FAD0002FE42 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B580BBF61B982EC200AEAB64 /* TimeTableWidget Alpha.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TimeTableWidget Alpha.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B580BC071B982F5100AEAB64 /* Info-Alpha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Alpha.plist"; sourceTree = "<group>"; };
+		B580BC0C1B98301E00AEAB64 /* OPDBit Alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "OPDBit Alpha.entitlements"; sourceTree = SOURCE_ROOT; };
+		B580BC0D1B98303500AEAB64 /* TimeTableWidget Alpha.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "TimeTableWidget Alpha.entitlements"; sourceTree = SOURCE_ROOT; };
 		B593AA411ACC3DDF0063F09E /* TimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeTableView.h; sourceTree = "<group>"; };
 		B593AA421ACC3DDF0063F09E /* TimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeTableView.m; sourceTree = "<group>"; };
 		B593AA441ACC4E7D0063F09E /* ShowTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTimeTableViewController.h; sourceTree = "<group>"; };
@@ -250,6 +272,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B580BBF31B982EC200AEAB64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B580BBF71B982EC200AEAB64 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B59682741AAC2EB7002D6983 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -278,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				B51438551ACFCA8E00EED7A5 /* TimeTableWidget.entitlements */,
+				B580BC0D1B98303500AEAB64 /* TimeTableWidget Alpha.entitlements */,
 				B514384A1ACFCA7A00EED7A5 /* TodayViewController.h */,
 				B514384B1ACFCA7A00EED7A5 /* TodayViewController.m */,
 				B514384D1ACFCA7A00EED7A5 /* MainInterface.storyboard */,
@@ -291,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				B51438491ACFCA7A00EED7A5 /* Info.plist */,
+				B580BC071B982F5100AEAB64 /* Info-Alpha.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -460,6 +492,7 @@
 				B59682771AAC2EB7002D6983 /* OPDBit.app */,
 				B51438451ACFCA7900EED7A5 /* TimeTableWidget.appex */,
 				B557D0D21B95FA0A0036DCF6 /* OPDBit Alpha.app */,
+				B580BBF61B982EC200AEAB64 /* TimeTableWidget Alpha.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -467,9 +500,10 @@
 		B59682791AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXGroup;
 			children = (
+				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
+				B580BC0C1B98301E00AEAB64 /* OPDBit Alpha.entitlements */,
 				B5530B281AECE5AE0096F39C /* Crashlytics.framework */,
 				B5530B291AECE5AE0096F39C /* Fabric.framework */,
-				B542274D1ACECA5E00BBBD3F /* OPDBit.entitlements */,
 				B593AA401ACC3DB50063F09E /* TimeTableView */,
 				B53655C81ABCA8BD00626416 /* Theme */,
 				B59682BA1AAC4AC4002D6983 /* Realm Model */,
@@ -770,16 +804,34 @@
 				B557D0CF1B95FA0A0036DCF6 /* Frameworks */,
 				B557D0D01B95FA0A0036DCF6 /* Resources */,
 				ED36C9B46E5E24497AAF11D4 /* Copy Pods Resources */,
+				B580BC061B982EC200AEAB64 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B557D1101B95FCE00036DCF6 /* PBXTargetDependency */,
+				B580BC011B982EC200AEAB64 /* PBXTargetDependency */,
 			);
 			name = "OPDBit Alpha";
 			productName = "OPDBit Alpha";
 			productReference = B557D0D21B95FA0A0036DCF6 /* OPDBit Alpha.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B580BBF51B982EC200AEAB64 /* TimeTableWidget Alpha */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B580BC031B982EC200AEAB64 /* Build configuration list for PBXNativeTarget "TimeTableWidget Alpha" */;
+			buildPhases = (
+				B580BBF21B982EC200AEAB64 /* Sources */,
+				B580BBF31B982EC200AEAB64 /* Frameworks */,
+				B580BBF41B982EC200AEAB64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TimeTableWidget Alpha";
+			productName = "TimeTableWidget Alpha";
+			productReference = B580BBF61B982EC200AEAB64 /* TimeTableWidget Alpha.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		B59682761AAC2EB7002D6983 /* OPDBit */ = {
 			isa = PBXNativeTarget;
@@ -824,6 +876,20 @@
 					B557D0D11B95FA0A0036DCF6 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = V55Z33K4J2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					B580BBF51B982EC200AEAB64 = {
+						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = V55Z33K4J2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					B59682761AAC2EB7002D6983 = {
 						CreatedOnToolsVersion = 6.1;
@@ -852,6 +918,7 @@
 				B59682761AAC2EB7002D6983 /* OPDBit */,
 				B51438441ACFCA7900EED7A5 /* TimeTableWidget */,
 				B557D0D11B95FA0A0036DCF6 /* OPDBit Alpha */,
+				B580BBF51B982EC200AEAB64 /* TimeTableWidget Alpha */,
 			);
 		};
 /* End PBXProject section */
@@ -872,6 +939,15 @@
 				B557D1691B9603220036DCF6 /* Images.xcassets in Resources */,
 				B557D1681B9600860036DCF6 /* OPIconAsset.xcassets in Resources */,
 				B557D0F91B95FAB60036DCF6 /* Info_alpha.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B580BBF41B982EC200AEAB64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B580BC081B982F5100AEAB64 /* Info-Alpha.plist in Resources */,
+				B580BC0B1B982FF700AEAB64 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,8 +1120,18 @@
 				B557D15F1B95FD7A0036DCF6 /* NetworkManager.m in Sources */,
 				B557D1601B95FD7A0036DCF6 /* DataManager.m in Sources */,
 				B557D1611B95FD7A0036DCF6 /* main.m in Sources */,
-				B557D1621B95FD7A0036DCF6 /* TodayViewController.m in Sources */,
-				B557D1631B95FD7A0036DCF6 /* TimeTableViewForWidget.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B580BBF21B982EC200AEAB64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B580BC0E1B98313B00AEAB64 /* LectureDetailView.m in Sources */,
+				B580BC0F1B98314D00AEAB64 /* UIFont+OPTheme.m in Sources */,
+				B580BC101B98315500AEAB64 /* UIColor+OPTheme.m in Sources */,
+				B580BC0A1B982FE000AEAB64 /* TimeTableViewForWidget.m in Sources */,
+				B580BC091B982FCD00AEAB64 /* TodayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1098,10 +1184,10 @@
 			target = B51438441ACFCA7900EED7A5 /* TimeTableWidget */;
 			targetProxy = B514384F1ACFCA7A00EED7A5 /* PBXContainerItemProxy */;
 		};
-		B557D1101B95FCE00036DCF6 /* PBXTargetDependency */ = {
+		B580BC011B982EC200AEAB64 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B51438441ACFCA7900EED7A5 /* TimeTableWidget */;
-			targetProxy = B557D10F1B95FCE00036DCF6 /* PBXContainerItemProxy */;
+			target = B580BBF51B982EC200AEAB64 /* TimeTableWidget Alpha */;
+			targetProxy = B580BC001B982EC200AEAB64 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1159,6 +1245,7 @@
 			baseConfigurationReference = FF3D7F73A7E4E3ECBE61BFEB /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
+				CODE_SIGN_ENTITLEMENTS = "OPDBit Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1185,6 +1272,7 @@
 			baseConfigurationReference = 36B226D3E967DD83FBCC2886 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
+				CODE_SIGN_ENTITLEMENTS = "OPDBit Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1200,6 +1288,45 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		B580BC041B982EC200AEAB64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "TimeTableWidget Alpha.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/TimeTableWidget/Info-Alpha.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B580BC051B982EC200AEAB64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "TimeTableWidget Alpha.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/TimeTableWidget/Info-Alpha.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1345,6 +1472,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B580BC031B982EC200AEAB64 /* Build configuration list for PBXNativeTarget "TimeTableWidget Alpha" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B580BC041B982EC200AEAB64 /* Debug */,
+				B580BC051B982EC200AEAB64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		B59682721AAC2EB7002D6983 /* Build configuration list for PBXProject "OPDBit" */ = {
 			isa = XCConfigurationList;

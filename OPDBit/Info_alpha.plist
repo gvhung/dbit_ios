@@ -26,15 +26,15 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.Minz.OPDBit</string>
+			<string>com.Minz.alpha.OPDBit</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>dbit</string>
+				<string>dbit-alpha</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

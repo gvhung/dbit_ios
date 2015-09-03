@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-@interface ServerLectureInfomationView : UIView
+@interface ServerLectureInfomationView : UIScrollView
 
 @end
