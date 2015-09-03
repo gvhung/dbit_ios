@@ -43,6 +43,14 @@
     {
         _dataManager = [DataManager sharedInstance];
         _activedTimeTable = _dataManager.activedTimeTable;
+        
+        // 수정 시 TimeTable에 보이지 않도록 변경
+        for (LectureObject *lecture in _activedTimeTable.lectures) {
+            if (lecture.ulid == currentLecture.ulid) {
+                [_activedTimeTable.lectures removeObjectAtIndex:[_activedTimeTable.lectures indexOfObject:lecture]];
+            }
+        }
+        
         _serverLecture = serverLecture;
         _currentLecture = currentLecture;
         if (serverLecture) {
@@ -102,7 +110,9 @@
     copiedLecture.lectureDetails = nil;
     
     [copiedLecture lectureFromServerLecture:_serverLecture];
-    NSString *message = [_dataManager lectureAreDuplicatedOtherLecture:copiedLecture lectureDetails:copiedLecture.lectureDetails inTimeTable:_activedTimeTable];
+    NSString *message = [_dataManager lectureAreDuplicatedOtherLecture:copiedLecture
+                                                        lectureDetails:copiedLecture.lectureDetails
+                                                           inTimeTable:_activedTimeTable];
     if (message) {
         _snackBar.message = [NSString stringWithFormat:@"%@ 강의와 겹칩니다!", message];
         [_snackBar animateToAppearInView:self.view];
