@@ -805,6 +805,7 @@
 				B557D0D01B95FA0A0036DCF6 /* Resources */,
 				ED36C9B46E5E24497AAF11D4 /* Copy Pods Resources */,
 				B580BC061B982EC200AEAB64 /* Embed App Extensions */,
+				B580BC111B983B2500AEAB64 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1037,6 +1038,19 @@
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run b13d96d8f86642f8566e7fc02bf10a4ae6835ea1 874578870def39559eb4d3719c2109ef9c2f22f7768276b747ccea533ce73f74";
 		};
+		B580BC111B983B2500AEAB64 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b13d96d8f86642f8566e7fc02bf10a4ae6835ea1 874578870def39559eb4d3719c2109ef9c2f22f7768276b747ccea533ce73f74";
+		};
 		BB96262F328DD4ECD58AC863 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1246,8 +1260,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CODE_SIGN_ENTITLEMENTS = "OPDBit Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1263,7 +1277,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8cfa51f8-799f-4b6f-bf28-85c2ee602105";
 			};
 			name = Debug;
 		};
@@ -1273,8 +1287,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CODE_SIGN_ENTITLEMENTS = "OPDBit Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1287,7 +1301,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8cfa51f8-799f-4b6f-bf28-85c2ee602105";
 			};
 			name = Release;
 		};
@@ -1295,8 +1309,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "TimeTableWidget Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: MinJun Kweon (V55Z33K4J2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: MinJun Kweon (V55Z33K4J2)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1307,7 +1321,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d9ee3820-5659-410d-8607-bc555cc95ac0";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1316,8 +1330,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "TimeTableWidget Alpha.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: MinJun Kweon (V55Z33K4J2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: MinJun Kweon (V55Z33K4J2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1325,7 +1339,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d9ee3820-5659-410d-8607-bc555cc95ac0";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1480,6 +1494,7 @@
 				B580BC051B982EC200AEAB64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B59682721AAC2EB7002D6983 /* Build configuration list for PBXProject "OPDBit" */ = {
 			isa = XCConfigurationList;

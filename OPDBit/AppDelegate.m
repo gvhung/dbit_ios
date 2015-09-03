@@ -56,7 +56,7 @@
             }];
     [[DataManager sharedInstance] synchronizeUserDefaultWithTimeTable:[DataManager sharedInstance].activedTimeTable];
     
-    [Fabric with:@[CrashlyticsKit]];
+    [Fabric with:@[[CrashlyticsKit class]]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
