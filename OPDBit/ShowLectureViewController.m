@@ -45,11 +45,17 @@
         _activedTimeTable = _dataManager.activedTimeTable;
         
         // 수정 시 TimeTable에 보이지 않도록 변경
+        TimeTableObject *copiedTimeTable = [[TimeTableObject alloc] init];
+        copiedTimeTable.timeStart = _activedTimeTable.timeStart;
+        copiedTimeTable.timeEnd = _activedTimeTable.timeEnd;
+        copiedTimeTable.workAtWeekend = _activedTimeTable.workAtWeekend;
+
         for (LectureObject *lecture in _activedTimeTable.lectures) {
-            if (lecture.ulid == currentLecture.ulid) {
-                [_activedTimeTable.lectures removeObjectAtIndex:[_activedTimeTable.lectures indexOfObject:lecture]];
+            if (lecture.ulid != currentLecture.ulid) {
+                [copiedTimeTable.lectures addObject:lecture];
             }
         }
+        _activedTimeTable = copiedTimeTable;
         
         _serverLecture = serverLecture;
         _currentLecture = currentLecture;
