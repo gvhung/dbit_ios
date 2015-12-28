@@ -30,6 +30,11 @@
 
 @end
 
+typedef NS_ENUM(NSInteger, TodaySubviewType) {
+    TodaySubviewTypeSection = 1,
+    TodaySubviewTypeTimeLabel
+};
+
 static CGFloat const TimeTableViewX = 0.0f;
 static CGFloat const TimeTableViewHeight = 400.0f;
 
@@ -71,12 +76,20 @@ static CGFloat const TimeHeadWidth = 20.0f;
     
     NSInteger i;
     
+    // Clear the subviews
+    for (UIView *subview in self.subviews) {
+        if (subview.tag == TodaySubviewTypeSection || subview.tag == TodaySubviewTypeTimeLabel) {
+            [subview removeFromSuperview];
+        }
+    }
+    
     for (i = _blockStart+1; i < _blockEnd; i++) {
         UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(TimeTableViewX, SectionHeadHeight+_timeHeight*(i-_blockStart), TimeHeadWidth, _timeHeight)];
         timeLabel.textColor = [UIColor whiteColor];
         timeLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:12];
         timeLabel.textAlignment = NSTextAlignmentRight;
         timeLabel.text = [NSString stringWithFormat:@"%2ld", (i%12 == 0) ? 12 : i%12];
+        timeLabel.tag = TodaySubviewTypeTimeLabel;
         [self addSubview:timeLabel];
         
         [timeLabel sizeToFit];
@@ -90,6 +103,7 @@ static CGFloat const TimeHeadWidth = 20.0f;
         sectionLabel.font = [UIFont fontWithName:@"AppleSDGothicNeo-Light" size:12];
         sectionLabel.textAlignment = NSTextAlignmentCenter;
         sectionLabel.text = _sectionTitles[i];
+        sectionLabel.tag = TodaySubviewTypeSection;
         [self addSubview:sectionLabel];
     }
 }
@@ -98,7 +112,6 @@ static CGFloat const TimeHeadWidth = 20.0f;
 {
     for (NSDictionary *lectureDictionary in _lectures) {
         for (NSDictionary *lectureDetailDictionary in lectureDictionary[@"lectureDetails"]) {
-            
             NSInteger convertedTimeTableStart = _timeStart/100*60 + _timeStart%100;
             NSInteger startMargin = convertedTimeTableStart%60;
             NSInteger convertedStartTime = [lectureDetailDictionary[@"timeStart"] integerValue]/100*60 + [lectureDetailDictionary[@"timeStart"] integerValue]%100;

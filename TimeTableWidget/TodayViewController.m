@@ -135,6 +135,10 @@ static CGFloat const EmptyButtonPadding = 10.0f;
     NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:suiteName];
     _activedTimeTable = [defaults objectForKey:@"ActivedTimeTable"];
 
+    for (UIView *subview in self.view.subviews) {
+        [subview removeFromSuperview];
+    }
+    
     [self initializeWidget];
     completionHandler(NCUpdateResultNewData);
 }
